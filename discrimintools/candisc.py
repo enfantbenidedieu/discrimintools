@@ -13,6 +13,8 @@ from sklearn.base import BaseEstimator, TransformerMixin
 from mapply.mapply import mapply
 from sklearn.metrics import accuracy_score
 
+from scientisttools.eta2 import eta2
+
 ##########################################################################################
 #                       CANONICAL DISCRIMINANT ANALYSIS (CANDISC)
 ##########################################################################################

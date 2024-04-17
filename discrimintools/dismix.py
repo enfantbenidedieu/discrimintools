@@ -13,6 +13,10 @@ from sklearn.base import BaseEstimator, TransformerMixin
 from mapply.mapply import mapply
 from sklearn.metrics import accuracy_score
 
+from scientisttools import FAMD
+
+from .lda import LDA
+
 ##################################################################################################
 #           Linear Discriminant Analysis with both Continuous and Categorical variables (DISMIX)
 ###################################################################################################

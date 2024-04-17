@@ -38,11 +38,3 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ]
 )
-
-from setuptools import setup,find_packages
-
-setup(name="discrimintools",
-      version="0.0.1",
-      description="Python module",
-      packages=["discrimintools"],
-      zip_safe=False)
