@@ -3,10 +3,10 @@
 import scipy.stats as st
 import numpy as np
 import pandas as pd
+import polars as pl
 from functools import reduce
 from scipy.spatial.distance import pdist,squareform
 from statsmodels.multivariate.manova import MANOVA
-import statsmodels.stats.multicomp as mc
 import statsmodels.api as sm
 import statsmodels.formula.api as smf
 from sklearn.base import BaseEstimator, TransformerMixin
@@ -50,15 +50,13 @@ class CANDISC(BaseEstimator,TransformerMixin):
     def __init__(self,
                  n_components=None,
                  target=None,
-                 row_labels=None,
-                 features_labels=None,
                  priors = None,
+                 ind_sup = None,
                  parallelize = False):
         self.n_components = n_components
         self.target = target
-        self.row_labels = row_labels
-        self.features_labels = features_labels
         self.priors = priors
+        self.ind_sup = ind_sup
         self.parallelize = parallelize
 
     def fit(self,X,y=None):
@@ -77,291 +75,296 @@ class CANDISC(BaseEstimator,TransformerMixin):
             Fitted estimator
         """
 
+        # Between pearson correlation
+        def betweencorrcoef(g_k,z_k,name,lda,weights):
+            def m(x, w):
+                return np.average(x,weights=w)
+            def cov(x, y, w):
+                return np.sum(w * (x - m(x, w)) * (y - m(y, w))) / np.sum(w)
+            def corr(x, y, w):
+                return cov(x, y, w) / np.sqrt(cov(x, x, w) * cov(y, y, w))
+            return corr(g_k[name], z_k[lda],weights)
+        
+        # Manlanobis distances
+        def mahalanobis_distances(X,y,n_obs,classe):
+            """
+            Compute the Mahalanobis squared distance
+            ----------------------------------------
+
+            Parameters
+            ----------
+            X :  pandas dataframe. 
+            
+            y : pd.Series
+
+            """
+            # Number of class
+            n_classes = len(classe)
+
+            # Matrice de covariance intra - classe utilisée par Mahalanobis
+            W = (n_obs/(n_obs - n_classes))*X
+
+            # Invesion
+            invW = pd.DataFrame(np.linalg.inv(W),index=W.index,columns=W.columns)
+
+            disto = pd.DataFrame(np.zeros((n_classes,n_classes)),index=classe,columns=classe)
+            for i in np.arange(0,n_classes-1):
+                for j in np.arange(i+1,n_classes):
+                    # Ecart entre les 2 vecteurs moyennes
+                    ecart = y.iloc[i,:] - y.iloc[j,:]
+                    # Distance de Mahalanobis
+                    disto.iloc[i,j] = np.dot(np.dot(ecart,invW),np.transpose(ecart))
+                    disto.iloc[j,i] = disto.iloc[i,j]
+    
+            return disto
+        
+        # Analysis of Variance table
+        def anova_table(aov):
+            aov['mean_sq'] = aov[:]['sum_sq']/aov[:]['df']
+            aov['eta_sq'] = aov[:-1]['sum_sq']/sum(aov['sum_sq'])
+            aov['omega_sq'] = (aov[:-1]['sum_sq']-(aov[:-1]['df']*aov['mean_sq'][-1]))/(sum(aov['sum_sq'])+aov['mean_sq'][-1])
+            cols = ['sum_sq', 'df', 'mean_sq', 'F', 'PR(>F)', 'eta_sq', 'omega_sq']
+            aov = aov[cols]
+            return aov
+        
+        # Univariate test statistics
+        def univariate_test_statistics(stdev,model):
+            """
+            Compute univariate Test Statistics
+            ----------------------------------
+
+            Parameters
+            ----------
+            stdev : float. Total Standard Deviation
+
+            model : OLSResults.Results class for for an OLS model.
+            
+            Return
+            -------
+            univariate test statistics
+            """
+            return np.array([stdev,model.rsquared,model.rsquared/(1-model.rsquared),model.fvalue,model.f_pvalue])
+        
+        # Global performance 
+        def global_performance(n_features,n_obs,n_classes,lw):
+            """
+            Compute Global statistic - Wilks' Lambda - Bartlett statistic and Rao
+            ---------------------------------------------------------------------
+
+            Parameters:
+            ----------
+            lw : float
+                Wilks lambda's value
+            
+            Returns:
+            --------
+            """
+            #########################################################
+            ## Bartlett Test
+            # Statistique B de Bartlett & Degré de liberté
+            B, ddl = -(n_obs - 1 - ((n_features + n_classes)/2))*np.log(lw), n_features*(n_classes - 1)
+            
+            ##############################################################
+            ## RAO test
+
+            # Valeur intermédiaire pour calcul du ddl dénominateur
+            temp = n_features**2 + (n_classes - 1)**2 - 5
+            temp = np.where(temp>0,np.sqrt(((n_features**2)*((n_classes - 1)**2)-4)/temp),1)
+            # ddl dénominateur
+            ddldenom = (2*n_obs - n_features - n_classes - 2)/2*temp - (ddl - 2)/2
+            # statistic de test
+            frao = ((1-(lw**(1/temp)))/(lw**(1/temp)))*(ddldenom/ddl)
+            # Resultat
+            res = pd.DataFrame({"Stat" : ["Wilks' Lambda",f"Bartlett -- C({int(ddl)})",f"Rao -- F({int(ddl)},{int(ddldenom)})"],
+                                "Value" : [lw,B,frao],
+                                "p-value": [np.nan,1 - st.chi2.cdf(B,ddl),1 - st.f.cdf(frao,ddl,ddldenom)]})
+            return res
+        
+        def likelihood_test(n_samples,n_features,n_classes,eigen):
+            # Statistique de test
+            if isinstance(eigen,float) or isinstance(eigen,int):
+                q = 1
+            else:
+                q = len(eigen)
+            LQ = np.prod([(1-i) for i in eigen])
+            # r
+            r = n_samples - 1 - (n_features+n_classes)/2
+            # t
+            if ((n_features - n_classes + q + 1)**2 + q**2 - 5) > 0 : 
+                t = np.sqrt((q**2*(n_features-n_classes+q+1)**2-4)/((n_features - n_classes + q + 1)**2 + q**2 - 5)) 
+            else: 
+                t = 1
+            # u
+            u = (q*(n_features-n_classes+q+1)-2)/4
+            # F de RAO
+            FRAO = ((1 - LQ**(1/t))/(LQ**(1/t))) * ((r*t - 2*u)/(q*(n_features - n_classes + q + 1)))
+            # ddl1 
+            ddl1 = q*(n_features - n_classes + q + 1)
+            # ddl2
+            ddl2 = r*t - 2*u
+            res_rao = pd.DataFrame({"statistic":FRAO,"DDL num." : ddl1, "DDL den." : ddl2,"Pr>F": 1 - st.f.cdf(FRAO,ddl1,ddl2)},index=["test"])
+            return res_rao
+
+        # check if X is an instance of polars dataframe
+        if isinstance(X,pl.DataFrame):
+            X = X.to_pandas()
+
         if not isinstance(X,pd.DataFrame):
             raise TypeError(
             f"{type(X)} is not supported. Please convert to a DataFrame with "
             "pd.DataFrame. For more information see: "
             "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html")
         
+        # Check if target is None
+        if self.target is None:
+            raise ValueError("'target' must be assigned")
+        elif not isinstance(self.target,list):
+            raise ValueError("'target' must be a list")
+        elif len(self.target)>1:
+            raise ValueError("'target' must be a list of length one")
+        
         # Set parallelize
         if self.parallelize:
-            self.n_workers_ = -1
+            n_workers = -1
         else:
-            self.n_workers_ = 1
+            n_workers = 1
 
-        # Save data
-        self.data_ = X
+        ###############################################################################################################"
+        # Drop level if ndim greater than 1 and reset columns name
+        ###############################################################################################################
+        if X.columns.nlevels > 1:
+            X.columns = X.columns.droplevel()
         
-        self.target_ = self.target
-        if self.target_ is None:
-            raise ValueError("Error :'target' must be assigned.")
+        # Check if individuls supplementary
+        if self.ind_sup is not None:
+            if (isinstance(self.ind_sup,int) or isinstance(self.ind_sup,float)):
+                ind_sup = [int(self.ind_sup)]
+            elif ((isinstance(self.ind_sup,list) or isinstance(self.ind_sup,tuple)) and len(self.ind_sup)>=1):
+                ind_sup = [int(x) for x in self.ind_sup]
 
-        self._computed_stats(X=X)
+        ####################################### Save the base in a new variables
+        # Store data
+        Xtot = X
+
+        ######################################## Drop supplementary individuls  ##############################################
+        if self.ind_sup is not None:
+            # Extract supplementary individuals
+            X_ind_sup = X.iloc[ind_sup,:]
+            X = X.drop(index=[name for i, name in enumerate(Xtot.index.tolist()) if i in ind_sup])
         
-        return self
-        
-    def _mahalanobis_distances(self,X,y):
-        """
-        Compute the Mahalanobis squared distance
+        #######################################################################################################################
+        # Split Data into two : X and y
+        y = X[self.target]
+        x = X.drop(columns=self.target)
 
-        Parameters
-        ----------
-        X : pd.DataFrame.
-            The
-        
-        y : pd.Series
+        ################################################ Check if all columns are numerics
+        # Check if all columns are numerics
+        all_num = all(pd.api.types.is_numeric_dtype(x[c]) for c in x.columns.tolist())
+        if not all_num:
+            raise TypeError("All features must be numeric")
 
-        
-        """
-
-        # Matrice de covariance intra - classe utilisée par Mahalanobis
-        W = (self.n_samples_/(self.n_samples_ - self.n_classes_))*X
-
-        # Invesion
-        invW = pd.DataFrame(np.linalg.inv(W),index=W.index,columns=W.columns)
-
-        disto = pd.DataFrame(np.zeros((self.n_classes_,self.n_classes_)),index=self.classes_,columns=self.classes_)
-        for i in np.arange(0,self.n_classes_-1):
-            for j in np.arange(i+1,self.n_classes_):
-                # Ecart entre les 2 vecteurs moyennes
-                ecart = y.iloc[i,:] - y.iloc[j,:]
-                # Distance de Mahalanobis
-                disto.iloc[i,j] = np.dot(np.dot(ecart,invW),np.transpose(ecart))
-                disto.iloc[j,i] = disto.iloc[i,j]
-        
-        self.squared_mdist_ = disto
-    
-    @staticmethod
-    def anova_table(aov):
-        aov['mean_sq'] = aov[:]['sum_sq']/aov[:]['df']
-        aov['eta_sq'] = aov[:-1]['sum_sq']/sum(aov['sum_sq'])
-        aov['omega_sq'] = (aov[:-1]['sum_sq']-(aov[:-1]['df']*aov['mean_sq'][-1]))/(sum(aov['sum_sq'])+aov['mean_sq'][-1])
-        cols = ['sum_sq', 'df', 'mean_sq', 'F', 'PR(>F)', 'eta_sq', 'omega_sq']
-        aov = aov[cols]
-        return aov
-    
-    @staticmethod
-    def univariate_test_statistics(x,res):
-        """
-        Compute univariate Test Statistics
-
-        Parameters
-        ----------
-        x : float. 
-            Total Standard Deviation
-        res : OLSResults.
-            Results class for for an OLS model.
-        
-        Return
-        -------
-        univariate test statistics
-
-        """
-
-        return np.array([x,res.rsquared,res.rsquared/(1-res.rsquared),res.fvalue,res.f_pvalue])
-    
-    def _global_performance(self,lw):
-        """Compute Global statistic - Wilks' Lambda - Bartlett statistic and Rao
-
-        Parameters:
-        ----------
-        lw : float
-            Wilks lambda's value
-        
-        Returns:
-        --------
-        """
-
-        ## Bartlett Test
-        # Statistique B de Bartlett
-        B = -(self.n_samples_ - 1 - ((self.n_features_ + self.n_classes_)/2))*np.log(lw)
-        # Degré de liberté
-        ddl = self.n_features_*(self.n_classes_ - 1)
-        
-        ## RAO test
-        # ddl numérateur
-        ddlnum = self.n_features_*(self.n_classes_ - 1)
-        # Valeur intermédiaire pour calcul du ddl dénominateur
-        temp = self.n_features_**2 + (self.n_classes_ - 1)**2 - 5
-        temp = np.where(temp>0,np.sqrt(((self.n_features_**2)*((self.n_classes_ - 1)**2)-4)/temp),1)
-        # ddl dénominateur
-        ddldenom = (2*self.n_samples_ - self.n_features_ - self.n_classes_ - 2)/2*temp - (ddlnum - 2)/2
-        # statistic de test
-        frao = ((1-(lw**(1/temp)))/(lw**(1/temp)))*(ddldenom/ddlnum)
-        # Resultat
-        res = pd.DataFrame({"Stat" : ["Wilks' Lambda",f"Bartlett -- C({int(ddl)})",f"Rao -- F({int(ddlnum)},{int(ddldenom)})"],
-                            "Value" : [lw,B,frao],
-                            "p-value": [np.nan,1 - st.chi2.cdf(B,ddl),1 - st.f.cdf(frao,ddlnum,ddldenom)]})
-        return res
-
-    
-    def _univariate_test(self,eigen):
-        # Statistique de test
-        if isinstance(eigen,float) or isinstance(eigen,int):
-            q = 1
-        else:
-            q = len(eigen)
-        LQ = np.prod([(1-i) for i in eigen])
-        # r
-        r = self.n_samples_ - 1 - (self.n_features_+self.n_classes_)/2
-        # t
-        if ((self.n_features_ - self.n_classes_ + q + 1)**2 + q**2 - 5) > 0 : 
-            t = np.sqrt((q**2*(self.n_features_-self.n_classes_+q+1)**2-4)/((self.n_features_ - self.n_classes_ + q + 1)**2 + q**2 - 5)) 
-        else: 
-            t = 1
-        # u
-        u = (q*(self.n_features_-self.n_classes_+q+1)-2)/4
-        # F de RAO
-        FRAO = ((1 - LQ**(1/t))/(LQ**(1/t))) * ((r*t - 2*u)/(q*(self.n_features_ - self.n_classes_ + q + 1)))
-        # ddl1 
-        ddl1 = q*(self.n_features_ - self.n_classes_ + q + 1)
-        # ddl2
-        ddl2 = r*t - 2*u
-        res_rao = pd.DataFrame({"statistic":FRAO,"DDL num." : ddl1, "DDL den." : ddl2,"Pr>F": 1 - st.f.cdf(FRAO,ddl1,ddl2)},index=["test"])
-        return res_rao
-    
-    @staticmethod
-    def betweencorrcoef(g_k,z_k,name,lda,weights):
-        def m(x, w):
-            return np.average(x,weights=w)
-        def cov(x, y, w):
-            return np.sum(w * (x - m(x, w)) * (y - m(y, w))) / np.sum(w)
-        def corr(x, y, w):
-            return cov(x, y, w) / np.sqrt(cov(x, x, w) * cov(y, y, w))
-        return corr(g_k[name], z_k[lda],weights)
-
-
-    def _computed_stats(self,X):
-        """
-        
-        
-        """
-        # Continuous variables
-        x = X.drop(columns=self.target_)
-        # Qualitative variables - target
-        y = X[self.target_]
-
-        # Features columns
-        self.features_labels_ = self.features_labels
-        if self.features_labels_ is None:
-            self.features_labels_ = x.columns
-        # Update x
-        x = x[self.features_labels_]
-        # New data
-        X = pd.concat([x,y],axis=1)
-
-        # Compute mean and standard deviation
-        mean_std_var = x.agg(func = ["mean","std"])
-
-        # categories
-        self.classes_ = np.unique(y)
+        ##### Category
+        classes = np.unique(y).tolist()
+        # Number of groups
+        n_classes = len(classes)
 
         # Number of rows and continuous variables
-        self.n_samples_, self.n_features_ = x.shape
+        n_samples, n_features = x.shape
 
-        # Number of groups
-        self.n_classes_ = len(self.classes_)
+        ###################################### Set number of components ##########################################
+        if self.n_components is None:
+            n_components = min(n_features-1,n_classes - 1)
+        elif not isinstance(self.n_components,int):
+            raise ValueError("'n_components' must be an integer.")
+        elif self.n_components < 1:
+            raise ValueError("'n_components' must be equal or greater than 1.")
+        else:
+            n_components = min(self.n_components,n_features-1,n_classes - 1)
 
-        # Set row labels
-        self.row_labels_ = self.row_labels
-        if self.row_labels_ is None:
-            self.row_labels = ["row."+str(i+1) for i in np.arange(0,self.n_samples_)]
-
-        # Number of components
-        self.n_components_ = self.n_components
-        if ((self.n_components_ is None) or (self.n_components_ > min(self.n_classes_-1,self.n_samples_))):
-            self.n_components_ = min(self.n_classes_-1,self.n_features_)
+        # Compute statistiques for quantitatives variables
+        stats = x.describe().T
 
         # Compute univariate ANOVA
-        univariate_test = pd.DataFrame(np.zeros((self.n_features_,5)),index=self.features_labels_,
-                                       columns=["Std. Dev.","R-squared","Rsq/(1-Rsq)","F-statistic","Prob (F-statistic)"])
-        univariate_anova = dict()
-        for lab in self.features_labels_:
-            model = smf.ols(formula="{}~C({})".format(lab,"+".join(self.target_)), data=X).fit()
-            univariate_test.loc[lab,:] = self.univariate_test_statistics(mean_std_var.loc["std",lab],model)
-            univariate_anova[lab] = self.anova_table(sm.stats.anova_lm(model, typ=2))
-
-        # Compute MULTIVARIATE ANOVA - MANOVA Test
-        manova = MANOVA.from_formula(formula="{}~{}".format(paste(self.features_labels_,collapse="+"),"+".join(self.target_)), data=X).mv_test(skip_intercept_test=True)
-
-        # Tukey Honestly significant difference - univariate
-        tukey_test = dict()
-        for name in self.features_labels_:
-            comp = mc.MultiComparison(x[name],y[self.target_[0]])
-            post_hoc_res = comp.tukeyhsd()
-            tukey_test[name] = post_hoc_res.summary()
-
-        # Bonferroni correction
-        bonf_test = dict()
-        for name in self.features_labels_:
-            comp = mc.MultiComparison(x[name],y[self.target_[0]])
-            tbl, a1, a2 = comp.allpairtest(st.ttest_ind, method= "bonf")
-            bonf_test[name] = tbl
+        univ_test = pd.DataFrame(np.zeros((n_features,5)),index=x.columns,columns=["Std. Dev.","R-squared","Rsq/(1-Rsq)","F-statistic","Prob (F-statistic)"])
+        anova = {}
+        for lab in x.columns:
+            model = smf.ols(formula="{}~C({})".format(lab,"+".join(self.target)), data=X).fit()
+            univ_test.loc[lab,:] = univariate_test_statistics(stdev=stats.loc[lab,"std"],model=model)
+            anova[lab] = anova_table(sm.stats.anova_lm(model, typ=2))
         
-        # Sidak Correction
-        sidak_test = dict()
-        for name in self.features_labels_:
-            comp = mc.MultiComparison(x[name],y[self.target_[0]])
-            tbl, a1, a2 = comp.allpairtest(st.ttest_ind, method= "sidak")
-            sidak_test[name] = tbl
+        # Rapport de correlation - Correlation ration
+        eta2_res = {}
+        for col in x.columns:
+            eta2_res[col] = eta2(y,x[col])
+        eta2_res = pd.DataFrame(eta2_res).T
+        
+        # Compute MULTIVARIATE ANOVA - MANOVA Test
+        manova = MANOVA.from_formula(formula="{}~{}".format("+".join(x.columns),"+".join(self.target)), data=X).mv_test(skip_intercept_test=True)
+
+        statistics = {"anova" : anova,"manova" : manova,"Eta2" : eta2_res,"univariate" : univ_test}
 
         # Summary information
         summary_infos = pd.DataFrame({
-            "Total Sample Size" : self.n_samples_,
-            "Variables" : self.n_features_,
-            "Classes" : self.n_classes_,
-            "DF Total" : self.n_samples_ - 1,
-            "DF Within Classes" : self.n_samples_ - self.n_classes_,
-            "DF Between Classes" : self.n_classes_-1
-        },index=["value"]).T
-
-         # Rapport de correlation - Correlation ration
-        eta2_res = dict()
-        for name in self.features_labels_:
-            eta2_res[name] = eta2(y,x[name])
-        eta2_res = pd.DataFrame(eta2_res).T
+            "infos" : ["Total Sample Size","Variables","Classes"],
+            "Value" : [n_samples,n_features,n_classes],
+            "DF" : ["DF Total", "DF Within Classes", "DF Between Classes"],
+            "DF value" : [n_samples-1,n_samples - n_classes, n_classes-1]
+        })
+        self.summary_information_ = summary_infos
 
         # Number of eflemnt in each group
-        I_k = y.value_counts(normalize=False)
+        n_k = y.value_counts(normalize=False)
 
         # Initial prior - proportion of each element
         if self.priors is None:
             p_k = y.value_counts(normalize=True)
+        elif not isinstance(self.priors,pd.Series):
+            raise TypeError("'priors' must be a pandas Series with classes as index")
         else:
-            p_k = pd.Series(self.priors,index=self.classes_)
+            p_k = self.priors
 
+        # Store some informations
+        self.call_ = {"Xtot" : Xtot,
+                      "X" : X,
+                      "target" : self.target[0],
+                      "features" : x.columns.tolist(),
+                      "n_components" : n_components,
+                      "priors" : p_k}
+        
+        #############################
         # Class level information
-        class_level_information = pd.concat([I_k,p_k],axis=1,ignore_index=False)
-        class_level_information.columns = ["n(k)","p(k)"]
+        class_level_information = pd.concat([n_k,p_k],axis=1)
+        class_level_information.columns = ["Frequency","Proportion"]
+        statistics["information"] = class_level_information
         
         # Mean by group
-        g_k = X.groupby(self.target_).mean()
+        g_k = X.groupby(self.target).mean()
 
         # Covariance totale
         V = x.cov(ddof=0)
 
         # Variance - Covariance par groupe
-        V_k = X.groupby(self.target_).cov(ddof=1)
+        V_k = X.groupby(self.target).cov(ddof=1)
 
         # Matrice de variance covariance intra - classe
-        W = list(map(lambda k : (I_k[k]-1)*V_k.loc[k],self.classes_))
-        W = (1/self.n_samples_)*reduce(lambda i,j : i + j, W)
+        W = list(map(lambda k : (n_k[k]-1)*V_k.loc[k],classes))
+        W = (1/n_samples)*reduce(lambda i,j : i + j, W)
 
         # Matrice de Variance Covariance inter - classe, obtenue par différence
         B = V - W
 
         # Squared Mahalanobis distances between class means
-        self._mahalanobis_distances(X=W,y=g_k)
+        squared_mdist = mahalanobis_distances(X=W,y=g_k,n_obs=n_samples,classe=classes)
 
         # First Matrix - French approach
         M1 = B.dot(np.linalg.inv(V)).T
         eigen1, _ = np.linalg.eig(M1)
-        eigen_values1 = np.real(eigen1[:self.n_components_])
+        eigen_values1 = np.real(eigen1[:n_components])
 
         # Second Matrix - Anglosaxonne approach
         M2 = B.dot(np.linalg.inv(W)).T
         eigen2, _ = np.linalg.eig(M2)
-        eigen_values2 = np.real(eigen2[:self.n_components_])
+        eigen_values2 = np.real(eigen2[:n_components])
 
         # Eigenvalue informations
         eigen_values = eigen_values2
@@ -370,9 +373,7 @@ class CANDISC(BaseEstimator,TransformerMixin):
         cumulative = np.cumsum(proportion)
 
         # Correction approach
-        xmean = mean_std_var.loc["mean",:]
-        C = pd.concat(list(map(lambda k : np.sqrt(p_k.loc[k,])*(g_k.loc[k,]-xmean),self.classes_)),axis=1)
-        C.columns = self.classes_
+        C = pd.concat(list(map(lambda k : np.sqrt(p_k.loc[k].values)*g_k.loc[k,:].sub(stats.loc[:,"mean"],axis="index").to_frame(k),classes)),axis=1)
         
         # Diagonalisation de la matrice M
         M3 = np.dot(np.dot(C.T,np.linalg.inv(V)),C)
@@ -386,133 +387,181 @@ class CANDISC(BaseEstimator,TransformerMixin):
         idx = [list(eigen3).index(x) for x in new_eigen]
 
         # New eigen vectors
-        eigen = new_eigen[:self.n_components_]
-        vector = vector3[:,idx][:,:self.n_components_]
-
-        # vecteur beta
+        eigen = new_eigen[:n_components]
+        vector = vector3[:,idx][:,:n_components]
+        
+        #####################################################################################################
+        #########################"" vecteur beta
         beta_l = np.dot(np.dot(np.linalg.inv(V),C),vector)
+        beta_l = pd.DataFrame(beta_l,index=x.columns,columns= ["LD"+str(x+1) for x in np.arange(beta_l.shape[1])])
 
-        # Coefficients 
-        u_l = np.apply_along_axis(func1d=lambda x : x*np.sqrt((self.n_samples_-self.n_classes_)/(self.n_samples_*eigen*(1-eigen))),arr=beta_l,axis=1)
-        # Intercept
-        u_l0 = -np.dot(np.transpose(u_l),xmean)
+        ############## Coefficients 
+        u_l = mapply(beta_l,lambda x : x*np.sqrt((n_samples-n_classes)/(n_samples*eigen*(1-eigen))),axis=1,progressbar=False,n_workers=n_workers)
+        
+        ##################### Intercept
+        u_l0 = - u_l.T.dot(stats.loc[:,"mean"])
+        u_l0.name = "intercept"
 
+        ##############################################################################################################
         # Coordonnées des individus
-        row_coord = np.apply_along_axis(arr=np.dot(x,u_l),func1d=lambda x : x + u_l0,axis=1)
-        # Coord collumns
-        self.dim_index_ = ["LD"+str(x+1) for x in np.arange(0,self.n_components_)]
+        ##############################################################################################################
+        row_coord = x.dot(u_l).add(u_l0,axis="columns")
 
         # Class Means on Canonical Variables
-        gmean_coord = (pd.concat([pd.DataFrame(row_coord,columns=self.dim_index_,index=y.index),y],axis=1,ignore_index=False)
-                         .groupby(self.target_)
-                         .mean())
+        gcoord = pd.concat((row_coord,y),axis=1).groupby(self.target).mean()
 
         # Coordonnées des centres de classes
-        z_k = mapply(g_k.dot(u_l),lambda x : x + u_l0,axis=1,progressbar=False,n_workers=self.n_workers_)
-        z_k.columns = self.dim_index_
+        z_k = mapply(g_k.dot(u_l),lambda x : x + u_l0,axis=1,progressbar=False,n_workers=n_workers)
 
         # Distance entre barycentre
-        disto = pd.DataFrame(squareform(pdist(z_k,metric="sqeuclidean")),columns=self.classes_,index=self.classes_)
+        disto = pd.DataFrame(squareform(pdist(z_k,metric="sqeuclidean")),columns=classes,index=classes)
 
         # Lambda de Wilks
         lw = np.linalg.det(W)/np.linalg.det(V)
         
         # global performance
-        self.global_performance_ = self._global_performance(lw=lw)
+        global_perf = global_performance(n_features=n_features,n_obs=n_samples,n_classes=n_classes,lw=lw)
+        statistics["performance"] = global_perf
 
-        # Test sur un ensemble de facteurs
-        res_rao = pd.DataFrame(np.zeros((self.n_components_,4)),columns=["statistic","DDL num.","DDL den.","Pr>F"]).astype("float")
-        for i in np.arange(0,self.n_components_):
-            res_rao.iloc[-i,:] = self._univariate_test(eigen=eigen_values1[-(i+1):])
-        res_rao = res_rao.sort_index(ascending=False).reset_index(drop=True)
+        # Test sur un ensemble de facteurs - likelohood ratio test
+        lrt_test = pd.DataFrame(np.zeros((n_components,4)),columns=["statistic","DDL num.","DDL den.","Pr>F"]).astype("float")
+        for i in np.arange(n_components):
+            lrt_test.iloc[-i,:] = likelihood_test(n_samples=n_samples,n_features=n_features,n_classes=n_classes,eigen=eigen_values1[-(i+1):])
+        lrt_test = lrt_test.sort_index(ascending=False).reset_index(drop=True)
+        statistics["likelihood_test"] = lrt_test
+        self.statistics_ = statistics
 
-        self.likelihood_test_ = res_rao
+        ###############################################################################################################
+        #  Correlation 
+        ###############################################################################################################
+        ################# Total correlation - Total Canonical Structure
+        tcorr = np.corrcoef(x=x,y=row_coord,rowvar=False)[:x.shape[1],x.shape[1]:]
+        tcorr = pd.DataFrame(tcorr,index=x.columns,columns= ["LD"+str(x+1) for x in np.arange(tcorr.shape[1])])
 
-        ##
-        # Corrélation totale
-        tcorr = np.transpose(np.corrcoef(x=row_coord,y=x,rowvar=False)[:self.n_components_,self.n_components_:])
-        tcorr = pd.DataFrame(tcorr,columns=self.dim_index_,index=self.features_labels_)
+        ################# Within correlation - Polled Within Canonical Structure
+        z1 = row_coord - gcoord.loc[y[self.target[0]],:].values
+        g_k_long = g_k.loc[y[self.target[0]],:]
+        z2 = pd.DataFrame(x.values - g_k_long.values,index=g_k_long.index,columns=x.columns)
+        wcorr = np.transpose(np.corrcoef(x=z1,y=z2,rowvar=False)[:n_components,n_components:])
+        wcorr = pd.DataFrame(wcorr,columns= ["LD"+str(x+1) for x in np.arange(wcorr.shape[1])],index=x.columns)
 
-        # Within correlation
-        z1 = row_coord - gmean_coord.loc[y[self.target_[0]],:].values
-        g_k_long = g_k.loc[y[self.target_[0]],:]
-        z2 = pd.DataFrame(x.values - g_k_long.values,index=g_k_long.index,columns=self.features_labels_)
-        wcorr = np.transpose(np.corrcoef(x=z1,y=z2,rowvar=False)[:self.n_components_,self.n_components_:])
-        wcorr = pd.DataFrame(wcorr,columns=self.dim_index_,index=self.features_labels_)
-
-        # Between correlation
-        bcorr = pd.DataFrame(np.zeros((self.n_features_,self.n_components_)),index=self.features_labels_,columns=self.dim_index_)
+        ################# Between correlation - Between Canonical Structure
+        bcorr = pd.DataFrame(np.zeros((n_features,n_components)),index=x.columns,columns=["LD"+str(x+1) for x in np.arange(n_components)])
         for name in x.columns:
             for name2 in bcorr.columns:
-                bcorr.loc[name,name2]=self.betweencorrcoef(g_k,z_k,name,name2,p_k.values)
-        
+                bcorr.loc[name,name2]= betweencorrcoef(g_k,z_k,name,name2,p_k.values)
 
+        ###################################################################################################################
         # Fonction de classement
+        #######################################################################################################################
         # Coefficients de la fonction de décision (w_kj, k=1,...,K; j=1,...,J)
-        u_l_df = pd.DataFrame(u_l,index=self.features_labels_,columns=self.dim_index_)
+        u_l_df = pd.DataFrame(u_l,index=x.columns,columns=["LD"+str(x+1) for x in np.arange(n_components)])
         S_omega_k = pd.DataFrame(map(lambda k :
-                            pd.DataFrame(map(lambda l : u_l_df.loc[:,l]*z_k.loc[k,l],self.dim_index_)).sum(axis=0),self.classes_), index = self.classes_).T
+                            pd.DataFrame(map(lambda l : u_l_df.loc[:,l]*z_k.loc[k,l],row_coord.columns)).sum(axis=0),classes), 
+                            index = classes).T
         
         # Constante de la fonction de décision
         S_omega_k0 = pd.DataFrame(
                     map(lambda k : (np.log(p_k.loc[k,])+sum(u_l0.T*z_k.loc[k,:])-
-                0.5*sum(z_k.loc[k,:]**2)),self.classes_),index = self.classes_,
+                0.5*sum(z_k.loc[k,:]**2)),classes),index = classes,
                 columns = ["intercept"]).T
 
-         # Store all informations
-        self.eig_ = np.array([eigen_values[:self.n_components_],
-                              difference[:self.n_components_],
-                              proportion[:self.n_components_],
-                              cumulative[:self.n_components_]])
-        
-        self.eigen_vectors_ = vector
-        
+        ###################################
+        # Store all informations
+        eig = np.c_[eigen_values[:n_components],difference[:n_components],proportion[:n_components],cumulative[:n_components]]
+        self.eig_ = pd.DataFrame(eig,columns=["Eigenvalue","Difference","Proportion","Cumulative"],index = ["LD"+str(x+1) for x in range(eig.shape[0])])
+         
+        self.ind_ = {"coord" : row_coord}
+        self.classes_ = {"classes" : classes,"coord" : gcoord,"mean" : g_k, "center" : z_k ,"dist" : disto,"mahalanobis" : squared_mdist}
+        self.cov_ = {"total" : V , "within" : W, "between" : V-W, "classes_cov" : V_k}          
+        self.corr_ = {"total" : tcorr, "within" : wcorr, "between" : bcorr}
+
         # Coefficients
         self.coef_ = u_l
         # Intercept
         self.intercept_ = u_l0
 
-        self.row_coord_ = row_coord
-
         # Fonction de classement - coefficient
-        self.score_coef_ = np.array(S_omega_k)
-        self.score_intercept_ = np.array(S_omega_k0)
+        self.score_coef_ = S_omega_k
+        self.score_intercept_ = S_omega_k0
 
-        # Store all information
-        self.gmean_ = g_k                                                # Mean in each group
-        self.tcov_ = V                                                   # Total covariance
-        self.gcov_ = V_k
-        self.wcov_ = W
-        self.bcov_ = V - W
-        self.correlation_ratio_ = eta2_res
-        self.summary_information_ = summary_infos
-        self.class_level_information_ = class_level_information
-        self.univariate_test_statistis_ = univariate_test
-        self.gmean_coord_ = gmean_coord
+        self.eigen_ = {"value" : eigen_values[:n_components],"vector" : vector[:,:n_components]}
 
-        self.anova_ = pd.concat(univariate_anova,axis=0) 
-        self.manova_ = manova
-        self.tukey_ = tukey_test
-        self.bonferroni_correction_ = bonf_test
-        self.sidak_ = sidak_test
-        self.gdisto_ = disto
-        self.gcenter_ = z_k
-        self.priors_ = p_k
-
-        # Correlation
-        self.tcorr_ = tcorr
-        self.wcorr_ = wcorr
-        self.bcorr_ = bcorr
-
-        # Data
-        self.data_ = X
+        ##########################################################################################################################
+        # Apply to model to supplementary individuals
+        if self.ind_sup is not None:
+            X_ind_sup = X.iloc[ind_sup,:]
+            self.ind_sup_ = {"coord" : self.transform(X_ind_sup)}
 
         self.model_ = "candisc"
+        
+        return self
+
+    def transform(self,X):
+        """
+        Project data to maximize class separation
+        -----------------------------------------
+
+        Parameters
+        ----------
+        X : DataFrame of shape (n_samples_, n_features_)
+            Input data
+        
+        Returns:
+        --------
+        X_new : DataFrame of shape (n_samples_, n_components_)
+            Transformed data.
+        """
+        # check if X is an instance of polars dataframe
+        if isinstance(X,pl.DataFrame):
+            X = X.to_pandas()
+
+        if not isinstance(X,pd.DataFrame):
+            raise TypeError(
+            f"{type(X)} is not supported. Please convert to a DataFrame with "
+            "pd.DataFrame. For more information see: "
+            "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html")
+        
+        ##### Chack if target in X columns
+        if self.call_["target"] in X.columns.tolist():
+            X = X.drop(columns=[self.call_["target"]])
+        
+        return X.dot(self.coef_).add(self.intercept_.values,axis="index")
     
+    def fit_transform(self,X):
+        """
+        Fit to data, then transform it
+        ------------------------------
+
+        Fits transformer to `x` and returns a transformed version of X.
+
+        Parameters:
+        ----------
+        X : DataFrame of shape (n_samples_, n_features_)
+            Input samples
+        
+        Returns
+        -------
+        X_new : DataFrame of shape (n_rows, n_features_)
+            Transformed data.
+        """
+        # check if X is an instance of polars dataframe
+        if isinstance(X,pl.DataFrame):
+            X = X.to_pandas()
+
+        if not isinstance(X,pd.DataFrame):
+            raise TypeError(
+            f"{type(X)} is not supported. Please convert to a DataFrame with "
+            "pd.DataFrame. For more information see: "
+            "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html")
+        
+        self.fit(X)
+        return self.ind_["coord"]
     
     def decision_function(self,X):
-
-        """Apply decision function to an array of samples.
+        """
+        Apply decision function to an array of samples
+        ----------------------------------------------
 
         The decision function is equal (up to a constant factor) to the
         log-posterior of the model, i.e. `log p(y = k | x)`. In a binary
@@ -531,29 +580,9 @@ class CANDISC(BaseEstimator,TransformerMixin):
             In the two-class case, the shape is (n_samples_,), giving the
             log likelihood ratio of the positive class.
         """
-        if not isinstance(X,pd.DataFrame):
-            raise TypeError(
-            f"{type(X)} is not supported. Please convert to a DataFrame with "
-            "pd.DataFrame. For more information see: "
-            "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html")
-
-        scores = X.dot(self.score_coef_).add(self.score_intercept_,axis="columns")
-        scores.columns = self.classes_
-        return scores
-
-    def transform(self,X):
-        """Project data to maximize class separation.
-
-        Parameters
-        ----------
-        X : DataFrame of shape (n_samples_, n_features_)
-            Input data
-        
-        Returns:
-        --------
-        X_new : DataFrame of shape (n_samples_, n_components_)
-            Transformed data.
-        """
+        # check if X is an instance of polars dataframe
+        if isinstance(X,pl.DataFrame):
+            X = X.to_pandas()
 
         if not isinstance(X,pd.DataFrame):
             raise TypeError(
@@ -561,36 +590,16 @@ class CANDISC(BaseEstimator,TransformerMixin):
             "pd.DataFrame. For more information see: "
             "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html")
         
-        predict = np.apply_along_axis(arr=np.dot(X,self.coef_),func1d=lambda x : x + self.intercept_,axis=1)
-        return pd.DataFrame(predict,index=X.index,columns=self.dim_index_)
-
-    def predict(self,X):
-        """Predict class labels for samples in X
-
-        Parameters
-        ----------
-        X : DataFrame of shape (n_samples_, n_features_)
-            The data matrix for which we want to get the predictions.
+        ##### Chack if target in X columns
+        if self.call_["target"] in X.columns.tolist():
+            X = X.drop(columns=[self.call_["target"]])
         
-        Returns:
-        --------
-        y_pred : ndarray of shape (n_samples)
-            Vectors containing the class labels for each sample
-        """
-        if not isinstance(X,pd.DataFrame):
-            raise TypeError(
-            f"{type(X)} is not supported. Please convert to a DataFrame with "
-            "pd.DataFrame. For more information see: "
-            "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html")
-        
-        predict_proba = self.predict_proba(X)
-        predict = np.unique(self.classes_)[np.argmax(predict_proba.values,axis=1)]
-        predict = pd.DataFrame(predict,columns=["predict"],index=X.index)
-        return predict
-
-
+        return X.dot(self.score_coef_).add(self.score_intercept_.values,axis="columns")
+    
     def predict_proba(self,X):
-        """Estimate probability
+        """
+        Estimate probability
+        --------------------
 
         Parameters
         ----------
@@ -603,6 +612,11 @@ class CANDISC(BaseEstimator,TransformerMixin):
             Estimated probabilities.
         
         """
+        # Set parallelize
+        if self.parallelize:
+            n_workers = -1
+        else:
+            n_workers = 1
 
         if not isinstance(X,pd.DataFrame):
             raise TypeError(
@@ -612,37 +626,39 @@ class CANDISC(BaseEstimator,TransformerMixin):
         # Decision
         scores = self.decision_function(X)
         # Probabilité d'appartenance - transformation 
-        C = mapply(mapply(scores,lambda x : np.exp(x),axis=0,progressbar=False,n_workers=self.n_workers_),
-                   lambda x : x/np.sum(x),axis=1,progressbar=False,n_workers=self.n_workers_)
-        C.columns = self.classes_
+        C = mapply(mapply(scores,lambda x : np.exp(x),axis=0,progressbar=False,n_workers=n_workers),
+                   lambda x : x/np.sum(x),axis=1,progressbar=False,n_workers=n_workers)
         return C
 
-    def fit_transform(self,X):
-        """Fit to data, then transform it
+    def predict(self,X):
+        """
+        Predict class labels for samples in X
+        -------------------------------------
 
-        Fits transformer to `x` and returns a transformed version of X.
-
-        Parameters:
+        Parameters
         ----------
         X : DataFrame of shape (n_samples_, n_features_)
-            Input samples
+            The data matrix for which we want to get the predictions.
         
-        Returns
-        -------
-        X_new : DataFrame of shape (n_rows, n_features_)
-            Transformed data.
-        
-        
+        Returns:
+        --------
+        y_pred : ndarray of shape (n_samples)
+            Vectors containing the class labels for each sample
         """
+        # check if X is an instance of polars dataframe
+        if isinstance(X,pl.DataFrame):
+            X = X.to_pandas()
+        
         if not isinstance(X,pd.DataFrame):
             raise TypeError(
             f"{type(X)} is not supported. Please convert to a DataFrame with "
             "pd.DataFrame. For more information see: "
             "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html")
         
-        self.fit(X)
-
-        return pd.DataFrame(self.row_coord_,index=X.index,columns=self.dim_index_)
+        predict_proba = self.predict_proba(X)
+        predict = np.unique(self.classes_["classes"])[np.argmax(predict_proba.values,axis=1)]
+        predict = pd.Series(predict,index=X.index,name="predict")
+        return predict
     
     def score(self,X,y,sample_weight=None):
         """
@@ -668,6 +684,9 @@ class CANDISC(BaseEstimator,TransformerMixin):
         score : float
             Mean accuracy of ``self.predict(X)`` w.r.t. `y`.
         """
+        # check if X is an instance of polars dataframe
+        if isinstance(X,pl.DataFrame):
+            X = X.to_pandas()
 
         if not isinstance(X,pd.DataFrame):
             raise TypeError(
