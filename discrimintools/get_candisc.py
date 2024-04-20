@@ -4,7 +4,7 @@ import pandas as pd
 
 def get_candisc_ind(self):
     """
-    Extract the results for individuals - CONDISC
+    Extract the results for individuals - CANDISC
     -----------------------------------------
 
     Parameters

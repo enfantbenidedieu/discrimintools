@@ -6,22 +6,22 @@ import polars as pl
 from sklearn.base import BaseEstimator, TransformerMixin
 from mapply.mapply import mapply
 from sklearn.metrics import accuracy_score
+from sklearn.preprocessing import StandardScaler
 
-from scientisttools import MCA
-from .revaluate_cat_variable import revaluate_cat_variable
+from scientisttools import PCA
 from .lda import LDA
 
-class DISQUAL(BaseEstimator,TransformerMixin):
+class PCADA(BaseEstimator,TransformerMixin):
     """
-    Discriminant Analysis for qualitatives/categoricals variables (DISQUAL)
-    -----------------------------------------------------------------------
+    Principal Components Analysis - Discriminant Analysis (PCADA)
+    -------------------------------------------------------------
 
     Description
     -----------
 
     This class inherits from sklearn BaseEstimator and TransformerMixin class
 
-    Performs discriminant analysis for categorical variables using multiple correspondence analysis (MCA) and linear discriminant analysis
+    Performs principal components analysis - discriminant analysis
 
     Parameters:
     ----------
@@ -47,7 +47,7 @@ class DISQUAL(BaseEstimator,TransformerMixin):
 
     lda_model_ : linear discriminant analysis model
 
-    factor_model_ : multiple correspondence analysis model
+    factor_model_ : principal components analysis model
 
     projection_function_ : projection function
 
@@ -63,16 +63,7 @@ class DISQUAL(BaseEstimator,TransformerMixin):
     
     References:
     -----------
-    https://lemakistatheux.wordpress.com/category/outils-danalyse-supervisee/la-methode-disqual/
     Ricco Rakotomalala, Pratique de l'analyse discriminante linéaire, Version 1.0, 2020
-    Saporta G., Probabilité, analyse des données et Statistique, Technip, 2006
-    Tufféry S., Data Mining et statistique décisionnelle - L'intelligence des données, Technip, 2012
-
-    #
-    prodécure SAS: http://od-datamining.com/download/#macro
-    Package et fonction R :
-    http://finzi.psych.upenn.edu/library/DiscriMiner/html/disqual.html
-    https://github.com/gastonstat/DiscriMiner
     """
     def __init__(self,
                  n_components = None,
@@ -135,22 +126,14 @@ class DISQUAL(BaseEstimator,TransformerMixin):
         # Split Data into two : X and y
         y = X[self.target]
         x = X.drop(columns=self.target)
-
-        ################################################ Check if all columns are categoricals
-        all_cat = all(pd.api.types.is_string_dtype(x[col]) for col in x.columns)
-        if not all_cat:
-            raise TypeError("All features must be categoricals")
-        
-        # Revaluate
-        x = revaluate_cat_variable(x)
         
         ##################################################################################################################
-        # Multiple Correspondence Analysis (MCA)
+        # Principal Components Analysis (PCA)
         ###################################################################################################################
-        global_mca = MCA(n_components=self.n_components,benzecri=False,greenacre=False,parallelize=self.parallelize).fit(x)
-    
+        global_pca = PCA(standardize=True,n_components=self.n_components,parallelize=self.parallelize).fit(x)
+
         # Fonction de projection - Coefficient de projections
-        fproj = mapply(global_mca.var_["coord"],lambda col : col/(x.shape[1]*np.sqrt(global_mca.eig_.iloc[:global_mca.call_["n_components"],0])),
+        fproj = mapply(global_pca.var_["coord"],lambda col : col/(x.shape[1]*np.sqrt(global_pca.eig_.iloc[:global_pca.call_["n_components"],0])),
                        axis=1,progressbar=False,n_workers=n_workers)
         self.projection_function_ = fproj
 
@@ -158,7 +141,7 @@ class DISQUAL(BaseEstimator,TransformerMixin):
         # Linear Discriminant Analysis (LDA)
         ##################################################################################################
         ###### Data to use in LDA
-        coord = global_mca.ind_["coord"].copy()
+        coord = global_pca.ind_["coord"].copy()
         coord.columns = ["Z"+str(x+1) for x in range(coord.shape[1])]
         data = pd.concat([y,coord],axis=1)
 
@@ -170,7 +153,7 @@ class DISQUAL(BaseEstimator,TransformerMixin):
         self.intercept_ = lda.intercept_
 
         # Stockage des deux modèles
-        self.factor_model_ = global_mca
+        self.factor_model_ = global_pca
         self.lda_model_ = lda
 
         self.model_ = "disqual"
@@ -228,8 +211,6 @@ class DISQUAL(BaseEstimator,TransformerMixin):
         ##### Chack if target in X columns
         if self.lda_model_.call_["target"] in X.columns.tolist():
             X = X.drop(columns=[self.lda_model_.call_["target"]])
-         # Add revaluate
-        X = revaluate_cat_variable(X)
         coord = self.factor_model_.transform(X).copy()
         coord.columns = ["Z"+str(x+1) for x in range(coord.shape[1])]
         return coord

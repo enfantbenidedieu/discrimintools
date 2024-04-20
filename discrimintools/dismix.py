@@ -1,14 +1,8 @@
 # -*- coding: utf-8 -*-
 
-import scipy.stats as st
 import numpy as np
 import pandas as pd
-from functools import reduce, partial
-from scipy.spatial.distance import pdist,squareform
-from statsmodels.multivariate.manova import MANOVA
-import statsmodels.stats.multicomp as mc
-import statsmodels.api as sm
-import statsmodels.formula.api as smf
+import polars as pl
 from sklearn.base import BaseEstimator, TransformerMixin
 from mapply.mapply import mapply
 from sklearn.metrics import accuracy_score
@@ -16,46 +10,79 @@ from sklearn.metrics import accuracy_score
 from scientisttools import FAMD
 
 from .lda import LDA
+from .revaluate_cat_variable import revaluate_cat_variable
 
 ##################################################################################################
 #           Linear Discriminant Analysis with both Continuous and Categorical variables (DISMIX)
 ###################################################################################################
 class DISMIX(BaseEstimator,TransformerMixin):
-    """Discriminant Analysis under Continuous and Categorical variables (DISMIX)
+    """
+    Discriminant Analysis of Mixed Data (DISMIX)
+    --------------------------------------------
+
+    Description
+    -----------
+
+    This class inherits from sklearn BaseEstimator and TransformerMixin class
 
     Performs linear discriminant analysis with both continuous and catogericals variables
 
     Parameters:
     -----------
-    n_components
-    target :
-    quanti_features_labels :
-    quali_features_labels:
-    row_labels :
-    prioirs:
-    grid_search : 
+     n_components : number of dimensions kept in the results 
 
+    target : The values of the classification variable define the groups for analysis.
+
+    priors : The priors statement specifies the prior probabilities of group membership.
+                - "equal" to set the prior probabilities equal,
+                - "proportional" or "prop" to set the prior probabilities proportional to the sample sizes
+                - a pandas series which specify the prior probability for each level of the classification variable.
     
-    
+    parallelize : boolean, default = False
+        If model should be parallelize
+            - If True : parallelize using mapply
+            - If False : parallelize using apply
+
+    Return
+    ------
+    coef_ : DataFrame of shape (n_features,n_classes_)
+
+    intercept_ : DataFrame of shape (1, n_classes)
+
+    lda_model_ : linear discriminant analysis model
+
+    factor_model_ : factor analysis of mixed data model
+
+    projection_function_ : projection function
+
+    coef_ : pandas dataframe of shpz (n_categories, n_classes)
+
+    intercept_ : pandas dataframe of shape (1, n_classes)
+
+    model_ : string. The model fitted = 'dismix'
+
+    Author(s)
+    ---------
+    Duvérier DJIFACK ZEBAZE duverierdjifack@gmail.com
+
+    References:
+    -----------
+    Ricco Rakotomalala, Pratique de l'analyse discriminante linéaire, Version 1.0, 2020
     """
     def __init__(self,
                  n_components = None,
-                 target=list[str],
-                 quanti_features_labels=list[str],
-                 quali_features_labels = list[str],
-                 row_labels = list[str],
+                 target=None,
                  priors=None,
                  parallelize=False):
         self.n_components = n_components
         self.target = target
-        self.quanti_features_labels = quanti_features_labels
-        self.quali_features_labels = quali_features_labels
-        self.row_labels = row_labels
         self.priors = priors
         self.parallelize = parallelize
 
     def fit(self,X,y=None):
-        """Fit the Linear Discriminant Analysis with categories variables
+        """
+        Fit the Linear Discriminant Analysis of Mixed Data model
+        --------------------------------------------------------
 
         Parameters:
         -----------
@@ -69,6 +96,9 @@ class DISMIX(BaseEstimator,TransformerMixin):
         self : object
             Fitted estimator
         """
+        # check if X is an instance of polars dataframe
+        if isinstance(X,pl.DataFrame):
+            X = X.to_pandas()
 
         if not isinstance(X,pd.DataFrame):
             raise TypeError(
@@ -76,127 +106,94 @@ class DISMIX(BaseEstimator,TransformerMixin):
             "pd.DataFrame. For more information see: "
             "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html")
         
+        # Check if target is None
+        if self.target is None:
+            raise ValueError("'target' must be assigned")
+        elif not isinstance(self.target,list):
+            raise ValueError("'target' must be a list")
+        elif len(self.target)>1:
+            raise ValueError("'target' must be a list of length one")
+        
         # Set parallelize
         if self.parallelize:
-            self.n_workers_ = -1
+            n_workers = -1
         else:
-            self.n_workers_ = 1
+            n_workers = 1
+        
+       ###############################################################################################################"
+        # Drop level if ndim greater than 1 and reset columns name
+        ###############################################################################################################
+        if X.columns.nlevels > 1:
+            X.columns = X.columns.droplevel()
+        
+        #######################################################################################################################
+        # Split Data into two : X and y
+        y = X[self.target]
+        x = X.drop(columns=self.target)
 
-        # Save data
-        self.data_ = X
-        
-        self.target_ = self.target
-        if self.target_ is None:
-            raise ValueError("Error :'target' must be assigned.")
-        
-        self.quanti_features_labels_ = self.quanti_features_labels
-        if self.quanti_features_labels_ is None:
-            raise ValueError("Error :'quanti_features_labels' must be assigned.")
-        
-        self.quali_features_labels_ = self.quali_features_labels
-        if self.quali_features_labels_ is None:
-            raise ValueError("Error :'quali_features_labels' must be assigned.")
-        
-        self._compute_stats(X=X)
-        
-        return self
-    
-    def _compute_stats(self,X):
-        """
-        
-        
-        """
-
-        # 
-
+        #########################################################################"
+        # Categoricals variables
+        cats = x.select_dtypes(include=["object","category"])
         # Continuous variables
-        x = X.drop(columns=self.target_)
-        # Qualitative variables - target
-        y = X[self.target_]
+        cont = x.drop(columns=cats.columns)
 
-        # categories
-        self.classes_ = np.unique(y)
-
-        # Number of observations
-        self.n_samples_, self.n_features_ = x.shape
-
-        # Number of groups
-        self.n_classes_ = len(self.classes_)
-
-        # Set row labels
-        self.row_labels_ = self.row_labels
-        if self.row_labels_ is None:
-            self.row_labels = ["row."+str(i+1) for i in np.arange(0,self.n_samples_)]
-
-        # Analyse Factoreielle sur données mixtes (FAMD)
-        famd = FAMD(normalize=True,
-                    n_components=self.n_components,
-                    row_labels=self.row_labels_,
-                    quali_labels=self.quali_features_labels_,
-                    quanti_labels=self.quanti_features_labels_,
-                    quali_sup_labels=None,
-                    quanti_sup_labels=None,
-                    row_sup_labels=None,
-                    parallelize=self.parallelize).fit(x)
+        # Check if no categoricals variables
+        if cats.shape[0]==0:
+            raise TypeError("No categoricals variables. Please use LDA instead")
         
-        # Extraction des informations sur les individus
-        row = get_famd_ind(famd)
+        # Check if no continuous variables
+        if cont.shape[0]==0:
+            raise TypeError("No continuous variables. Please use DISQUAL")
 
-        # Coordonnées issues de l'Analyse en Composantes Principales (AFDM est sur ACP sur des données transformées)
-        var_mod_coord = pd.DataFrame(famd.var_mod_coord_,index=famd.col_labels_+list(famd.mod_labels_),columns=famd.dim_index_)
+        ####### Revaluate categoricals variables
+        cats = revaluate_cat_variable(cats)
+        x = pd.concat((cont,cats),axis=1)
 
+        ################################################################################
+        # Factor Analysis of Mixed Data (FAMD)
+        ##################################################################################
+        global_famd = FAMD(n_components=self.n_components,parallelize=self.parallelize).fit(x)
+
+        #######################################################################################################
         # Coefficients de projections sur les modalités des variables qualitatives
-        fproj1 = mapply(var_mod_coord.loc[famd.mod_labels_,:],lambda x : x/(len(self.quali_features_labels_)*np.sqrt(famd.eig_[0])),axis=1,progressbar=False,n_workers=self.n_workers_)
+        fproj1 = mapply(global_famd.quali_var_["coord"],lambda x : x/(cats.shape[1]*np.sqrt(global_famd.eig_.iloc[:global_famd.call_["n_components"],0])),
+                        axis=1,progressbar=False,n_workers=n_workers)
 
         # Coefficients des fonctions de projection sur les variables quantitatives
-        fproj2 = mapply(var_mod_coord.loc[famd.col_labels_,:],lambda x : x/(len(self.quanti_features_labels_)*np.sqrt(famd.eig_[0])),axis=1,progressbar=False,n_workers=self.n_workers_)
+        fproj2 = mapply(global_famd.quanti_var_["coord"],lambda x : x/(cont.shape[1]*np.sqrt(global_famd.eig_.iloc[:global_famd.call_["n_components"],0])),
+                        axis=1,progressbar=False,n_workers=n_workers)
 
         # Concaténation des fonction des projection
         fproj = pd.concat([fproj2,fproj1],axis=0)
-
-        # Données pour l'Analyse Discriminante Linéaire (LDA)
-        row_coord = row["coord"]
-        row_coord.columns = list(["Z"+str(x+1) for x in np.arange(0,famd.n_components_)])
-        new_X = pd.concat([y,row_coord],axis=1)
-
-        # Analyse Discriminante Linéaire
-        lda = LDA(target=self.target_,
-                  distribution="homoscedastik",
-                  features_labels=row_coord.columns,
-                  row_labels=self.row_labels_,
-                  priors=self.priors,
-                  parallelize=self.parallelize).fit(new_X)
-        
-        # LDA coefficients and intercepts
-        lda_coef = lda.coef_
-        lda_intercept = lda.intercept_ 
-
-        # Coefficient du MIXDISC
-        coef = pd.DataFrame(np.dot(fproj,lda_coef),columns=lda_coef.columns,index=fproj.index)
-        
-        # Sortie de l'ACM
         self.projection_function_ = fproj
-        self.n_components_ = famd.n_components_
 
-        # Sortie de l'ADL
-        self.lda_coef_ = lda_coef
-        self.lda_intercept_ = lda_intercept
-        self.lda_features_labels_ = list(["Z"+str(x+1) for x in np.arange(0,famd.n_components_)])
-        
-        # Informations du MIXDISC
-        self.statistical_evaluation_ = lda.statistical_evaluation_
-        self.coef_ = coef
-        self.intercept_ = lda_intercept
+        #########################################################################################################
+        # Linear Discriminant Analysis (LDA)
+        ########################################################################################################
+        # Données pour l'Analyse Discriminante Linéaire (LDA)
+        coord = global_famd.ind_["coord"].copy()
+        coord.columns = ["Z"+str(x+1) for x in range(coord.shape[1])]
+        data = pd.concat([y,coord],axis=1)
+
+        # Linear Discriminant Analysis (LDA)
+        lda = LDA(target=self.target,priors=self.priors).fit(data)
+
+        ##################### DISMIX coeffcients and intercept
+        self.coef_ = pd.DataFrame(np.dot(fproj,lda.coef_),index=fproj.index,columns=lda.coef_.columns)
+        self.intercept_ = lda.intercept_
 
         # Stockage des deux modèles
-        self.famd_model_ = famd
+        self.factor_model_ = global_famd
         self.lda_model_ = lda
 
         self.model_ = "dismix"
+
+        return self
     
     def fit_transform(self,X):
         """
-        Fit to data, then transform it.
+        Fit to data, then transform it
+        ------------------------------
 
         Fits transformer to `X` and returns a transformed version of `X`.
 
@@ -210,10 +207,10 @@ class DISMIX(BaseEstimator,TransformerMixin):
         X_new :  DataFrame of shape (n_samples, n_features_new)
             Transformed array.
         """
-
         self.fit(X)
-
-        return self.famd_model_.row_coord_
+        coord = self.factor_model_.ind_["coord"].copy()
+        coord.columns = ["Z"+str(x+1) for x in range(coord.shape[1])]
+        return coord
     
     def transform(self,X):
         """Project data to maximize class separation
@@ -229,13 +226,37 @@ class DISMIX(BaseEstimator,TransformerMixin):
         
         """
 
-        coord = self.famd_model_.transform(X)
-        coord = pd.DataFrame(coord[:,:self.n_components_],index=X.index,columns=self.lda_features_labels_)
+         # check if X is an instance of polars dataframe
+        if isinstance(X,pl.DataFrame):
+            X = X.to_pandas()
 
+        # Check if X is a pandas DataFrame
+        if not isinstance(X,pd.DataFrame):
+           raise TypeError(
+            f"{type(X)} is not supported. Please convert to a DataFrame with "
+            "pd.DataFrame. For more information see: "
+            "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html")
+
+        ##### Chack if target in X columns
+        if self.lda_model_.call_["target"] in X.columns.tolist():
+            X = X.drop(columns=[self.lda_model_.call_["target"]])
+        
+        # Categoricals variables
+        cats = X.select_dtypes(include=["object","category"])
+        cont = X.drop(columns=cats.columns)
+
+        ####### Revaluate categoricals variables
+        cats = revaluate_cat_variable(cats)
+        X = pd.concat((cont,cats),axis=1)
+        # Factor Analaysis of Mixed Data (FAMD)
+        coord = self.factor_model_.transform(X).copy()
+        coord.columns = ["Z"+str(x+1) for x in range(coord.shape[1])]
         return coord
     
     def predict(self,X):
-        """Predict class labels for samples in X
+        """
+        Predict class labels for samples in X
+        -------------------------------------
 
         Parameters:
         -----------
@@ -248,11 +269,12 @@ class DISMIX(BaseEstimator,TransformerMixin):
             DataFrame containing the class labels for each sample.
         
         """
-
         return self.lda_model_.predict(self.transform(X))
     
     def predict_proba(self,X):
-        """Estimate probability
+        """
+        Estimate probability
+        --------------------
 
         Parameters
         ----------
@@ -265,13 +287,12 @@ class DISMIX(BaseEstimator,TransformerMixin):
             Estimate probabilities
         
         """
-
         return self.lda_model_.predict_proba(self.transform(X))
     
     def score(self, X, y, sample_weight=None):
-
         """
-        Return the mean accuracy on the given test data and labels.
+        Return the mean accuracy on the given test data and labels
+        ----------------------------------------------------------
 
         In multi-label classification, this is the subset accuracy
         which is a harsh metric since you require for each sample that
@@ -293,5 +314,16 @@ class DISMIX(BaseEstimator,TransformerMixin):
         score : float
             Mean accuracy of ``self.predict(X)`` w.r.t. `y`.
         """
-        
         return accuracy_score(y, self.predict(X), sample_weight=sample_weight)
+    
+    def pred_table(self):
+        """
+        Prediction table
+        ----------------
+        
+        Notes
+        -----
+        pred_table[i,j] refers to the number of times “i” was observed and the model predicted “j”. Correct predictions are along the diagonal.
+        """
+        pred = self.predict(self.factor_model_.call_["X"])
+        return pd.crosstab(self.lda_model_.call_["X"][self.lda_model_.call_["target"]],pred)

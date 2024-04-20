@@ -13,7 +13,7 @@ from sklearn.base import BaseEstimator, TransformerMixin
 from mapply.mapply import mapply
 from sklearn.metrics import accuracy_score
 
-from scientisttools.eta2 import eta2
+from .eta2 import eta2
 
 ##########################################################################################
 #                       CANONICAL DISCRIMINANT ANALYSIS (CANDISC)
@@ -35,38 +35,76 @@ class CANDISC(BaseEstimator,TransformerMixin):
 
     Parameters
     ----------
-    n_components : 
+    n_components : number of dimensions kept in the results, default = None
 
-    target : 
+    target : string, target variable
+
+    priors : Class priors (sum to 1)
+
+    parallelize : boolean, default = False
+        If model should be parallelize
+            - If True : parallelize using mapply
+            - If False : parallelize using apply
 
     Return
     ------
+    summary_information_ :  summary information about the variables in the analysis. This information includes the number of observations, 
+                            the number of quantitative variables in the analysis, and the number of classes in the classification variable. 
+                            The frequency of each class is also displayed.
+
+    eig_  : a pandas dataframe containing all the eigenvalues, the difference between each eigenvalue, the percentage of variance and the cumulative percentage of variance
+
+    ind_ : a dictionary of pandas dataframe containing all the results for the active individuals (coordinates)
+
+    statistics_ : statistics
+
+    classes_ : classes informations
+
+    cov_ : covariances
+
+    corr_ : correlation
+
+    coef_ : pandas dataframe, Weight vector(s).
+
+    intercept_ : pandas dataframe, Intercept term.
+
+    score_coef_ :
+
+    score_intercept_ : 
+
+    svd_ : eigenv value decomposition
+
+    call_ : a dictionary with some statistics
+
+    model_ : string. The model fitted = 'candisc'
 
     Author(s)
     ---------
     Duvérier DJIFACK ZEBAZE duverierdjifack@gmail.com
+
+    References
+    ----------
+    SAS Documentation, https://documentation.sas.com/doc/en/statug/15.2/statug_candisc_toc.htm
     
     """
     def __init__(self,
                  n_components=None,
                  target=None,
                  priors = None,
-                 ind_sup = None,
                  parallelize = False):
         self.n_components = n_components
         self.target = target
         self.priors = priors
-        self.ind_sup = ind_sup
         self.parallelize = parallelize
 
     def fit(self,X,y=None):
         """
-        Fit the model to X
-        ------------------
+        Fit the Canonical Discriminant Analysis model
+        ---------------------------------------------
 
         Parameters
         ----------
-        X : DataFrame,
+        X : pandas/polars DataFrame,
             Training Data
         
         Returns:
@@ -86,37 +124,40 @@ class CANDISC(BaseEstimator,TransformerMixin):
             return corr(g_k[name], z_k[lda],weights)
         
         # Manlanobis distances
-        def mahalanobis_distances(X,y,n_obs,classe):
+        def mahalanobis_distances(wcov,gmean,n_obs,classe):
             """
             Compute the Mahalanobis squared distance
             ----------------------------------------
 
             Parameters
             ----------
-            X :  pandas dataframe. 
+            wcov :  pandas dataframe, within covariance matrix 
             
-            y : pd.Series
+            gmean :  pandas dataframe, conditional mean
 
+            Return
+            ------
+            dist2 : square mahalanobie distance
             """
             # Number of class
             n_classes = len(classe)
 
             # Matrice de covariance intra - classe utilisée par Mahalanobis
-            W = (n_obs/(n_obs - n_classes))*X
+            W = (n_obs/(n_obs - n_classes))*wcov
 
             # Invesion
             invW = pd.DataFrame(np.linalg.inv(W),index=W.index,columns=W.columns)
 
-            disto = pd.DataFrame(np.zeros((n_classes,n_classes)),index=classe,columns=classe)
+            dist2 = pd.DataFrame(np.zeros((n_classes,n_classes)),index=classe,columns=classe)
             for i in np.arange(0,n_classes-1):
                 for j in np.arange(i+1,n_classes):
                     # Ecart entre les 2 vecteurs moyennes
-                    ecart = y.iloc[i,:] - y.iloc[j,:]
+                    ecart = gmean.iloc[i,:] - gmean.iloc[j,:]
                     # Distance de Mahalanobis
-                    disto.iloc[i,j] = np.dot(np.dot(ecart,invW),np.transpose(ecart))
-                    disto.iloc[j,i] = disto.iloc[i,j]
+                    dist2.iloc[i,j] = np.dot(np.dot(ecart,invW),np.transpose(ecart))
+                    dist2.iloc[j,i] = dist2.iloc[i,j]
     
-            return disto
+            return dist2
         
         # Analysis of Variance table
         def anova_table(aov):
@@ -234,24 +275,7 @@ class CANDISC(BaseEstimator,TransformerMixin):
         ###############################################################################################################
         if X.columns.nlevels > 1:
             X.columns = X.columns.droplevel()
-        
-        # Check if individuls supplementary
-        if self.ind_sup is not None:
-            if (isinstance(self.ind_sup,int) or isinstance(self.ind_sup,float)):
-                ind_sup = [int(self.ind_sup)]
-            elif ((isinstance(self.ind_sup,list) or isinstance(self.ind_sup,tuple)) and len(self.ind_sup)>=1):
-                ind_sup = [int(x) for x in self.ind_sup]
 
-        ####################################### Save the base in a new variables
-        # Store data
-        Xtot = X
-
-        ######################################## Drop supplementary individuls  ##############################################
-        if self.ind_sup is not None:
-            # Extract supplementary individuals
-            X_ind_sup = X.iloc[ind_sup,:]
-            X = X.drop(index=[name for i, name in enumerate(Xtot.index.tolist()) if i in ind_sup])
-        
         #######################################################################################################################
         # Split Data into two : X and y
         y = X[self.target]
@@ -313,28 +337,32 @@ class CANDISC(BaseEstimator,TransformerMixin):
         self.summary_information_ = summary_infos
 
         # Number of eflemnt in each group
-        n_k = y.value_counts(normalize=False)
+        n_k, p_k = y.value_counts(normalize=False),  y.value_counts(normalize=True)
 
-        # Initial prior - proportion of each element
+         # Initial prior - proportion of each element
         if self.priors is None:
-            p_k = y.value_counts(normalize=True)
-        elif not isinstance(self.priors,pd.Series):
-            raise TypeError("'priors' must be a pandas Series with classes as index")
+            raise ValueError("'priors' must be assigned")
+
+        if self.priors in ["proportional","prop"]:
+            priors = p_k
+        elif self.priors == "equal":
+            priors = pd.Series([1/n_classes]*n_classes,index=classes)
         else:
-            p_k = self.priors
+            priors = pd.Series([x/self.priors.sum() for x in self.priors.values],index=self.priors.index)
 
         # Store some informations
-        self.call_ = {"Xtot" : Xtot,
-                      "X" : X,
+        self.call_ = {"X" : X,
                       "target" : self.target[0],
                       "features" : x.columns.tolist(),
+                      "n_samples" : n_samples,
+                      "n_classes" : n_classes,
                       "n_components" : n_components,
                       "priors" : p_k}
         
         #############################
         # Class level information
-        class_level_information = pd.concat([n_k,p_k],axis=1)
-        class_level_information.columns = ["Frequency","Proportion"]
+        class_level_information = pd.concat([n_k,p_k,priors],axis=1)
+        class_level_information.columns = ["Frequency","Proportion","Prior Probability"]
         statistics["information"] = class_level_information
         
         # Mean by group
@@ -354,7 +382,7 @@ class CANDISC(BaseEstimator,TransformerMixin):
         B = V - W
 
         # Squared Mahalanobis distances between class means
-        squared_mdist = mahalanobis_distances(X=W,y=g_k,n_obs=n_samples,classe=classes)
+        squared_mdist2 = mahalanobis_distances(wcov=W,gmean=g_k,n_obs=n_samples,classe=classes)
 
         # First Matrix - French approach
         M1 = B.dot(np.linalg.inv(V)).T
@@ -373,7 +401,7 @@ class CANDISC(BaseEstimator,TransformerMixin):
         cumulative = np.cumsum(proportion)
 
         # Correction approach
-        C = pd.concat(list(map(lambda k : np.sqrt(p_k.loc[k].values)*g_k.loc[k,:].sub(stats.loc[:,"mean"],axis="index").to_frame(k),classes)),axis=1)
+        C = pd.concat(list(map(lambda k : np.sqrt(priors.loc[k].values)*g_k.loc[k,:].sub(stats.loc[:,"mean"],axis="index").to_frame(k),classes)),axis=1)
         
         # Diagonalisation de la matrice M
         M3 = np.dot(np.dot(C.T,np.linalg.inv(V)),C)
@@ -449,7 +477,7 @@ class CANDISC(BaseEstimator,TransformerMixin):
         bcorr = pd.DataFrame(np.zeros((n_features,n_components)),index=x.columns,columns=["LD"+str(x+1) for x in np.arange(n_components)])
         for name in x.columns:
             for name2 in bcorr.columns:
-                bcorr.loc[name,name2]= betweencorrcoef(g_k,z_k,name,name2,p_k.values)
+                bcorr.loc[name,name2]= betweencorrcoef(g_k,z_k,name,name2,priors.values)
 
         ###################################################################################################################
         # Fonction de classement
@@ -472,8 +500,8 @@ class CANDISC(BaseEstimator,TransformerMixin):
         self.eig_ = pd.DataFrame(eig,columns=["Eigenvalue","Difference","Proportion","Cumulative"],index = ["LD"+str(x+1) for x in range(eig.shape[0])])
          
         self.ind_ = {"coord" : row_coord}
-        self.classes_ = {"classes" : classes,"coord" : gcoord,"mean" : g_k, "center" : z_k ,"dist" : disto,"mahalanobis" : squared_mdist}
-        self.cov_ = {"total" : V , "within" : W, "between" : V-W, "classes_cov" : V_k}          
+        self.classes_ = {"classes" : classes,"coord" : gcoord,"mean" : g_k,"cov" :V_k,"center" : z_k ,"dist" : disto,"mahalanobis" : squared_mdist2}
+        self.cov_ = {"total" : V , "within" : W, "between" : B}          
         self.corr_ = {"total" : tcorr, "within" : wcorr, "between" : bcorr}
 
         # Coefficients
@@ -485,14 +513,9 @@ class CANDISC(BaseEstimator,TransformerMixin):
         self.score_coef_ = S_omega_k
         self.score_intercept_ = S_omega_k0
 
-        self.eigen_ = {"value" : eigen_values[:n_components],"vector" : vector[:,:n_components]}
+        self.svd_ = {"value" : eigen_values[:n_components],"vector" : vector[:,:n_components]}
 
-        ##########################################################################################################################
-        # Apply to model to supplementary individuals
-        if self.ind_sup is not None:
-            X_ind_sup = X.iloc[ind_sup,:]
-            self.ind_sup_ = {"coord" : self.transform(X_ind_sup)}
-
+        # Model name
         self.model_ = "candisc"
         
         return self
@@ -522,11 +545,18 @@ class CANDISC(BaseEstimator,TransformerMixin):
             "pd.DataFrame. For more information see: "
             "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html")
         
+        # Set parallelize
+        if self.parallelize:
+            n_workers = -1
+        else:
+            n_workers = 1
+        
         ##### Chack if target in X columns
         if self.call_["target"] in X.columns.tolist():
             X = X.drop(columns=[self.call_["target"]])
         
-        return X.dot(self.coef_).add(self.intercept_.values,axis="index")
+        coord = mapply(X.dot(self.coef_),lambda x : x + self.intercept_.values,axis=1,progressbar=False,n_workers=n_workers)
+        return coord
     
     def fit_transform(self,X):
         """
@@ -560,8 +590,8 @@ class CANDISC(BaseEstimator,TransformerMixin):
     
     def decision_function(self,X):
         """
-        Apply decision function to an array of samples
-        ----------------------------------------------
+        Apply decision function to a pandas dataframe of samples
+        --------------------------------------------------------
 
         The decision function is equal (up to a constant factor) to the
         log-posterior of the model, i.e. `log p(y = k | x)`. In a binary
@@ -657,8 +687,7 @@ class CANDISC(BaseEstimator,TransformerMixin):
         
         predict_proba = self.predict_proba(X)
         predict = np.unique(self.classes_["classes"])[np.argmax(predict_proba.values,axis=1)]
-        predict = pd.Series(predict,index=X.index,name="predict")
-        return predict
+        return pd.Series(predict,index=X.index,name="prediction")
     
     def score(self,X,y,sample_weight=None):
         """
@@ -695,3 +724,15 @@ class CANDISC(BaseEstimator,TransformerMixin):
             "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html")
 
         return accuracy_score(y, self.predict(X), sample_weight=sample_weight)
+    
+    def pred_table(self):
+        """
+        Prediction table
+        ----------------
+        
+        Notes
+        -----
+        pred_table[i,j] refers to the number of times “i” was observed and the model predicted “j”. Correct predictions are along the diagonal.
+        """
+        pred = self.predict(self.call_["X"])
+        return pd.crosstab(self.call_["X"][self.call_["target"]],pred)
