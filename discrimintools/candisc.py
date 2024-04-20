@@ -35,7 +35,7 @@ class CANDISC(BaseEstimator,TransformerMixin):
 
     Parameters
     ----------
-    n_components : number of dimensions kept in the results, default = None
+    n_components : number of dimensions kept in the results
 
     target : string, target variable
 

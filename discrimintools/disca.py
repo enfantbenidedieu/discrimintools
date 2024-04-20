@@ -16,14 +16,6 @@ from scientisttools import CA
 ##########################################################################################
 #           Discriminant Corrrespondence Analysis (DISCA)
 ##########################################################################################
-
-# https://bookdown.org/teddyswiebold/multivariate_statistical_analysis_using_r/discriminant-correspondence-analysis.html
-# https://search.r-project.org/CRAN/refmans/TExPosition/html/tepDICA.html
-# http://pbil.univ-lyon1.fr/ADE-4/ade4-html/discrimin.coa.html
-# https://rdrr.io/cran/ade4/man/discrimin.coa.html
-# https://stat.ethz.ch/pipermail/r-help/2010-December/263170.html
-# https://www.sciencedirect.com/science/article/pii/S259026012200011X
-
 class DISCA(BaseEstimator,TransformerMixin):
     """
     Discriminant Correspondence Analysis (DISCA)
@@ -38,11 +30,53 @@ class DISCA(BaseEstimator,TransformerMixin):
 
     Parameters:
     ----------
-    n_components:
-    target :
+    n_components : number of dimensions kept in the results
 
+    target : string, target variable
+
+    priors : The priors statement specifies the prior probabilities of group membership.
+                - "equal" to set the prior probabilities equal,
+                - "proportional" or "prop" to set the prior probabilities proportional to the sample sizes
+                - a pandas series which specify the prior probability for each level of the classification variable.
     
-    
+    parallelize : boolean, default = False
+        If model should be parallelize
+            - If True : parallelize using mapply
+            - If False : parallelize using apply
+
+    Return
+    ------
+
+    call_ : a dictionary with some statistics
+
+    ind_ : a dictionary of pandas dataframe containing all the results for the active individuals (coordinates)
+
+    var_ : a dictionary of pandas dataframe containing all the results for the active variables (coordinates, correlation between variables and axes, square cosine, contributions)
+
+    statistics_ : statistics
+
+    classes_ : classes informations
+
+    anova_ : analyse of variance 
+
+    factor_model_ : correspondence analysis model
+
+    coef_ : discriminant correspondence analysis coefficients
+
+    model_ : string. The model fitted = 'disca'
+
+    Author(s)
+    ---------
+    Duvérier DJIFACK ZEBAZE duverierdjifack@gmail.com
+
+    Notes:
+    ------
+    https://bookdown.org/teddyswiebold/multivariate_statistical_analysis_using_r/discriminant-correspondence-analysis.html
+    https://search.r-project.org/CRAN/refmans/TExPosition/html/tepDICA.html
+    http://pbil.univ-lyon1.fr/ADE-4/ade4-html/discrimin.coa.html
+    https://rdrr.io/cran/ade4/man/discrimin.coa.html
+    https://stat.ethz.ch/pipermail/r-help/2010-December/263170.html
+    https://www.sciencedirect.com/science/article/pii/S259026012200011X    
     """
     def __init__(self,
                  n_components = None,
@@ -294,8 +328,9 @@ class DISCA(BaseEstimator,TransformerMixin):
         return row_sup_dummies.dot(self.coef_)
     
     def decision_function(self,X):
-
-        """Apply decision function to an array of samples.
+        """
+        Apply decision function to an array of samples
+        ----------------------------------------------
 
         Parameters
         ----------
@@ -404,9 +439,9 @@ class DISCA(BaseEstimator,TransformerMixin):
         return pd.Series(predict,index=X.index,name="prediction")
     
     def score(self, X, y, sample_weight=None):
-
         """
-        Return the mean accuracy on the given test data and labels.
+        Return the mean accuracy on the given test data and labels
+        ----------------------------------------------------------
 
         In multi-label classification, this is the subset accuracy
         which is a harsh metric since you require for each sample that

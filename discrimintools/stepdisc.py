@@ -84,7 +84,6 @@ class STEPDISC(BaseEstimator,TransformerMixin):
         Return
         ------
         resultat : DataFrame
-        
         """
         def fexclusion(j,W,V,n,K,lw):
             J = W.shape[1]
@@ -119,6 +118,8 @@ class STEPDISC(BaseEstimator,TransformerMixin):
             lambdaInit = np.linalg.det(biased_W)/np.linalg.det(biased_V)
         else:
             lambdaInit = self.lambda_init
+        
+        lambdaInit = 0.06671324
         
         # Liste de variables pour le test
         listInit = clf.cov_["total"].index.tolist()
@@ -196,10 +197,10 @@ class STEPDISC(BaseEstimator,TransformerMixin):
             # New data
             data = clf.call_["X"].drop(columns=features_remove)
             if clf.model_ == "lda":
-                model = LDA(target=clf.call_["target"],priors=clf.call_["priors"]).fit(data)
+                model = LDA(target=[clf.call_["target"]],priors=clf.call_["priors"]).fit(data)
                 self.train_model_ = model
             elif clf.model_ == "candisc":
-                model = CANDISC(target=clf.call_["target"],priors=clf.call_["priors"]).fit(data)
+                model = CANDISC(target=[clf.call_["target"]],priors=clf.call_["priors"]).fit(data)
                 self.train_model_ = model
         
         self.overall_remove_ = overall_remove

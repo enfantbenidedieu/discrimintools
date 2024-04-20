@@ -6,7 +6,6 @@ import polars as pl
 from sklearn.base import BaseEstimator, TransformerMixin
 from mapply.mapply import mapply
 from sklearn.metrics import accuracy_score
-from sklearn.preprocessing import StandardScaler
 
 from scientisttools import PCA
 from .lda import LDA

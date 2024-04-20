@@ -6,14 +6,13 @@ import polars as pl
 from functools import reduce, partial
 from statsmodels.multivariate.manova import MANOVA
 
-
 import statsmodels.api as sm
 import statsmodels.formula.api as smf
 from sklearn.base import BaseEstimator, TransformerMixin
 from mapply.mapply import mapply
 from sklearn.metrics import accuracy_score
 
-from scientisttools.eta2 import eta2
+from .eta2 import eta2
 
 class LDA(BaseEstimator,TransformerMixin):
     """

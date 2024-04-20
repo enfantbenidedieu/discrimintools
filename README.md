@@ -14,10 +14,10 @@ With this discrimintools package, you can perform :
 
 * Canonical Discriminant Analysis (CANDISC)
 * Linear Discriminant Analysis (LDA)
+* Principal Components Analysis - Discriminant Analysis (PCADA)
 * Discriminant Analysis for qualitatives/categoricals variables (DISQUAL)
 * Discriminant Analysis of Mixed Data (DISMIX)
 * Discriminant Correspondence Analysis (DISCA)
-* Stepwise Discriminant Analysis (STEPDISC)
 
 ## Installation
 
@@ -26,7 +26,16 @@ With this discrimintools package, you can perform :
 discrimintools requires 
 
 ```
-Python 
+Python >= 3.10.5
+numpy >= 1.26.4
+pandas >=2.2.2
+scikit-learn >=1.2.2
+polars >= 0.19.2
+plotnine >= 0.10.1
+mapply >= 0.1.21
+scientisttools >= 0.1.4
+statsmodels >= 0.14.0
+scipy >= 1.10.1
 ```
 
 ### User installation
