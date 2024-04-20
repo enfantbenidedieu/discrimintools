@@ -5,13 +5,16 @@ import pandas as pd
 from functools import partial
 from sklearn.base import BaseEstimator, TransformerMixin
 
+from .lda import LDA
+from .candisc import CANDISC
+
 #######################################################################################################
 #               Stepwise Discriminant Analysis (STEPDISC) - Discriminant Analysis Procedure
 #######################################################################################################
-
-
 class STEPDISC(BaseEstimator,TransformerMixin):
-    """Stepwise Discriminant Analysis
+    """
+    Stepwise Discriminant Analysis
+    -------------------------------
 
     Performs a stepwise discriminant analysis to select a subset of the quantitative variables for use
     in discriminating among the classes. It can be used for forward selection, backward elimination, or
@@ -51,16 +54,16 @@ class STEPDISC(BaseEstimator,TransformerMixin):
 
         Parameter
         ---------
-        clf : an instance of class LINEARDISC or CANDISC
+        clf : an object of class LDA or CANDISC
         
         """
 
         if clf.model_ not in ["candisc","lda"]:
-            raise ValueError("Error : 'clf' must be and instance of class 'LINEARDISC' or 'CANDISC'.")
+            raise TypeError("'clf' must be and object of class 'LDA' or 'CANDISC'.")
         
         isMethodValid = ["forward", "backward","stepwise"]
         if self.method.lower() not in isMethodValid:
-            raise ValueError("Error : 'method' must be either 'backward','forward' or 'stepwise'.")
+            raise ValueError("'method' must be either 'backward','forward' or 'stepwise'.")
 
         self._compute_stats(clf)
         
@@ -70,7 +73,9 @@ class STEPDISC(BaseEstimator,TransformerMixin):
         raise NotImplementedError("Error : This method is not implemented yet.")
     
     def _compute_backward(self,clf):
-        """Backward Elimination
+        """
+        Backward Elimination
+        --------------------
 
         Parameters:
         -----------
@@ -105,8 +110,8 @@ class STEPDISC(BaseEstimator,TransformerMixin):
             return np.array([lwVar,lw/lwVar,fvalue,sp.stats.f.sf(fvalue, ddlsuppnum, ddlsuppden)])
         
         # Matrix V et W utilisées
-        biased_V = ((clf.n_samples_ - 1)/clf.n_samples_)*clf.tcov_
-        biased_W = ((clf.n_samples_ - clf.n_classes_)/clf.n_samples_)*clf.wcov_
+        biased_V = ((clf.call_["X"].shape[0] - 1)/clf.call_["X"].shape[0])*clf.cov_["total"]
+        biased_W = ((clf.call_["X"].shape[0] - clf.call_["n_classes"])/clf.call_["n_classes"])*clf.cov_["within"]
 
         # Lambda de Wilks - Initialisation de la valeur du Lambda de Wilks
         lambdaInit = 0.0
@@ -116,7 +121,7 @@ class STEPDISC(BaseEstimator,TransformerMixin):
             lambdaInit = self.lambda_init
         
         # Liste de variables pour le test
-        listInit = clf.features_labels_
+        listInit = clf.cov_["total"].index.tolist()
 
         # Sauvegarde des résultats
         Result = pd.DataFrame(columns=["Wilks L.","Partial L.","F","p-value"]).astype("float")
@@ -125,7 +130,7 @@ class STEPDISC(BaseEstimator,TransformerMixin):
         # 
         while True:
             # Résultat d'un étape
-            fextract = partial(fexclusion,W=biased_W,V=biased_V,n=clf.n_samples_,K=clf.n_classes_,lw=lambdaInit)
+            fextract = partial(fexclusion,W=biased_W,V=biased_V,n=clf.call_["X"].shape[0],K=clf.call_["n_classes"],lw=lambdaInit)
             res = pd.DataFrame(np.array(list(map(lambda j : fextract(j=j),np.arange(biased_W.shape[1])))),
                                columns=["Wilks L.","Partial L.","F","p-value"])
             res.index = listInit
@@ -184,24 +189,17 @@ class STEPDISC(BaseEstimator,TransformerMixin):
         elif self.method == "stepwise":
             overall_remove = self._compute_stepwise(clf=clf)
 
-        features_remove = list(overall_remove.index)
+        features_remove = set(overall_remove.index)
 
         # Entraînement d'un modèle
         if self.model_train:
-            # New features
-            new_features = [x for x in clf.features_labels_ if x not in set(features_remove)]
+            # New data
+            data = clf.call_["X"].drop(columns=features_remove)
             if clf.model_ == "lda":
-                model = LDA(features_labels = new_features,
-                            target=clf.target_,
-                            distribution="homoscedastik",
-                            row_labels=clf.row_labels_,
-                            parallelize=self.parallelize).fit(clf.data_)
+                model = LDA(target=clf.call_["target"],priors=clf.call_["priors"]).fit(data)
                 self.train_model_ = model
             elif clf.model_ == "candisc":
-                model = CANDISC(features_labels=new_features,
-                                target=clf.target_,
-                                row_labels=clf.row_labels_,
-                                parallelize=self.parallelize).fit(clf.data_)
+                model = CANDISC(target=clf.call_["target"],priors=clf.call_["priors"]).fit(data)
                 self.train_model_ = model
         
         self.overall_remove_ = overall_remove
