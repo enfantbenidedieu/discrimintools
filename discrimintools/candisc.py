@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 import scipy.stats as st
 import numpy as np
 import pandas as pd
@@ -85,15 +84,19 @@ class CANDISC(BaseEstimator,TransformerMixin):
     References
     ----------
     SAS Documentation, https://documentation.sas.com/doc/en/statug/15.2/statug_candisc_toc.htm
-    
+    https://www.rdocumentation.org/packages/candisc/versions/0.8-6/topics/candisc
+    https://www.rdocumentation.org/packages/candisc/versions/0.8-6
+    Ricco Rakotomalala, Pratique de l'analyse discriminante linéaire, Version 1.0, 2020
     """
     def __init__(self,
                  n_components=None,
                  target=None,
+                 features = None,
                  priors = None,
                  parallelize = False):
         self.n_components = n_components
         self.target = target
+        self.features = features
         self.priors = priors
         self.parallelize = parallelize
 
@@ -275,11 +278,28 @@ class CANDISC(BaseEstimator,TransformerMixin):
         ###############################################################################################################
         if X.columns.nlevels > 1:
             X.columns = X.columns.droplevel()
+        
+        # Save data
+        Xtot = X.copy()
 
         #######################################################################################################################
         # Split Data into two : X and y
         y = X[self.target]
         x = X.drop(columns=self.target)
+
+        # Set features labels/names
+        if self.features is None:
+            features = x.columns.tolist()
+        elif not isinstance(self.features,list):
+            raise ValueError("'features' must be a list of variable names")
+        else:
+            features = self.features
+        
+        ###### Select features
+        x = x[features]
+        
+        # Redefine X
+        X = pd.concat((x,y),axis=1)
 
         ################################################ Check if all columns are numerics
         # Check if all columns are numerics
@@ -315,6 +335,7 @@ class CANDISC(BaseEstimator,TransformerMixin):
             model = smf.ols(formula="{}~C({})".format(lab,"+".join(self.target)), data=X).fit()
             univ_test.loc[lab,:] = univariate_test_statistics(stdev=stats.loc[lab,"std"],model=model)
             anova[lab] = anova_table(sm.stats.anova_lm(model, typ=2))
+        anova = pd.concat(anova)
         
         # Rapport de correlation - Correlation ration
         eta2_res = {}
@@ -343,17 +364,21 @@ class CANDISC(BaseEstimator,TransformerMixin):
         if self.priors is None:
             raise ValueError("'priors' must be assigned")
 
-        if self.priors in ["proportional","prop"]:
-            priors = p_k
-        elif self.priors == "equal":
-            priors = pd.Series([1/n_classes]*n_classes,index=classes)
-        else:
+        # Prior probability
+        if isinstance(self.priors,pd.Series):
             priors = pd.Series([x/self.priors.sum() for x in self.priors.values],index=self.priors.index)
+        elif isinstance(self.priors,str):
+            if self.priors in ["proportional","prop"]:
+                priors = p_k
+            elif self.priors == "equal":
+                priors = pd.Series([1/n_classes]*n_classes,index=classes)
 
         # Store some informations
-        self.call_ = {"X" : X,
+        self.call_ = {"Xtot" : Xtot,
+                      "X" : X,
                       "target" : self.target[0],
-                      "features" : x.columns.tolist(),
+                      "features" : features,
+                      "n_features" : n_features,
                       "n_samples" : n_samples,
                       "n_classes" : n_classes,
                       "n_components" : n_components,
@@ -554,6 +579,9 @@ class CANDISC(BaseEstimator,TransformerMixin):
         ##### Chack if target in X columns
         if self.call_["target"] in X.columns.tolist():
             X = X.drop(columns=[self.call_["target"]])
+
+        ####### Select features
+        X = X[self.call_["features"]]
         
         coord = mapply(X.dot(self.coef_),lambda x : x + self.intercept_.values,axis=1,progressbar=False,n_workers=n_workers)
         return coord
@@ -624,6 +652,8 @@ class CANDISC(BaseEstimator,TransformerMixin):
         if self.call_["target"] in X.columns.tolist():
             X = X.drop(columns=[self.call_["target"]])
         
+        ####### Select features
+        X = X[self.call_["features"]]
         return X.dot(self.score_coef_).add(self.score_intercept_.values,axis="columns")
     
     def predict_proba(self,X):
@@ -691,7 +721,8 @@ class CANDISC(BaseEstimator,TransformerMixin):
     
     def score(self,X,y,sample_weight=None):
         """
-        Return the mean accuracy on the given test data and labels.
+        Return the mean accuracy on the given test data and labels
+        ----------------------------------------------------------
 
         In multi-label classification, this is the subset accuracy
         which is a harsh metric since you require for each sample that

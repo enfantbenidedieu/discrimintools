@@ -31,6 +31,8 @@ class LDA(BaseEstimator,TransformerMixin):
 
     target : The values of the classification variable define the groups for analysis.
 
+    features : list of quantitative variables to be included in the analysis. The default is all numeric variables in dataset
+
     priors : The priors statement specifies the prior probabilities of group membership.
                 - "equal" to set the prior probabilities equal,
                 - "proportional" or "prop" to set the prior probabilities proportional to the sample sizes
@@ -61,11 +63,18 @@ class LDA(BaseEstimator,TransformerMixin):
     Author(s)
     ---------
     Duvérier DJIFACK ZEBAZE duverierdjifack@gmail.com
+
+    References
+    ----------
+    SAS Documentation, https://documentation.sas.com/doc/en/pgmsascdc/9.4_3.3/statug/statug_discrim_overview.htm
+    Ricco Rakotomalala, Pratique de l'analyse discriminante linéaire, Version 1.0, 2020
     """
     def __init__(self,
                  target = None,
+                 features = None,
                  priors = None):
         self.target = target
+        self.features = features
         self.priors = priors
     
     def fit(self,X,y=None):
@@ -298,11 +307,28 @@ class LDA(BaseEstimator,TransformerMixin):
         ###############################################################################################################
         if X.columns.nlevels > 1:
             X.columns = X.columns.droplevel()
+        
+        # Save data
+        Xtot = X.copy()
 
         #######################################################################################################################
         # Split Data into two : x and y
         y = X[self.target]
         x = X.drop(columns=self.target)
+
+        # Set features labels/names
+        if self.features is None:
+            features = x.columns.tolist()
+        elif not isinstance(self.features,list):
+            raise ValueError("'features' must be a list of variable names")
+        else:
+            features = self.features
+        
+        ###### Select features
+        x = x[features]
+        
+        # Redefine X
+        X = pd.concat((x,y),axis=1)
 
         ################################################ Check if all columns are numerics
         # Check if all columns are numerics
@@ -328,6 +354,7 @@ class LDA(BaseEstimator,TransformerMixin):
             model = smf.ols(formula="{}~C({})".format(lab,"+".join(self.target)), data=X).fit()
             univ_test.loc[lab,:] = univariate_test_statistics(stdev= stats.loc[lab,"std"],model=model)
             anova[lab] = anova_table(sm.stats.anova_lm(model, typ=2))
+        anova = pd.concat(anova)
         
         # Rapport de correlation - Correlation ration
         eta2_res = {}
@@ -355,18 +382,20 @@ class LDA(BaseEstimator,TransformerMixin):
         # Initial prior - proportion of each element
         if self.priors is None:
             raise ValueError("'priors' must be assigned")
-
-        if self.priors in ["proportional","prop"]:
-            priors = p_k
-        elif self.priors == "equal":
-            priors = pd.Series([1/n_classes]*n_classes,index=classes)
-        else:
+        
+        if isinstance(self.priors,pd.Series):
             priors = pd.Series([x/self.priors.sum() for x in self.priors.values],index=self.priors.index)
-    
+        elif isinstance(self.priors,str):
+            if self.priors in ["proportional","prop"]:
+                priors = p_k
+            elif self.priors == "equal":
+                priors = pd.Series([1/n_classes]*n_classes,index=classes)
+            
         # Store some informations
-        self.call_ = {"X" : X,
+        self.call_ = {"Xtot" : Xtot,
+                      "X" : X,
                       "target" : self.target[0],
-                      "features" : x.columns.tolist(),
+                      "features" : features,
                       "n_features" : n_features,
                       "n_samples" : n_samples,
                       "n_classes" : n_classes,
@@ -395,11 +424,13 @@ class LDA(BaseEstimator,TransformerMixin):
         B = V - W
 
         ################################################################"
-        # Rank of Within matrix
-        W_rank = np.linalg.matrix_rank(W)
-        log_det_W = np.log(np.linalg.det(W))
-        statistics["pooled_information"] = pd.Series([W_rank, log_det_W],index=["rank","log_det"],name="pooled_cov_matrix")
-
+        # Rank of pooled covariance matrix
+        rankW = np.linalg.matrix_rank(W)
+        logDetW = np.log(np.linalg.det(W))
+        statistics["pooled_information"] = pd.DataFrame([rankW,logDetW],columns=["value"],
+                                                        index=["Rang de la mat. de cov. intra-classes",
+                                                               "Log. naturel du det. de la mat. de cov. intra-classes"])
+        
         ###########################################################################################################
         # Coefficients des fonctions de classement
         ###########################################################################################################
@@ -483,7 +514,9 @@ class LDA(BaseEstimator,TransformerMixin):
         ##### Chack if target in X columns
         if self.call_["target"] in X.columns.tolist():
             X = X.drop(columns=[self.call_["target"]])
-        
+
+        ####### Select features
+        X = X[self.call_["features"]]
         return X.dot(self.coef_).add(self.intercept_.values,axis="columns")
     
     def fit_transform(self,X):
@@ -551,6 +584,9 @@ class LDA(BaseEstimator,TransformerMixin):
         ##### Chack if target in X columns
         if self.call_["target"] in X.columns.tolist():
             X = X.drop(columns=[self.call_["target"]])
+
+        ####### Select features
+        X = X[self.call_["features"]]
         return  X.dot(self.coef_).add(self.intercept_.values,axis="columns")
     
     def predict_proba(self,X):
@@ -579,7 +615,6 @@ class LDA(BaseEstimator,TransformerMixin):
             "https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html")
         # Decision
         scores = self.decision_function(X)
-        # Probabilité d'appartenance - transformation 
         return scores.apply(lambda x : np.exp(x),axis=0).apply(lambda x : x/np.sum(x),axis=1)
     
     def predict(self,X):

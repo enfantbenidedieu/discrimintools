@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
-
-import scipy.stats as st
 import numpy as np
 import pandas as pd
 import polars as pl
+import scipy as sp
 
 from scipy.spatial.distance import pdist,squareform
 from sklearn.base import BaseEstimator, TransformerMixin
@@ -33,6 +32,8 @@ class DISCA(BaseEstimator,TransformerMixin):
     n_components : number of dimensions kept in the results
 
     target : string, target variable
+
+    features : list of qualitatives variables to be included in the analysis.
 
     priors : The priors statement specifies the prior probabilities of group membership.
                 - "equal" to set the prior probabilities equal,
@@ -81,10 +82,12 @@ class DISCA(BaseEstimator,TransformerMixin):
     def __init__(self,
                  n_components = None,
                  target = None,
+                 features = None,
                  priors = None,
                  parallelize = False):
         self.n_components = n_components
         self.target = target
+        self.features = features
         self.priors = priors
         self.parallelize = parallelize
     
@@ -134,10 +137,27 @@ class DISCA(BaseEstimator,TransformerMixin):
         if X.columns.nlevels > 1:
             X.columns = X.columns.droplevel()
         
+         # Save data
+        Xtot = X.copy()
+        
         #######################################################################################################################
         # Split Data into two : x and y
         y = X[self.target]
         x = X.drop(columns=self.target)
+
+        # Set features labels/names
+        if self.features is None:
+            features = x.columns.tolist()
+        elif not isinstance(self.features,list):
+            raise ValueError("'features' must be a list of variable names")
+        else:
+            features = self.features
+        
+        ###### Select features
+        x = x[features]
+        
+        # Redefine X
+        X = pd.concat((x,y),axis=1)
 
         # Number of rows and continuous variables
         n_samples, n_features = x.shape
@@ -151,6 +171,16 @@ class DISCA(BaseEstimator,TransformerMixin):
         all_cat = all(pd.api.types.is_string_dtype(x[col]) for col in x.columns)
         if not all_cat:
             raise TypeError("All features must be categoricals")
+        
+        ################################################ Chi2 -test
+        chi2_test = pd.DataFrame(columns=["statistic","ddl","pvalue"],index=x.columns).astype("float")
+        for col in x.columns:
+            tab = pd.crosstab(x[col],y[self.target[0]])
+            chi2 = sp.stats.chi2_contingency(observed=tab,correction=False)
+            chi2_test.loc[col,:] = [chi2[0], chi2[2], chi2[1]]
+        chi2_test = chi2_test.sort_values(by=["pvalue"])
+        chi2_test["ddl"] = chi2_test["ddl"].astype(int)
+        statistics = {"chi2" : chi2_test}
 
         ######################################################################################
         # Tableau des indicatrices
@@ -183,7 +213,7 @@ class DISCA(BaseEstimator,TransformerMixin):
         ###########################################
         mod_stats = pd.concat([n_l,G],axis=1)
         mod_stats.columns = ["Frequence","Proportion"]
-        statistics = {"categories" : mod_stats}
+        statistics = {**statistics,**{"categories" : mod_stats}}
         
         # Number of element 
         n_k, p_k = y.value_counts(normalize=False), y.value_counts(normalize=True)
@@ -202,7 +232,7 @@ class DISCA(BaseEstimator,TransformerMixin):
         # Store some informations
         self.call_ = {"X" : X,
                       "target" : self.target[0],
-                      "features" : x.columns.tolist(),
+                      "features" : features,
                       "n_features" : n_features,
                       "n_samples" : n_samples,
                       "n_classes" : n_classes,
@@ -313,6 +343,9 @@ class DISCA(BaseEstimator,TransformerMixin):
          ##### Chack if target in X columns
         if self.call_["target"] in X.columns.tolist():
             X = X.drop(columns=[self.call_["target"]])
+        
+        ####### Select features
+        X = X[self.call_["features"]]
 
         #self._compute_row_sup_stats(X)
         n_rows = X.shape[0]
@@ -324,7 +357,6 @@ class DISCA(BaseEstimator,TransformerMixin):
                 if self.var_["coord"].index.tolist()[j] in values:
                     Y[i,j] = 1
         row_sup_dummies = pd.DataFrame(Y,columns=self.var_["coord"].index,index=X.index)
-        
         return row_sup_dummies.dot(self.coef_)
     
     def decision_function(self,X):

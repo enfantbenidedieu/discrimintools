@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from __future__ import annotations
 
 # Canonical Discriminant Analysis (CANDISC)
 from .candisc import CANDISC
@@ -23,10 +24,10 @@ from .fviz_disca import fviz_disca_ind, fviz_disca_mod
 # PCA - DA
 from .pcada import PCADA
 
-
+# Stepwise discriminant analysis
 from .stepdisc import STEPDISC
 
+from .version import __version__
 __name__ = "discrimintools"
-__version__ = '0.0.1'
 __author__ = 'Duvérier DJIFACK ZEBAZE'
 __email__ = 'duverierdjifack@gmail.com'

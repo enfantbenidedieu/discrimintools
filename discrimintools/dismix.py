@@ -3,13 +3,15 @@
 import numpy as np
 import pandas as pd
 import polars as pl
+import scipy as sp
+
 from sklearn.base import BaseEstimator, TransformerMixin
 from mapply.mapply import mapply
 from sklearn.metrics import accuracy_score
-
 from scientisttools import FAMD
 
 from .lda import LDA
+from .eta2 import eta2
 from .revaluate_cat_variable import revaluate_cat_variable
 
 ##################################################################################################
@@ -33,6 +35,8 @@ class DISMIX(BaseEstimator,TransformerMixin):
 
     target : The values of the classification variable define the groups for analysis.
 
+    features : list of mixed variables to be included in the analysis
+
     priors : The priors statement specifies the prior probabilities of group membership.
                 - "equal" to set the prior probabilities equal,
                 - "proportional" or "prop" to set the prior probabilities proportional to the sample sizes
@@ -45,6 +49,8 @@ class DISMIX(BaseEstimator,TransformerMixin):
 
     Return
     ------
+    call_ : a dictionary with some statistics
+
     coef_ : DataFrame of shape (n_features,n_classes_)
 
     intercept_ : DataFrame of shape (1, n_classes)
@@ -72,10 +78,12 @@ class DISMIX(BaseEstimator,TransformerMixin):
     def __init__(self,
                  n_components = None,
                  target=None,
+                 features = None,
                  priors=None,
                  parallelize=False):
         self.n_components = n_components
         self.target = target
+        self.features = features
         self.priors = priors
         self.parallelize = parallelize
 
@@ -126,10 +134,27 @@ class DISMIX(BaseEstimator,TransformerMixin):
         if X.columns.nlevels > 1:
             X.columns = X.columns.droplevel()
         
+        # Save data
+        Xtot = X.copy()
+        
         #######################################################################################################################
         # Split Data into two : X and y
         y = X[self.target]
         x = X.drop(columns=self.target)
+
+        # Set features labels/names
+        if self.features is None:
+            features = x.columns.tolist()
+        elif not isinstance(self.features,list):
+            raise ValueError("'features' must be a list of variable names")
+        else:
+            features = self.features
+        
+        ###### Select features
+        x = x[features]
+        
+        # Redefine X
+        X = pd.concat((x,y),axis=1)
 
         #########################################################################"
         # Categoricals variables
@@ -144,10 +169,46 @@ class DISMIX(BaseEstimator,TransformerMixin):
         # Check if no continuous variables
         if cont.shape[0]==0:
             raise TypeError("No continuous variables. Please use DISQUAL")
+        
+        ################################################ Chi2 -test
+        chi2_test = pd.DataFrame(columns=["statistic","ddl","pvalue"],index=cats.columns).astype("float")
+        for col in cats.columns:
+            tab = pd.crosstab(x[col],y[self.target[0]])
+            chi2 = sp.stats.chi2_contingency(observed=tab,correction=False)
+            chi2_test.loc[col,:] = [chi2[0], chi2[2], chi2[1]]
+        chi2_test = chi2_test.sort_values(by=["pvalue"])
+        chi2_test["ddl"] = chi2_test["ddl"].astype(int)
 
+        ################################################ Correlation rato
+        # Rapport de correlation - Correlation ration
+        eta2_res = {}
+        for col in cont.columns:
+            eta2_res[col] = eta2(y,x[col])
+        eta2_res = pd.DataFrame(eta2_res).T.sort_values(by=["pvalue"])
+        self.statistics_ = {"chi2" : chi2_test, "Eta2" : eta2_res}
+
+        #################################################################################################
         ####### Revaluate categoricals variables
         cats = revaluate_cat_variable(cats)
         x = pd.concat((cont,cats),axis=1)
+
+        ##### Category
+        classes = np.unique(y).tolist()
+        # Number of groups
+        n_classes = len(classes)
+
+        # Number of rows and continuous variables
+        n_samples, n_features = x.shape
+        
+        #############################################################""
+        # Store some informations
+        self.call_ = {"Xtot" : Xtot,
+                      "X" : X,
+                      "target" : self.target[0],
+                      "features" : features,
+                      "n_features" : n_features,
+                      "n_samples" : n_samples,
+                      "n_classes" : n_classes}
 
         ################################################################################
         # Factor Analysis of Mixed Data (FAMD)
@@ -240,6 +301,9 @@ class DISMIX(BaseEstimator,TransformerMixin):
         ##### Chack if target in X columns
         if self.lda_model_.call_["target"] in X.columns.tolist():
             X = X.drop(columns=[self.lda_model_.call_["target"]])
+        
+        ####### Select features
+        X = X[self.call_["features"]]
         
         # Categoricals variables
         cats = X.select_dtypes(include=["object","category"])

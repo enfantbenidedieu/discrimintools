@@ -18,6 +18,7 @@ With this discrimintools package, you can perform :
 * Discriminant Analysis for qualitatives/categoricals variables (DISQUAL)
 * Discriminant Analysis of Mixed Data (DISMIX)
 * Discriminant Correspondence Analysis (DISCA)
+* Stepwise Discriminant Analysis (STEPDISC)
 
 ## Installation
 
@@ -26,7 +27,7 @@ With this discrimintools package, you can perform :
 discrimintools requires 
 
 ```
-Python >= 3.10.5
+Python >= 3.10
 numpy >= 1.26.4
 pandas >=2.2.2
 scikit-learn >=1.2.2

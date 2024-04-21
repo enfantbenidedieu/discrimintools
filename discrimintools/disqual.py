@@ -2,6 +2,7 @@
 import numpy as np
 import pandas as pd
 import polars as pl
+import scipy as sp
 
 from sklearn.base import BaseEstimator, TransformerMixin
 from mapply.mapply import mapply
@@ -29,6 +30,8 @@ class DISQUAL(BaseEstimator,TransformerMixin):
 
     target : The values of the classification variable define the groups for analysis.
 
+    features : list of qualitatives variables to be included in the analysis.
+
     priors : The priors statement specifies the prior probabilities of group membership.
                 - "equal" to set the prior probabilities equal,
                 - "proportional" or "prop" to set the prior probabilities proportional to the sample sizes
@@ -41,6 +44,10 @@ class DISQUAL(BaseEstimator,TransformerMixin):
 
     Returns:
     -------
+    call_ : a dictionary with some statistics
+
+    statistics_ : Chi-square test of independence of variables in a contingency table.
+
     coef_ : DataFrame of shape (n_features,n_classes_)
 
     intercept_ : DataFrame of shape (1, n_classes)
@@ -77,10 +84,12 @@ class DISQUAL(BaseEstimator,TransformerMixin):
     def __init__(self,
                  n_components = None,
                  target = None,
+                 features = None,
                  priors=None,
                  parallelize=False):
         self.n_components = n_components
         self.target = target
+        self.features = features
         self.priors = priors
         self.parallelize = parallelize
 
@@ -131,18 +140,63 @@ class DISQUAL(BaseEstimator,TransformerMixin):
         if X.columns.nlevels > 1:
             X.columns = X.columns.droplevel()
         
+        # Save data
+        Xtot = X.copy()
+        
         #######################################################################################################################
         # Split Data into two : X and y
         y = X[self.target]
         x = X.drop(columns=self.target)
+
+        # Set features labels/names
+        if self.features is None:
+            features = x.columns.tolist()
+        elif not isinstance(self.features,list):
+            raise ValueError("'features' must be a list of variable names")
+        else:
+            features = self.features
+        
+        ###### Select features
+        x = x[features]
+        
+        # Redefine X
+        X = pd.concat((x,y),axis=1)
 
         ################################################ Check if all columns are categoricals
         all_cat = all(pd.api.types.is_string_dtype(x[col]) for col in x.columns)
         if not all_cat:
             raise TypeError("All features must be categoricals")
         
+        ##### Category
+        classes = np.unique(y).tolist()
+        # Number of groups
+        n_classes = len(classes)
+
+        # Number of rows and continuous variables
+        n_samples, n_features = x.shape
+        
+        #############################################################""
+        # Store some informations
+        self.call_ = {"Xtot" : Xtot,
+                      "X" : X,
+                      "target" : self.target[0],
+                      "features" : features,
+                      "n_features" : n_features,
+                      "n_samples" : n_samples,
+                      "n_classes" : n_classes}
+        
         # Revaluate
         x = revaluate_cat_variable(x)
+
+        ################################################ Chi2 -test
+        chi2_test = pd.DataFrame(columns=["statistic","ddl","pvalue"],index=x.columns).astype("float")
+        for col in x.columns:
+            tab = pd.crosstab(x[col],y[self.target[0]])
+            chi2 = sp.stats.chi2_contingency(observed=tab,correction=False)
+            chi2_test.loc[col,:] = [chi2[0], chi2[2], chi2[1]]
+        chi2_test = chi2_test.sort_values(by=["pvalue"])
+        chi2_test["ddl"] = chi2_test["ddl"].astype(int)
+        self.statistics_ = {"chi2" : chi2_test}
         
         ##################################################################################################################
         # Multiple Correspondence Analysis (MCA)
@@ -228,7 +282,11 @@ class DISQUAL(BaseEstimator,TransformerMixin):
         ##### Chack if target in X columns
         if self.lda_model_.call_["target"] in X.columns.tolist():
             X = X.drop(columns=[self.lda_model_.call_["target"]])
-         # Add revaluate
+        
+        ######## Selected features
+        X = X[self.call_["features"]]
+
+        # Add revaluate
         X = revaluate_cat_variable(X)
         coord = self.factor_model_.transform(X).copy()
         coord.columns = ["Z"+str(x+1) for x in range(coord.shape[1])]
