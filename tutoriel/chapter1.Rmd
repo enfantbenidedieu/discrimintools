@@ -1,0 +1,487 @@
+\Chapter{\bf Analyse Factorielle Discriminante }
+
+Ce chapitre a pour objectif de présenter rapidement les principales fonctionnalités offertes par le package \og discrimintools \fg{} pour réaliser une Analyse Factorielle Discriminante ou Analyse Discriminante Descriptive. 
+
+<!-- https://marie-chavent.perso.math.cnrs.fr/teaching/ -->
+<!-- https://thinkr.fr/creer-package-r-quelques-minutes/ -->
+
+## Présentation des données
+
+Nous allons illustrer ce chapitre à travers l'exemple des Vins de Bordeaux (Michel Tenenhaus, 2007). On cherche à relier la qualité des vins de Bordeaux à des caractéristiques météorologiques. La variable à expliquer $y$ est la qualité du vin et prend $3$ modalités : 1 = bon, 2 = moyen et 3 = médiocre. Les variables explicatives de la qualité du vin sont les suivantes : $X_{1}$ (Somme des températures moyennes journalières (°C)), $X_{2}$ (Durée d'insolation (h)), $X_{3}$ (Nombre de jours de grande chaleur) et $X_4$ (Hauteur des pluies (mm)).
+
+
+```{python}
+# Chargement des données
+import pandas as pd
+donnee = pd.read_excel("./data/vin_bordelais.xls",index_col=1)
+print(donnee)
+```
+
+\subsection{Objectifs}
+
+L'analyse factorielle discriminante est une méthode descriptive. Elle vise à produire un système de représentation de dimension réduite qui permet de discerner les classes lorsqu'on y projette les individus. Il s'agit d'une méthode d'analyse factorielle. On peut la voir comme une variante de l'analyse en composantes principales où les centres de classes sont les individus, pondérés par leurs effectifs, et avec une métrique particulière (SAPORTA, 2006). Les variables latentes (ou discriminantes) sont exprimées par des combinaisons linéaires des variables originelles. Elles sont deux à deux orthogonales. Elles cherchent à assurer un écartement maximal entre les centres de classes. In fine, l'objectif est de mettre en évidence les caractéristiques qui permettent de distinguer au mieux les groupes.
+
+
+\subsection{Problématique}
+
+L'analyse factorielle discriminante ou analyse discriminante descriptive permet de caractériser de manière multidimensionnelle l'appartenance des individus à des groupes prédéfinis, ceci à l'aide de plusieurs variables explicatives prises de façon simultanée. En effet, il s'agit de construire un nouveau système de représentation qui permet de mettre en évidence ces groupes. Les objectifs de l'analyse factorielle discriminante sont double :
+
+\begin{enumerate}
+    \item \textbf{Descriptif} : Mettre en évidence les caractéristiques qui permettent de distinguer au mieux les groupes;
+    
+    \item \textbf{Prédictif} : Classer automatiquement un nouvel individu (l’affecter à un groupe) à partir de ses caractéristiques
+\end{enumerate}
+
+
+\subsection{Rapport de corrélation}
+
+Nous mesurons le pouvons discriminant de chaque variables $X_{j}$ en utilisant l'analyse de la variance à un facteur. Pour cela, nous utilisons le rapport de corrélation définit par :
+
+\begin{equation}
+    \eta^{2}(X_{j}, y) = \dfrac{\text{Somme des carrés inter - classes}}{\text{Somme des carrés totale}}
+\end{equation}
+
+Cet indicateur, compris entre $0$ et $1$, est basé sur la dispersion des moyennes conditionnelles. Il s'agit d'un indicateur de séparabilité des groupes :
+
+
+\begin{itemize}
+\item $\eta^{2}(X_{j},y)=0$, la discrimination est impossible, les moyennes conditionnelles sont confondues. La somme des carrés inter - classes est nulle.
+
+\item $\eta^{2}(X_{j},y)=1$, la discriminantion est parfaite, les points associés aux groupes sont agglutinés autour de leur moyenne respectives : la somme des carrés intra - classes est nulle, ce qui est équivalent à la somme des carrés inter - classes est egale à la somme des carrés totale.
+\end{itemize}
+
+```{python}
+# Pouvoir discriminant
+from discrimintools.eta2 import eta2
+
+R2 = {}
+for name in donnee.columns[1:-1]:
+    R2[name] = eta2(donnee["Qualite"],donnee[name])
+R2 = pd.DataFrame(R2).T.sort_values(by=["pvalue"])
+print(R2)
+```
+
+Toutes les p-values sont inférieures au seuil de $5\%$, par conséquent, il existe une différence significative dans la qualité du vin.
+
+## AFD
+
+
+### Chargement de discrimintools
+
+Sage précaution avec les packages pour Python, nous affichons le numéro de la version de \og discrimintools \fg{} utilisée dans ce tutoriel. 
+
+```{python}
+# version
+import discrimintools
+print(discrimintools.__version__)
+```
+
+Nous fonctionnons avec la version \og 0.0.1 \fg{}.
+
+```{python}
+from discrimintools import CANDISC
+```
+
+On crée une instance de la classe CANDISC, en lui passant ici des étiquettes pour les lignes et les variables. 
+
+Le constructeur de la classe CANDISC possède un paramètre \texttt{n\_components} qui indique le nombre d'axes discriminants à garder. Par défaut, la valeur du paramètre \texttt{n\_components} est fixée à \texttt{None}.
+
+Réalisez l'AFD sur toutes observations en tapant la ligne de code suivante :
+
+```{python}
+# Instanciation
+my_cda = CANDISC(n_components=2,target=["Qualite"],priors="prop",
+                 features=["Temperature","Soleil","Chaleur","Pluie"],
+                 parallelize=False)
+```
+
+\begin{itemize}
+\item \texttt{n\_components} : le nombre d'axes discriminants à garder dans les résultats
+\item \texttt{target} : le label de la variable cible.
+\item \texttt{features} : les noms des variables explicatives. Si c'est None alors toutes les variables quantitatives seront utilisées.
+\item \texttt{priors} : les probabilités \emph{a priori} d'appartenance aux classes
+\item \texttt{parallelize} : paralleliser l'algorithme.
+\end{itemize}
+
+On estime le modèle en appliquant la méthode \texttt{.fit} de la classe CANDISC sur le jeu de données à traiter.
+
+```{python}
+# Apprentissage
+my_cda.fit(donnee)
+```
+
+
+### Les valeurs propres
+
+L'exécution de la méthode \texttt{my\_cda.fit(donnee)} provoque le calcul de plusieurs attributs parmi lesquels \texttt{my\_cda.eig\_}.
+
+```{python}
+print(my_cda.eig_)
+```
+
+
+L'attribut \texttt{my\_cda.eig\_} contient :
+
+\begin{itemize}
+\item en 1ère colonne : les valeurs propres en valeur absolue
+\item en 2ème colonne : les différences des valeurs propres
+\item en 3ème colonne : les valeurs propres en pourcentage de la variance totale (proportions)
+\item en 4ème colonne : les valeurs propres en pourcentage cumulé de la variance totale.
+\end{itemize}
+
+Le premier axe discriminant contient $96\%$ de l'information totale disponible.
+
+On peut obtenir un résumé des principaux résultats en utilisant la fonction \texttt{summaryCANDISC}.
+
+```{python}
+from discrimintools import summaryCANDISC
+summaryCANDISC(my_cda)
+```
+
+
+Le champ \texttt{.coef\_} nous intéresse particulièrement. Il correspond aux coefficients des fonctions discriminantes :
+
+```{python}
+# Affichage brut des ceofficients
+print(my_cda.coef_)
+```
+
+La matrice est de dimension (4,2) puisque nous avons un problème à $(K=3)$ classes (d'où $K-1$ axes discriminants) et $4$ descripteurs.
+
+```{python}
+#dimensions
+print(my_cda.coef_.shape)
+```
+
+Il ne faut pas oublier les constantes (\emph{intercept}) des fonctions discriminantes.
+
+```{python}
+# et les constantes pour chaque classe
+print(my_cda.intercept_)
+```
+
+Nous pouvons dès lors adopter une présentation plus sympathique des fonctions discriminantes. Pour ce faire, nous utilisons la fonction \texttt{get\_candisc\_coef} en fixant le paramètre \og \texttt{choice = "absolute"} \fg{}.
+
+```{python}
+# Affichage des coefficients
+from discrimintools import get_candisc_coef
+coef = get_candisc_coef(my_cda,choice="absolute")
+coef
+```
+
+## Représentations factorielles
+
+### Coordonnées des individus
+
+```{python}
+# Coordonnées des individus
+from discrimintools import get_candisc_ind
+ind_coord = get_candisc_ind(my_cda)["coord"]
+print(ind_coord.head(6))
+```
+
+```{python,out.width="90%"}
+# Carte des individus
+import plotnine as pn
+from discrimintools import fviz_candisc
+p = (fviz_candisc(my_cda,x_lim=(-5,5),y_lim=(-5,5),repel=True)+
+      pn.theme(legend_direction="vertical",legend_position=(0.8,0.6)))
+print(p)
+```
+
+
+### Coordonnées des centres de classes
+
+L'introduction des barycentre spermet de mieux situer la qualité relative des facteurs dans la discrimination des classes.
+
+```{python}
+# Coordonnées des centres de classes
+zk = my_cda.classes_["coord"]
+print(zk)
+```
+
+
+
+
+## Evaluation globale du modèle
+
+### Evaluation statistique des facteurs
+
+#### Distance entre centres de classes
+
+Dans le plan factoriel, les distances sont camptabilisées à l'aide d'une simple distance euclidienne.
+
+```{python}
+# Distances entre centres de classes
+print(my_cda.classes_["dist"])
+```
+
+
+#### Pouvoir discriminant des facteurs
+
+Le pouvoir discriminant des facteurs est traduit par les valeurs propres qui leurs sont associées.
+
+```{python}
+print(my_cda.eig_)
+```
+
+#### Test MANOVA
+
+discrimintools fournit un test de sgnificativité globale du modèle.
+
+```{python}
+# Significativité globale du modèle
+print(my_cda.statistics_["manova"]) 
+```
+
+Nous nous intéressons en particulier à la ligne relative à \og Wilks' Lambda \fg{}.
+
+#### Performance globale
+
+Nosu affichons les valeurs des statistiques suivantes : Lambda de Wilks, Transformation de Bartlett et de RAO.
+
+
+```{python}
+# Performance globale
+print(my_cda.statistics_["performance"])
+```
+
+L'écartement entre les barycentres conditionnels est significatif à $5\%$. L'analyse discriminante est viable dans ce contexte.
+
+### Test sur un ensemble de facteurs
+
+Combien de facteurs faut - il retenir?.
+
+```{python}
+# Test sur un ensemble de facteur
+print(my_cda.statistics_["likelihood_test"])
+```
+
+### Matrices de covariance
+
+Elles sont directement fournies par l'objet  \og discrimintools \fg{}
+
+### Matrice de covariance intra - classe
+
+```{python}
+# Covariance intra - classe
+print(my_cda.cov_["within"])
+```
+
+### Matrice de covariance totale
+
+```{python}
+# Covariance totale
+print(my_cda.cov_["total"])
+```
+
+### Matrice de covariance inter - classe
+
+```{python}
+# Matrice de covaiance inter - classe
+print(my_cda.cov_["between"])
+```
+
+
+### Interprétation des facteurs
+
+Elle permet la compréhension de la nature des facteurs.
+
+#### Corrélation totale
+
+```{python}
+# Correlation totale
+print(my_cda.corr_["total"])
+```
+
+#### Correlation intra - classe
+
+```{python}
+# Correlation intra - classe
+print(my_cda.corr_["within"])
+```
+
+
+#### Correlation inter - classe
+
+
+```{python}
+# Corrélation inter - classe
+print(my_cda.corr_["between"])
+```
+
+## Prediction des classes
+
+Considérons l'année 1958. Les données (hypothétiques) de cette année sont : 
+
+
+```{python}
+## Inidvidu supplémentaire
+XTest = pd.DataFrame({"Temperature" : 3000,
+                       "Soleil" : 1100, 
+                       "Chaleur" : 20, 
+                       "Pluie" : 300},index=[1958])
+XTest
+```
+
+### Coordonnées factorielles 
+
+```{python}
+# Coordonées factorielles
+ind_sup_coord = my_cda.transform(XTest)
+print(ind_sup_coord)
+```
+
+
+```{python}
+p = (p + pn.annotate("point", x = ind_sup_coord.iloc[:,0], 
+                     y = ind_sup_coord.iloc[:,1], color="blue")+
+         pn.annotate("text", x = ind_sup_coord.iloc[:,0], 
+                     y = ind_sup_coord.iloc[:,1], label = "1958",color="blue"))
+print(p)
+```
+
+La fonction \texttt{predict()} permet de produire les prédictions à partir de la matrice des explicatives en test.
+
+```{python}
+# Prédiction simple
+pred = my_cda.predict(XTest)
+print(pred)
+```
+
+### Fonctions de classement explicites
+
+La classe CANDISC de discrimintools retourne les fonctions de décision issues de l'analyse factorielle discriminante. Pour celà, il faut spécifier l'argument \og \texttt{choice == "score"}.
+
+```{python}
+# Fonctions de décision - AFD
+score_coef = get_candisc_coef(my_cda,choice = "score")
+print(score_coef)
+```
+
+### Prédiction des classes sur l'échantillon d'apprentissage
+
+```{python}
+import numpy as np
+# Prédiction sur XTrain
+X = donnee[donnee.columns[:-1]]
+y_pred = my_cda.predict(X)
+
+# Distribution des classes prédictes
+print(y_pred.value_counts())
+```
+
+$11$ observations ont été prédite \og Bon \fg{}, $11$ \og Medicocre\fg{} et $12$ \og Moyen \fg{}.
+
+### Matrice de confusion et taux de bon classement
+
+La matrice de confusion est issue de la confrontation entre ces prédictions et les classes observées. Nous faisons appel au module \og \href{https://scikit-learn.org/stable/modules/model_evaluation.html}{metrics} \fg{} de la librairie \og \href{https://scikit-learn.org/stable/index.html}{scikit-learn} \fg{}.
+
+```{python}
+# Matrice de confusion
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+cm = confusion_matrix(donnee.Qualite,y_pred,labels=my_cda.classes_["classes"])
+disp = ConfusionMatrixDisplay(confusion_matrix=cm,
+                              display_labels=my_cda.classes_["classes"])
+disp.plot();
+plt.show()
+```
+
+
+La fonction \texttt{score()} nous donne le taux de reconnaissance (ou taux de succès).
+
+```{python}
+# Taux de succès
+print(my_cda.score(X,donnee.Qualite))
+```
+
+Notre taux de succès est de $79\%$.
+
+La fonction \texttt{classification\_report()} génère un rapport sur les performances globales, mais aussi sur les reconnaissances par classe (rappel, précision et F-Measure[F1-Score])
+
+```{python}
+# rapport
+from sklearn.metrics import classification_report
+print(classification_report(donnee.Qualite,y_pred))
+```
+
+Nous retrouvons, entre autres le taux de succès de $79\%$.
+
+### Probabilité d'appartenance
+
+\og discrimintools \fg{} peut aussi calculer les probabilités d'affectation aux classes avec \texttt{predict\_proba()}. Elle permettent une analyse plus fine de la qualité du modèle, via la construction de la courbe ROC par exemple, dont le principe reste valable pour les problèmes multi - classes.
+
+```{python}
+# Probabilité d'appartenance
+print(my_cda.predict_proba(X).head(6))
+```
+
+
+## Sélection de variables
+
+Limiter le modèle aux variables explicatives pertinentes est primordial pour l'interprétation et le deploiement des modèles.
+
+### Backward selection
+
+```{python}
+# Selection backward
+from discrimintools import STEPDISC
+backward = STEPDISC(my_cda,method="backward",alpha=0.01,
+                    model_train=False,verbose=True)
+```
+
+Les variables sélectionnées sont les suivantes : 
+
+```{python}
+# Variables sélectionnées
+selectedVar = backward.results_["selected"]
+selectedVar
+```
+
+Nous entraînons le modèle avec les variables sélectionnées :
+
+```{python}
+# Modèle réduit
+my_cda2 = CANDISC(n_components=2,target=["Qualite"],priors="prop",
+                 features=selectedVar,parallelize=False).fit(donnee)
+```
+
+
+```{python}
+# Summary
+summaryCANDISC(my_cda2,to_markdown=False)
+```
+
+
+### Forward selection
+
+```{python}
+# Selection forward
+forward = STEPDISC(my_cda,method="forward",alpha=0.01,
+                    model_train=False,verbose=True)
+```
+
+Les variables sélectionnées sont les suivantes : 
+
+```{python}
+# Variables sélectionnées
+selectedVar2 = forward.results_["selected"]
+selectedVar2
+```
+
+Nous entraînons le modèle avec les variables sélectionnées :
+
+```{python}
+# Modèle réduit
+my_cda3 = CANDISC(n_components=2,target=["Qualite"],priors="prop",
+                 features=selectedVar2,parallelize=False).fit(donnee)
+```
+
+
+```{python}
+# Summary
+summaryCANDISC(my_cda3,to_markdown=False)
+```
+
+
+Bien qu'il soit possible de déduire un mécanisme de classement en analyse factorielle discriminante, sa finalité est bien différente de l'analyse discriminante linéaire, prédictive. Mais les deux approches se rejoignent.

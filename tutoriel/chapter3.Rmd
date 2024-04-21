@@ -1,0 +1,425 @@
+\Chapter{\bf Analyse des Correspondances Discriminante}
+
+Ce chapitre a pour objectif de présenter rapidement les principales fonctionnalités offertes par le package \og discrimintools \fg{} pour réaliser une Analyse des Correspondances Discriminante . 
+
+<!-- https://scholar.google.com/citations?view_op=view_citation&hl=en&user=Tyd1NtYAAAAJ&cstart=20&pagesize=80&citation_for_view=Tyd1NtYAAAAJ:TFP_iSt0sucC -->
+
+## Présentation des données
+
+L'analyse des correspondances discriminante (ACD) est le pendant de l'analyse factorielle discriminante pour les descripteurs catégoriels. On la reconnaît sous les traits de l'analyse discriminante barycentrique. Lorsque le nombre de classes est supérieur à $2$, l'approche passe par un tableau de contingence particulier soumis à une analyse factorielle des correspondances (AFC).
+
+### Importation des données
+
+Nous illustrons l'analyse des correspondances discriminante à l'aide d'un exemple sur les données \og Races Canines \fg{} extraites de l'ouvrage de Tenenhaus. Il s'agit de prédire la variable \og Fonction \fg{} (utilite, chasse, compagnie) de $(n=27)$ chiens à partir de leurs caractéristiques (Taille, Poids, etc. 6 variables).
+
+
+```{python}
+# Chargement des données
+import pandas as pd
+# Données actives
+DTrain = pd.read_csv("./data/races_canines.txt",sep="\t",encoding='latin-1',
+                     index_col=0)
+print(DTrain.info())
+```
+
+
+### Distribution relative
+
+Nous calculons la distribution relative des classes :
+
+```{python}
+# Distribution relative des classes
+d = (DTrain.Fonction.value_counts(normalize=True).reset_index()
+                .rename(columns={"index":"Fonction"}))
+print(d)
+```
+
+
+## Analyse bivariée
+
+Une première piste consiste à procéder à une simple analyse bivariée. Nous croisons chaque descripteur avec la variable cible. Nous disposons ainsi d'une première indication sur les liaisons individuelles de chaque descripteur avec \og Fonction \fg{}.
+
+```{python}
+# V de Cramer
+import scientistmetrics as st
+cramerV = st.scientistmetrics(DTrain)
+cramerV = (cramerV.iloc[:6,6].to_frame()
+                  .sort_values(by="Fonction",ascending=False).T)
+print(cramerV)
+```
+
+Nous avons quelques relations qui sont assez fortes :  `r colnames(py$cramerV)[1]` avec un V de Cramer de `r round(py$cramerV[1,1],2)`; `r colnames(py$cramerV)[2]` avec un V de Cramer de `r round(py$cramerV[1,2],2)`; `r colnames(py$cramerV)[3]` avec un V de Cramer de `r round(py$cramerV[1,3],2)` et `r colnames(py$cramerV)[4]` avec un V de Cramer de `r round(py$cramerV[1,4],2)`. Il semble donc possible d'expliquer la fonction des chiens à partir de leurs caractéristiques. Mais il faut le faire de manière multivariée c'est - à - dire en tenant compte du rôle simultané de l'ensemble des descripteurs.
+
+## Analyse avec discrimintools
+
+## Modélisation avec discrimintools
+
+Sage précaution avec les packages pour Python, nous affichons le numéro de la version de \og discrimintools \fg{} utilisée dans ce tutoriel. 
+
+```{python}
+# version
+import discrimintools
+print(discrimintools.__version__)
+```
+
+Nous fonctionnons avec la version \og 0.0.1 \fg{}.
+
+```{python}
+# Importation
+from discrimintools import DISCA
+```
+
+On crée une instance de la classe DISCA, en lui passant ici des étiquettes pour les variables explicatives et la variable cible. 
+
+```{python}
+# Instanciation
+disca = DISCA(n_components=None,target=["Fonction"],priors="prop")
+```
+
+On estime le modèle en appliquant la méthode \texttt{.fit} de la classe DISCA sur le jeu de données.
+
+```{python}
+# Entraînement du modèle
+disca.fit(DTrain)
+```
+
+### Inspection de l'objet DISCA
+
+\begin{itemize}
+\item \texttt{call\_["priors"]} correspond à la distribution relative des classes.
+\end{itemize}
+
+```{python}
+# distribution des classes
+print(disca.call_["priors"].to_frame())
+```
+
+
+\begin{itemize}
+\item \texttt{statistics\_["chi2"]} correspond au test de chi2 entre variables qualitatives et la cible
+\end{itemize}
+
+```{python}
+# test statistique de chi2
+print(disca.statistics_["chi2"])
+```
+
+\begin{itemize}
+\item \texttt{statistics\_["categories"]} correspond à la distribution absolue et relative des colonnes 
+\end{itemize}
+
+```{python}
+# distribution absolue et relative des classes
+print(disca.statistics_["categories"])
+```
+
+
+## Analyse des classes
+
+###  Coordonnées des classes
+
+L'objet \og disca \fg{} fournit les coordonnées des points - classes.
+
+```{python}
+# Coordonnées des points - classes
+print(disca.classes_["coord"])
+```
+
+On projette ces points - classes dans le plan :
+
+```{python gcoord,fig.cap="Carte des points - classes",out.width="50%"}
+# Projection des points classes
+from plotnine import *
+gcoord = disca.classes_["coord"]
+p = (ggplot(gcoord,aes(x="Dim.1",y="Dim.2",label=gcoord.index))+
+        geom_point(aes(color=gcoord.index))+
+        geom_text(aes(color=gcoord.index),
+                  adjust_text={'arrowprops': {'arrowstyle': '-','lw':1.0}})+
+        geom_hline(yintercept=0,colour="black",linetype="--")+
+        geom_vline(xintercept=0,colour="black",linetype="--")+
+        theme(legend_direction="vertical",legend_position=(0.2,0.5))+
+        labs(color="Fonction"))
+print(p)
+```
+
+Visiblement, \og compagnie \fg{} et \og utilite \fg{} s'opposent sur le premier facteur. \og chasse \fg{} se démarque des deux autres sur le second facteur.
+
+### Distances entre centres de classes
+
+Les distances entre centres de classes permettent de situer les proximités entre les groupes sur l'ensemble des facteurs. La distance euclidienne entre les classes dans le répère factoriel est la suivante :
+
+```{python}
+# Distance euclidienne
+DE = disca.classes_["dist"]
+print(DE)
+```
+
+Les trois types de fonctions forment un triangle approximativement isocèle dans le plan factoriel.
+
+Ajoutons ces distances sur le plan factoriel :
+
+```{python fig.cap="Carte des points - classes",out.width="50%"}
+# Projection des points classes avec distances entre classes
+p = (ggplot(gcoord,aes(x="Dim.1",y="Dim.2",label=gcoord.index))+
+        geom_point(aes(color=gcoord.index))+
+        geom_text(aes(color=gcoord.index),
+                  adjust_text={'arrowprops': {'arrowstyle': '-','lw':1.0}})+
+        geom_hline(yintercept=0,colour="black",linetype="--")+
+        geom_vline(xintercept=0,colour="black",linetype="--")+
+        theme(legend_direction="vertical",legend_position=(0.2,0.3))+
+        annotate("segment",x=gcoord.iloc[0,0],y=gcoord.iloc[0,1],
+                           xend=gcoord.iloc[1,0],yend=gcoord.iloc[1,1],
+                           color="blue")+
+        annotate("segment",x=gcoord.iloc[0,0],y=gcoord.iloc[0,1],
+                           xend=gcoord.iloc[2,0],yend=gcoord.iloc[2,1],
+                           color="blue")+
+        annotate("segment",x=gcoord.iloc[1,0],y=gcoord.iloc[1,1],
+                           xend=gcoord.iloc[2,0],yend=gcoord.iloc[2,1],
+                           color="blue")+
+        # Add test
+        annotate('text', x = -0.3, y = 0.2,label = DE.iloc[0,1].round(2),
+                 size = 10, angle='35')+
+        annotate('text', x = 0.4, y = 0.2,label = DE.iloc[0,2].round(2),
+                 size = 10, angle='-60')+
+        annotate('text', x = 0, y = -0.25,label = DE.iloc[2,1].round(2),
+                 size = 10, angle='-10')+
+        labs(color="Fonction"))
+print(p)
+```
+
+
+### Qualité de la représentation des classes
+
+Il suffit de passer les coordonnées au carré et de diviser par la somme en ligne. Sous discrimintools, elles correspondent à la qualité de représentation des points - lignes de l'analyse factorielle des correspondances.
+
+```{python}
+# Qualité de représentation
+gcos2 = disca.classes_["cos2"]
+print(gcos2)
+```
+
+Le graphique (Figure \ref{fig:gcoord}) ne laissait aucun doute, mais c'est toujours mieux quand les chiffres confirment : les informations portées par \og compagnie \fg{} et \og utilite \fg{} sont bien captées par le premier facteur. \og chasse \fg{} est mieux situé sur le second facteur. Et la somme en ligne dans le tableau des COS2 fait bien $100\%$.
+
+### Contributions des classes
+
+Sous discrimintools, elles correspondent aux contributions des points - lignes de l'analyse factorielle des correspondances.
+
+```{python}
+# Contribution des groupes
+gcontrib = disca.classes_["contrib"]
+print(gcontrib)
+```
+
+
+Le premier axe oppose les fonctions \og compagnie \fg{} et \og utilite \fg{}. Elles déterminent (\textbf{contributions} = `r round(py$gcontrib[2,1],2)`$\%$ $+$ `r round(py$gcontrib[3,1],2)`$\%$) `r round(sum(py$gcontrib[c(2:3),1]),2)`$\%$ de l'information portée par le facteur. Elles sont aussi très bien représentées puisque `r round(100*py$gcos2[2,1],2)`$\%$ (resp. `r round(100*py$gcos2[3,1],2)`$\%$) de l'information véhiculée par \og compagnie \fg{} (resp. \og utilite \fg{}) est restrancrite sur cet axe.
+
+Le second axe permet surtout de distinguer la fonction \og chasse \fg{} des deux premiers.
+
+## Structures canoniques
+
+Les structures canoniques correspondent aux représentations des modalités colonnes du tableau de contingence - et donc des modalités des variables prédictives - dans le répère factoriel.
+
+### Poids, distance à l'origine et inertie
+
+```{python}
+# Informations sur les modalités
+mod_infos = disca.var_["infos"]
+print(mod_infos)
+```
+
+### Coordonnées des points modalités
+
+```{python}
+# Coordonnées des points modalités
+mod_coord = disca.var_["coord"]
+print(mod_coord)
+```
+
+
+
+```{python modcoord,fig.cap="Carte des points - modalités"}
+# Ajout de la variable
+modcoord = mod_coord.copy()
+modcoord.loc[:,"variable"] = [x.split("_")[0] for x in mod_coord.index]
+
+# Projection des points modalités
+p = (ggplot(modcoord,aes(x="Dim.1",y="Dim.2",label=mod_coord.index))+
+        geom_point(aes(color=modcoord.variable))+
+        geom_text(aes(color=modcoord.variable),
+                  adjust_text={'arrowprops': {'arrowstyle': '-','lw':1.0}})+
+        geom_hline(yintercept=0,colour="black",linetype="--")+
+        geom_vline(xintercept=0,colour="black",linetype="--")+
+        theme(legend_direction="vertical",legend_position=(0.2,0.5))+
+        labs(color="Variable"))
+print(p)
+```
+
+### Contributions des points modalités aux facteurs
+
+Les contributions des points modalités sont :
+
+```{python}
+# Contributions des points modalités
+mod_contrib = disca.var_["contrib"]
+print(mod_contrib)
+```
+
+## Affectation des classes
+
+## Fonction discriminante canonique
+
+L'exécution de la méthode \texttt{disca.fit(DTrain)} provoque le calcul de plusieurs attributs parmi lesquels \texttt{disca.coef\_}. Ce champ nous intéresse particulièrement car il correspond aux coefficients des fonctions de classement. Ces fonctions canoniques permettent de projeter des individus non étiquetés dans l'espace factoriel.
+
+```{python}
+# Coefficients des fonctions discriminantes canoniques
+print(disca.coef_)
+```
+
+
+### Coordonnées des individus
+
+A partir des fonctions discriminantes canoniques, on détermine les coordonnées des individus.
+
+```{python}
+# Coordonnées factorielles des individus
+ind_coord = disca.ind_["coord"]
+print(ind_coord)
+```
+
+
+```{python rowcoord,fig.cap="Carte des individus"}
+# Ajout de la colonne Fonction
+rowcoord = pd.concat([ind_coord,DTrain["Fonction"]],axis=1)
+# Projection des points modalités
+p = (ggplot(rowcoord,aes(x="Dim.1",y="Dim.2",label=rowcoord.index))+
+        geom_point(aes(color=rowcoord.Fonction))+
+        geom_text(aes(color=rowcoord.Fonction),
+                  adjust_text={'arrowprops': {'arrowstyle': '-','lw':1.0}})+
+        geom_hline(yintercept=0,colour="black",linetype="--")+
+        geom_vline(xintercept=0,colour="black",linetype="--")+
+        theme(legend_direction="vertical",legend_position=(0.5,0.2))+
+        labs(color="Fonction")+
+        annotate("text",x=gcoord["Dim.1"].values,y=gcoord["Dim.2"].values,
+                 label=gcoord.index,color=["red","green","violet"]))
+print(p)
+```
+
+### Valeurs propres associées aux facteurs
+
+Les valeurs propres associées aux facteurs sont celles issues de l'analyse factorielle des correspondances.
+
+```{python}
+# Valeurs propres
+from scientisttools import get_eig
+eig = get_eig(disca.factor_model_)
+print(eig)
+```
+
+La valeur propre $(\lambda)$ indique l'inertie (la variance) expliquée par l'appartenance aux groupes sur chaque axe. En les additionnant, nous avons l'inertie expliquée par l'appartenance aux groupes dans l'espace complet soit `r sum(py$eig[,1])`. Cette inertie indique la quantité d'information que l'on peut modéliser dans la relation entre la cible Fonction et les descripteurs. Le premier facteur explique `r round(py$eig[1,3],2)`$\%$ de l'inertie totale.
+
+On peut représenter graphiquement ces valeurs propres
+
+```{python,fig.cap = "Scree plot"}
+# Scree plot
+from scientisttools import fviz_screeplot
+p = fviz_screeplot(disca.factor_model_,choice="proportion",add_labels=True)
+print(p)
+```
+
+### Rapport de corrélation
+
+Le champ \texttt{anova\_["Eta2"]} correspond aux carrés des rapports de corrélation.
+
+```{python}
+# Rapport de corrélation
+print(disca.anova_["Eta2"])
+```
+
+### Corrélation canonique
+
+La corrélation canonique est la racine carré du rapport de corrélation.
+
+```{python}
+# Corrélation canonique
+print(disca.anova_["canonical_Eta2"])
+```
+
+## Traitement d'individus supplémentaires
+
+Les fonctions discriminantes canoniques nous permettent de positionner les individus suppémentaires dans le répère factoriel.
+
+### Importation des données
+
+Nous chargeons les individus supplémentaires.
+
+```{python}
+# Individus supplémentaires
+Dsup = pd.read_excel("./data/races_canines_acm.xls",
+                     header=0,sheet_name=1,index_col=0)
+print(Dsup)
+```
+
+### Coordonnées des individus supplémentaires
+
+L'objet \og DISCA \fg{} contient la fonction \texttt{transform()} bien connue des utilisateurs de scikit-learn. Elle permet d'obtenir les coordonnées des individus dans l'espace factoriel.
+
+```{python}
+# Coordonnées des individus supplémentaires
+ind_sup_coord = disca.transform(Dsup)
+```
+
+```{r,engine='R',echo=FALSE}
+knitr::kable(py$ind_sup_coord, 
+             caption = "Coordonnées des individus supplémentaires",
+             booktabs = TRUE,linesep = "") %>% 
+  kableExtra::kable_styling(font_size = 8,
+                            position = "center",
+                            latex_options = c("striped", "hold_position","repeat_header"))
+```
+
+On rajoute ces individus au plan factoriel
+
+```{python,fig.cap="Carte des individus"}
+# Projection des points modalités
+p = (ggplot(rowcoord,aes(x="Dim.1",y="Dim.2",label=rowcoord.index))+
+        geom_point(aes(color=rowcoord.Fonction))+
+        geom_text(aes(color=rowcoord.Fonction),
+                  adjust_text={'arrowprops': {'arrowstyle': '-','lw':1.0}})+
+        geom_hline(yintercept=0,colour="black",linetype="--")+
+        geom_vline(xintercept=0,colour="black",linetype="--")+
+        theme(legend_direction="vertical",legend_position=(0.5,0.2))+
+        labs(color="Variable")+
+        annotate("text",x=ind_sup_coord["Dim.1"].values,
+                        y=ind_sup_coord["Dim.2"].values,
+                    label=ind_sup_coord.index))
+print(p)
+```
+
+### Distances euclidiennes aux classes
+
+La fonction \texttt{decision\_function()} permet de calculer les distances euclidiennes aux centres de classes.
+
+```{python}
+# Distances euclidiennes aux classes
+disca.decision_function(Dsup)
+```
+
+
+### Probabilités d'affectation
+
+L'objet \og discrimintools \fg{} calcule les probabilités d'affectation aux classes avec \texttt{predict\_proba()}.
+
+```{python}
+# probabilité d'affectation
+print(disca.predict_proba(Dsup))
+```
+
+### Prédiction
+
+On effectue la prédiction à partir de la matrice des explicatives des individus supplémentaires.
+
+```{python}
+# Prediction des individus supplémentaires
+ypred = disca.predict(Dsup)
+ypred
+```

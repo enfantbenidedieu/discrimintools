@@ -1,0 +1,262 @@
+\Chapter{\bf La méthode DISQUAL}
+
+Ce chapitre a pour objectif de présenter rapidement les principales fonctionnalités offertes par le package \og discrimintools \fg{} pour réaliser une analyse discriminante linéaire sur variables qualitatives.
+
+## Présentation de la méthode
+
+La méthode DISQUAL (discrimination sur variables qualitatives) repose sur l'enchaînement de plusieurs étapes :
+
+
+\begin{enumerate}
+\item Réaliser une ACM sur les variables explicatives catégorielles.
+\item Réaliser une ADL où l'on prédit la variable cible à l'aide des variables synthétiques (coordonnées factorielles des individus)
+ \item Exprimer les fonctions de classement définitives à partir des indicatrices des variables initiales.
+\end{enumerate}
+
+## Présentation des données
+
+Nous allons illustrer ce chapitre en utilisant les données \og Vote au congrès \fg{} (\emph{cf} Ricco Rakotomalala, Pratique de l'Analyse Discriminante Linéaire, version 1.0, 2020). Ces données recensent les votes de (n = $435$) parlementaires américains identifiés selon leur appartenance politique (Y = \og group \fg{} avec $K=2$ valeurs possibles $\{\text{republicain}, \text{democrat}\}$) sur différents thèmes en 1984.
+
+Ces données ont été subdivisées en apprentissage ($n_{\text{train}}=235$) et test ($n_{\text{test}}=200$).
+
+
+```{python}
+# Chargement des données - Base d'apprentissage
+import pandas as pd
+DTrain = pd.read_excel("./data/CongressVotePipeline.xlsx",sheet_name="train",
+                       header=0)
+DTrain.info()
+```
+
+#### Distribution relative
+
+Nous calculons la distribution relative des classes :
+
+```{python}
+# Distribution relative des classes
+d = (DTrain.group.value_counts(normalize=True).to_frame()
+                .rename(columns={"index":"group"}))
+print(d)
+```
+
+
+### Relation entre descriptifs et cible - V de Cramer
+
+Une première piste consiste à procéder à une simple analyse bivariée. Nous croisons chaque descripteur avec la variable cible. Nous disposons ainsi d'une première indication sur les liaisons individuelles de chaque descripteur avec \og Fonction \fg{}.
+
+```{python}
+# V de Cramer
+import scientistmetrics as st
+# 
+K = DTrain.shape[1]-1
+cramerV = st.scientistmetrics(DTrain)
+cramerV = (cramerV.iloc[:K,K].to_frame()
+                  .sort_values(by="group",ascending=False))
+print(cramerV)
+```
+
+
+## Analyse avec discrimintools
+
+## Modélisation avec discrimintools
+
+Sage précaution avec les packages pour Python, nous affichons le numéro de la version de \og discrimintools \fg{} utilisée dans ce tutoriel. 
+
+```{python}
+# version
+import discrimintools
+print(discrimintools.__version__)
+```
+
+Nous fonctionnons avec la version \og 0.0.1 \fg{}.
+
+```{python}
+# Importation
+from discrimintools import DISQUAL
+```
+
+On crée une instance de la classe DISQUAL, en lui passant ici des étiquettes pour les variables explicatives et la variable cible. 
+
+```{python}
+# Instanciation
+disqual = DISQUAL(n_components=None,target=["group"],priors="prop")
+```
+
+On estime le modèle en appliquant la méthode \texttt{.fit} de la classe DISQUAL sur le jeu de données.
+
+```{python}
+# Entraînement du modèle
+disqual.fit(DTrain)
+```
+
+### Inspection de l'objet DISQUAL
+
+\begin{itemize}
+\item \texttt{statistics\_["chi2"]} correspond au test de chi2 entre variables qualitatives et la cible
+\end{itemize}
+
+```{python}
+# test statistique de chi2
+print(disqual.statistics_["chi2"])
+```
+
+## Analyse des correspondances multiples
+
+La méthode disqual retourne l'objet \og factor\_model\_ \fg{} pour l'ACM.
+
+```{python}
+# MCA
+mca = disqual.factor_model_
+```
+
+Visualisons les vaaleurs propres de l'ACM
+
+
+```{python}
+# Valeurs propres
+from scientisttools import fviz_screeplot
+p = fviz_screeplot(mca,choice="eigenvalue")
+print(p)
+```
+
+
+### Coordonnées des modalités
+
+Nous affichons les coordonnées des modalités.
+
+```{python}
+# Coordonées des modalités
+mca.var_["coord"].iloc[:,:2]
+```
+
+
+### Coefficients de projection
+
+Les coefficients de projection appliqués sur les indicatrices, permettent d'obtenir les coordonnées factorielles des individus. Ils définissent les variables latentes.
+
+```{python}
+# Fonction de projection
+disqual.projection_function_.iloc[:,:2]
+```
+
+## Analyse discriminante sur facteurs
+
+Avec l'analyse discriminante linéaire, nous cherchons à prédire le \og group \fg{} d'appartenance politique à partir des \og n\_components \fg{} composantes de l'ACM. n\_components est un hyperparamètre de l'algorithme DISQUAL. Le réduire améliore les propriétés de régularisation, mais nous prenons le risque de ne pas capter suffisamment les informations véhiculées par les données. L’augmenter nous fait prendre le risque du surapprentissage.
+
+### Coefficients de l'ADL
+
+Les coefficients des fonctions de classement sont :
+
+```{python}
+# Coefficients
+disqual.lda_model_.coef_
+```
+
+### Coefficients de DISQUAL
+
+Nous exprimons les fonctions de classement dans l'espace originel des indicatrices.
+
+```{python}
+# Coefficients
+disqual.coef_
+```
+
+Toutes les indicatrices dont représentées.
+
+## Evaluation en Test
+
+L'évaluation sur l'échantillon test est une approche priviligiée pour mesurer et comparer les performances des modèles de nature et de complexité différente. Dans cette section, nous traitons la seconde feuille \og test \fg{} comportant $200$ observations de notre classeur Excel.
+
+### Importation des données
+
+Nous chargeons la feuille \og test \fg{}. 
+
+```{python}
+# chargement échantillon test
+DTest = pd.read_excel("./data/CongressVotePipeline.xlsx",sheet_name="test",header=0)
+print(DTest.info())
+```
+
+Nous affichons pour vérification la distribution des classes.
+
+```{python}
+# Distribution relative des classes
+dtest = (DTest.group.value_counts(normalize=True).reset_index()
+                   .rename(columns={"index":"group"}))
+print(dtest)
+```
+
+### Prédiction des classes sur l'échantillon d'apprentissage
+
+Il y a deux étapes dans l'évaluation : 
+\begin{enumerate}
+\item Effectuer la prédiction à partir de la matrice des explicatives de l'échantillon test;
+\item Confronter les prédictions de l'étape 1 avec les classes observées.
+\end{enumerate}
+
+### Probabilité d'appartenance
+
+L'objet \og discrimintools \fg{} calcule les probabilités d'affectation aux classes avec \texttt{predict\_proba()}. Elle permettent une analyse plus fine de la qualité du modèle, via la construction de la courbe ROC par exemple, dont le principe reste valable pour les problèmes multi - classes.
+
+```{python}
+# Matrice X en Test
+XTest = DTest.drop(columns=["group"])
+# Probabilité d'appartenance
+print(disqual.predict_proba(XTest).head(6))
+```
+
+
+### Classe d'appartenance
+
+L'objet \og discrimintools \fg{} calcule les classes d'appartenance avec la fonction \texttt{predict()}. Elle permet de produire les prédictions à partir de la matrice des explicatives en test.
+
+```{python}
+# Prédiction sur XTest
+y_pred = disqual.predict(XTest)
+```
+
+On calcule la distribution d'appartenance
+
+```{python}
+# Distribution des classes prédictes
+y_pred.value_counts(normalize=False).to_frame()
+```
+
+$111$ observations ont été prédite \og democrat \fg{} et  $89$ \og republican \fg{}.
+
+### Matrice de confusion et taux de bon classement
+
+La matrice de confusion est issue de la confrontation entre ces prédictions et les classes observées. Nous faisons appel au module \og \href{https://scikit-learn.org/stable/modules/model_evaluation.html}{metrics} \fg{} de la librairie \og \href{https://scikit-learn.org/stable/index.html}{scikit-learn} \fg{}.
+
+```{python,fig.cap = "Matrice de confusion",out.width="70%"}
+# Matrice de confusion
+import matplotlib.pyplot as plt
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+cm = confusion_matrix(DTest.group,y_pred,
+                      labels=disqual.lda_model_.classes_["classes"])
+disp = ConfusionMatrixDisplay(confusion_matrix=cm,
+                              display_labels=disqual.lda_model_.classes_["classes"])
+disp.plot(cmap=plt.cm.Blues,values_format='g');
+plt.show()
+```
+
+
+La fonction \texttt{score()} nous donne le taux de reconnaissance (ou taux de succès).
+
+```{python}
+# Taux de succès
+score = disqual.score(XTest,DTest.group)
+print(score)
+```
+
+Notre taux de succès est de `r 100*round(py$score,2)`$\%$.
+
+La fonction \texttt{classification\_report()} génère un rapport sur les performances globales, mais aussi sur les reconnaissances par classe (rappel, précision et F-Measure[F1-Score])
+
+```{python}
+# rapport
+from sklearn.metrics import classification_report
+print(classification_report(DTest.group,y_pred))
+```
+
+Nous retrouvons, entre autres le taux de succès de `r 100*round(py$score,2)`$\%$s.

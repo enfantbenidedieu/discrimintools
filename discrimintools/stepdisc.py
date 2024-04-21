@@ -306,7 +306,7 @@ class STEPDISC(BaseEstimator,TransformerMixin):
             if model.model_ == "lda":
                 new_model = LDA(target=[model.call_["target"]],features=selectedVar,priors=model.call_["priors"]).fit(dataset)
             elif model.model_ == "candisc":
-                new_model = CANDISC(target=[model.call_["target"]],priors=model.call_["priors"]).fit(dataset)
+                new_model = CANDISC(target=[model.call_["target"]],features=selectedVar,priors=model.call_["priors"]).fit(dataset)
             
             self.results_ = {**self.results_,**{"train" : new_model}}
         

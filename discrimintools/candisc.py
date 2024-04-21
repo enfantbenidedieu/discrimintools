@@ -346,7 +346,7 @@ class CANDISC(BaseEstimator,TransformerMixin):
         # Compute MULTIVARIATE ANOVA - MANOVA Test
         manova = MANOVA.from_formula(formula="{}~{}".format("+".join(x.columns),"+".join(self.target)), data=X).mv_test(skip_intercept_test=True)
 
-        statistics = {"anova" : anova,"manova" : manova,"Eta2" : eta2_res,"univariate" : univ_test}
+        statistics = {"anova" : anova,"manova" : manova,"Eta2" : eta2_res,"univariate" : univ_test, "stats" : stats}
 
         # Summary information
         summary_infos = pd.DataFrame({
