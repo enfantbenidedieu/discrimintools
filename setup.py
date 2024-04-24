@@ -23,8 +23,7 @@ setuptools.setup(
                       "mapply>=0.1.21",
                       "scientisttools>=0.1.4",
                       "statsmodels>=0.14.0",
-                      "scipy>=1.10.1"
-                      ],
+                      "scipy>=1.10.1"],
     python_requires=">=3.10",
     include_package_data=True,
     package_data={"": ["data/*.xlsx",

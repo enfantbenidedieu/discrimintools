@@ -65,4 +65,4 @@ The docstring is written in english
 
 ## Authors
 
-Duvérier DJIFCK ZEBAZE [duverierdjifack@gmail.com](mailto:duverierdjifack@gmail.com)
+Duvérier DJIFACK ZEBAZE [duverierdjifack@gmail.com](mailto:duverierdjifack@gmail.com)
