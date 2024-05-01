@@ -317,13 +317,13 @@ class CANDISC(BaseEstimator,TransformerMixin):
 
         ###################################### Set number of components ##########################################
         if self.n_components is None:
-            n_components = min(n_features-1,n_classes - 1)
+            n_components = n_classes - 1
         elif not isinstance(self.n_components,int):
             raise ValueError("'n_components' must be an integer.")
         elif self.n_components < 1:
             raise ValueError("'n_components' must be equal or greater than 1.")
         else:
-            n_components = min(self.n_components,n_features-1,n_classes - 1)
+            n_components = min(self.n_components,n_classes - 1)
 
         # Compute statistiques for quantitatives variables
         stats = x.describe().T

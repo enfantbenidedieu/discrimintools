@@ -28,15 +28,15 @@ discrimintools requires
 
 ```
 Python >= 3.10
-numpy >= 1.26.4
+numpy >=1.26.4
 pandas >=2.2.2
 scikit-learn >=1.2.2
-polars >= 0.19.2
-plotnine >= 0.10.1
-mapply >= 0.1.21
-scientisttools >= 0.1.4
-statsmodels >= 0.14.0
-scipy >= 1.10.1
+polars >=0.19.2
+plotnine >=0.10.1
+mapply >=0.1.21
+scientisttools >=0.1.5
+statsmodels >=0.14.0
+scipy >=1.10.1
 ```
 
 ### User installation

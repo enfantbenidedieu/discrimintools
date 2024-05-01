@@ -27,7 +27,7 @@ from .pcada import PCADA
 # Stepwise discriminant analysis
 from .stepdisc import STEPDISC
 
-from .version import __version__
+__version__ = '0.0.2'
 __name__ = "discrimintools"
 __author__ = 'Duvérier DJIFACK ZEBAZE'
 __email__ = 'duverierdjifack@gmail.com'

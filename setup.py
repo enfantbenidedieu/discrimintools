@@ -8,7 +8,7 @@ with open("README.md", "r",encoding="utf-8") as fh:
 # Setting up
 setuptools.setup(
     name="discrimintools",
-    version="0.0.1",
+    version="0.0.2",
     author="Duvérier DJIFACK ZEBAZE",
     author_email="duverierdjifack@gmail.com",
     description="Python package dedicated to Discriminant Analysis (DA) distributed under the MIT License",
@@ -21,7 +21,7 @@ setuptools.setup(
                       "polars>=0.19.2",
                       "plotnine>=0.10.1",
                       "mapply>=0.1.21",
-                      "scientisttools>=0.1.4",
+                      "scientisttools>=0.1.5",
                       "statsmodels>=0.14.0",
                       "scipy>=1.10.1"],
     python_requires=">=3.10",
