@@ -1,8 +1,10 @@
-# discrimintools : Python library for discriminant analysis
+<center>
+    <img src="./figures/discrimintools.svg" alt="centered image" height="50%"/>
+</center>
 
-## About discrimintools
+# discrimintools : Python library for Discriminant Analysis (DA)
 
-discrimintools is a Python package dedicated to Discriminant Analysis (DA) distributed under the MIT License.
+discrimintools is a python package dedicated to Discriminant Analysis (DA) distributed under the MIT License.
 
 ## Overview
 
