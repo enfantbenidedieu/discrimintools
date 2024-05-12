@@ -438,7 +438,7 @@ class LDA(BaseEstimator,TransformerMixin):
         # Inverse de la matrice de variance - covariance intra - class
         invW = np.linalg.inv(W)
 
-        # Calcul des coeffcients des variabes - features
+        # Calcul des coefficients des variabes - features
         coef = g_k.dot(invW).rename_axis(None).T
         coef.index = x.columns
 
