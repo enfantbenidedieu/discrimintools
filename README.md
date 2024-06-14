@@ -28,7 +28,7 @@ With this discrimintools package, you can perform :
 
 discrimintools requires 
 
-```
+```python
 Python >= 3.10
 numpy >=1.26.4
 pandas >=2.2.2
@@ -45,7 +45,7 @@ scipy >=1.10.1
 
 You can install discrimintools using pip :
 
-```
+```python
 pip install discrimintools
 ```
 
