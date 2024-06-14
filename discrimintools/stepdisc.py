@@ -12,40 +12,43 @@ class STEPDISC(BaseEstimator,TransformerMixin):
     """
     Stepwise Discriminant Analysis (STEPDISC)
     -----------------------------------------
+    This class inherits from sklearn BaseEstimator and TransformerMixin class
 
     Description
     -----------
+    Performs a stepwise discriminant analysis to select a subset of the quantitative variables for use in discriminating among the classes. It can be used for forward selection, backward elimination.
 
-    This class inherits from sklearn BaseEstimator and TransformerMixin class
-
-    Performs a stepwise discriminant analysis to select a subset of the quantitative variables for use
-    in discriminating among the classes. It can be used for forward selection, backward elimination.
-
+    Usage
+    -----
+    ```python
+    >>> STEPDISC(model = None, method="forward", alpha=0.01, lambda_init = None, model_train = False, verbose = True)
+    ```
+    
     Parameters
     ----------
-    model : an object of class LDA, CANDISC
+    `model` : an object of class LDA, CANDISC
 
-    method : the feature selection method to be used :
-                - "forward" for forward selection, 
-                - "backward" for backward elimination
+    `method` : the feature selection method to be used :
+        * "forward" for forward selection, 
+        * "backward" for backward elimination
 
-    alpha : Specifies the significance level for adding or retaining variables in stepwise variable selection, default = 0.01
+    `alpha` : Specifies the significance level for adding or retaining variables in stepwise variable selection, default = 0.01
             
-    lambda_init : Initial Wilks Lambda/ Default = None
+    `lambda_init` : Initial Wilks Lambda/ Default = None
 
-    model_train : if model should be train with selected variables
+    `model_train` : if model should be train with selected variables
 
-    verbose : boolean, 
-                - if True, print intermediary steps during feature selection (default)
-                - if False
+    `verbose` : boolean, 
+        * if True, print intermediary steps during feature selection (default)
+        * if False
     
-    Return
-    ------
-    call_ : a dictionary with some statistics
+    Attributes
+    ----------
+    `call_` : dictionary with some statistics
 
-    results_ : a dictionary with stepwise results
+    `results_` : dictionary with stepwise results
 
-    model_ : string. The model fitted = 'stepdisc'
+    `model_` : string specifying the model fitted = 'stepdisc'
 
     Author(s)
     ---------
@@ -53,8 +56,21 @@ class STEPDISC(BaseEstimator,TransformerMixin):
 
     References
     ----------
-    SAS documentation, https://documentation.sas.com/doc/en/pgmsascdc/9.4_3.3/statug/statug_stepdisc_overview.htm
     Ricco Rakotomalala, Pratique de l'analyse discriminante linéaire, Version 1.0, 2020
+
+    Links
+    -----
+    SAS documentation, https://documentation.sas.com/doc/en/pgmsascdc/9.4_3.3/statug/statug_stepdisc_overview.htm
+
+    Examples
+    --------
+    >>> # load wine dataset
+    >>> from discrimintools.datasets import load_wine
+    >>> wine = load_wine()
+    >>> from discrimintools import LDA, STEPDISC
+    >>> res_lda = LDA(target=["Cultivar"],features=None,priors="prop")
+    >>> res_lda.fit(wine)
+    >>> res_stepdisc = STEPDISC(model=res_lda,method="forward",model_train=True,verbose=True)
     """
     def __init__(self,
                  model = None,

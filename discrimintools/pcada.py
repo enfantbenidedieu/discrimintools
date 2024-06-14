@@ -45,17 +45,19 @@ class PCADA(BaseEstimator,TransformerMixin):
 
     Attributes
     ----------
-    coef_ : pandas dataframe of shape (n_features, n_classes)
+    `call_` : dictionary with some statistics
 
-    intercept_ : pandas dataframe of shape (1, n_classes)
+    `coef_` : pandas dataframe of shape (n_features, n_classes)
 
-    lda_model_ : linear discriminant analysis (LDA) model
+    `intercept_` : pandas dataframe of shape (1, n_classes)
 
-    factor_model_ : principal components analysis (PCA) model
+    `lda_model_` : linear discriminant analysis (LDA) model
 
-    projection_function_ : projection function
+    `factor_model_` : principal components analysis (PCA) model
 
-    model_ : string specifying the model fitted = 'pcada'
+    `projection_function_` : projection function
+
+    `model_` : string specifying the model fitted = 'pcada'
 
     Author(s)
     ---------

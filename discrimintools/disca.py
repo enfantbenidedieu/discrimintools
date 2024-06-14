@@ -118,7 +118,7 @@ class DISCA(BaseEstimator,TransformerMixin):
     --------
     ```python
     >>> # load canines dataset
-    >>> from discrimintools import load_canines
+    >>> from discrimintools.datasets import load_canines
     >>> canines = load_canines()
     >>> from discrimintools import DISCA
     >>> res_disca = DISCA(n_components=2,target=["Fonction"],priors = "prop")

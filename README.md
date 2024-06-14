@@ -17,8 +17,8 @@ With this discrimintools package, you can perform :
 * Canonical Discriminant Analysis (CANDISC)
 * Linear Discriminant Analysis (LDA)
 * Principal Components Analysis - Discriminant Analysis (PCADA)
-* Discriminant Analysis for qualitatives/categoricals variables (DISQUAL)
-* Discriminant Analysis of Mixed Data (DISMIX)
+* Discriminant Analysis on Qualitatives variables (DISQUAL)
+* Discriminant Analysis on Mixed Data (DISMIX)
 * Discriminant Correspondence Analysis (DISCA)
 * Stepwise Discriminant Analysis (STEPDISC)
 

@@ -108,7 +108,7 @@ def fviz_disca_ind(self,
     ---------
     ```python
     >>> # load canines dataset
-    >>> from discrimintools import load_canines
+    >>> from discrimintools.datasets import load_canines
     >>> canines = load_canines()
     >>> from discrimintools import DISCA, fviz_disca_ind
     >>> res_disca = DISCA(n_components=2,target=["Fonction"],priors = "prop")
@@ -283,7 +283,7 @@ def fviz_disca_mod(self,
     ---------
     ```python
     >>> # load canines dataset
-    >>> from discrimintools import load_canines
+    >>> from discrimintools.datasets import load_canines
     >>> canines = load_canines()
     >>> from discrimintools import DISCA, fviz_disca_mod
     >>> res_disca = DISCA(n_components=2,target=["Fonction"],priors = "prop")

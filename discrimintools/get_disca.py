@@ -35,7 +35,7 @@ def get_disca_ind(self):
     --------
     ```python
     >>> # load canines dataset
-    >>> from discrimintools import load_canines
+    >>> from discrimintools.datasets import load_canines
     >>> canines = load_canines()
     >>> from discrimintools import DISCA, get_disca_ind
     >>> res_disca = DISCA(n_components=2,target=["Fonction"],priors = "prop")
@@ -68,7 +68,7 @@ def get_disca_var(self):
 
     Returns
     -------
-    a dictionary of dataframes containing all the results for the active variables/categories including:
+    dictionary of dataframes containing all the results for the active variables/categories including:
 
     `coord` : factor coordinates for the variables/categories
 
@@ -84,7 +84,7 @@ def get_disca_var(self):
     --------
     ```python
     >>> # load canines dataset
-    >>> from discrimintools import load_canines
+    >>> from discrimintools.datasets import load_canines
     >>> canines = load_canines()
     >>> from discrimintools import DISCA, get_disca_var
     >>> res_disca = DISCA(n_components=2,target=["Fonction"],priors = "prop")
@@ -134,7 +134,7 @@ def get_disca_classes(self):
     --------
     ```python
     >>> # load canines dataset
-    >>> from discrimintools import load_canines
+    >>> from discrimintools.datasets import load_canines
     >>> canines = load_canines()
     >>> from discrimintools import DISCA, get_disca_classes
     >>> res_disca = DISCA(n_components=2,target=["Fonction"],priors = "prop")
@@ -178,7 +178,7 @@ def get_disca_coef(self):
     --------
     ```python
     >>> # load canines dataset
-    >>> from discrimintools import load_races_canines
+    >>> from discrimintools.datasets import load_canines
     >>> canines = load_canines()
     >>> from discrimintools import DISCA, get_disca_coef
     >>> res_disca = DISCA(n_components=2,target=["Fonction"],priors = "prop")
@@ -228,7 +228,7 @@ def get_disca(self,choice="ind"):
     --------
     ```python
     >>> # load canines dataset
-    >>> from discrimintools import load_canines
+    >>> from discrimintools.datasets import load_canines
     >>> canines = load_canines()
     >>> from discrimintools import DISCA, get_disca
     >>> res_disca = DISCA(n_components=2,target=["Fonction"],priors = "prop")
@@ -297,7 +297,7 @@ def summaryDISCA(self,digits=3,nb_element=10,ncp=3,to_markdown=False,tablefmt = 
     --------
     ```python
     >>> # load canines dataset
-    >>> from discrimintools import load_canines
+    >>> from discrimintools.datasets import load_canines
     >>> canines = load_canines()
     >>> from discrimintools import DISCA, summaryDISCA
     >>> res_disca = DISCA(n_components=2,target=["Fonction"],priors = "prop")

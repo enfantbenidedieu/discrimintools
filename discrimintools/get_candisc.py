@@ -37,9 +37,9 @@ def get_candisc_ind(self):
     >>> from seaborn import load_dataset
     >>> iris = load_dataset("iris")
     >>> from discrimintools import CANDISC, get_candisc_ind
-    >>> candisc = CANDISC(n_components=2,target=["species"],priors="prop",parallelize=False)
-    >>> candisc.fit(iris)
-    >>> ind = get_candisc_ind(candisc)
+    >>> res_candisc = CANDISC(n_components=2,target=["species"],priors="prop",parallelize=False)
+    >>> res_candisc.fit(iris)
+    >>> ind = get_candisc_ind(res_candisc)
     ```
     """
     if self.model_ != "candisc":
@@ -84,12 +84,12 @@ def get_candisc_var(self,choice="correlation"):
     >>> from seaborn import load_dataset
     >>> iris = load_dataset("iris")
     >>> from discrimintools import CANDISC, get_candisc_var
-    >>> candisc = CANDISC(n_components=2,target=["species"],priors="prop",parallelize=False)
-    >>> candisc.fit(iris)
+    >>> res_candisc = CANDISC(n_components=2,target=["species"],priors="prop",parallelize=False)
+    >>> res_candisc.fit(iris)
     >>> # results for canonical correlation
-    >>> corr = get_candisc_var(candisc,choice="correlation") 
+    >>> corr = get_candisc_var(res_candisc,choice="correlation") 
     >>> # results for covariance
-    >>> covar = get_candisc(candisc,choice="covariance") 
+    >>> covar = get_candisc(res_candisc,choice="covariance") 
     ```
     """
     if self.model_ != "candisc":
@@ -141,12 +141,12 @@ def get_candisc_coef(self,choice="absolute"):
     >>> from seaborn import load_dataset
     >>> iris = load_dataset("iris")
     >>> from discrimintools import CANDISC, get_candisc_coef
-    >>> candisc = CANDISC(n_components=2,target=["species"],priors="prop",parallelize=False)
-    >>> candisc.fit(iris)
+    >>> res_candisc = CANDISC(n_components=2,target=["species"],priors="prop",parallelize=False)
+    >>> res_candisc.fit(iris)
     >>> # results for canonical coefficients
-    >>> cancoef = get_candisc_coef(candisc,choice="absolute") 
+    >>> cancoef = get_candisc_coef(res_candisc,choice="absolute") 
     >>> # results for classification coefficients
-    >>> classcoef = get_candisc_coef(candisc,choice="score") 
+    >>> classcoef = get_candisc_coef(res_candisc,choice="score") 
     ```
     """
     if self.model_ != "candisc":
@@ -198,18 +198,18 @@ def get_candisc(self,choice = "ind"):
     >>> from seaborn import load_dataset
     >>> iris = load_dataset("iris")
     >>> from discrimintools import CANDISC, get_candisc
-    >>> candisc = CANDISC(n_components=2,target=["species"],priors="prop",parallelize=False)
-    >>> candisc.fit(iris)
+    >>> res_candisc = CANDISC(n_components=2,target=["species"],priors="prop",parallelize=False)
+    >>> res_candisc.fit(iris)
     >>> # Results for individuals
-    >>> ind = get_candisc(candisc, choice = "ind")
+    >>> ind = get_candisc(res_candisc, choice = "ind")
     >>> # Results for variables - Canonical correlation
-    >>> cancorr = get_candisc(candisc, choice = "correlation")
+    >>> cancorr = get_candisc(res_candisc, choice = "correlation")
     >>> # Results for variables - covariance
-    >>> covar = get_candisc(candisc, choice = "covariance")
+    >>> covar = get_candisc(res_candisc, choice = "covariance")
     >>> # Canonical coefficients
-    >>> cancoef = get_candisc(candisc, choice = "absolute")
+    >>> cancoef = get_candisc(res_candisc, choice = "absolute")
     >>> # Coefficients of classification function
-    >>> classcoef = get_candisc(candisc, choice = "score")
+    >>> classcoef = get_candisc(res_candisc, choice = "score")
     ```
     """
     if self.model_ != "candisc":
@@ -267,9 +267,9 @@ def summaryCANDISC(self,digits=3,nb_element=10,ncp=3,to_markdown=False,tablefmt 
     >>> from seaborn import load_dataset
     >>> iris = load_dataset("iris")
     >>> from discrimintools import CANDISC, summaryCANDISC
-    >>> candisc = CANDISC(n_components=2,target=["species"],priors="prop",parallelize=False)
-    >>> candisc.fit(iris)
-    >>> summaryCANDISC(candisc)
+    >>> res_candisc = CANDISC(n_components=2,target=["species"],priors="prop",parallelize=False)
+    >>> res_candisc.fit(iris)
+    >>> summaryCANDISC(res_candisc)
     ```
     """
 

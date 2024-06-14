@@ -39,10 +39,10 @@ def get_lda_ind(self):
     >>> from seaborn import load_dataset
     >>> iris = load_dataset("iris")
     >>> from discrimintools import LDA, get_lda_ind
-    >>> lda = LDA(target=["species"],priors="prop")
-    >>> lda.fit(iris)
+    >>> res_lda = LDA(target=["species"],priors="prop")
+    >>> res_lda.fit(iris)
     >>> # Results for individuals
-    >>> ind = get_lda_ind(lda)
+    >>> ind = get_lda_ind(res_lda)
     ```
     """
     if self.model_ != "lda":
@@ -83,10 +83,10 @@ def get_lda_var(self):
     >>> from seaborn import load_dataset
     >>> iris = load_dataset("iris")
     >>> from discrimintools import LDA, get_lda_var
-    >>> lda = LDA(target=["species"],priors="prop")
-    >>> lda.fit(iris)
+    >>> res_lda = LDA(target=["species"],priors="prop")
+    >>> res_lda.fit(iris)
     >>> # covariance
-    >>> covar = get_lda_var(lda) 
+    >>> covar = get_lda_var(res_lda) 
     ```
     """
     if self.model_ != "lda":
@@ -127,10 +127,10 @@ def get_lda_coef(self):
     >>> from seaborn import load_dataset
     >>> iris = load_dataset("iris")
     >>> from discrimintools import LDA, get_lda_coef
-    >>> lda = LDA(target=["species"],priors="prop")
-    >>> lda.fit(iris)
+    >>> res_lda = LDA(target=["species"],priors="prop")
+    >>> res_lda.fit(iris)
     >>> # results for classification coefficients
-    >>> classcoef = get_lda_coef(lda) 
+    >>> classcoef = get_lda_coef(res_lda) 
     ```
     """
     if self.model_ != "lda":
@@ -176,14 +176,14 @@ def get_lda(self,choice = "ind"):
     >>> from seaborn import load_dataset
     >>> iris = load_dataset("iris")
     >>> from discrimintools import LDA, get_lda
-    >>> lda = LDA(target=["species"],priors="prop")
-    >>> lda.fit(iris)
+    >>> res_lda = LDA(target=["species"],priors="prop")
+    >>> res_lda.fit(iris)
     >>> # Results for individuals
-    >>> ind = get_lda(lda, choice = "ind")
+    >>> ind = get_lda(res_lda, choice = "ind")
     >>> # Results for variables - covariance
-    >>> covar = get_lda(lda, choice = "cov")
+    >>> covar = get_lda(res_lda, choice = "cov")
     >>> # Coefficients of classification function
-    >>> classcoef = get_lda(lda, choice = "coef")
+    >>> classcoef = get_lda(res_lda, choice = "coef")
     ```
     """
     if self.model_ != "lda":
@@ -239,9 +239,9 @@ def summaryLDA(self,digits=3,nb_element=10,to_markdown=False,tablefmt = "pipe",*
     >>> from seaborn import load_dataset
     >>> iris = load_dataset("iris")
     >>> from discrimintools import LDA, summaryLDA
-    >>> lda = LDA(target=["species"],priors="prop")
-    >>> lda.fit(iris)
-    >>> summaryLDA(lda)
+    >>> res_lda = LDA(target=["species"],priors="prop")
+    >>> res_lda.fit(iris)
+    >>> summaryLDA(res_lda)
     ```
     """
     if self.model_ != "lda":

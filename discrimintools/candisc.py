@@ -141,8 +141,8 @@ class CANDISC(BaseEstimator,TransformerMixin):
     >>> from seaborn import load_dataset
     >>> iris = load_dataset("iris")
     >>> from discrimintools import CANDISC
-    >>> candisc = CANDISC(n_components=2,target=["species"],priors="prop",parallelize=False)
-    >>> candisc.fit(iris)
+    >>> res_candisc = CANDISC(n_components=2,target=["species"],priors="prop",parallelize=False)
+    >>> res_candisc.fit(iris)
     ```
     """
     def __init__(self,
