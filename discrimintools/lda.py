@@ -19,46 +19,64 @@ class LDA(BaseEstimator,TransformerMixin):
     Linear Discriminant Analysis (LDA)
     ----------------------------------
 
-    Description
-    -----------
-
     This class inherits from sklearn BaseEstimator and TransformerMixin class
 
-    Develops a discriminant criterion to classify each observation into groups
+    Description
+    -----------
+    Performs linear discriminant criterion to classify each observation into groups
+
+    Usage
+    -----
+    ```python
+    >>> LDA(target = None, features = None, priors = None)
+    ```
 
     Parameters:
-    ----------
+    -----------
+    `target` : The values of the classification variable define the groups for analysis.
 
-    target : The values of the classification variable define the groups for analysis.
+    `features` : list of quantitative variables to be included in the analysis. The default is all numeric variables in dataset
 
-    features : list of quantitative variables to be included in the analysis. The default is all numeric variables in dataset
-
-    priors : The priors statement specifies the prior probabilities of group membership.
-                - "equal" to set the prior probabilities equal,
-                - "proportional" or "prop" to set the prior probabilities proportional to the sample sizes
-                - a pandas series which specify the prior probability for each level of the classification variable.
+    `priors` : The priors statement specifies the prior probabilities of group membership.
+        * "equal" to set the prior probabilities equal,
+        * "proportional" or "prop" to set the prior probabilities proportional to the sample sizes
+        * a pandas series which specify the prior probability for each level of the classification variable.
         
-    Returns
-    ------
-    call_ : a dictionary with some statistics
+    Attributes:
+    -----------
+    `summary_information_` :  summary information about the variables in the analysis. This information includes the number of observations, the number of quantitative variables in the analysis, and the number of classes in the classification variable. The frequency of each class is also displayed.
 
-    coef_ : DataFrame of shape (n_features,n_classes_)
+    `ind_` : dictionary of pandas dataframe containing all the results for the active individuals (coordinates, generalized square distance)
 
-    intercept_ : DataFrame of shape (1, n_classes)
+    `statistics_` : dictionary containing the some statistics results including :
+        * `anova` : pandas dataframe containing analysis of variance test
+        * `manova` : pandas dataframe containing multivariate analysis of variance test
+        * `eta2` : pandas dataframe containing square correlation ratio test
+        * `univariate` : pandas dataframe containing univariate linear model result
+        * `stats` : pandas dataframe containing descriptive statistics for feature (mean, std. dev., max., min., )
+        * `information` : pandas dataframe containing the class level information (ferquence, proportion, priors)
+        * `pooled_information` : pandas dataframe containing the pooled information of the within covariance matrix
+        * `performance` : pandas dataframe containing the model global performance
+        * `statistical_evaluation` : pandas dataframe containing the statistical evaluation
+    
+    `classes_` : dictionary containing classes information including : 
+        * `classes` : classe distribution
+        * `mean` : pandas dataframe containing the mean by class
+        * `cov` : pandas dataframe containing the covariance by class
+        * `mahalanobis` : pandas dataframe containing the square mahalanobis distance
+    
+    `cov_` : dictionary containing covariances matrix including :
+        * `total` : total-sample covariance matrix
+        * `within` : within covariance matrix
+        * `between` : between covariance matrix
+    
+    `coef_` : pandas dataframe of shape (n_features, n_classes) containing the coefficients of linear discriminant analysis
 
-    summary_information_ :  summary information about the variables in the analysis. This information includes the number of observations, 
-                            the number of quantitative variables in the analysis, and the number of classes in the classification variable. 
-                            The frequency of each class is also displayed.
+    `intercept_` : pandas dataframe of shape (1, n_classes)  containing the intercept of linear discriminant analysis.
+    
+    `call_` : dictionary with some statistics
 
-    ind_ : a dictionary of pandas dataframe containing all the results for the active individuals (coordinates)
-
-    statistics_ : statistics
-
-    classes_ : classes informations
-
-    cov_ : covariances
-
-    model_ : string. The model fitted = 'lda'
+    `model_` : string. The model fitted = 'lda'
 
     Author(s)
     ---------
@@ -66,8 +84,34 @@ class LDA(BaseEstimator,TransformerMixin):
 
     References
     ----------
-    SAS Documentation, https://documentation.sas.com/doc/en/pgmsascdc/9.4_3.3/statug/statug_discrim_overview.htm
+    Bardos M., Analyse discriminante - Application au risque et scoring financier, Dunod, 2001.
+
     Ricco Rakotomalala, Pratique de l'analyse discriminante linéaire, Version 1.0, 2020
+
+    Tenenhaus M., Méthodes statistiques en gestion, Dunod
+
+    Links
+    -----
+    SAS Documentation, https://documentation.sas.com/doc/en/pgmsascdc/9.4_3.3/statug/statug_discrim_overview.htm
+
+    https://fr.wikipedia.org/wiki/Analyse_discriminante_lin%C3%A9aire
+
+    https://online.stat.psu.edu/stat505/lesson/10/10.3
+
+    See also
+    --------
+    get_lda_ind, get_lda_var, get_lda_coef, get_lda, summaryLDA
+
+    Examples
+    --------
+    ```python
+    >>> # load iris dataset
+    >>> from seaborn import load_dataset
+    >>> iris = load_dataset("iris")
+    >>> from discrimintools import LDA
+    >>> lda = LDA(target=["species"],priors="prop")
+    >>> lda.fit(iris)
+    ```
     """
     def __init__(self,
                  target = None,
@@ -84,8 +128,10 @@ class LDA(BaseEstimator,TransformerMixin):
 
         Parameters
         ----------
-        X : pandas/polars DataFrame,
+        `X` : pandas/polars DataFrame of shape (n_samples, n_features + 1)
             Training Data
+        
+        `y` : None. y is ignored.
         
         Returns:
         --------
@@ -100,13 +146,13 @@ class LDA(BaseEstimator,TransformerMixin):
 
             Parameters
             ----------
-            wcov : pandas dataframe, within covariance matrix
+            `wcov` : pandas dataframe, within covariance matrix
             
-            gmean : pandas dataframe, conditional mean
+            `gmean` : pandas dataframe, conditional mean
 
             Return
             ------
-            dist2 : square mahalanobis distance
+            `dist2` : square mahalanobis distance
             """
             # Invesion
             invW = pd.DataFrame(np.linalg.inv(wcov),index=wcov.index,columns=wcov.columns)
@@ -140,10 +186,9 @@ class LDA(BaseEstimator,TransformerMixin):
 
             Parameters
             ----------
-            stdev : float. 
-                Total Standard Deviation
-            model : OLSResults.
-                Results class for for an OLS model.
+            `stdev` : float. Total Standard Deviation
+            
+            `model` : OLSResults. Results class for for an OLS model.
             
             Return
             -------
@@ -158,15 +203,15 @@ class LDA(BaseEstimator,TransformerMixin):
 
             Parameters
             ----------
-            X : pandas dataframe of shape (n_rows, n_features)
+            `X` : pandas dataframe of shape (n_rows, n_features)
 
-            wcov : pandas dataframe, within covariance matrix
+            `wcov` : pandas dataframe, within covariance matrix
 
-            gmean : pandas dataframe, conditional mean
+            `gmean` : pandas dataframe, conditional mean
 
-            classes : class groups
+            `classes` : class groups
 
-            priors : Class priors (sum to 1)
+            `priors` : Class priors (sum to 1)
 
             Return
             ------
@@ -188,15 +233,15 @@ class LDA(BaseEstimator,TransformerMixin):
 
             Parameters
             ----------
-            V : pandas dataframe, total covariance matrix
+            `V` : pandas dataframe, total covariance matrix
 
-            W : pandas dataframe, within covariance matrix
+            `W` : pandas dataframe, within covariance matrix
 
-            n_classes : number of classes
+            `n_classes` : number of classes
             
             Returns:
             --------
-            manova : Multivariate Anova
+            `manova` : Multivariate Analysis of Variance
             """
 
             # Set number of features
@@ -365,7 +410,7 @@ class LDA(BaseEstimator,TransformerMixin):
         # Compute MULTIVARIATE ANOVA - MANOVA Test
         manova = MANOVA.from_formula(formula="{}~{}".format("+".join(x.columns),"+".join(self.target)), data=X).mv_test(skip_intercept_test=True)
 
-        statistics = {"anova" : anova,"manova" : manova,"Eta2" : eta2_res,"univariate" : univ_test,"stats" : stats}
+        statistics = {"anova" : anova,"manova" : manova,"eta2" : eta2_res,"univariate" : univ_test,"stats" : stats}
 
         # Summary information
         summary_infos = pd.DataFrame({
@@ -488,19 +533,18 @@ class LDA(BaseEstimator,TransformerMixin):
     def transform(self,X):
         """
         Project data to maximize class separation
-        -----------------------------------------
+        ------------------------------------------
 
         Parameters
         ----------
-        X : DataFrame of shape (n_samples_, n_features_)
+        `X` : pandas/polars dataframe of shape (n_samples, n_features)
             Input data
         
         Returns:
         --------
-        X_new : DataFrame of shape (n_samples_, n_classes_)
+        `X_new` : pandas dataframe of shape (n_samples, n_classes)
             Transformed data.
         """
-
         # check if X is an instance of polars dataframe
         if isinstance(X,pl.DataFrame):
             X = X.to_pandas()
@@ -519,21 +563,25 @@ class LDA(BaseEstimator,TransformerMixin):
         X = X[self.call_["features"]]
         return X.dot(self.coef_).add(self.intercept_.values,axis="columns")
     
-    def fit_transform(self,X):
+    def fit_transform(self,X,y=None):
         """
         Fit to data, then transform it
         ------------------------------
 
-        Fits transformer to `x` and returns a transformed version of X.
+        Description
+        -----------
+        Fits transformer to `X` and returns a transformed version of X.
 
         Parameters:
         ----------
-        X : DataFrame of shape (n_samples_, n_features_+1)
+        `X` : pandas/polars dataFrame of shape (n_samples, n_features+1)
             Input samples
+        
+        `y` : None. y is ignored.
         
         Returns
         -------
-        X_new : DataFrame of shape (n_rows, n_classes_)
+        `X_new` : pandas dataFrame of shape (n_samples, n_classes)
             Transformed data.
         """
         # check if X is an instance of polars dataframe
@@ -554,6 +602,8 @@ class LDA(BaseEstimator,TransformerMixin):
         Apply decision function to an array of samples
         ----------------------------------------------
 
+        Notes
+        -----
         The decision function is equal (up to a constant factor) to the
         log-posterior of the model, i.e. `log p(y = k | x)`. In a binary
         classification setting this instead corresponds to the difference
@@ -561,15 +611,12 @@ class LDA(BaseEstimator,TransformerMixin):
 
         Parameters
         ----------
-        X : DataFrame of shape (n_samples_, n_features)
-            DataFrame of samples (test vectors).
+        `X` : pandas/polars dataFrame of shape (n_samples, n_features)
 
         Returns
         -------
-        C : DataFrame of shape (n_samples_,) or (n_samples_, n_classes)
+        `C` : pandas dataFrame of shape (n_samples,) or (n_samples, n_classes)
             Decision function values related to each class, per sample.
-            In the two-class case, the shape is (n_samples_,), giving the
-            log likelihood ratio of the positive class.
         """
         # check if X is an instance of polars dataframe
         if isinstance(X,pl.DataFrame):
@@ -596,12 +643,12 @@ class LDA(BaseEstimator,TransformerMixin):
 
         Parameters
         ----------
-        X : DataFrame of shape (n_samples_,n_features_)
+        `X` : pandas/polars dataFrame of shape (n_samples, n_features)
             Input data.
         
         Returns:
         --------
-        C : DataFrame of shape (n_samples_,n_classes_)
+        `C` : pandas dataFrame of shape (n_samples,n_classes)
             Estimated probabilities.
         """
         # check if X is an instance of polars dataframe
@@ -624,14 +671,18 @@ class LDA(BaseEstimator,TransformerMixin):
 
         Parameters
         ----------
-        X : DataFrame of shape (n_samples_, n_features_)
-            The data matrix for which we want to get the predictions.
+        `X` : pandas/polars dataFrame of shape (n_samples_, n_features_)
+            The pandas dataframe for which we want to get the predictions.
         
         Returns:
         --------
-        y_pred : ndarray of shape (n_samples)
-            Vectors containing the class labels for each sample
+        `y_pred` : pandas series of shape (n_samples,).
+            Pandas series containing the class labels for each sample
         """
+        # check if X is an instance of polars dataframe
+        if isinstance(X,pl.DataFrame):
+            X = X.to_pandas()
+
         if not isinstance(X,pd.DataFrame):
             raise TypeError(
             f"{type(X)} is not supported. Please convert to a DataFrame with "
@@ -647,24 +698,24 @@ class LDA(BaseEstimator,TransformerMixin):
         Return the mean accuracy on the given test data and labels
         ----------------------------------------------------------
 
-        In multi-label classification, this is the subset accuracy
-        which is a harsh metric since you require for each sample that
-        each label set be correctly predicted.
+        Notes
+        -----
+        In multi-label classification, this is the subset accuracy which is a harsh metric since you require for each sample that each label set be correctly predicted.
 
         Parameters
         ----------
-        X : DataFrame of shape (n_samples_, n_features)
+        `X` : pandas/polars dataFrame of shape (n_samples, n_features)
             Test samples.
 
-        y : array-like of shape (n_samples,) or (n_samples, n_outputs)
+        `y` : pandas series of shape (n_samples,) or (n_samples, n_outputs)
             True labels for `X`.
 
-        sample_weight : array-like of shape (n_samples,), default=None
+        `sample_weight` : array-like of shape (n_samples,), default=None
             Sample weights.
 
         Returns
         -------
-        score : float
+        `score` : float
             Mean accuracy of ``self.predict(X)`` w.r.t. `y`.
         """
         # check if X is an instance of polars dataframe

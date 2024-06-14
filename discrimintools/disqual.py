@@ -14,79 +14,100 @@ from .lda import LDA
 
 class DISQUAL(BaseEstimator,TransformerMixin):
     """
-    Discriminant Analysis for qualitatives/categoricals variables (DISQUAL)
-    -----------------------------------------------------------------------
+    Discriminant Analysis on Qualitative variables (DISQUAL)
+    --------------------------------------------------------
+    This class inherits from sklearn BaseEstimator and TransformerMixin class
 
     Description
     -----------
+    Implementation of the DISQUAL methodology. Performs a linear Discrimination Analysis (LDA) on components from a Multiple Correspondence Analysis (MCA).
 
-    This class inherits from sklearn BaseEstimator and TransformerMixin class
+    Usage
+    -----
+    ```python
+    >>> DISQUAL(n_components = 2, target = None, features = None, priors=None, parallelize=False)
+    ```
 
-    Performs discriminant analysis for categorical variables using multiple correspondence analysis (MCA) and linear discriminant analysis
-
-    Parameters:
+    Parameters
     ----------
-    n_components : number of dimensions kept in the results 
+    `n_components` : number of dimensions kept in the results (by default 2)
 
-    target : The values of the classification variable define the groups for analysis.
+    `target` : list of string with length 1 specifying the values of the classification variable define the groups for analysis.
 
-    features : list of qualitatives variables to be included in the analysis.
+    `features` : list of qualitatives variables to be included in the analysis. The default is all categoricals variables in dataset
 
-    priors : The priors statement specifies the prior probabilities of group membership.
-                - "equal" to set the prior probabilities equal,
-                - "proportional" or "prop" to set the prior probabilities proportional to the sample sizes
-                - a pandas series which specify the prior probability for each level of the classification variable.
-    
-    parallelize : boolean, default = False
-        If model should be parallelize
-            - If True : parallelize using mapply
-            - If False : parallelize using apply
+    `priors` : The priors statement specifying the prior probabilities of group membership.
+        * "equal" to set the priors probabilities equal,
+        * "proportional" or "prop" to set the priors probabilities proportional to the sample sizes
+        * pandas series which specify the prior probability for each level of the classification variable.
 
-    Returns:
-    -------
-    call_ : a dictionary with some statistics
+    `parallelize` : boolean, default = False. If model should be parallelize
+        * If `True` : parallelize using mapply (see https://mapply.readthedocs.io/en/stable/README.html#installation)
+        * If `False` : parallelize using apply
 
-    statistics_ : Chi-square test of independence of variables in a contingency table.
+    Attributes
+    ----------
+    `call_` : dictionary with some statistics
 
-    coef_ : DataFrame of shape (n_features,n_classes_)
+    `statistics_` : chi-square test of independence of variables in a contingency table.
 
-    intercept_ : DataFrame of shape (1, n_classes)
+    `coef_` : pandas dataframe of shape (n_features, n_classes)
 
-    lda_model_ : linear discriminant analysis model
+    `intercept_` : pandas dataframe of shape (1, n_classes)
 
-    factor_model_ : multiple correspondence analysis model
+    `lda_model_` : linear discriminant analysis (LDA) model
 
-    projection_function_ : projection function
+    `factor_model_` : multiple correspondence analysis (MCA) model
 
-    coef_ : pandas dataframe of shpz (n_categories, n_classes)
+    `projection_function_` : projection function
 
-    intercept_ : pandas dataframe of shape (1, n_classes)
-
-    model_ : string. The model fitted = 'disqual'
+    `model_` : string specifying the model fitted = 'disqual'
 
     Author(s)
     ---------
     Duvérier DJIFACK ZEBAZE duverierdjifack@gmail.com
     
-    References:
-    -----------
-    https://lemakistatheux.wordpress.com/category/outils-danalyse-supervisee/la-methode-disqual/
+    References
+    ----------
+    Celeux G., Nakache J-P, Analyse discriminante sur variables qualitatives, Polytechnica, 1994.
+
     Ricco Rakotomalala, Pratique de l'analyse discriminante linéaire, Version 1.0, 2020
+
     Saporta G., Probabilité, analyse des données et Statistique, Technip, 2006
+
     Tufféry S., Data Mining et statistique décisionnelle - L'intelligence des données, Technip, 2012
 
-    #
+    Links
+    -----
+    https://hal.science/hal-02514101/file/Disqual77.pdf
+
+    https://lemakistatheux.wordpress.com/category/outils-danalyse-supervisee/la-methode-disqual/
+
     prodécure SAS: http://od-datamining.com/download/#macro
-    Package et fonction R :
+
     http://finzi.psych.upenn.edu/library/DiscriMiner/html/disqual.html
+
     https://github.com/gastonstat/DiscriMiner
+
+    https://eric.univ-lyon2.fr/ricco/tanagra/fichiers/fr_Tanagra_Pipeline_Python.pdf
+
+    Examples
+    --------
+    ```python
+    >>> # Load vote dataset
+    >>> from discrimintools.datasets import load_congress_vote
+    >>> DTrain = load_congress_vote(which="train")
+    >>> from discrimintools import DISQUAL
+    >>> res_disqual = DISQUAL(n_components=2,target=["group"],priors="prop",parallelize=False)
+    >>> res_disqual.fit(DTrain)
+    ```
     """
     def __init__(self,
-                 n_components = None,
+                 n_components = 2,
                  target = None,
                  features = None,
-                 priors=None,
-                 parallelize=False):
+                 priors = None,
+                 parallelize = False):
         self.n_components = n_components
         self.target = target
         self.features = features
@@ -100,10 +121,10 @@ class DISQUAL(BaseEstimator,TransformerMixin):
 
         Parameters:
         -----------
-        X : pandas/polars DataFrame of shape (n_samples, n_features+1)
+        X : pandas/polars dataframe of shape (n_samples, n_features+1)
             Training data
         
-        y : None
+        y : None. y is ignored.
 
         Returns:
         --------
@@ -124,9 +145,9 @@ class DISQUAL(BaseEstimator,TransformerMixin):
         if self.target is None:
             raise ValueError("'target' must be assigned")
         elif not isinstance(self.target,list):
-            raise ValueError("'target' must be a list")
+            raise TypeError("'target' must be a list")
         elif len(self.target)>1:
-            raise ValueError("'target' must be a list of length one")
+            raise TypeError("'target' must be a list of length one")
         
         # Set parallelize
         if self.parallelize:
@@ -236,16 +257,18 @@ class DISQUAL(BaseEstimator,TransformerMixin):
         Fit to data, then transform it
         ------------------------------
 
+        Description
+        -----------
         Fits transformer to `X` and returns a transformed version of `X`.
 
         Parameters
         ----------
-        X : DataFrame of shape (n_samples, n_features+1)
+        `X` : pandas/polars dataframe of shape (n_samples, n_features+1)
             Input samples.
 
         Returns
         -------
-        X_new :  DataFrame of shape (n_samples, n_features_new)
+        `X_new` :  pandas dataframe of shape (n_samples, n_features_new)
             Transformed array.
         """
         self.fit(X)
@@ -260,12 +283,12 @@ class DISQUAL(BaseEstimator,TransformerMixin):
 
         Parameters:
         ----------
-        X : DataFrame of shape (n_samples, n_features)
+        `X` : pandas/polars dataframe of shape (n_samples, n_features)
             Input data
 
         Returns:
         --------
-        X_new : DataFrame of shape (n_samples, n_components_)
+        `X_new` : DataFrame of shape (n_samples, n_components)
         
         """
         # check if X is an instance of polars dataframe
@@ -317,14 +340,13 @@ class DISQUAL(BaseEstimator,TransformerMixin):
 
         Parameters
         ----------
-        X : DataFrame of shape (n_samples, n_features)
+        `X` : pandas/polars dataframe of shape (n_samples, n_features)
             Input data
         
         Returns:
         -------
-        C : DataFrame of shape (n_samples, n_classes)
-            Estimate probabilities
-        
+        `C` : pandas dataframe of shape (n_samples, n_classes)
+            Estimated probabilities
         """
         return self.lda_model_.predict_proba(self.transform(X))
     
@@ -333,24 +355,24 @@ class DISQUAL(BaseEstimator,TransformerMixin):
         Return the mean accuracy on the given test data and labels
         ----------------------------------------------------------
 
-        In multi-label classification, this is the subset accuracy
-        which is a harsh metric since you require for each sample that
-        each label set be correctly predicted.
+        Notes
+        -----
+        In multi-label classification, this is the subset accuracy which is a harsh metric since you require for each sample that each label set be correctly predicted.
 
         Parameters
         ----------
-        X : array-like of shape (n_samples, n_features)
+        `X` : pandas/polars dataframe of shape (n_samples, n_features)
             Test samples.
 
-        y : array-like of shape (n_samples,) or (n_samples, n_outputs)
+        `y` : pandas series or array-like of shape (n_samples,)
             True labels for `X`.
 
-        sample_weight : array-like of shape (n_samples,), default=None
+        `sample_weight` : array-like of shape (n_samples,), default=None
             Sample weights.
 
         Returns
         -------
-        score : float
+        `score` : float
             Mean accuracy of ``self.predict(X)`` w.r.t. `y`.
         """
         return accuracy_score(y, self.predict(X), sample_weight=sample_weight)

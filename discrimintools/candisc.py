@@ -23,59 +23,90 @@ class CANDISC(BaseEstimator,TransformerMixin):
     Canonical Discriminant Analysis (CANDISC)
     -----------------------------------------
 
+    This class inherits from sklearn BaseEstimator and TransformerMixin class
+
     Description
     -----------
 
-    This class inherits from sklearn BaseEstimator and TransformerMixin class
+    Performs Canonical Discriminant Analysis, computes squared Mahalanobis distances between class means, and performs both univariate and multivariate one-way analyses of variance
 
-    Performs a Canonical Discriminant Analysis, computes squared 
-    Mahalanobis distances between class means, and performs both 
-    univariate and multivariate one-way analyses of variance
-
-    Parameters
+    Usage
+    -----
+    ```python
+    >>> CANDISC(n_components=None, target=None, features = None, priors = None, parallelize = False)
+    ```
+    
+    Arguments:
     ----------
-    n_components : number of dimensions kept in the results
+    `n_components` : number of dimensions kept in the results (by default 2)
 
-    target : string, target variable
+    `target : a list of string with length 1 specifying the values of the classification variable define the groups for analysis.
 
-    priors : Class priors (sum to 1)
+    `features` : list of quantitative variables to be included in the analysis. The default is all numeric variables in dataset
 
-    parallelize : boolean, default = False
-        If model should be parallelize
-            - If True : parallelize using mapply
-            - If False : parallelize using apply
+    `priors` : The priors statement specifies the prior probabilities of group membership.
+        * "equal" to set the prior probabilities equal,
+        * "proportional" or "prop" to set the prior probabilities proportional to the sample sizes
+        * a pandas series which specify the prior probabilities for each level of the classification variable.
 
-    Return
-    ------
-    summary_information_ :  summary information about the variables in the analysis. This information includes the number of observations, 
-                            the number of quantitative variables in the analysis, and the number of classes in the classification variable. 
-                            The frequency of each class is also displayed.
+    `parallelize` : boolean, default = False (see https://mapply.readthedocs.io/en/stable/README.html#installation). If model should be parallelize
+        * If `True` : parallelize using mapply
+        * If `False` : parallelize using apply
 
-    eig_  : a pandas dataframe containing all the eigenvalues, the difference between each eigenvalue, the percentage of variance and the cumulative percentage of variance
+    Attributes:
+    -----------
+    `summary_information_` :  summary information about the variables in the analysis. This information includes the number of observations, the number of quantitative variables in the analysis, and the number of classes in the classification variable. The frequency of each class is also displayed.
 
-    ind_ : a dictionary of pandas dataframe containing all the results for the active individuals (coordinates)
+    `eig_`  : a pandas dataframe containing all the eigenvalues, the difference between each eigenvalue, the percentage of variance and the cumulative percentage of variance
 
-    statistics_ : statistics
+    `ind_` : a dictionary of pandas dataframe containing all the results for the active individuals (coordinates)
 
-    classes_ : classes informations
+    `statistics_` : a dictionary containing some statistics results including :
+        * `anova` : a pandas dataframe containing analysis of variance test
+        * `manova` : a pandas dataframe containing multivariate analysis of variance test
+        * `eta2` : a pandas dataframe containing square correlation ratio test
+        * `univariate` : a pandas dataframe containing univariate linear model result
+        * `stats` : a pandas dataframe containing descriptive statistics for features (mean, std. dev., max., min., )
+        * `information` : a pandas dataframe containing the class level information (frequence, proportion, priors)
+        * `performance` : a pandas dataframe containing the model global performance
+        * `likelihood_test` : a pandas dataframe containing the likelihood ratio test
 
-    cov_ : covariances
+    `classes_` : a dictionary containing classes informations including :
+        * `classes` : classe distribution
+        * `coord` : a pandas dataframe containing the class coordinates
+        * `mean` : a pandas dataframe containing the mean by class
+        * `cov` : a pandas dataframe containing the covariance by class
+        * `center` : a pandas dataframe containing the coordinates of class center
+        * `dist` : a pandas dataframe containing the square distance to origin
+        * `mahalanobis` : a pandas dataframe containing the square mahalanobis distance
 
-    corr_ : correlation
+    `cov_` : a dictionary containing covariance matrix including :
+        * `total` : total-sample covariance matrix
+        * `within` : within covariance matrix
+        * `between` : between covariance matrix
 
-    coef_ : pandas dataframe, Weight vector(s).
+    `corr_` : a dictionary containing correlation matrix including:
+        * `total` : total-class correlation
+        * `within` : within-class correlation
+        * `between` : between-class correlation
 
-    intercept_ : pandas dataframe, Intercept term.
+    `coef_` : a pandas dataframe of shape (n_features, n_components)
+        The coefficients of canonical discriminant analysis
 
-    score_coef_ :
+    `intercept_` : a pandas dataframe of shape (1, n_components)
+        The intercept of canonical discriminant analysis.
 
-    score_intercept_ : 
+    `score_coef_` : a pandas dataframe of shape (n_features, n_classes)
+        The coefficients of classification function.
 
-    svd_ : eigenv value decomposition
+    `score_intercept_` : a pandas dataframe of shape (1, n_classes)
+        The intercept of classification function.
 
-    call_ : a dictionary with some statistics
+    `svd_` : eigen value decomposition
 
-    model_ : string. The model fitted = 'candisc'
+    `call_` : a dictionary with some statistics
+
+    `model_` : string specifying the model fitted = 'candisc'
 
     Author(s)
     ---------
@@ -83,14 +114,40 @@ class CANDISC(BaseEstimator,TransformerMixin):
 
     References
     ----------
-    SAS Documentation, https://documentation.sas.com/doc/en/statug/15.2/statug_candisc_toc.htm
-    https://www.rdocumentation.org/packages/candisc/versions/0.8-6/topics/candisc
-    https://www.rdocumentation.org/packages/candisc/versions/0.8-6
+    Lebart L., Piron M., & Morineau A. (2006). Statistique exploratoire multidimensionnelle. Dunod, Paris 4ed.
+
     Ricco Rakotomalala, Pratique de l'analyse discriminante linéaire, Version 1.0, 2020
+
+    Saporta G., Probabilités, Analyse de données et Statistiques, Technip, 2006.
+
+    Tenenhaus M., Statistique - Méthodes pour décrire, expliquer et prévoir, Dunod, 2007.
+
+    Links
+    -----
+    https://documentation.sas.com/doc/en/statug/15.2/statug_candisc_toc.htm
+
+    https://www.rdocumentation.org/packages/candisc/versions/0.8-6/topics/candisc
+
+    https://fr.wikipedia.org/wiki/Analyse_discriminante
+
+    See also
+    --------
+    get_candisc_ind, get_candisc_var,get_candisc_coef, get_candisc, summaryCANDISC, fviz_candisc
+
+    Examples
+    --------
+    ```python
+    >>> # load iris dataset
+    >>> from seaborn import load_dataset
+    >>> iris = load_dataset("iris")
+    >>> from discrimintools import CANDISC
+    >>> candisc = CANDISC(n_components=2,target=["species"],priors="prop",parallelize=False)
+    >>> candisc.fit(iris)
+    ```
     """
     def __init__(self,
-                 n_components=None,
-                 target=None,
+                 n_components = None,
+                 target = None,
                  features = None,
                  priors = None,
                  parallelize = False):
@@ -115,7 +172,6 @@ class CANDISC(BaseEstimator,TransformerMixin):
         self : object
             Fitted estimator
         """
-
         # Between pearson correlation
         def betweencorrcoef(g_k,z_k,name,lda,weights):
             def m(x, w):
@@ -346,7 +402,7 @@ class CANDISC(BaseEstimator,TransformerMixin):
         # Compute MULTIVARIATE ANOVA - MANOVA Test
         manova = MANOVA.from_formula(formula="{}~{}".format("+".join(x.columns),"+".join(self.target)), data=X).mv_test(skip_intercept_test=True)
 
-        statistics = {"anova" : anova,"manova" : manova,"Eta2" : eta2_res,"univariate" : univ_test, "stats" : stats}
+        statistics = {"anova" : anova,"manova" : manova,"eta2" : eta2_res,"univariate" : univ_test, "stats" : stats}
 
         # Summary information
         summary_infos = pd.DataFrame({
@@ -586,7 +642,7 @@ class CANDISC(BaseEstimator,TransformerMixin):
         coord = mapply(X.dot(self.coef_),lambda x : x + self.intercept_.values,axis=1,progressbar=False,n_workers=n_workers)
         return coord
     
-    def fit_transform(self,X):
+    def fit_transform(self,X,y=None):
         """
         Fit to data, then transform it
         ------------------------------
@@ -595,12 +651,14 @@ class CANDISC(BaseEstimator,TransformerMixin):
 
         Parameters:
         ----------
-        X : DataFrame of shape (n_samples_, n_features_)
+        X : DataFrame of shape (n_samples, n_features)
             Input samples
+        
+        y : None
         
         Returns
         -------
-        X_new : DataFrame of shape (n_rows, n_features_)
+        X_new : DataFrame of shape (n_rows, n_components)
             Transformed data.
         """
         # check if X is an instance of polars dataframe
@@ -630,7 +688,7 @@ class CANDISC(BaseEstimator,TransformerMixin):
         ----------
         X : DataFrame of shape (n_samples_, n_features)
             DataFrame of samples (test vectors).
-
+s
         Returns
         -------
         C : DataFrame of shape (n_samples_,) or (n_samples_, n_classes)
@@ -663,12 +721,12 @@ class CANDISC(BaseEstimator,TransformerMixin):
 
         Parameters
         ----------
-        X : DataFrame of shape (n_samples_,n_features_)
+        X : pandas dataframe of shape (n_samples,n_features)
             Input data.
         
         Returns:
         --------
-        C : DataFrame of shape (n_samples_,n_classes_)
+        C : pandas dataframe of shape (n_samples,n_classes)
             Estimated probabilities.
         
         """
@@ -697,13 +755,12 @@ class CANDISC(BaseEstimator,TransformerMixin):
 
         Parameters
         ----------
-        X : DataFrame of shape (n_samples_, n_features_)
-            The data matrix for which we want to get the predictions.
+        X : pandas/polars dataframe of shape (n_samples_, n_features_). 
+            The pandas/polars dataframe for which we want to get the predictions.
         
         Returns:
         --------
-        y_pred : ndarray of shape (n_samples)
-            Vectors containing the class labels for each sample
+        y_pred : pandas series of shape (n_samples) containing the class labels for each sample
         """
         # check if X is an instance of polars dataframe
         if isinstance(X,pl.DataFrame):
@@ -724,13 +781,11 @@ class CANDISC(BaseEstimator,TransformerMixin):
         Return the mean accuracy on the given test data and labels
         ----------------------------------------------------------
 
-        In multi-label classification, this is the subset accuracy
-        which is a harsh metric since you require for each sample that
-        each label set be correctly predicted.
+        In multi-label classification, this is the subset accuracy which is a harsh metric since you require for each sample that each label set be correctly predicted.
 
         Parameters
         ----------
-        X : DataFrame of shape (n_samples_, n_features)
+        X : pandas/polars dataFrame of shape (n_samples_, n_features)
             Test samples.
 
         y : array-like of shape (n_samples,) or (n_samples, n_outputs)
@@ -764,6 +819,10 @@ class CANDISC(BaseEstimator,TransformerMixin):
         Notes
         -----
         pred_table[i,j] refers to the number of times “i” was observed and the model predicted “j”. Correct predictions are along the diagonal.
+
+        Returns
+        -------
+        table : pandas crosstable
         """
         pred = self.predict(self.call_["X"])
         return pd.crosstab(self.call_["X"][self.call_["target"]],pred)

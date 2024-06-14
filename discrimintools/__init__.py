@@ -8,7 +8,7 @@ from .fviz_candisc import fviz_candisc
 
 # Linear Discriminant Analysis (LDA)
 from .lda import LDA
-from .get_lda import get_lda_ind, get_lda_cov, get_lda_coef, get_lda,summaryLDA
+from .get_lda import get_lda_ind, get_lda_var, get_lda_coef, get_lda, summaryLDA
 
 # Discriminant Analysis for qualitatives variables (DISQUAL)
 from .disqual import DISQUAL
@@ -27,7 +27,7 @@ from .pcada import PCADA
 # Stepwise discriminant analysis
 from .stepdisc import STEPDISC
 
-__version__ = '0.0.2'
+__version__ = '0.0.3'
 __name__ = "discrimintools"
 __author__ = 'Duvérier DJIFACK ZEBAZE'
 __email__ = 'duverierdjifack@gmail.com'

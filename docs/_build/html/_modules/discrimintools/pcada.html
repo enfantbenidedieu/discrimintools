@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>discrimintools.pcada &mdash; discrimintools 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            discrimintools
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">discrimintools</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">discrimintools</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">discrimintools.pcada</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for discrimintools.pcada</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">polars</span> <span class="k">as</span> <span class="nn">pl</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="kn">import</span> <span class="n">BaseEstimator</span><span class="p">,</span> <span class="n">TransformerMixin</span>
+<span class="kn">from</span> <span class="nn">mapply.mapply</span> <span class="kn">import</span> <span class="n">mapply</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+
+<span class="kn">from</span> <span class="nn">scientisttools</span> <span class="kn">import</span> <span class="n">PCA</span>
+<span class="kn">from</span> <span class="nn">.lda</span> <span class="kn">import</span> <span class="n">LDA</span>
+
+<div class="viewcode-block" id="PCADA"><a class="viewcode-back" href="../../discrimintools.html#discrimintools.pcada.PCADA">[docs]</a><span class="k">class</span> <span class="nc">PCADA</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span><span class="n">TransformerMixin</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Principal Components Analysis - Discriminant Analysis (PCADA)</span>
+<span class="sd">    -------------------------------------------------------------</span>
+
+<span class="sd">    Description</span>
+<span class="sd">    -----------</span>
+
+<span class="sd">    This class inherits from sklearn BaseEstimator and TransformerMixin class</span>
+
+<span class="sd">    Performs principal components analysis - discriminant analysis</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    ----------</span>
+<span class="sd">    n_components : number of dimensions kept in the results </span>
+
+<span class="sd">    target : The values of the classification variable define the groups for analysis.</span>
+
+<span class="sd">    features : list of quantitative variables to be included in the analysis. The default is all numeric variables in dataset</span>
+
+<span class="sd">    priors : The priors statement specifies the prior probabilities of group membership.</span>
+<span class="sd">                - &quot;equal&quot; to set the prior probabilities equal,</span>
+<span class="sd">                - &quot;proportional&quot; or &quot;prop&quot; to set the prior probabilities proportional to the sample sizes</span>
+<span class="sd">                - a pandas series which specify the prior probability for each level of the classification variable.</span>
+<span class="sd">    </span>
+<span class="sd">    parallelize : boolean, default = False</span>
+<span class="sd">        If model should be parallelize</span>
+<span class="sd">            - If True : parallelize using mapply</span>
+<span class="sd">            - If False : parallelize using apply</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">    -------</span>
+<span class="sd">    coef_ : DataFrame of shape (n_features,n_classes_)</span>
+
+<span class="sd">    intercept_ : DataFrame of shape (1, n_classes)</span>
+
+<span class="sd">    lda_model_ : linear discriminant analysis model</span>
+
+<span class="sd">    factor_model_ : principal components analysis model</span>
+
+<span class="sd">    projection_function_ : projection function</span>
+
+<span class="sd">    coef_ : pandas dataframe of shpz (n_categories, n_classes)</span>
+
+<span class="sd">    intercept_ : pandas dataframe of shape (1, n_classes)</span>
+
+<span class="sd">    model_ : string. The model fitted = &#39;disqual&#39;</span>
+
+<span class="sd">    Author(s)</span>
+<span class="sd">    ---------</span>
+<span class="sd">    Duvérier DJIFACK ZEBAZE duverierdjifack@gmail.com</span>
+<span class="sd">    </span>
+<span class="sd">    References:</span>
+<span class="sd">    -----------</span>
+<span class="sd">    Ricco Rakotomalala, Pratique de l&#39;analyse discriminante linéaire, Version 1.0, 2020</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">n_components</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">target</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">features</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">priors</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+                 <span class="n">parallelize</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span> <span class="o">=</span> <span class="n">n_components</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">target</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">features</span> <span class="o">=</span> <span class="n">features</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">priors</span> <span class="o">=</span> <span class="n">priors</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parallelize</span> <span class="o">=</span> <span class="n">parallelize</span>
+
+<div class="viewcode-block" id="PCADA.fit"><a class="viewcode-back" href="../../discrimintools.html#discrimintools.pcada.PCADA.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fit the Linear Discriminant Analysis with categories variables model</span>
+<span class="sd">        --------------------------------------------------------------------</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        -----------</span>
+<span class="sd">        X : pandas/polars DataFrame of shape (n_samples, n_features+1)</span>
+<span class="sd">            Training data</span>
+<span class="sd">        </span>
+<span class="sd">        y : None</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        --------</span>
+<span class="sd">        self : object</span>
+<span class="sd">            Fitted estimator</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># check if X is an instance of polars dataframe</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="si">}</span><span class="s2"> is not supported. Please convert to a DataFrame with &quot;</span>
+            <span class="s2">&quot;pd.DataFrame. For more information see: &quot;</span>
+            <span class="s2">&quot;https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># Check if target is None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;target&#39; must be assigned&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">,</span><span class="nb">list</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;target&#39; must be a list&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;target&#39; must be a list of length one&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># Set parallelize</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parallelize</span><span class="p">:</span>
+            <span class="n">n_workers</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">n_workers</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="c1">###############################################################################################################&quot;</span>
+        <span class="c1"># Drop level if ndim greater than 1 and reset columns name</span>
+        <span class="c1">###############################################################################################################</span>
+        <span class="k">if</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">nlevels</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">X</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">droplevel</span><span class="p">()</span>
+        
+        <span class="c1"># Save data</span>
+        <span class="n">Xtot</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        
+        <span class="c1">#######################################################################################################################</span>
+        <span class="c1"># Split Data into two : X and y</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">]</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+
+        <span class="c1"># Set features labels/names</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">features</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">features</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">,</span><span class="nb">list</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;features&#39; must be a list of variable names&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">features</span>
+        
+        <span class="c1">###### Select features</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">features</span><span class="p">]</span>
+        
+        <span class="c1"># Redefine X</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1">################################################ Check if all columns are numerics</span>
+        <span class="c1"># Check if all columns are numerics</span>
+        <span class="n">all_num</span> <span class="o">=</span> <span class="nb">all</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">is_numeric_dtype</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">c</span><span class="p">])</span> <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">all_num</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;All features must be numeric&quot;</span><span class="p">)</span>
+
+        <span class="c1">##### Category</span>
+        <span class="n">classes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="c1"># Number of groups</span>
+        <span class="n">n_classes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">classes</span><span class="p">)</span>
+
+        <span class="c1"># Number of rows and continuous variables</span>
+        <span class="n">n_samples</span><span class="p">,</span> <span class="n">n_features</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span>
+        
+        <span class="c1">#############################################################&quot;&quot;</span>
+        <span class="c1"># Store some informations</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call_</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Xtot&quot;</span> <span class="p">:</span> <span class="n">Xtot</span><span class="p">,</span>
+                      <span class="s2">&quot;X&quot;</span> <span class="p">:</span> <span class="n">X</span><span class="p">,</span>
+                      <span class="s2">&quot;target&quot;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                      <span class="s2">&quot;features&quot;</span> <span class="p">:</span> <span class="n">features</span><span class="p">,</span>
+                      <span class="s2">&quot;n_features&quot;</span> <span class="p">:</span> <span class="n">n_features</span><span class="p">,</span>
+                      <span class="s2">&quot;n_samples&quot;</span> <span class="p">:</span> <span class="n">n_samples</span><span class="p">,</span>
+                      <span class="s2">&quot;n_classes&quot;</span> <span class="p">:</span> <span class="n">n_classes</span><span class="p">}</span>
+        
+        <span class="c1">##################################################################################################################</span>
+        <span class="c1"># Principal Components Analysis (PCA)</span>
+        <span class="c1">###################################################################################################################</span>
+        <span class="n">global_pca</span> <span class="o">=</span> <span class="n">PCA</span><span class="p">(</span><span class="n">standardize</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">n_components</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_components</span><span class="p">,</span><span class="n">parallelize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parallelize</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+        <span class="c1"># Fonction de projection - Coefficient de projections</span>
+        <span class="n">fproj</span> <span class="o">=</span> <span class="n">mapply</span><span class="p">(</span><span class="n">global_pca</span><span class="o">.</span><span class="n">var_</span><span class="p">[</span><span class="s2">&quot;coord&quot;</span><span class="p">],</span><span class="k">lambda</span> <span class="n">col</span> <span class="p">:</span> <span class="n">col</span><span class="o">/</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">global_pca</span><span class="o">.</span><span class="n">eig_</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="n">global_pca</span><span class="o">.</span><span class="n">call_</span><span class="p">[</span><span class="s2">&quot;n_components&quot;</span><span class="p">],</span><span class="mi">0</span><span class="p">])),</span>
+                       <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">progressbar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">n_workers</span><span class="o">=</span><span class="n">n_workers</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">projection_function_</span> <span class="o">=</span> <span class="n">fproj</span>
+
+        <span class="c1">################################################################################################</span>
+        <span class="c1"># Linear Discriminant Analysis (LDA)</span>
+        <span class="c1">##################################################################################################</span>
+        <span class="c1">###### Data to use in LDA</span>
+        <span class="n">coord</span> <span class="o">=</span> <span class="n">global_pca</span><span class="o">.</span><span class="n">ind_</span><span class="p">[</span><span class="s2">&quot;coord&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">coord</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Z&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">coord</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">y</span><span class="p">,</span><span class="n">coord</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Linear Discriminant Analysis model</span>
+        <span class="n">lda</span> <span class="o">=</span> <span class="n">LDA</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">,</span><span class="n">priors</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">priors</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+        
+        <span class="c1">##################### DISQUAL coeffcients and intercept</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coef_</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">fproj</span><span class="p">,</span><span class="n">lda</span><span class="o">.</span><span class="n">coef_</span><span class="p">),</span><span class="n">index</span><span class="o">=</span><span class="n">fproj</span><span class="o">.</span><span class="n">index</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="n">lda</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">intercept_</span> <span class="o">=</span> <span class="n">lda</span><span class="o">.</span><span class="n">intercept_</span>
+
+        <span class="c1"># Stockage des deux modèles</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">factor_model_</span> <span class="o">=</span> <span class="n">global_pca</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">lda_model_</span> <span class="o">=</span> <span class="n">lda</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_</span> <span class="o">=</span> <span class="s2">&quot;disqual&quot;</span>
+    
+        <span class="k">return</span> <span class="bp">self</span></div>
+        
+<div class="viewcode-block" id="PCADA.fit_transform"><a class="viewcode-back" href="../../discrimintools.html#discrimintools.pcada.PCADA.fit_transform">[docs]</a>    <span class="k">def</span> <span class="nf">fit_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fit to data, then transform it</span>
+<span class="sd">        ------------------------------</span>
+
+<span class="sd">        Fits transformer to `X` and returns a transformed version of `X`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : DataFrame of shape (n_samples, n_features+1)</span>
+<span class="sd">            Input samples.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        X_new :  DataFrame of shape (n_samples, n_features_new)</span>
+<span class="sd">            Transformed array.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="n">coord</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">factor_model_</span><span class="o">.</span><span class="n">ind_</span><span class="p">[</span><span class="s2">&quot;coord&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">coord</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Z&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">coord</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+        <span class="k">return</span> <span class="n">coord</span></div>
+    
+<div class="viewcode-block" id="PCADA.transform"><a class="viewcode-back" href="../../discrimintools.html#discrimintools.pcada.PCADA.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Project data to maximize class separation</span>
+<span class="sd">        -----------------------------------------</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : DataFrame of shape (n_samples, n_features)</span>
+<span class="sd">            Input data</span>
+
+<span class="sd">        Returns:</span>
+<span class="sd">        --------</span>
+<span class="sd">        X_new : DataFrame of shape (n_samples, n_components_)</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># check if X is an instance of polars dataframe</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span>
+
+        <span class="c1"># Check if X is a pandas DataFrame</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+           <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="si">}</span><span class="s2"> is not supported. Please convert to a DataFrame with &quot;</span>
+            <span class="s2">&quot;pd.DataFrame. For more information see: &quot;</span>
+            <span class="s2">&quot;https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html&quot;</span><span class="p">)</span>
+
+        <span class="c1">##### Chack if target in X columns</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">lda_model_</span><span class="o">.</span><span class="n">call_</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">():</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">lda_model_</span><span class="o">.</span><span class="n">call_</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]])</span>
+        
+        <span class="c1">####### Select features</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="p">[</span><span class="s2">&quot;features&quot;</span><span class="p">]]</span>
+
+        <span class="n">coord</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">factor_model_</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        <span class="n">coord</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Z&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">coord</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+        <span class="k">return</span> <span class="n">coord</span></div>
+    
+<div class="viewcode-block" id="PCADA.predict"><a class="viewcode-back" href="../../discrimintools.html#discrimintools.pcada.PCADA.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Predict class labels for samples in X</span>
+<span class="sd">        -------------------------------------</span>
+
+<span class="sd">        Parameters:</span>
+<span class="sd">        -----------</span>
+<span class="sd">        X : DataFrame of shape (n_samples, n_features)</span>
+<span class="sd">            The dataframe for which we want to get the predictions</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">        --------</span>
+<span class="sd">        y_pred : DtaFrame of shape (n_samples, 1)</span>
+<span class="sd">            DataFrame containing the class labels for each sample.</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">lda_model_</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">))</span></div>
+    
+<div class="viewcode-block" id="PCADA.predict_proba"><a class="viewcode-back" href="../../discrimintools.html#discrimintools.pcada.PCADA.predict_proba">[docs]</a>    <span class="k">def</span> <span class="nf">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Estimate probability</span>
+<span class="sd">        --------------------</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : DataFrame of shape (n_samples, n_features)</span>
+<span class="sd">            Input data</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">        -------</span>
+<span class="sd">        C : DataFrame of shape (n_samples, n_classes)</span>
+<span class="sd">            Estimate probabilities</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">lda_model_</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">))</span></div>
+    
+<div class="viewcode-block" id="PCADA.score"><a class="viewcode-back" href="../../discrimintools.html#discrimintools.pcada.PCADA.score">[docs]</a>    <span class="k">def</span> <span class="nf">score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sample_weight</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the mean accuracy on the given test data and labels</span>
+<span class="sd">        ----------------------------------------------------------</span>
+
+<span class="sd">        In multi-label classification, this is the subset accuracy</span>
+<span class="sd">        which is a harsh metric since you require for each sample that</span>
+<span class="sd">        each label set be correctly predicted.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : array-like of shape (n_samples, n_features)</span>
+<span class="sd">            Test samples.</span>
+
+<span class="sd">        y : array-like of shape (n_samples,) or (n_samples, n_outputs)</span>
+<span class="sd">            True labels for `X`.</span>
+
+<span class="sd">        sample_weight : array-like of shape (n_samples,), default=None</span>
+<span class="sd">            Sample weights.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        score : float</span>
+<span class="sd">            Mean accuracy of ``self.predict(X)`` w.r.t. `y`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">sample_weight</span><span class="o">=</span><span class="n">sample_weight</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="PCADA.pred_table"><a class="viewcode-back" href="../../discrimintools.html#discrimintools.pcada.PCADA.pred_table">[docs]</a>    <span class="k">def</span> <span class="nf">pred_table</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Prediction table</span>
+<span class="sd">        ----------------</span>
+<span class="sd">        </span>
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        pred_table[i,j] refers to the number of times “i” was observed and the model predicted “j”. Correct predictions are along the diagonal.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">factor_model_</span><span class="o">.</span><span class="n">call_</span><span class="p">[</span><span class="s2">&quot;X&quot;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">lda_model_</span><span class="o">.</span><span class="n">call_</span><span class="p">[</span><span class="s2">&quot;X&quot;</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">lda_model_</span><span class="o">.</span><span class="n">call_</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]],</span><span class="n">pred</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Duvérier DJIFACK ZEBAZE.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

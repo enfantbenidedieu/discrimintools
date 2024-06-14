@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>discrimintools.stepdisc &mdash; discrimintools 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            discrimintools
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">discrimintools</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">discrimintools</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">discrimintools.stepdisc</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for discrimintools.stepdisc</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">scipy</span> <span class="k">as</span> <span class="nn">sp</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">reduce</span>
+<span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="kn">import</span> <span class="n">BaseEstimator</span><span class="p">,</span> <span class="n">TransformerMixin</span>
+
+<span class="kn">from</span> <span class="nn">.lda</span> <span class="kn">import</span> <span class="n">LDA</span>
+<span class="kn">from</span> <span class="nn">.candisc</span> <span class="kn">import</span> <span class="n">CANDISC</span>
+
+<div class="viewcode-block" id="STEPDISC"><a class="viewcode-back" href="../../discrimintools.html#discrimintools.stepdisc.STEPDISC">[docs]</a><span class="k">class</span> <span class="nc">STEPDISC</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span><span class="n">TransformerMixin</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Stepwise Discriminant Analysis (STEPDISC)</span>
+<span class="sd">    -----------------------------------------</span>
+
+<span class="sd">    Description</span>
+<span class="sd">    -----------</span>
+
+<span class="sd">    This class inherits from sklearn BaseEstimator and TransformerMixin class</span>
+
+<span class="sd">    Performs a stepwise discriminant analysis to select a subset of the quantitative variables for use</span>
+<span class="sd">    in discriminating among the classes. It can be used for forward selection, backward elimination.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    model : an object of class LDA, CANDISC</span>
+
+<span class="sd">    method : the feature selection method to be used :</span>
+<span class="sd">                - &quot;forward&quot; for forward selection, </span>
+<span class="sd">                - &quot;backward&quot; for backward elimination</span>
+
+<span class="sd">    alpha : Specifies the significance level for adding or retaining variables in stepwise variable selection, default = 0.01</span>
+<span class="sd">            </span>
+<span class="sd">    lambda_init : Initial Wilks Lambda/ Default = None</span>
+
+<span class="sd">    model_train : if model should be train with selected variables</span>
+
+<span class="sd">    verbose : boolean, </span>
+<span class="sd">                - if True, print intermediary steps during feature selection (default)</span>
+<span class="sd">                - if False</span>
+<span class="sd">    </span>
+<span class="sd">    Return</span>
+<span class="sd">    ------</span>
+<span class="sd">    call_ : a dictionary with some statistics</span>
+
+<span class="sd">    results_ : a dictionary with stepwise results</span>
+
+<span class="sd">    model_ : string. The model fitted = &#39;stepdisc&#39;</span>
+
+<span class="sd">    Author(s)</span>
+<span class="sd">    ---------</span>
+<span class="sd">    Duvérier DJIFACK ZEBAZE duverierdjifack@gmail.com</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    SAS documentation, https://documentation.sas.com/doc/en/pgmsascdc/9.4_3.3/statug/statug_stepdisc_overview.htm</span>
+<span class="sd">    Ricco Rakotomalala, Pratique de l&#39;analyse discriminante linéaire, Version 1.0, 2020</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">model</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">method</span><span class="o">=</span><span class="s2">&quot;forward&quot;</span><span class="p">,</span>
+                 <span class="n">alpha</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span>
+                 <span class="n">lambda_init</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">model_train</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+                 <span class="n">verbose</span> <span class="o">=</span> <span class="kc">True</span><span class="p">):</span>
+        
+        <span class="c1"># Compute Coariance and biased covariance matrix</span>
+        <span class="k">def</span> <span class="nf">cov_matrix</span><span class="p">(</span><span class="n">data</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Compute Covariance and biaised Covariance matrix</span>
+<span class="sd">            ------------------------------------------------</span>
+
+<span class="sd">            Parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            data : pandas dataframe of shape (n_rows, n_features)</span>
+
+<span class="sd">            Return</span>
+<span class="sd">            ------</span>
+<span class="sd">            a tuple of covariance and biaised covariance matrix            </span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># numbeer of rows</span>
+            <span class="n">V</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">cov</span><span class="p">()</span> <span class="c1"># total covariance matrix</span>
+            <span class="n">Vb</span> <span class="o">=</span> <span class="p">((</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="n">n</span><span class="p">)</span> <span class="o">*</span> <span class="n">V</span> <span class="c1"># biaised total covariance matrix</span>
+            <span class="k">return</span> <span class="n">V</span><span class="p">,</span> <span class="n">Vb</span>
+        
+        <span class="c1"># Compule pooled covariance matrix</span>
+        <span class="k">def</span> <span class="nf">pooled_cov_matrix</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">target</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Compute pooled covariance and biaised pooled covariance matrix</span>
+<span class="sd">            --------------------------------------------------------------</span>
+
+<span class="sd">            Parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            data : pandas dataframe of shape (n_rows, n-features + 1)</span>
+
+<span class="sd">            target : string, target name</span>
+
+<span class="sd">            Return</span>
+<span class="sd">            -----</span>
+<span class="sd">            a tuple of pooled covariance and biaised pooled covariance matrix</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">n</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="c1"># number of rows</span>
+            <span class="n">classes</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">target</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span> <span class="c1"># classes</span>
+            <span class="n">K</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">classes</span><span class="p">)</span> <span class="c1"># number of class</span>
+            <span class="n">V_k</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">target</span><span class="p">)</span><span class="o">.</span><span class="n">cov</span><span class="p">(</span><span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="n">n_k</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">target</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+
+            <span class="c1"># Pooled covariance matrix</span>
+            <span class="n">W</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="k">lambda</span> <span class="n">k</span> <span class="p">:</span> <span class="p">(</span><span class="n">n_k</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">V_k</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">k</span><span class="p">],</span><span class="n">classes</span><span class="p">))</span>
+            <span class="n">W</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="o">/</span><span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="n">K</span><span class="p">))</span><span class="o">*</span><span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span><span class="p">,</span><span class="n">j</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">,</span> <span class="n">W</span><span class="p">)</span>
+            <span class="c1"># Biaised pooled covariance matrix</span>
+            <span class="n">Wb</span> <span class="o">=</span> <span class="p">((</span><span class="n">n</span><span class="o">-</span><span class="n">K</span><span class="p">)</span><span class="o">/</span><span class="n">n</span><span class="p">)</span><span class="o">*</span><span class="n">W</span>
+            <span class="k">return</span> <span class="n">W</span><span class="p">,</span> <span class="n">Wb</span>
+        
+        <span class="c1"># Wilks lambda</span>
+        <span class="k">def</span> <span class="nf">wilks</span><span class="p">(</span><span class="n">Vb</span><span class="p">,</span> <span class="n">Wb</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Compute Wilks Lambda</span>
+<span class="sd">            --------------------</span>
+
+<span class="sd">            Parameter</span>
+<span class="sd">            ---------</span>
+<span class="sd">            Vb : biaised total covariance matrix</span>
+
+<span class="sd">            Wb : biaised pooled covariance matrix</span>
+
+<span class="sd">            Return</span>
+<span class="sd">            ------</span>
+<span class="sd">            value : Wilks Lambda</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">Wb</span><span class="p">)</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">det</span><span class="p">(</span><span class="n">Vb</span><span class="p">)</span>
+        
+        <span class="c1"># Wilks lambda</span>
+        <span class="k">def</span> <span class="nf">wilks_log</span><span class="p">(</span><span class="n">Vb</span><span class="p">,</span> <span class="n">Wb</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Compute Wilks Lambda</span>
+<span class="sd">            --------------------</span>
+
+<span class="sd">            Parameter</span>
+<span class="sd">            ---------</span>
+<span class="sd">            Vb : biaised total covariance matrix</span>
+
+<span class="sd">            Wb : biaised pooled covariance matrix</span>
+
+<span class="sd">            Return</span>
+<span class="sd">            ------</span>
+<span class="sd">            value : Wilks Lambda</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="n">detVb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">slogdet</span><span class="p">(</span><span class="n">Vb</span><span class="p">)</span>  
+            <span class="n">detWb</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">slogdet</span><span class="p">(</span><span class="n">Wb</span><span class="p">)</span>  
+            <span class="c1"># intra-classes biaisée</span>
+            <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">((</span><span class="n">detWb</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">detWb</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span><span class="o">-</span><span class="p">(</span><span class="n">detVb</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">detVb</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+
+        <span class="c1"># Critical probability</span>
+        <span class="k">def</span> <span class="nf">p_value</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">ddl1</span><span class="p">,</span> <span class="n">ddl2</span><span class="p">):</span>
+<span class="w">            </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">            Compute critical probability</span>
+<span class="sd">            ----------------------------</span>
+
+<span class="sd">            Parameters</span>
+<span class="sd">            ----------</span>
+<span class="sd">            F : Fisher statistic</span>
+
+<span class="sd">            ddl1 : first degree of freedom</span>
+
+<span class="sd">            ddl2 : second degree of freedom</span>
+
+<span class="sd">            Return</span>
+<span class="sd">            ------</span>
+<span class="sd">            pvalue : float, critical probability</span>
+<span class="sd">            &quot;&quot;&quot;</span>
+            <span class="k">if</span> <span class="p">(</span><span class="n">F</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">):</span>
+                <span class="k">return</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">sp</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="mf">1.0</span><span class="o">/</span><span class="n">F</span><span class="p">,</span> <span class="n">ddl1</span><span class="p">,</span> <span class="n">ddl2</span><span class="p">))</span>
+            <span class="k">return</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">sp</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">f</span><span class="o">.</span><span class="n">cdf</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">ddl1</span><span class="p">,</span> <span class="n">ddl2</span><span class="p">))</span>
+
+        <span class="c1"># Check if valid discriminan analysis model</span>
+        <span class="k">if</span> <span class="n">model</span><span class="o">.</span><span class="n">model_</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;lda&quot;</span><span class="p">,</span> <span class="s2">&quot;candisc&quot;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;&#39;model&#39; must be an object of class LDA, CANDISC&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># Chack if valid method</span>
+        <span class="n">isMethodValid</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;forward&quot;</span><span class="p">,</span> <span class="s2">&quot;backward&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">method</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">isMethodValid</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;method&#39; should be one of &#39;backward&#39;,&#39;forward&#39;&quot;</span><span class="p">)</span>
+        
+        <span class="c1">####### Global dataset</span>
+        <span class="n">dataset</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">call_</span><span class="p">[</span><span class="s2">&quot;X&quot;</span><span class="p">]</span>
+        <span class="c1"># Number of rows</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">dataset</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+        <span class="c1">###### Matrice of features</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">call_</span><span class="p">[</span><span class="s2">&quot;X&quot;</span><span class="p">][</span><span class="n">model</span><span class="o">.</span><span class="n">call_</span><span class="p">[</span><span class="s2">&quot;features&quot;</span><span class="p">]]</span>
+        <span class="c1"># Number of features</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">call_</span><span class="p">[</span><span class="s2">&quot;n_features&quot;</span><span class="p">]</span>
+
+        <span class="c1"># Vetor of target</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">dataset</span><span class="p">[[</span><span class="n">model</span><span class="o">.</span><span class="n">call_</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]]]</span>
+        <span class="c1"># Number of classes</span>
+        <span class="n">K</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+
+        <span class="c1">#################################################################################&quot;</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">Vb</span> <span class="o">=</span> <span class="n">cov_matrix</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="n">_</span><span class="p">,</span> <span class="n">Wb</span> <span class="o">=</span> <span class="n">pooled_cov_matrix</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span> <span class="n">target</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">call_</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">])</span>
+        
+        <span class="c1">#####</span>
+        <span class="n">varNames</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="n">colNames</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Wilks L.&quot;</span><span class="p">,</span><span class="s2">&quot;Partial L.&quot;</span><span class="p">,</span><span class="s2">&quot;F&quot;</span><span class="p">,</span><span class="s2">&quot;p-value&quot;</span><span class="p">]</span>
+
+        <span class="c1">########################## Forward procedure</span>
+        <span class="k">if</span> <span class="n">method</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;forward&quot;</span><span class="p">:</span>
+            <span class="n">enteredVarList</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">enteredVarSummary</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">L_initial</span> <span class="o">=</span> <span class="mi">1</span>  <span class="c1"># Valeur du Lambda de Wilks pour q = 0</span>
+            <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+                <span class="n">infoVar</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">varNames</span><span class="p">:</span>
+                    <span class="c1"># Wilks Lambda</span>
+                    <span class="n">wilksVarSelect</span> <span class="o">=</span> <span class="n">enteredVarList</span><span class="o">+</span><span class="p">[</span><span class="n">name</span><span class="p">]</span>
+                    <span class="n">L</span> <span class="o">=</span> <span class="n">wilks_log</span><span class="p">(</span><span class="n">Vb</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">wilksVarSelect</span><span class="p">,</span> <span class="n">wilksVarSelect</span><span class="p">],</span><span class="n">Wb</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">wilksVarSelect</span><span class="p">,</span> <span class="n">wilksVarSelect</span><span class="p">])</span>
+                    <span class="c1"># Degree of Freedom</span>
+                    <span class="n">ddl1</span><span class="p">,</span> <span class="n">ddl2</span> <span class="o">=</span> <span class="n">K</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="n">K</span><span class="o">-</span><span class="n">q</span>
+                    <span class="c1"># Fisher statistic</span>
+                    <span class="n">F</span> <span class="o">=</span> <span class="n">ddl2</span><span class="o">/</span><span class="n">ddl1</span> <span class="o">*</span> <span class="p">(</span><span class="n">L_initial</span><span class="o">/</span><span class="n">L</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="n">R</span> <span class="o">=</span> <span class="mi">1</span><span class="o">-</span><span class="p">(</span><span class="n">L</span><span class="o">/</span><span class="n">L_initial</span><span class="p">)</span>  <span class="c1"># Calcul du R² partiel</span>
+                    <span class="c1"># Critical probability</span>
+                    <span class="n">pval</span> <span class="o">=</span> <span class="n">p_value</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">ddl1</span><span class="p">,</span> <span class="n">ddl2</span><span class="p">)</span>
+                    <span class="n">infoVar</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">L</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="n">pval</span><span class="p">))</span>
+
+                <span class="n">infoStepResults</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">infoVar</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">varNames</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">colNames</span><span class="p">)</span>
+
+                <span class="c1"># To print step result</span>
+                <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">infoStepResults</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">()</span>
+
+                <span class="c1"># Apply criteria decision</span>
+                <span class="n">enteredVar</span> <span class="o">=</span> <span class="n">infoStepResults</span><span class="p">[</span><span class="s2">&quot;Wilks L.&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">idxmin</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">infoStepResults</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">enteredVar</span><span class="p">,</span> <span class="s2">&quot;p-value&quot;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">alpha</span><span class="p">:</span>
+                    <span class="k">break</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">enteredVarList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">enteredVar</span><span class="p">)</span>
+                    <span class="n">varNames</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">enteredVar</span><span class="p">)</span>
+                    <span class="n">L_initial</span> <span class="o">=</span> <span class="n">infoStepResults</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">enteredVar</span><span class="p">,</span><span class="s2">&quot;Wilks L.&quot;</span><span class="p">]</span>
+                    <span class="n">enteredVarSummary</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">infoStepResults</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">enteredVar</span><span class="p">]))</span>
+                    
+            <span class="n">stepdiscSummary</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">enteredVarSummary</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">enteredVarList</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">colNames</span><span class="p">)</span>
+            <span class="c1">##########</span>
+            <span class="c1"># Selected variables</span>
+            <span class="n">selectedVar</span> <span class="o">=</span> <span class="n">stepdiscSummary</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+            <span class="c1"># Removed variables</span>
+            <span class="n">removedVar</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">varNames</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">selectedVar</span><span class="p">]</span>
+        <span class="k">elif</span> <span class="n">method</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span> <span class="o">==</span> <span class="s2">&quot;backward&quot;</span><span class="p">:</span>
+            <span class="n">removedVarList</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="n">removedVarSummary</span> <span class="o">=</span> <span class="p">[]</span>
+            <span class="c1"># Calcul du Lamba de Wilks pour q = p</span>
+            <span class="k">if</span> <span class="n">lambda_init</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">L_initial</span> <span class="o">=</span> <span class="n">wilks</span><span class="p">(</span><span class="n">Vb</span><span class="p">,</span><span class="n">Wb</span><span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">L_initial</span> <span class="o">=</span> <span class="n">lambda_init</span>
+            <span class="k">for</span> <span class="n">q</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">p</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+                <span class="n">infoVar</span> <span class="o">=</span> <span class="p">[]</span>
+                <span class="k">for</span> <span class="n">name</span> <span class="ow">in</span> <span class="n">varNames</span><span class="p">:</span>
+                    <span class="c1"># calcul du Lambda de Wilks (q-1)</span>
+                    <span class="n">wilksVarSelect</span> <span class="o">=</span> <span class="p">[</span><span class="n">var</span> <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="n">varNames</span> <span class="k">if</span> <span class="n">var</span> <span class="o">!=</span> <span class="n">name</span><span class="p">]</span>
+                    <span class="n">L</span> <span class="o">=</span> <span class="n">wilks_log</span><span class="p">(</span><span class="n">Vb</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">wilksVarSelect</span><span class="p">,</span> <span class="n">wilksVarSelect</span><span class="p">],</span><span class="n">Wb</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">wilksVarSelect</span><span class="p">,</span> <span class="n">wilksVarSelect</span><span class="p">])</span>
+                    <span class="c1"># Degree of freedom</span>
+                    <span class="n">ddl1</span><span class="p">,</span> <span class="n">ddl2</span> <span class="o">=</span> <span class="n">K</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">n</span><span class="o">-</span><span class="n">K</span><span class="o">-</span><span class="n">q</span><span class="o">+</span><span class="mi">1</span>
+                    <span class="c1"># Fisher statistic</span>
+                    <span class="n">F</span> <span class="o">=</span> <span class="n">ddl2</span><span class="o">/</span><span class="n">ddl1</span><span class="o">*</span><span class="p">(</span><span class="n">L</span><span class="o">/</span><span class="n">L_initial</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+                    <span class="c1"># Partial Rsquared</span>
+                    <span class="n">R</span> <span class="o">=</span> <span class="mi">1</span><span class="o">-</span><span class="p">(</span><span class="n">L_initial</span><span class="o">/</span><span class="n">L</span><span class="p">)</span>
+                    <span class="c1"># Critical probability</span>
+                    <span class="n">pval</span> <span class="o">=</span> <span class="n">p_value</span><span class="p">(</span><span class="n">F</span><span class="p">,</span> <span class="n">ddl1</span><span class="p">,</span> <span class="n">ddl2</span><span class="p">)</span>
+                    <span class="n">infoVar</span><span class="o">.</span><span class="n">append</span><span class="p">((</span><span class="n">L</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">F</span><span class="p">,</span> <span class="n">pval</span><span class="p">))</span>
+
+                <span class="n">infoStepResults</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">infoVar</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">varNames</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">colNames</span><span class="p">)</span>
+
+                <span class="c1"># To print step result</span>
+                <span class="k">if</span> <span class="n">verbose</span><span class="p">:</span>
+                    <span class="nb">print</span><span class="p">(</span><span class="n">infoStepResults</span><span class="p">)</span>
+                    <span class="nb">print</span><span class="p">()</span>
+
+                <span class="c1"># Apply criteria decision</span>
+                <span class="n">removedVar</span> <span class="o">=</span> <span class="n">infoStepResults</span><span class="p">[</span><span class="s2">&quot;Wilks L.&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">idxmin</span><span class="p">()</span>
+                <span class="k">if</span> <span class="n">infoStepResults</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">removedVar</span><span class="p">,</span> <span class="s2">&quot;p-value&quot;</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">alpha</span><span class="p">:</span>
+                    <span class="k">break</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">removedVarList</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">removedVar</span><span class="p">)</span>
+                    <span class="n">varNames</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">removedVar</span><span class="p">)</span>
+                    <span class="n">removedVarSummary</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">infoStepResults</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">removedVar</span><span class="p">]))</span>
+                    <span class="n">L_initial</span> <span class="o">=</span> <span class="n">infoStepResults</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">removedVar</span><span class="p">,</span><span class="s2">&quot;Wilks L.&quot;</span><span class="p">]</span>
+
+            <span class="n">stepdiscSummary</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">removedVarSummary</span><span class="p">,</span> <span class="n">index</span><span class="o">=</span><span class="n">removedVarList</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">colNames</span><span class="p">)</span>
+
+            <span class="c1">###### Selected variables</span>
+            <span class="n">removedVar</span> <span class="o">=</span> <span class="n">stepdiscSummary</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+            <span class="n">selectedVar</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">varNames</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">removedVar</span><span class="p">]</span>
+
+        <span class="c1"># </span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call_</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;model&quot;</span> <span class="p">:</span> <span class="n">model</span><span class="p">,</span> <span class="s2">&quot;method&quot;</span> <span class="p">:</span> <span class="n">method</span><span class="p">,</span> <span class="s2">&quot;alpha&quot;</span> <span class="p">:</span> <span class="n">alpha</span><span class="p">}</span>
+        <span class="c1"># Results</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">results_</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;summary&quot;</span> <span class="p">:</span> <span class="n">stepdiscSummary</span><span class="p">,</span><span class="s2">&quot;selected&quot;</span> <span class="p">:</span> <span class="n">selectedVar</span><span class="p">,</span><span class="s2">&quot;removed&quot;</span> <span class="p">:</span> <span class="n">removedVar</span><span class="p">}</span>
+
+        <span class="c1">##################################### Train model with selected variables</span>
+        <span class="k">if</span> <span class="n">model_train</span><span class="p">:</span>
+            <span class="c1"># New data</span>
+            <span class="k">if</span> <span class="n">model</span><span class="o">.</span><span class="n">model_</span> <span class="o">==</span> <span class="s2">&quot;lda&quot;</span><span class="p">:</span>
+                <span class="n">new_model</span> <span class="o">=</span> <span class="n">LDA</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">call_</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]],</span><span class="n">features</span><span class="o">=</span><span class="n">selectedVar</span><span class="p">,</span><span class="n">priors</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">call_</span><span class="p">[</span><span class="s2">&quot;priors&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="n">model</span><span class="o">.</span><span class="n">model_</span> <span class="o">==</span> <span class="s2">&quot;candisc&quot;</span><span class="p">:</span>
+                <span class="n">new_model</span> <span class="o">=</span> <span class="n">CANDISC</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">call_</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]],</span><span class="n">features</span><span class="o">=</span><span class="n">selectedVar</span><span class="p">,</span><span class="n">priors</span><span class="o">=</span><span class="n">model</span><span class="o">.</span><span class="n">call_</span><span class="p">[</span><span class="s2">&quot;priors&quot;</span><span class="p">])</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">dataset</span><span class="p">)</span>
+            
+            <span class="bp">self</span><span class="o">.</span><span class="n">results_</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">results_</span><span class="p">,</span><span class="o">**</span><span class="p">{</span><span class="s2">&quot;train&quot;</span> <span class="p">:</span> <span class="n">new_model</span><span class="p">}}</span>
+        
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_</span> <span class="o">=</span> <span class="s2">&quot;stepdisc&quot;</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Duvérier DJIFACK ZEBAZE.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

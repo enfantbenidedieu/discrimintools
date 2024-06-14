@@ -19,68 +19,114 @@ class DISCA(BaseEstimator,TransformerMixin):
     """
     Discriminant Correspondence Analysis (DISCA)
     --------------------------------------------
+    This class inherits from sklearn BaseEstimator and TransformerMixin class
 
     Description
     -----------
+    Performs Discriminant Correspondence Analysis model.
 
-    This class inherits from sklearn BaseEstimator and TransformerMixin class
+    Usage
+    -----
+    ```python
+    >>> DISCA(n_components = 2, target = None, features = None, priors = None, parallelize = False)
+    ```
 
-    Performance Discriminant Correspondence Analysis
-
-    Parameters:
+    Parameters
     ----------
-    n_components : number of dimensions kept in the results
+    `n_components` : number of dimensions kept in the results (by default 2)
 
-    target : string, target variable
+    `target` : list of string with length 1 specifying the values of the classification variable define the groups for analysis.
 
-    features : list of qualitatives variables to be included in the analysis.
+    `features` : list of qualitatives variables to be included in the analysis. The default is all categoricals variables in dataset
 
-    priors : The priors statement specifies the prior probabilities of group membership.
-                - "equal" to set the prior probabilities equal,
-                - "proportional" or "prop" to set the prior probabilities proportional to the sample sizes
-                - a pandas series which specify the prior probability for each level of the classification variable.
-    
-    parallelize : boolean, default = False
-        If model should be parallelize
-            - If True : parallelize using mapply
-            - If False : parallelize using apply
+    `priors` : The priors statement specifying the prior probabilities of group membership.
+        * "equal" to set the priors probabilities equal,
+        * "proportional" or "prop" to set the priors probabilities proportional to the sample sizes
+        * pandas series which specify the prior probability for each level of the classification variable.
 
-    Return
-    ------
+    `parallelize` : boolean, default = False. If model should be parallelize
+        * If `True` : parallelize using mapply (see https://mapply.readthedocs.io/en/stable/README.html#installation)
+        * If `False` : parallelize using apply
 
-    call_ : a dictionary with some statistics
+    Attributes
+    ----------
+    `call_` : dictionary with some statistics
 
-    ind_ : a dictionary of pandas dataframe containing all the results for the active individuals (coordinates)
+    `ind_` : dictionary of pandas dataframe containing all the results for the active individuals (coordinates)
 
-    var_ : a dictionary of pandas dataframe containing all the results for the active variables (coordinates, correlation between variables and axes, square cosine, contributions)
+    `var_` : dictionary of pandas dataframe containing all the results for the active variables (coordinates, correlation between variables and axes, square cosine, contributions)
 
-    statistics_ : statistics
+    `statistics_` : dictionary containing some statistics results :
+        * `chi2` : pandas dataframe containing the chi-squared test between features and target
+        * `categories` : pandas dataframe containing the distribution in count for features
+        * `information` : pandas dataframe containing the class level information (frequence, proportion, priors)
 
-    classes_ : classes informations
+    `classes_` : dictionary containing the classes information:
+        * `coord` : pandas dataframe containing the group coordinates
+        * `cos2` : pandas dataframe containing the group cos2
+        * `contrib` : pandas dataframe containing the group contributions
+        * `infos` : pandas dataframe containing the group additional informations (margin, square distance to origin & inertia)
+        * `classes` : name of categories
+        * `dist2` : pandas dataframe containing the square distance to origin for groups
+        * `dist` : pandas dataframe containing the square distance between each group
 
-    anova_ : analyse of variance 
+    `anova_` : dictionary containing :
+        * `eta2` : pandas dataframe containing the square correlation ratio
+        * `canonical_eta2` : pandas dataframe containing the canonical square correlation ratio
 
-    factor_model_ : correspondence analysis model
+    `factor_model_` : correspondence analysis (CA) model
 
-    coef_ : discriminant correspondence analysis coefficients
+    `coef_` : pandas dataframe containing discriminant correspondence analysis coefficients
 
-    model_ : string. The model fitted = 'disca'
+    `model_` : string specifying the model fitted = 'disca'
 
     Author(s)
     ---------
     Duvérier DJIFACK ZEBAZE duverierdjifack@gmail.com
 
-    Notes:
-    ------
+    References
+    ----------
+    Abdi, H., and Williams, L.J. (2010). Principal component analysis. Wiley Interdisciplinary Reviews: Computational Statistics, 2, 433-459.
+    
+    Abdi, H. and Williams, L.J. (2010). Correspondence analysis. In N.J. Salkind, D.M., Dougherty, & B. Frey (Eds.): Encyclopedia of Research Design. Thousand Oaks (CA): Sage. pp. 267-278.
+    
+    Abdi, H. (2007). Singular Value Decomposition (SVD) and Generalized Singular Value Decomposition (GSVD). In N.J. Salkind (Ed.): Encyclopedia of Measurement and Statistics.Thousand Oaks (CA): Sage. pp. 907-912.
+    
+    Abdi, H. (2007). Discriminant correspondence analysis. In N.J. Salkind (Ed.): Encyclopedia of Measurement and Statistics. Thousand Oaks (CA): Sage. pp. 270-275.
+
+    Ricco Rakotomalala (2020), Pratique de l'analyse discriminante linéaire, Version 1.0, 2020
+
+    Links
+    -----
     https://bookdown.org/teddyswiebold/multivariate_statistical_analysis_using_r/discriminant-correspondence-analysis.html
+
     https://search.r-project.org/CRAN/refmans/TExPosition/html/tepDICA.html
+
     http://pbil.univ-lyon1.fr/ADE-4/ade4-html/discrimin.coa.html
+
     https://rdrr.io/cran/ade4/man/discrimin.coa.html
+
     https://stat.ethz.ch/pipermail/r-help/2010-December/263170.html
-    https://www.sciencedirect.com/science/article/pii/S259026012200011X    
+
+    https://www.sciencedirect.com/science/article/pii/S259026012200011X 
+
+    See also
+    --------
+    get_disca_ind, get_disca_var, get_disca_classes, get_disca_coef, get_disca, summaryDISCA, fviz_disca_ind, fviz_disca_mod
+
+    Examples
+    --------
+    ```python
+    >>> # load canines dataset
+    >>> from discrimintools import load_canines
+    >>> canines = load_canines()
+    >>> from discrimintools import DISCA
+    >>> res_disca = DISCA(n_components=2,target=["Fonction"],priors = "prop")
+    >>> res_disca.fit(canines)
+    ```
     """
     def __init__(self,
-                 n_components = None,
+                 n_components = 2,
                  target = None,
                  features = None,
                  priors = None,
@@ -91,22 +137,24 @@ class DISCA(BaseEstimator,TransformerMixin):
         self.priors = priors
         self.parallelize = parallelize
     
-    def fit(self,X):
+    def fit(self,X,y=None):
         """
         Fit the Discriminant Correspondence Analysis model
         --------------------------------------------------
 
         Parameters
         ----------
-        X : pandas/polars DataFrame,
-            Training Data
+        `X` : pandas/polars dataframe of shape (n_samples, n_features+1)
+            Training Data.
         
-        Returns:
-        --------
-        self : object
+        `y` : None.
+            y is ignored.
+        
+        Returns
+        -------
+        `self` : object
             Fitted estimator
         """ 
-
         # check if X is an instance of polars dataframe
         if isinstance(X,pl.DataFrame):
             X = X.to_pandas()     
@@ -127,7 +175,7 @@ class DISCA(BaseEstimator,TransformerMixin):
         if self.target is None:
             raise ValueError("'target' must be assigned")
         elif not isinstance(self.target,list):
-            raise ValueError("'target' must be a list")
+            raise TypeError("'target' must be a list")
         elif len(self.target)>1:
             raise ValueError("'target' must be a list of length one")
 
@@ -184,7 +232,7 @@ class DISCA(BaseEstimator,TransformerMixin):
 
         ######################################################################################
         # Tableau des indicatrices
-        dummies = pd.concat((pd.get_dummies(x[col],prefix=col,prefix_sep="_",dtype=float) for col in x.columns),axis=1)
+        dummies = pd.concat((pd.get_dummies(x[col],prefix=col,prefix_sep="_",dtype=int) for col in x.columns),axis=1)
 
         ############################################################
         # Construction de la matrice M
@@ -230,7 +278,8 @@ class DISCA(BaseEstimator,TransformerMixin):
             priors = pd.Series([x/self.priors.sum() for x in self.priors.values],index=self.priors.index)
 
         # Store some informations
-        self.call_ = {"X" : X,
+        self.call_ = {"Xtot" : Xtot,
+                      "X" : X,
                       "target" : self.target[0],
                       "features" : features,
                       "n_features" : n_features,
@@ -260,7 +309,7 @@ class DISCA(BaseEstimator,TransformerMixin):
         
         # Rapport de corrélation - Correlation ratio
         eta2 = ((x.shape[0]*global_ca.eig_.iloc[:,0])/tss)
-        eta2.name = "Eta2"
+        eta2.name = "eta2"
 
         ##################################################################################
         # Information sur les classes
@@ -280,28 +329,33 @@ class DISCA(BaseEstimator,TransformerMixin):
         self.coef_ = coef
         
         # Analysis of variance
-        self.anova_ = {"Eta2" : eta2,"canonical_Eta2" : mapply(eta2,lambda x : np.sqrt(x),axis=0,progressbar=False,n_workers=n_workers)}
+        self.anova_ = {"eta2" : eta2,"canonical_eta2" : mapply(eta2,lambda x : np.sqrt(x),axis=0,progressbar=False,n_workers=n_workers)}
 
         self.model_ = "disca"
         
         return self
         
-    def fit_transform(self,X):
+    def fit_transform(self,X,y=None):
         """
         Fit to data, then transform it
         ------------------------------
 
+        Description
+        -----------
         Fits transformer to `X` and returns a transformed version of `X`.
 
         Parameters
         ----------
-        X : DataFrame of shape (n_samples, n_features+1)
+        `X` : pandas/polars dataframe of shape (n_samples, n_features+1)
             Input samples.
+        
+        `y` : None.
+            y is ignored.
 
         Returns
         -------
-        X_new :  DataFrame of shape (n_samples, n_features_new)
-            Transformed array.
+        `X_new` : pandas dataframe of shape (n_samples, n_components)
+            Transformed dataframe.
         """
         self.fit(X)
         return self.ind_["coord"]
@@ -311,24 +365,21 @@ class DISCA(BaseEstimator,TransformerMixin):
         Apply the dimensionality reduction on X
         --------------------------------------- 
         
+        Description
+        -----------
         X is projected on the first axes previous extracted from a training set.
+
         Parameters
         ----------
-        X : array of string, int or float, shape (n_rows_sup, n_vars)
-            New data, where n_rows_sup is the number of supplementary
-            row points and n_vars is the number of variables.
-            X is a data table containing a category in each cell.
-            Categories can be coded by strings or numeric values.
-            X rows correspond to supplementary row points that are
-            projected onto the axes.
+        `X` : pandas/polars dataframe of shape (n_samples_plus, n_features) or (n_samples_plus, n_features+1)
         
-        y : None
+        `y` : None
             y is ignored.
+
         Returns
         -------
-        X_new : array of float, shape (n_rows_sup, n_components_)
-            X_new : coordinates of the projections of the supplementary
-            row points onto the axes.
+        `X_new` : pandas dataframe of shape (n_samples_sup, n_components)
+            Coordinates of the projections of the supplementary
         """
         # check if X is an instance of polars dataframe
         if isinstance(X,pl.DataFrame):
@@ -361,20 +412,18 @@ class DISCA(BaseEstimator,TransformerMixin):
     
     def decision_function(self,X):
         """
-        Apply decision function to an array of samples
-        ----------------------------------------------
+        Apply decision function to a pandas dataframe of samples
+        --------------------------------------------------------
 
         Parameters
         ----------
-        X : DataFrame of shape (n_samples_, n_features)
-            DataFrame of samples (test vectors).
-
+        `X` : pandas/polars dataframe of shape (n_samples, n_features)
+            
         Returns
         -------
-        C : DataFrame of shape (n_samples_,) or (n_samples_, n_classes)
+        `C` : pandas dataframe of shape (n_samples_,) or (n_samples_, n_classes)
             Decision function values related to each class, per sample.
         """
-
         # check if X is an instance of polars dataframe
         if isinstance(X,pl.DataFrame):
             X = X.to_pandas()
@@ -408,14 +457,13 @@ class DISCA(BaseEstimator,TransformerMixin):
 
         Parameters
         ----------
-        X : DataFrame of shape (n_samples_,n_features_)
+        `X` : pandas/polars dataFrame of shape (n_samples, n_features)
             Input data.
         
         Returns:
         --------
-        C : DataFrame of shape (n_samples_,n_classes_)
+        `C` : pandas dataframe of shape (n_samples,n_classes)
             Estimated probabilities.
-        
         """
 
         # check if X is an instance of polars dataframe
@@ -452,13 +500,13 @@ class DISCA(BaseEstimator,TransformerMixin):
 
         Parameters
         ----------
-        X : DataFrame of shape (n_samples_, n_features_)
-            The data matrix for which we want to get the predictions.
+        `X` : pandas/polars dataframe of shape (n_samples, n_features)
+            The pandas/polars dataframe for which we want to get the predictions.
         
-        Returns:
-        --------
-        y_pred : ndarray of shape (n_samples)
-            Vectors containing the class labels for each sample
+        Returns
+        -------
+        `y_pred` : pandas series of shape (n_samples,)
+            Pandas series containing the class labels for each sample
         """
         if not isinstance(X,pd.DataFrame):
             raise TypeError(
@@ -475,24 +523,24 @@ class DISCA(BaseEstimator,TransformerMixin):
         Return the mean accuracy on the given test data and labels
         ----------------------------------------------------------
 
-        In multi-label classification, this is the subset accuracy
-        which is a harsh metric since you require for each sample that
-        each label set be correctly predicted.
+        Notes
+        -----
+        In multi-label classification, this is the subset accuracy which is a harsh metric since you require for each sample that each label set be correctly predicted.
 
         Parameters
         ----------
-        X : array-like of shape (n_samples, n_features)
+        `X` : pandas/polars dataframe of shape (n_samples, n_features)
             Test samples.
 
-        y : array-like of shape (n_samples,) or (n_samples, n_outputs)
+        `y` : pandas series/dataframe of shape (n_samples,) or (n_samples,1)
             True labels for `X`.
 
-        sample_weight : array-like of shape (n_samples,), default=None
+        `sample_weight` : array-like of shape (n_samples,), default=None
             Sample weights.
 
         Returns
         -------
-        score : float
+        `score` : float
             Mean accuracy of ``self.predict(X)`` w.r.t. `y`.
         """
         return accuracy_score(y, self.predict(X), sample_weight=sample_weight)

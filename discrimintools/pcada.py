@@ -14,60 +14,70 @@ class PCADA(BaseEstimator,TransformerMixin):
     """
     Principal Components Analysis - Discriminant Analysis (PCADA)
     -------------------------------------------------------------
+    This class inherits from sklearn BaseEstimator and TransformerMixin class
 
     Description
     -----------
+    Implementation of the PCADA methodology. Performs a linear Discrimination Analysis (LDA) on components from a Principal Components Analysis (PCA).
 
-    This class inherits from sklearn BaseEstimator and TransformerMixin class
+    Usage
+    -----
+    ```python
+    >>> PCADA(n_components = 2, target = None, features = None, priors=None, parallelize=False)
+    ```
 
-    Performs principal components analysis - discriminant analysis
-
-    Parameters:
+    Parameters
     ----------
-    n_components : number of dimensions kept in the results 
+    `n_components` : number of dimensions kept in the results (by default 2)
 
-    target : The values of the classification variable define the groups for analysis.
+    `target` : list of string with length 1 specifying the values of the classification variable define the groups for analysis.
 
-    features : list of quantitative variables to be included in the analysis. The default is all numeric variables in dataset
+    `features` : list of quantitatives variables to be included in the analysis. The default is all quantitatives variables in dataset
 
-    priors : The priors statement specifies the prior probabilities of group membership.
-                - "equal" to set the prior probabilities equal,
-                - "proportional" or "prop" to set the prior probabilities proportional to the sample sizes
-                - a pandas series which specify the prior probability for each level of the classification variable.
-    
-    parallelize : boolean, default = False
-        If model should be parallelize
-            - If True : parallelize using mapply
-            - If False : parallelize using apply
+    `priors` : The priors statement specifying the prior probabilities of group membership.
+        * "equal" to set the priors probabilities equal,
+        * "proportional" or "prop" to set the priors probabilities proportional to the sample sizes
+        * pandas series which specify the prior probability for each level of the classification variable.
 
-    Returns:
-    -------
-    coef_ : DataFrame of shape (n_features,n_classes_)
+    `parallelize` : boolean, default = False. If model should be parallelize
+        * If `True` : parallelize using mapply (see https://mapply.readthedocs.io/en/stable/README.html#installation)
+        * If `False` : parallelize using apply
 
-    intercept_ : DataFrame of shape (1, n_classes)
-
-    lda_model_ : linear discriminant analysis model
-
-    factor_model_ : principal components analysis model
-
-    projection_function_ : projection function
-
-    coef_ : pandas dataframe of shpz (n_categories, n_classes)
+    Attributes
+    ----------
+    coef_ : pandas dataframe of shape (n_features, n_classes)
 
     intercept_ : pandas dataframe of shape (1, n_classes)
 
-    model_ : string. The model fitted = 'disqual'
+    lda_model_ : linear discriminant analysis (LDA) model
+
+    factor_model_ : principal components analysis (PCA) model
+
+    projection_function_ : projection function
+
+    model_ : string specifying the model fitted = 'pcada'
 
     Author(s)
     ---------
     Duvérier DJIFACK ZEBAZE duverierdjifack@gmail.com
     
-    References:
-    -----------
+    References
+    ----------
     Ricco Rakotomalala, Pratique de l'analyse discriminante linéaire, Version 1.0, 2020
+
+    Examples
+    --------
+    ```python
+    >>> # load wine dataset
+    >>> from discrimintools.datasets import load_wine
+    >>> wine = load_wine()
+    >>> from discrimintools import PCADA
+    >>> res_pcada = PCADA(n_components=2,target=["Cultivar"],features=None,priors="prop")
+    >>> res_pcada.fit(wine)
+    ```
     """
     def __init__(self,
-                 n_components = None,
+                 n_components = 2,
                  target = None,
                  features = None,
                  priors=None,
@@ -80,15 +90,15 @@ class PCADA(BaseEstimator,TransformerMixin):
 
     def fit(self,X,y=None):
         """
-        Fit the Linear Discriminant Analysis with categories variables model
-        --------------------------------------------------------------------
+        Fit the Principal Components Analysis - Discriminant Analysis model
+        -------------------------------------------------------------------
 
         Parameters:
         -----------
         X : pandas/polars DataFrame of shape (n_samples, n_features+1)
             Training data
         
-        y : None
+        y : None. y is ignored.
 
         Returns:
         --------
@@ -209,16 +219,18 @@ class PCADA(BaseEstimator,TransformerMixin):
         Fit to data, then transform it
         ------------------------------
 
+        Description
+        -----------
         Fits transformer to `X` and returns a transformed version of `X`.
 
         Parameters
         ----------
-        X : DataFrame of shape (n_samples, n_features+1)
+        `X` : pandas/polars dataframe of shape (n_samples, n_features+1)
             Input samples.
 
         Returns
         -------
-        X_new :  DataFrame of shape (n_samples, n_features_new)
+        `X_new` :  pandas dataframe of shape (n_samples, n_features_new)
             Transformed array.
         """
         self.fit(X)
@@ -231,15 +243,14 @@ class PCADA(BaseEstimator,TransformerMixin):
         Project data to maximize class separation
         -----------------------------------------
 
-        Parameters:
+        Parameters
         ----------
-        X : DataFrame of shape (n_samples, n_features)
+        `X` : pandas/polars dataframe of shape (n_samples, n_features)
             Input data
 
-        Returns:
-        --------
-        X_new : DataFrame of shape (n_samples, n_components_)
-        
+        Returns
+        -------
+        `X_new` : pandas dataframe of shape (n_samples, n_components)
         """
         # check if X is an instance of polars dataframe
         if isinstance(X,pl.DataFrame):
@@ -268,16 +279,15 @@ class PCADA(BaseEstimator,TransformerMixin):
         Predict class labels for samples in X
         -------------------------------------
 
-        Parameters:
-        -----------
-        X : DataFrame of shape (n_samples, n_features)
+        Parameters
+        ----------
+        `X` : pandas/polars dataframe of shape (n_samples, n_features)
             The dataframe for which we want to get the predictions
         
-        Returns:
-        --------
-        y_pred : DtaFrame of shape (n_samples, 1)
-            DataFrame containing the class labels for each sample.
-        
+        Returns
+        -------
+        `y_pred` : pandas dataframe of shape (n_samples, 1)
+            Pandas dataframe containing the class labels for each sample.
         """
         return self.lda_model_.predict(self.transform(X))
     
@@ -288,14 +298,13 @@ class PCADA(BaseEstimator,TransformerMixin):
 
         Parameters
         ----------
-        X : DataFrame of shape (n_samples, n_features)
+        `X` : pandas/polars dataframe of shape (n_samples, n_features)
             Input data
         
-        Returns:
+        Returns
         -------
-        C : DataFrame of shape (n_samples, n_classes)
+        `C` : pandas dataframe of shape (n_samples, n_classes)
             Estimate probabilities
-        
         """
         return self.lda_model_.predict_proba(self.transform(X))
     
@@ -304,24 +313,24 @@ class PCADA(BaseEstimator,TransformerMixin):
         Return the mean accuracy on the given test data and labels
         ----------------------------------------------------------
 
-        In multi-label classification, this is the subset accuracy
-        which is a harsh metric since you require for each sample that
-        each label set be correctly predicted.
+        Description
+        -----------
+        In multi-label classification, this is the subset accuracy which is a harsh metric since you require for each sample that each label set be correctly predicted.
 
         Parameters
         ----------
-        X : array-like of shape (n_samples, n_features)
+        `X` : pandas/polars dataframe of shape (n_samples, n_features)
             Test samples.
 
-        y : array-like of shape (n_samples,) or (n_samples, n_outputs)
+        `y` : pandas series of shape (n_samples,) or (n_samples, n_outputs)
             True labels for `X`.
 
-        sample_weight : array-like of shape (n_samples,), default=None
+        `sample_weight` : array-like of shape (n_samples,), default=None
             Sample weights.
 
         Returns
         -------
-        score : float
+        `score` : float
             Mean accuracy of ``self.predict(X)`` w.r.t. `y`.
         """
         return accuracy_score(y, self.predict(X), sample_weight=sample_weight)

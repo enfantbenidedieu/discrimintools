@@ -13,35 +13,30 @@ def eta2(categories,value,digits=4):
 
     Parameters
     ----------
-    categories : un facteur associé à la variable qualitative
+    `categories` : un facteur associé à la variable qualitative
 
-    value : un vecteur associé à la variable quantitatives
+    `value` : un vecteur associé à la variable quantitatives
 
-    digits : int, default=3. Number of decimal printed
+    `digits` : int, default=3. Number of decimal printed
 
     Return
     ------
     a dictionary of numeric elements
-
-    Sum. Intra : la somme des carrés intra
-
-    Sum. Inter : La somme des carrés inter
-
-    Correlation ratio : La valeur du rapport de corrélation empirique
-
-    F-stats : La statistique de test F de Fisher
-    
-    pvalue : la probabilité critique
+        * `Sum. Intra` : la somme des carrés intra
+        * `Sum. Inter` : La somme des carrés inter
+        * `Correlation ratio` : La valeur du rapport de corrélation empirique
+        * `F-stats` : La statistique de test F de Fisher
+        * `pvalue` : la probabilité critique
 
     References
     ----------
     F. Bertrand, M. Maumy-Bertrand, Initiation à la Statistique avec R, Dunod, 4ème édition, 2023.
 
+    https://stackoverflow.com/questions/52083501/how-to-compute-correlation-ratio-or-eta-in-python
+
     Author(s)
     ---------
     Duvérier DJIFACK ZEBAZE duverierdjifack@gmail.com
-
-    see also https://stackoverflow.com/questions/52083501/how-to-compute-correlation-ratio-or-eta-in-python
     """
     K = len(np.unique(categories, return_inverse=True)[0])
     n = value.shape[0]

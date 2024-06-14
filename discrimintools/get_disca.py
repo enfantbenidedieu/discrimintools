@@ -1,78 +1,147 @@
 # -*- coding: utf-8 -*-
-
 import pandas as pd
 import numpy as np
-from scipy.spatial.distance import pdist
-from scipy.cluster import hierarchy
-from scientisttools.eta2 import eta2
-import scipy.stats as st
 
-# Row informations
 def get_disca_ind(self):
     """
     Extract the results for individuals - DISCA
     -------------------------------------------
 
+    Description
+    -----------
+    Extract the results (factor coordinates) for active individuals from Discriminant Correspondence Analysis (DISCA) outputs.
+
+    Usage
+    -----
+    ````python
+    >>> get_disca_ind(self)
+    ```
+
     Parameters
     ----------
-    self : an object of class DISCA
+    `self` : an object of class DISCA
 
     Returns
     -------
-    a dictionary of dataframes containing all the results for the active individuals including:
-    - coord : coordinates for the individuals
+    dictionary of dataframes containing all the results for the active individuals including:
+
+    `coord` : factor coordinates for the individuals
 
     Author(s)
     ---------
     Duvérier DJIFACK ZEBAZE duverierdjifack@gmail.com
+
+    Examples
+    --------
+    ```python
+    >>> # load canines dataset
+    >>> from discrimintools import load_canines
+    >>> canines = load_canines()
+    >>> from discrimintools import DISCA, get_disca_ind
+    >>> res_disca = DISCA(n_components=2,target=["Fonction"],priors = "prop")
+    >>> res_disca.fit(canines)
+    >>> ind = get_disca_ind(res_disca)
+    ```
     """
     if self.model_ != "disca":
         raise TypeError("'self' must be an object of class DISCA")
     return self.ind_
 
-# Categories informations
 def get_disca_var(self):
     """
     Extract the results for variables/categories - DISCA
     ----------------------------------------------------
 
+    Description
+    -----------
+    Extract the results (factor coordinates, contributions, square cosinus) for variables/categories from Discriminant Correspondence Analysis (DISCA) outputs.
+
+    Usage
+    -----
+    ```python
+    >>> get_disca_var(self)
+    ```
+
     Parameters
     ----------
-    self : an object of class DISCA
+    `self` : an object of class DISCA
 
     Returns
     -------
-    a dictionary of dataframes containing all the results for the active variables including:
-    - coord : coordinates for the variables/categories
+    a dictionary of dataframes containing all the results for the active variables/categories including:
 
-    - contrib : contributions for the variables/categories
+    `coord` : factor coordinates for the variables/categories
+
+    `contrib` : contributions for the variables/categories
+
+    `cos2` : square cosinus for variables/categories
 
     Author(s)
     ---------
     Duvérier DJIFACK ZEBAZE duverierdjifack@gmail.com
+
+    Examples
+    --------
+    ```python
+    >>> # load canines dataset
+    >>> from discrimintools import load_canines
+    >>> canines = load_canines()
+    >>> from discrimintools import DISCA, get_disca_var
+    >>> res_disca = DISCA(n_components=2,target=["Fonction"],priors = "prop")
+    >>> res_disca.fit(canines)
+    >>> # Results for variables/categories
+    >>> var = get_disca_var(res_disca)
+    ```
     """
     if self.model_ != "disca":
         raise TypeError("'self' must be an object of class DISCA")
     return self.var_
 
-# Group informations
 def get_disca_classes(self):
     """
     Extract the results for groups - DISCA
     --------------------------------------
 
+    Description
+    -----------
+    Extract the results (factor coordinates, contributions, square cosinus) for groups/classes from Discriminant Correspondence Analysis (DISCA) outputs.
+
+    Usage
+    -----
+    ```python
+    >>> get_disca_classes(self)
+    ```
+
     Parameters
     ----------
-    self : an object of class DISCA
+    `self` : an object of class DISCA
 
     Returns
     -------
-    a dictionary of dataframes containing all the results for the groups including:
-    - coord : coordinates for the individuals
+    dictionary of dataframes containing all the results for the groups/classes including:
+
+    `coord` : factor coordinates for the groups/classes
+
+    `contrib` : contributions for the groups/classes
+
+    `cos2` : square cosinus for the groups/classes
 
     Author(s)
     ---------
     Duvérier DJIFACK ZEBAZE duverierdjifack@gmail.com
+
+    Examples
+    --------
+    ```python
+    >>> # load canines dataset
+    >>> from discrimintools import load_canines
+    >>> canines = load_canines()
+    >>> from discrimintools import DISCA, get_disca_classes
+    >>> res_disca = DISCA(n_components=2,target=["Fonction"],priors = "prop")
+    >>> res_disca.fit(canines)
+    >>> # Results for classes
+    >>> classes = get_disca_classes(res_disca)
+    ```
     """
     if self.model_ != "disca":
         raise TypeError("'self' must be an object of class DISCA")
@@ -83,41 +152,96 @@ def get_disca_coef(self):
     Extract coefficients - DISCA
     ----------------------------
 
+    Description
+    -----------
+    Extract coefficients of classification function from Discriminant Correspondence Analysis (DISCA) outputs.
+
+    Usage
+    -----
+    ```python
+    >>> get_disca_coef(self)
+    ```
+
     Parameters
     ----------
-    self : an object of class DISCA
+    `self` : an object of class DISCA
 
     Returns
     -------
-    a pandas dataframe containing coefficients
+    pandas dataframe containing coefficients
 
     Author(s)
     ---------
     Duvérier DJIFACK ZEBAZE duverierdjifack@gmail.com
+
+    Examples
+    --------
+    ```python
+    >>> # load canines dataset
+    >>> from discrimintools import load_races_canines
+    >>> canines = load_canines()
+    >>> from discrimintools import DISCA, get_disca_coef
+    >>> res_disca = DISCA(n_components=2,target=["Fonction"],priors = "prop")
+    >>> res_disca.fit(canines)
+    >>> # Coefficients of classification function
+    >>> classcoef = get_disca_coef(res_disca)
+    ```
     """
     if self.model_ != "disca":
         raise TypeError("'self' must be an object of class DISCA")
     return self.coef_
 
-# Disca extract informations
 def get_disca(self,choice="ind"):
     """
     Extract the results - DISCA
     ---------------------------
 
+    Description
+    -----------
+    Extract the results (individuals, variables, classes, coefficients) from Discriminant Correspondence Analysis (DISCA) outputs.
+
+    Usage
+    ------
+    ```python
+    >>> get_disca(self,choice=("ind","var","classes","coef"))
+    ```
+
     Parameters
     ----------
-    self : an object of class DISCA
+    `self` : an object of class DISCA
 
-    choice :
+    `choice` : the element to subset fro the output. Allowed values are :
+        * "ind" for individuals
+        * "var" for variables
+        * "classes" for classes/groups
+        * "coef" for coefficients of classification function
 
     Returns
     -------
-    a dictionary or a pandas dataframe
+    dictionary or pandas dataframe
 
     Author(s)
     ---------
     Duvérier DJIFACK ZEBAZE duverierdjifack@gmail.com
+
+    Examples
+    --------
+    ```python
+    >>> # load canines dataset
+    >>> from discrimintools import load_canines
+    >>> canines = load_canines()
+    >>> from discrimintools import DISCA, get_disca
+    >>> res_disca = DISCA(n_components=2,target=["Fonction"],priors = "prop")
+    >>> res_disca.fit(canines)
+    >>> # Results for individuals
+    >>> ind = get_disca(res_disca, choice = "ind")
+    >>> # Results for variables
+    >>> var = get_disca(res_disca, choice = "var")
+    >>> # Results for groups/classes
+    >>> classes = get_disca(res_disca, choice = "classes")
+    >>> # Coefficients of classification function
+    >>> coef = get_disca(res_disca, choice = "coef")
+    ```
     """
     if self.model_ != "disca":
         raise TypeError("'self' must be an object of class DISCA")
@@ -139,29 +263,51 @@ def summaryDISCA(self,digits=3,nb_element=10,ncp=3,to_markdown=False,tablefmt = 
     Printing summaries of Discriminant Correspondence Analysis model
     ----------------------------------------------------------------
 
+    Description
+    -----------
+    Printing summaries of discriminant correspondence analysis objects.
+
+    Usage
+    -----
+    ```python
+    >>> summaryDISCA(self,digits=3,nb_element=10,ncp=3,to_markdown=False,tablefmt = "pipe",**kwargs)
+    ```
+
     Parameters
     ----------
-    self        :   an object of class DISCA
+    `self` : an object of class DISCA
 
-    digits      :   int, default=3. Number of decimal printed
+    `digits` : int, default=3. Number of decimal printed
 
-    nb_element  :   int, default = 10. Number of element
+    `nb_element` :   int, default = 10. Number of element
 
-    ncp         :   int, default = 3. Number of componennts
+    `ncp` :   int, default = 3. Number of componennts
 
-    to_markdown :   Print DataFrame in Markdown-friendly format.
+    `to_markdown` : Print DataFrame in Markdown-friendly format.
 
-    tablefmt    :   Table format. For more about tablefmt, see : https://pypi.org/project/tabulate/
+    `tablefmt` : Table format. For more about tablefmt, see : https://pypi.org/project/tabulate/
 
-    **kwargs    :   These parameters will be passed to tabulate.
+    `**kwargs` : These parameters will be passed to tabulate.
 
     Author(s)
     ---------
     Duvérier DJIFACK ZEBAZE duverierdjifack@gmail.com
-    """
 
+    Examples
+    --------
+    ```python
+    >>> # load canines dataset
+    >>> from discrimintools import load_canines
+    >>> canines = load_canines()
+    >>> from discrimintools import DISCA, summaryDISCA
+    >>> res_disca = DISCA(n_components=2,target=["Fonction"],priors = "prop")
+    >>> res_disca.fit(canines)
+    >>> summaryDISCA(res_disca)
+    ```
+    """
+    # Check if self is an object of class DISCA
     if self.model_ != "disca":
-        raise ValueError("'self' must be an object of class DISCA")
+        raise TypeError("'self' must be an object of class DISCA")
 
     # Define number of components
     ncp = min(ncp,self.factor_model_.call_["n_components"])
@@ -180,11 +326,14 @@ def summaryDISCA(self,digits=3,nb_element=10,ncp=3,to_markdown=False,tablefmt = 
     else:
         print(class_level_infos)
     
-    print("\nCanonical coeffcients\n")
-    if to_markdown:
-        print(coef.to_markdown(tablefmt=tablefmt,**kwargs))
+    if coef.shape[0] > nb_element:
+        print(f"\nCanonical coefficients (the {nb_element} first)\n")
     else:
-        print(coef)
+        print("\nCanonical coeffcients\n")
+    if to_markdown:
+        print(coef.iloc[:nb_element,:].to_markdown(tablefmt=tablefmt,**kwargs))
+    else:
+        print(coef.iloc[:nb_element,:])
 
     # Add individuals informations
     if self.ind_["coord"].shape[0]>nb_element:

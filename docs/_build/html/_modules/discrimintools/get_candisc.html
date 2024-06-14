@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>discrimintools.get_candisc &mdash; discrimintools 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            discrimintools
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">discrimintools</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">discrimintools</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">discrimintools.get_candisc</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for discrimintools.get_candisc</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<div class="viewcode-block" id="get_candisc_ind"><a class="viewcode-back" href="../../discrimintools.html#discrimintools.get_candisc.get_candisc_ind">[docs]</a><span class="k">def</span> <span class="nf">get_candisc_ind</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extract the results for individuals - CANDISC</span>
+<span class="sd">    -----------------------------------------</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    self : an object of class CANDISC</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    a dictionary of dataframes containing all the results for the active individuals including:</span>
+<span class="sd">    - coord : coordinates for the individuals</span>
+
+<span class="sd">    Author(s)</span>
+<span class="sd">    ---------</span>
+<span class="sd">    Duvérier DJIFACK ZEBAZE duverierdjifack@gmail.com</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_</span> <span class="o">!=</span> <span class="s2">&quot;candisc&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;&#39;self&#39; must be an object of class CANDISC.&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_</span></div>
+
+<div class="viewcode-block" id="get_candisc_var"><a class="viewcode-back" href="../../discrimintools.html#discrimintools.get_candisc.get_candisc_var">[docs]</a><span class="k">def</span> <span class="nf">get_candisc_var</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">choice</span><span class="o">=</span><span class="s2">&quot;correlation&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extract the results for variables - CANDISC</span>
+<span class="sd">    -------------------------------------------</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    self : an object of class CANDISC</span>
+
+<span class="sd">    choice : the element to subset from the output. Allowed values are &quot;correlation&quot; (for canonical correlation) or &quot;covariance&quot; (for covariance).</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    a dictionary of dataframes containings all the results for the variables</span>
+
+<span class="sd">    Author(s)</span>
+<span class="sd">    ---------</span>
+<span class="sd">    Duvérier DJIFACK ZEBAZE duverierdjifack@gmail.com</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_</span> <span class="o">!=</span> <span class="s2">&quot;candisc&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;&#39;self&#39; must be an object of class CANDISC&quot;</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">choice</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;correlation&quot;</span><span class="p">,</span><span class="s2">&quot;covariance&quot;</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;choice&#39; should be one of &#39;correlation&#39;, &#39;covariance&#39;&quot;</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">choice</span> <span class="o">==</span> <span class="s2">&quot;correlation&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">corr_</span>
+    <span class="k">elif</span> <span class="n">choice</span> <span class="o">==</span> <span class="s2">&quot;covariance&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">cov_</span></div>
+    
+<div class="viewcode-block" id="get_candisc_coef"><a class="viewcode-back" href="../../discrimintools.html#discrimintools.get_candisc.get_candisc_coef">[docs]</a><span class="k">def</span> <span class="nf">get_candisc_coef</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">choice</span><span class="o">=</span><span class="s2">&quot;absolute&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extract coefficients - CANDISC</span>
+<span class="sd">    ------------------------------</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    self : an object of class CANDISC</span>
+
+<span class="sd">    choice : the element to subset from the output. Allowed values are &quot;absolute&quot; (for canonical coefficients) or &quot;score&quot; (for class coefficients)</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    a pandas dataframe containing coefficients</span>
+
+<span class="sd">    Author(s)</span>
+<span class="sd">    ---------</span>
+<span class="sd">    Duvérier DJIFACK ZEBAZE duverierdjifack@gmail.com</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_</span> <span class="o">!=</span> <span class="s2">&quot;candisc&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;&#39;self&#39; must be an object of class CANDISC&quot;</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">choice</span> <span class="o">==</span> <span class="s2">&quot;absolute&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">coef_</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">intercept_</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">choice</span> <span class="o">==</span> <span class="s2">&quot;score&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">score_coef_</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">score_intercept_</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="get_candisc"><a class="viewcode-back" href="../../discrimintools.html#discrimintools.get_candisc.get_candisc">[docs]</a><span class="k">def</span> <span class="nf">get_candisc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">choice</span> <span class="o">=</span> <span class="s2">&quot;ind&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Extract the results - CANDISC</span>
+<span class="sd">    -----------------------------</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    self : an object of class CANDISC</span>
+
+<span class="sd">    choice :</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    a dictionary or a pandas dataframe</span>
+
+<span class="sd">    Author(s)</span>
+<span class="sd">    ---------</span>
+<span class="sd">    Duvérier DJIFACK ZEBAZE duverierdjifack@gmail.com</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_</span> <span class="o">!=</span> <span class="s2">&quot;candisc&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;&#39;self&#39; must be an object of class CANDISC&quot;</span><span class="p">)</span>
+    
+    <span class="k">if</span> <span class="n">choice</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;ind&quot;</span><span class="p">,</span><span class="s2">&quot;correlation&quot;</span><span class="p">,</span><span class="s2">&quot;covariance&quot;</span><span class="p">,</span><span class="s2">&quot;absolute&quot;</span><span class="p">,</span><span class="s2">&quot;score&quot;</span><span class="p">]:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;choice&#39; should be one of &#39;ind&#39;, &#39;correlation&#39;, &#39;covariance&#39;, &#39;absolute&#39;, &#39;score&#39;&quot;</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">choice</span> <span class="o">==</span> <span class="s2">&quot;ind&quot;</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">get_candisc_ind</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">choice</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;correlation&quot;</span><span class="p">,</span><span class="s2">&quot;covariance&quot;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">get_candisc_var</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">choice</span><span class="o">=</span><span class="n">choice</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">choice</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;absolute&quot;</span><span class="p">,</span><span class="s2">&quot;score&quot;</span><span class="p">]:</span>
+        <span class="k">return</span> <span class="n">get_candisc_coef</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">choice</span><span class="o">=</span><span class="n">choice</span><span class="p">)</span></div>
+
+<div class="viewcode-block" id="summaryCANDISC"><a class="viewcode-back" href="../../discrimintools.html#discrimintools.get_candisc.summaryCANDISC">[docs]</a><span class="k">def</span> <span class="nf">summaryCANDISC</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">digits</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">nb_element</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span><span class="n">ncp</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span><span class="n">to_markdown</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">tablefmt</span> <span class="o">=</span> <span class="s2">&quot;pipe&quot;</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Printing summaries of Canonical Discriminant Analysis model</span>
+<span class="sd">    -----------------------------------------------------------</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    self        :   an object of class CANDISC</span>
+
+<span class="sd">    digits      :   int, default=3. Number of decimal printed</span>
+
+<span class="sd">    nb_element  :   int, default = 10. Number of element</span>
+
+<span class="sd">    ncp         :   int, default = 3. Number of componennts</span>
+
+<span class="sd">    to_markdown :   Print DataFrame in Markdown-friendly format.</span>
+
+<span class="sd">    tablefmt    :   Table format. For more about tablefmt, see : https://pypi.org/project/tabulate/</span>
+
+<span class="sd">    **kwargs    :   These parameters will be passed to tabulate.</span>
+
+<span class="sd">    Author(s)</span>
+<span class="sd">    ---------</span>
+<span class="sd">    Duvérier DJIFACK ZEBAZE duverierdjifack@gmail.com</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">model_</span> <span class="o">!=</span> <span class="s2">&quot;candisc&quot;</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;self&#39; must be an object of class CANDISC&quot;</span><span class="p">)</span>
+
+    <span class="c1"># Define number of components</span>
+    <span class="n">ncp</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">ncp</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="p">[</span><span class="s2">&quot;n_components&quot;</span><span class="p">])</span>
+    <span class="n">nb_element</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">nb_element</span><span class="p">,</span><span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="p">[</span><span class="s2">&quot;X&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+    
+    <span class="n">ind</span> <span class="o">=</span> <span class="n">get_candisc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">choice</span><span class="o">=</span><span class="s2">&quot;ind&quot;</span><span class="p">)</span>
+    <span class="n">vcorr</span> <span class="o">=</span> <span class="n">get_candisc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">choice</span><span class="o">=</span><span class="s2">&quot;correlation&quot;</span><span class="p">)</span>
+    <span class="n">coef</span> <span class="o">=</span> <span class="n">get_candisc_coef</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">choice</span><span class="o">=</span><span class="s2">&quot;absolute&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">decimals</span><span class="o">=</span><span class="n">digits</span><span class="p">)</span>
+    <span class="n">score_coef</span> <span class="o">=</span> <span class="n">get_candisc_coef</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">choice</span><span class="o">=</span><span class="s2">&quot;score&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">decimals</span><span class="o">=</span><span class="n">digits</span><span class="p">)</span>
+
+    <span class="c1"># Partial Principal Components Analysis Results</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;                     Canonical Discriminant Analysis - Results                     </span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Summary Information</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">summary</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">summary_information_</span>
+    <span class="k">if</span> <span class="n">to_markdown</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">summary</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">(</span><span class="n">tablefmt</span><span class="o">=</span><span class="n">tablefmt</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">summary</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Class Level information</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">class_level_infos</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">statistics_</span><span class="p">[</span><span class="s2">&quot;information&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">to_markdown</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">class_level_infos</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">(</span><span class="n">tablefmt</span><span class="o">=</span><span class="n">tablefmt</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">class_level_infos</span><span class="p">)</span>
+
+    <span class="c1"># Add eigenvalues informations</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Importance of components&quot;</span><span class="p">)</span>
+    <span class="n">eig</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">eig_</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">decimals</span><span class="o">=</span><span class="n">digits</span><span class="p">)</span>
+    <span class="n">eig</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Variance&quot;</span><span class="p">,</span><span class="s2">&quot;Difference&quot;</span><span class="p">,</span><span class="s2">&quot;</span><span class="si">% o</span><span class="s2">f var.&quot;</span><span class="p">,</span><span class="s2">&quot;Cumulative </span><span class="si">% o</span><span class="s2">f var.&quot;</span><span class="p">]</span>
+    <span class="k">if</span> <span class="n">to_markdown</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">eig</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">(</span><span class="n">tablefmt</span><span class="o">=</span><span class="n">tablefmt</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">eig</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Test of H0: The canonical correlations in the current row and all that follow are zero</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">lrt_test</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">statistics_</span><span class="p">[</span><span class="s2">&quot;likelihood_test&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">decimals</span><span class="o">=</span><span class="n">digits</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">to_markdown</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">lrt_test</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">(</span><span class="n">tablefmt</span><span class="o">=</span><span class="n">tablefmt</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">lrt_test</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Group means:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">gmean</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">[</span><span class="s2">&quot;mean&quot;</span><span class="p">]</span>
+    <span class="n">gmean</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="n">gmean</span> <span class="o">=</span> <span class="n">gmean</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">decimals</span><span class="o">=</span><span class="n">digits</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">to_markdown</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">gmean</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">(</span><span class="n">tablefmt</span><span class="o">=</span><span class="n">tablefmt</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">gmean</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Coefficients of canonical discriminants:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">to_markdown</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">coef</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">(</span><span class="n">tablefmt</span><span class="o">=</span><span class="n">tablefmt</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">coef</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Classification functions coefficients:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">to_markdown</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">score_coef</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">(</span><span class="n">tablefmt</span><span class="o">=</span><span class="n">tablefmt</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">score_coef</span><span class="p">)</span>
+
+    <span class="c1"># Add individuals informations</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_</span><span class="p">[</span><span class="s2">&quot;coord&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&gt;</span><span class="n">nb_element</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Individuals (the </span><span class="si">{</span><span class="n">nb_element</span><span class="si">}</span><span class="s2"> first)</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Individuals</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">ind_infos</span> <span class="o">=</span> <span class="n">ind</span><span class="p">[</span><span class="s2">&quot;coord&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="n">nb_element</span><span class="p">,:]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">decimals</span><span class="o">=</span><span class="n">digits</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">to_markdown</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">ind_infos</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">(</span><span class="n">tablefmt</span><span class="o">=</span><span class="n">tablefmt</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">ind_infos</span><span class="p">)</span>
+    
+    <span class="c1"># Add variables informations</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">corr_</span><span class="p">[</span><span class="s2">&quot;total&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">&gt;</span><span class="n">nb_element</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Correlations between Canonical and Original Variables (the </span><span class="si">{</span><span class="n">nb_element</span><span class="si">}</span><span class="s2"> first)</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Correlations between Canonical and Original Variables</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">var_infos</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">()</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">ncp</span><span class="p">,</span><span class="mi">1</span><span class="p">):</span>
+        <span class="n">tcorr</span> <span class="o">=</span> <span class="n">vcorr</span><span class="p">[</span><span class="s2">&quot;total&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">tcorr</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span><span class="s2">&quot;total.&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">bcorr</span> <span class="o">=</span> <span class="n">vcorr</span><span class="p">[</span><span class="s2">&quot;between&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">bcorr</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span><span class="s2">&quot;between.&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">wcorr</span> <span class="o">=</span> <span class="n">vcorr</span><span class="p">[</span><span class="s2">&quot;within&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">wcorr</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span><span class="s2">&quot;within.&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">var_infos</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">var_infos</span><span class="p">,</span><span class="n">tcorr</span><span class="p">,</span><span class="n">bcorr</span><span class="p">,</span><span class="n">wcorr</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">var_infos</span> <span class="o">=</span> <span class="n">var_infos</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">decimals</span><span class="o">=</span><span class="n">digits</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">to_markdown</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">var_infos</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">(</span><span class="n">tablefmt</span><span class="o">=</span><span class="n">tablefmt</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">var_infos</span><span class="p">)</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Class Means on Canonical Variables</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="n">gcoord</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">[</span><span class="s2">&quot;coord&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">decimals</span><span class="o">=</span><span class="n">digits</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">to_markdown</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">gcoord</span><span class="o">.</span><span class="n">to_markdown</span><span class="p">(</span><span class="n">tablefmt</span><span class="o">=</span><span class="n">tablefmt</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">gcoord</span><span class="p">)</span></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Duvérier DJIFACK ZEBAZE.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

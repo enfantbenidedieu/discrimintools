@@ -14,58 +14,58 @@ from .lda import LDA
 from .eta2 import eta2
 from .revaluate_cat_variable import revaluate_cat_variable
 
-##################################################################################################
-#           Linear Discriminant Analysis with both Continuous and Categorical variables (DISMIX)
-###################################################################################################
 class DISMIX(BaseEstimator,TransformerMixin):
     """
-    Discriminant Analysis of Mixed Data (DISMIX)
+    Discriminant Analysis on Mixed Data (DISMIX)
     --------------------------------------------
+    This class inherits from sklearn BaseEstimator and TransformerMixin class
 
     Description
     -----------
+    Implementation of the DISMIX methodology. Performs a linear Discrimination Analysis (LDA) on components from a Factor Analysis of Mixed Data (FAMD).
 
-    This class inherits from sklearn BaseEstimator and TransformerMixin class
-
-    Performs linear discriminant analysis with both continuous and catogericals variables
+    Usage
+    -----
+    ```python
+    >>> DISMIX(n_components = 2, target = None, features = None, priors=None, parallelize=False)
+    ```
 
     Parameters:
     -----------
-     n_components : number of dimensions kept in the results 
+    `n_components` : number of dimensions kept in the results (by default 2)
 
-    target : The values of the classification variable define the groups for analysis.
+    `target : The values of the classification variable define the groups for analysis.
 
-    features : list of mixed variables to be included in the analysis
+    `features` : list of mixed variables to be included in the analysis. The default is all mixed variables in dataset
 
-    priors : The priors statement specifies the prior probabilities of group membership.
-                - "equal" to set the prior probabilities equal,
-                - "proportional" or "prop" to set the prior probabilities proportional to the sample sizes
-                - a pandas series which specify the prior probability for each level of the classification variable.
-    
-    parallelize : boolean, default = False
-        If model should be parallelize
-            - If True : parallelize using mapply
-            - If False : parallelize using apply
+    `priors` : The priors statement specifies the prior probabilities of group membership.
+        * "equal" to set the prior probabilities equal,
+        * "proportional" or "prop" to set the prior probabilities proportional to the sample sizes
+        * a pandas series which specify the prior probability for each level of the classification variable.
 
-    Return
-    ------
-    call_ : a dictionary with some statistics
+    `parallelize` : boolean, default = False (see https://mapply.readthedocs.io/en/stable/README.html#installation). If model should be parallelize
+        * If `True` : parallelize using mapply
+        * If `False` : parallelize using apply
 
-    coef_ : DataFrame of shape (n_features,n_classes_)
+    Attributes:
+    -----------
+    `call_` : dictionary with some statistics
 
-    intercept_ : DataFrame of shape (1, n_classes)
+    `statistics_` : dictionary of statistics including :
+        * "chi2" : chi-square statistic test
+        * "eta2" : square correlatin ratio
 
-    lda_model_ : linear discriminant analysis model
+    `coef_` : pandas dataframe of shape (n_features, n_classes)
 
-    factor_model_ : factor analysis of mixed data model
+    `intercept_` : pandas dataframe of shape (1, n_classes)
 
-    projection_function_ : projection function
+    `lda_model_` : linear discriminant analysis (LDA) model
 
-    coef_ : pandas dataframe of shpz (n_categories, n_classes)
+    `factor_model_` : factor analysis of mixed data (FAMD) model
 
-    intercept_ : pandas dataframe of shape (1, n_classes)
+    `projection_function_` : projection function
 
-    model_ : string. The model fitted = 'dismix'
+    `model_` : string specifying the model fitted = 'dismix'
 
     Author(s)
     ---------
@@ -73,14 +73,27 @@ class DISMIX(BaseEstimator,TransformerMixin):
 
     References:
     -----------
+    Rafik Abdesselam (2010), Discriminant Analysis on Mixed Predictors, 
+
     Ricco Rakotomalala, Pratique de l'analyse discriminante linéaire, Version 1.0, 2020
+
+    Examples
+    --------
+    ```python
+    >>> # load heart dataset
+    >>> from discrimintools.datasets import load_heart
+    >>> heart = load_heart()
+    >>> from discrimintools import DISMIX
+    >>> res_dismix = DISMIX(n_components=5,target=["disease"],priors="prop")
+    >>> res_dismix.fit(heart)
+    ```
     """
     def __init__(self,
-                 n_components = None,
-                 target=None,
+                 n_components = 2,
+                 target = None,
                  features = None,
-                 priors=None,
-                 parallelize=False):
+                 priors = None,
+                 parallelize = False):
         self.n_components = n_components
         self.target = target
         self.features = features
@@ -92,15 +105,15 @@ class DISMIX(BaseEstimator,TransformerMixin):
         Fit the Linear Discriminant Analysis of Mixed Data model
         --------------------------------------------------------
 
-        Parameters:
-        -----------
-        X : DataFrame of shape (n_samples, n_features+1)
+        Parameters
+        ----------
+        X : pandas/polars dataframe of shape (n_samples, n_features+1)
             Training data
         
-        y : None
+        y : None. y is ignored.
 
-        Returns:
-        --------
+        Returns
+        -------
         self : object
             Fitted estimator
         """
@@ -185,7 +198,7 @@ class DISMIX(BaseEstimator,TransformerMixin):
         for col in cont.columns:
             eta2_res[col] = eta2(y,x[col])
         eta2_res = pd.DataFrame(eta2_res).T.sort_values(by=["pvalue"])
-        self.statistics_ = {"chi2" : chi2_test, "Eta2" : eta2_res}
+        self.statistics_ = {"chi2" : chi2_test, "eta2" : eta2_res}
 
         #################################################################################################
         ####### Revaluate categoricals variables
@@ -256,16 +269,18 @@ class DISMIX(BaseEstimator,TransformerMixin):
         Fit to data, then transform it
         ------------------------------
 
+        Description
+        -----------
         Fits transformer to `X` and returns a transformed version of `X`.
 
         Parameters
         ----------
-        X : DataFrame of shape (n_samples, n_features+1)
+        `X` : pandas/polars dataframe of shape (n_samples, n_features+1)
             Input samples.
 
         Returns
         -------
-        X_new :  DataFrame of shape (n_samples, n_features_new)
+        `X_new` :  pandas dataframe of shape (n_samples, n_features_new)
             Transformed array.
         """
         self.fit(X)
@@ -274,19 +289,19 @@ class DISMIX(BaseEstimator,TransformerMixin):
         return coord
     
     def transform(self,X):
-        """Project data to maximize class separation
+        """
+        Project data to maximize class separation
+        -----------------------------------------
 
-        Parameters:
+        Parameters
         ----------
-        X : DataFrame of shape (n_samples, n_features)
+        `X` : pandas/polars dataframe of shape (n_samples, n_features)
             Input data
 
-        Returns:
-        --------
-        X_new : DataFrame of shape (n_samples, n_components_)
-        
+        Returns
+        -------
+        `X_new` : pandas dataframe of shape (n_samples, n_components_)
         """
-
          # check if X is an instance of polars dataframe
         if isinstance(X,pl.DataFrame):
             X = X.to_pandas()
@@ -324,14 +339,13 @@ class DISMIX(BaseEstimator,TransformerMixin):
 
         Parameters:
         -----------
-        X : DataFrame of shape (n_samples, n_features)
+        `X` : pandas/polars dataframe of shape (n_samples, n_features)
             The dataframe for which we want to get the predictions
         
         Returns:
         --------
-        y_pred : DtaFrame of shape (n_samples, 1)
+        `y_pred` : pandas series of shape (n_samples,)
             DataFrame containing the class labels for each sample.
-        
         """
         return self.lda_model_.predict(self.transform(X))
     
@@ -342,14 +356,13 @@ class DISMIX(BaseEstimator,TransformerMixin):
 
         Parameters
         ----------
-        X : DataFrame of shape (n_samples, n_features)
+        `X` : pandas/polars dataframe of shape (n_samples, n_features)
             Input data
         
-        Returns:
+        Returns
         -------
-        C : DataFrame of shape (n_samples, n_classes)
-            Estimate probabilities
-        
+        `C` : pandas dataframe of shape (n_samples, n_classes)
+            Estimated probabilities
         """
         return self.lda_model_.predict_proba(self.transform(X))
     
@@ -358,24 +371,24 @@ class DISMIX(BaseEstimator,TransformerMixin):
         Return the mean accuracy on the given test data and labels
         ----------------------------------------------------------
 
-        In multi-label classification, this is the subset accuracy
-        which is a harsh metric since you require for each sample that
-        each label set be correctly predicted.
+        Notes
+        -----
+        In multi-label classification, this is the subset accuracy which is a harsh metric since you require for each sample that each label set be correctly predicted.
 
         Parameters
         ----------
-        X : array-like of shape (n_samples, n_features)
+        `X` : pandas/polars dataframe of shape (n_samples, n_features)
             Test samples.
 
-        y : array-like of shape (n_samples,) or (n_samples, n_outputs)
+        `y` : pandas series or array-like of shape (n_samples,) or (n_samples, n_outputs)
             True labels for `X`.
 
-        sample_weight : array-like of shape (n_samples,), default=None
+        `sample_weight` : array-like of shape (n_samples,), default=None
             Sample weights.
 
         Returns
         -------
-        score : float
+        `score` : float
             Mean accuracy of ``self.predict(X)`` w.r.t. `y`.
         """
         return accuracy_score(y, self.predict(X), sample_weight=sample_weight)

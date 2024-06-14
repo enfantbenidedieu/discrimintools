@@ -30,14 +30,94 @@ def fviz_disca_ind(self,
                     center_marker_size=5,
                     ggtheme=pn.theme_minimal()):
     """
-    Draw the Discriminant Correspondence Analysis (CANDISC) individuals graphs
-    --------------------------------------------------------------------------
+    Draw the Discriminant Correspondence Analysis (DISCA) individuals graphs
+    ------------------------------------------------------------------------
 
-    Author:
-    ------
-    Duvérier DJIFACK ZEBAZE duverierdjifack@gmail.com
-    """
+    Description
+    -----------
+    Draw the Discriminant Correspondence Analysis individuals graphs
+
+    Usage
+    -----
+    ```python
+    >>> fviz_disca_ind(axis=[0,1],x_lim = None,y_lim = None,x_label=None,y_label=None, title = None,geom = ["point","text"],
+                        repel=True,point_size = 1.5,text_size = 8,text_type = "text",add_grid = True,add_hline = True,add_vline=True,
+                        ha = "center",va = "center",hline_color = "black",hline_style = "dashed",vline_color = "black",
+                        vline_style = "dashed",add_group = True,center_marker_size=5,ggtheme=pn.theme_minimal())
+    ```
+
+    Parameters
+    ----------
+    `self` : an object of class DISCA
+
+    `axis` : a numeric list/tuple of length 2 specifying the dimensions to be plotted (by default = [0,1]).
+
+    `x_label` : a string specifying the label text of x (by default = None and a x_label is chosen).
+
+    `y_label` : a string specifying the label text of y (by default = None and a y_label is chosen).
+
+    `x_lim` : a numeric list of length 2 specifying the range of the plotted 'x' values (by default = None).
+
+    `y_lim` : a numeric list of length 2 specifying the range of the plotted 'Y' values (by default = None).
+
+    `title` : a string corresponding to the title of the graph you draw (by default = None and a title is chosen).
+
+    `geom` : a string specifying the geometry to be used for the graph. Allowed values are the combinaison of ["point","text"]. Use "point"  (to show only points); "text" to show only labels; ["point","text"] to show both types.
+
+    `point_size` : a numeric value specifying the marker size (by default = 1.5).
     
+    `text_size` : a numeric value specifying the label size (by default = 8).
+
+    `text_type` :  a string specifying either `geom_text` or `geom_label` (by default = "text"). Allowed values are : "text" or "label".
+
+    `add_grid` : a boolean to either add or not a grid customization (by default = True).
+
+    `add_hline` : a boolean to either add or not a horizontal ligne (by default = True).
+
+    `add_vline` : a boolean to either add or not a vertical ligne (by default = True).
+
+    `repel` : a boolean, whether to avoid overplotting text labels or not (by default == False).
+
+    `hline_color` : a string specifying the horizontal ligne color (by default = "black").
+
+    `hline_style` : a string specifying the horizontal ligne style (by default = "dashed"). Allowed values are : "solid", "dashed", "dashdot" or "dotted"
+
+    `vline_color` : a string specifying the vertical ligne color (by default = "black").
+
+    `vline_style` : a string specifying the vertical ligne style (by default = "dashed"). Allowed values are : "solid", "dashed", "dashdot" or "dotted"
+
+    `ha` : horizontal alignment (by default = "center"). Allowed values are : "left", "center" or "right"
+
+    `va` : vertical alignment (by default = "center"). Allowed values are : "top", "center", "bottom" or "baseline"
+
+    'add_group' : a boolean, whether to add or not groups coordinates to plot (by default = True)
+
+    `center_marker_size` : a numeric specifying the cluster marker size.
+
+    `ggtheme`: function, plotnine theme name. Default value is theme_minimal(). Allowed values include plotnine official themes : theme_gray(), theme_bw(), theme_classic(), theme_void(),...
+
+    Return
+    ------
+    a plotnine
+
+    Author(s)
+    ---------
+    Duvérier DJIFACK ZEBAZE duverierdjifack@gmail.com
+
+    Examples:
+    ---------
+    ```python
+    >>> # load canines dataset
+    >>> from discrimintools import load_canines
+    >>> canines = load_canines()
+    >>> from discrimintools import DISCA, fviz_disca_ind
+    >>> res_disca = DISCA(n_components=2,target=["Fonction"],priors = "prop")
+    >>> res_disca.fit(canines)
+    >>> # Individuals factor map
+    >>> p = fviz_disca_ind(res_disca)
+    >>> print(p)
+    ```
+    """
     if self.model_ != "disca":
         raise TypeError("'self' must be an object of class DISCA")
     
@@ -57,7 +137,7 @@ def fviz_disca_ind(self,
     p = pn.ggplot(data=coord,mapping=pn.aes(x = f"Dim.{axis[0]+1}",y=f"Dim.{axis[1]+1}",label=coord.index,color=self.call_["target"]))
     
     if "point" in geom:
-        p = p + pn.geom_point(size=point_size)
+        p = p + pn.geom_point(pn.aes(shape=self.call_["target"]),size=point_size)
     
     if "text" in geom:
         if repel:
@@ -129,30 +209,92 @@ def fviz_disca_mod(self,
                  ggtheme=pn.theme_minimal()) -> pn:
     
     """
-    Visualize Discriminant Correspondence Analysis - Graph of variables/categories
+    Draw the Discriminant Correspondence Analysis - Graph of variables/categories
     ------------------------------------------------------------------------------
 
     Description
     -----------
+    Draw the discriminant correspondence analysis variables/categories graphs
 
-
+    Usage
+    -----
+    ```python
+    >>> fviz_disca_mod(self,axis=[0,1],x_lim= None,y_lim=None,x_label = None,y_label = None,title =None,color ="black",
+                        geom = ["point","text"],text_type = "text",marker = "o",point_size = 1.5,text_size = 8,add_grid =True,
+                        add_group=True,color_sup = "blue",marker_sup = "^",add_hline = True,add_vline = True,ha="center",va="center",
+                        hline_color="black",hline_style="dashed",vline_color="black",vline_style ="dashed",repel=False,ggtheme=pn.theme_minimal())
+    ```
+              
     Parameters
     ----------
-    self : an object of class DISCA
+    `self` : an object of class DISCA
 
-    axis : a numeric list or vector of length 2 specifying the dimensions to be plotted, default = [0,1]
+    `axis` : a numeric list/tuple of length 2 specifying the dimensions to be plotted (by default = [0,1]).
+
+    `x_label` : a string specifying the label text of x (by default = None and a x_label is chosen).
+
+    `y_label` : a string specifying the label text of y (by default = None and a y_label is chosen).
+
+    `x_lim` : a numeric list of length 2 specifying the range of the plotted 'x' values (by default = None).
+
+    `y_lim` : a numeric list of length 2 specifying the range of the plotted 'Y' values (by default = None).
+
+    `title` : a string corresponding to the title of the graph you draw (by default = None and a title is chosen).
+
+    `geom` : a string specifying the geometry to be used for the graph. Allowed values are the combinaison of ["point","text"]. Use "point"  (to show only points); "text" to show only labels; ["point","text"] to show both types.
+
+    `point_size` : a numeric value specifying the marker size (by default = 1.5).
+    
+    `text_size` : a numeric value specifying the label size (by default = 8).
+
+    `text_type` :  a string specifying either `geom_text` or `geom_label` (by default = "text"). Allowed values are : "text" or "label".
+
+    `add_grid` : a boolean to either add or not a grid customization (by default = True).
+
+    `add_hline` : a boolean to either add or not a horizontal ligne (by default = True).
+
+    `add_vline` : a boolean to either add or not a vertical ligne (by default = True).
+
+    `repel` : a boolean, whether to avoid overplotting text labels or not (by default == False).
+
+    `hline_color` : a string specifying the horizontal ligne color (by default = "black").
+
+    `hline_style` : a string specifying the horizontal ligne style (by default = "dashed"). Allowed values are : "solid", "dashed", "dashdot" or "dotted"
+
+    `vline_color` : a string specifying the vertical ligne color (by default = "black").
+
+    `vline_style` : a string specifying the vertical ligne style (by default = "dashed"). Allowed values are : "solid", "dashed", "dashdot" or "dotted"
+
+    `ha` : horizontal alignment (by default = "center"). Allowed values are : "left", "center" or "right"
+
+    `va` : vertical alignment (by default = "center"). Allowed values are : "top", "center", "bottom" or "baseline"
+
+    `ggtheme`: function, plotnine theme name. Default value is theme_minimal(). Allowed values include plotnine official themes : theme_gray(), theme_bw(), theme_classic(), theme_void(),...
 
     Return
     ------
-    a plotnine graph
+    a plotnine
 
     Author(s)
     ---------
     Duvérier DJIFACK ZEBAZE duverierdjifack@gmail.com
+
+    Examples:
+    ---------
+    ```python
+    >>> # load canines dataset
+    >>> from discrimintools import load_canines
+    >>> canines = load_canines()
+    >>> from discrimintools import DISCA, fviz_disca_mod
+    >>> res_disca = DISCA(n_components=2,target=["Fonction"],priors = "prop")
+    >>> res_disca.fit(canines)
+    >>> # Variables/categories factor map
+    >>> p = fviz_disca_mod(res_disca)
+    >>> print(p)
+    ```
     """
-    
     if self.model_ != "disca":
-        raise ValueError("Error : 'self' must be an object of class DISCA")
+        raise TypeError("'self' must be an object of class DISCA")
     
     if ((len(axis) !=2) or 
         (axis[0] < 0) or 
@@ -173,7 +315,6 @@ def fviz_disca_mod(self,
             p = p + text_label(text_type,color=color,size=text_size,va=va,ha=ha,adjust_text={'arrowprops': {'arrowstyle': '-','color': color,"lw":1.0}})
         else:
             p = p + text_label(text_type,color=color,size=text_size,va=va,ha=ha)
-    
     
     ###################### Add supplementary columns coordinates
     if add_group:

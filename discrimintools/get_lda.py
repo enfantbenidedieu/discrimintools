@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import numpy as np
 import pandas as pd
 
 def get_lda_ind(self):
@@ -7,41 +6,88 @@ def get_lda_ind(self):
     Extract the results for individuals - LDA
     -----------------------------------------
 
+    Description
+    -----------
+    Extract the results for active individuals from Linear Discriminant Analysis (LDA) outputs.
+
+    Usage
+    -----
+    ```python
+    >>> get_lda_ind(self)
+    ```
+
     Parameters
     ----------
-    self : an object of class LDA
+    `self` : an object of class LDA
 
     Returns
     -------
-    a dictionary of dataframes containing all the results for the active individuals including:
-    - scores : scores for the individuals
+    dictionary of dataframes containing all the results for the active individuals including:
 
-    - generalied_dist2 : generalized distance
+    `scores` : scores for the individuals
+
+    `generalied_dist2` : generalized square distance
 
     Author(s)
     ---------
     Duvérier DJIFACK ZEBAZE duverierdjifack@gmail.com
+
+    Examples
+    --------
+    ```python
+    >>> # load iris dataset
+    >>> from seaborn import load_dataset
+    >>> iris = load_dataset("iris")
+    >>> from discrimintools import LDA, get_lda_ind
+    >>> lda = LDA(target=["species"],priors="prop")
+    >>> lda.fit(iris)
+    >>> # Results for individuals
+    >>> ind = get_lda_ind(lda)
+    ```
     """
     if self.model_ != "lda":
         raise TypeError("'self' must be an object of class LDA")
     return self.ind_
 
-def get_lda_cov(self):
+def get_lda_var(self):
     """
     Extract the results for variables - LDA
     ---------------------------------------
 
+    Description
+    -----------
+    Extract the results (covariance) for variables from Linear Discriminant Analysis (LDA) outputs.
+
+    Usage
+    -----
+    ```python
+    >>> get_lda_var(self)
+    ```
+
     Parameters
     ----------
-    self : an object of class LDA
+    `self` : an object of class LDA
 
     Returns
     -------
-    a dictionary of dataframes containings all the results for the variables
+    dictionary of dataframes containings all the results for the variables
 
     Author(s)
     ---------
     Duvérier DJIFACK ZEBAZE duverierdjifack@gmail.com
+
+    Examples
+    --------
+    ```python
+    >>> # Load iris dataset
+    >>> from seaborn import load_dataset
+    >>> iris = load_dataset("iris")
+    >>> from discrimintools import LDA, get_lda_var
+    >>> lda = LDA(target=["species"],priors="prop")
+    >>> lda.fit(iris)
+    >>> # covariance
+    >>> covar = get_lda_var(lda) 
+    ```
     """
     if self.model_ != "lda":
         raise TypeError("'self' must be an object of class LDA")
@@ -52,41 +98,93 @@ def get_lda_coef(self):
     Extract coefficients - LDA
     --------------------------
 
+    Description
+    -----------
+    Extract coefficients of classification function from Linear Discriminant Analysis (LDA) outputs.
+
+    Usage
+    -----
+    ```python
+    >>> get_lda_coef(self)
+    ```
+
     Parameters
     ----------
-    self : an object of class LDA
+    `self` : an object of class LDA
 
     Returns
     -------
-    a pandas dataframe containing coefficients
+    pandas dataframe containing coefficients
 
     Author(s)
     ---------
     Duvérier DJIFACK ZEBAZE duverierdjifack@gmail.com
+
+    Examples
+    --------
+    ```python
+    >>> # load iris dataset
+    >>> from seaborn import load_dataset
+    >>> iris = load_dataset("iris")
+    >>> from discrimintools import LDA, get_lda_coef
+    >>> lda = LDA(target=["species"],priors="prop")
+    >>> lda.fit(iris)
+    >>> # results for classification coefficients
+    >>> classcoef = get_lda_coef(lda) 
+    ```
     """
     if self.model_ != "lda":
         raise TypeError("'self' must be an object of class LDA")
     return pd.concat((self.coef_,self.intercept_),axis=0)
-    
-    
+     
 def get_lda(self,choice = "ind"):
     """
     Extract the results - LDA
     -------------------------
 
+    Description
+    -----------
+    Extract results (individuals, covariance, coefficients of classification function) from Linear Discriminant Analysis (LDA) outputs.
+
+    Usage
+    -----
+    ```python
+    >>> get_lda(self,choice=("ind","cov","coef"))
+    ```
+
     Parameters
     ----------
-    self : an object of class LDA
+    `self` : an object of class LDA
 
-    choice :
-
+    `choice` : the element to subset from the output. Allowed values are :
+        * "ind" for individuals
+        * "cov" for covariance
+        * "coef" for coefficients of classification function
+    
     Returns
     -------
-    a dictionary or a pandas dataframe
+    dictionary or pandas dataframe
 
     Author(s)
     ---------
     Duvérier DJIFACK ZEBAZE duverierdjifack@gmail.com
+
+    Examples
+    --------
+    ```python
+    >>> # load iris dataset
+    >>> from seaborn import load_dataset
+    >>> iris = load_dataset("iris")
+    >>> from discrimintools import LDA, get_lda
+    >>> lda = LDA(target=["species"],priors="prop")
+    >>> lda.fit(iris)
+    >>> # Results for individuals
+    >>> ind = get_lda(lda, choice = "ind")
+    >>> # Results for variables - covariance
+    >>> covar = get_lda(lda, choice = "cov")
+    >>> # Coefficients of classification function
+    >>> classcoef = get_lda(lda, choice = "coef")
+    ```
     """
     if self.model_ != "lda":
         raise TypeError("'self' must be an object of class LDA")
@@ -97,34 +195,55 @@ def get_lda(self,choice = "ind"):
     if choice == "ind":
         return get_lda_ind(self)
     elif choice == "cov":
-        return get_lda_cov(self)
+        return get_lda_var(self)
     elif choice == "coef":
         return get_lda_coef(self)
 
 def summaryLDA(self,digits=3,nb_element=10,to_markdown=False,tablefmt = "pipe",**kwargs):
     """
     Printing summaries of Linear Discriminant Analysis model
-    -----------------------------------------------------------
+    --------------------------------------------------------
+
+    Description
+    -----------
+    Printing summaries of linear discriminant analysis objects.
+
+    Usage
+    -----
+    ```python
+    >>> summaryLDA(self,digits=3,nb_element=10,to_markdown=False,tablefmt = "pipe",**kwargs)
+    ```
 
     Parameters
     ----------
-    self        :   an object of class LDA
+    `self` : an object of class LDA
 
-    digits      :   int, default=3. Number of decimal printed
+    `digits` : int, default=3. Number of decimal printed
 
-    nb_element  :   int, default = 10. Number of element
+    `nb_element` : int, default = 10. Number of element
 
-    to_markdown :   Print DataFrame in Markdown-friendly format.
+    `to_markdown` : Print DataFrame in Markdown-friendly format.
 
-    tablefmt    :   Table format. For more about tablefmt, see : https://pypi.org/project/tabulate/
+    `tablefmt` : Table format. For more about tablefmt, see : https://pypi.org/project/tabulate/
 
-    **kwargs    :   These parameters will be passed to tabulate.
+    `**kwargs` : These parameters will be passed to tabulate.
 
     Author(s)
     ---------
     Duvérier DJIFACK ZEBAZE duverierdjifack@gmail.com
-    """
 
+    Examples
+    --------
+    ```python
+    >>> # load iris dataset
+    >>> from seaborn import load_dataset
+    >>> iris = load_dataset("iris")
+    >>> from discrimintools import LDA, summaryLDA
+    >>> lda = LDA(target=["species"],priors="prop")
+    >>> lda.fit(iris)
+    >>> summaryLDA(lda)
+    ```
+    """
     if self.model_ != "lda":
         raise ValueError("'self' must be an object of class LDA")
 

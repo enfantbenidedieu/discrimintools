@@ -1,0 +1,2389 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>discrimintools package &mdash; discrimintools 0.0.2 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="discrimintools" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            discrimintools
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">discrimintools</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">discrimintools package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-discrimintools.candisc">discrimintools.candisc module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#discrimintools.candisc.CANDISC"><code class="docutils literal notranslate"><span class="pre">CANDISC</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-discrimintools.datasets">discrimintools.datasets module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#discrimintools.datasets.load_vins"><code class="docutils literal notranslate"><span class="pre">load_vins()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#discrimintools.datasets.load_wine"><code class="docutils literal notranslate"><span class="pre">load_wine()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-discrimintools.disca">discrimintools.disca module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#discrimintools.disca.DISCA"><code class="docutils literal notranslate"><span class="pre">DISCA</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-discrimintools.dismix">discrimintools.dismix module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#discrimintools.dismix.DISMIX"><code class="docutils literal notranslate"><span class="pre">DISMIX</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-discrimintools.disqual">discrimintools.disqual module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#discrimintools.disqual.DISQUAL"><code class="docutils literal notranslate"><span class="pre">DISQUAL</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-discrimintools.eta2">discrimintools.eta2 module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#discrimintools.eta2.eta2"><code class="docutils literal notranslate"><span class="pre">eta2()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-discrimintools.fviz_candisc">discrimintools.fviz_candisc module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#discrimintools.fviz_candisc.fviz_candisc"><code class="docutils literal notranslate"><span class="pre">fviz_candisc()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-discrimintools.fviz_disca">discrimintools.fviz_disca module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#discrimintools.fviz_disca.fviz_disca_ind"><code class="docutils literal notranslate"><span class="pre">fviz_disca_ind()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#discrimintools.fviz_disca.fviz_disca_mod"><code class="docutils literal notranslate"><span class="pre">fviz_disca_mod()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-discrimintools.get_candisc">discrimintools.get_candisc module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#discrimintools.get_candisc.get_candisc"><code class="docutils literal notranslate"><span class="pre">get_candisc()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#discrimintools.get_candisc.get_candisc_coef"><code class="docutils literal notranslate"><span class="pre">get_candisc_coef()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#discrimintools.get_candisc.get_candisc_ind"><code class="docutils literal notranslate"><span class="pre">get_candisc_ind()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#discrimintools.get_candisc.get_candisc_var"><code class="docutils literal notranslate"><span class="pre">get_candisc_var()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#discrimintools.get_candisc.summaryCANDISC"><code class="docutils literal notranslate"><span class="pre">summaryCANDISC()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-discrimintools.get_disca">discrimintools.get_disca module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#discrimintools.get_disca.get_disca"><code class="docutils literal notranslate"><span class="pre">get_disca()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#discrimintools.get_disca.get_disca_classes"><code class="docutils literal notranslate"><span class="pre">get_disca_classes()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#discrimintools.get_disca.get_disca_coef"><code class="docutils literal notranslate"><span class="pre">get_disca_coef()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#discrimintools.get_disca.get_disca_ind"><code class="docutils literal notranslate"><span class="pre">get_disca_ind()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#discrimintools.get_disca.get_disca_var"><code class="docutils literal notranslate"><span class="pre">get_disca_var()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#discrimintools.get_disca.summaryDISCA"><code class="docutils literal notranslate"><span class="pre">summaryDISCA()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-discrimintools.get_lda">discrimintools.get_lda module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#discrimintools.get_lda.get_lda"><code class="docutils literal notranslate"><span class="pre">get_lda()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#discrimintools.get_lda.get_lda_coef"><code class="docutils literal notranslate"><span class="pre">get_lda_coef()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#discrimintools.get_lda.get_lda_cov"><code class="docutils literal notranslate"><span class="pre">get_lda_cov()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#discrimintools.get_lda.get_lda_ind"><code class="docutils literal notranslate"><span class="pre">get_lda_ind()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#discrimintools.get_lda.summaryLDA"><code class="docutils literal notranslate"><span class="pre">summaryLDA()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-discrimintools.lda">discrimintools.lda module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#discrimintools.lda.LDA"><code class="docutils literal notranslate"><span class="pre">LDA</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-discrimintools.pcada">discrimintools.pcada module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#discrimintools.pcada.PCADA"><code class="docutils literal notranslate"><span class="pre">PCADA</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-discrimintools.revaluate_cat_variable">discrimintools.revaluate_cat_variable module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#discrimintools.revaluate_cat_variable.revaluate_cat_variable"><code class="docutils literal notranslate"><span class="pre">revaluate_cat_variable()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-discrimintools.stepdisc">discrimintools.stepdisc module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#discrimintools.stepdisc.STEPDISC"><code class="docutils literal notranslate"><span class="pre">STEPDISC</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-discrimintools.text_label">discrimintools.text_label module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#discrimintools.text_label.text_label"><code class="docutils literal notranslate"><span class="pre">text_label()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-discrimintools">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">discrimintools</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">discrimintools</a></li>
+      <li class="breadcrumb-item active">discrimintools package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/discrimintools.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="discrimintools-package">
+<h1>discrimintools package<a class="headerlink" href="#discrimintools-package" title="Permalink to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this heading"></a></h2>
+</section>
+<section id="module-discrimintools.candisc">
+<span id="discrimintools-candisc-module"></span><h2>discrimintools.candisc module<a class="headerlink" href="#module-discrimintools.candisc" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="discrimintools.candisc.CANDISC">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">discrimintools.candisc.</span></span><span class="sig-name descname"><span class="pre">CANDISC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_components</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parallelize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/candisc.html#CANDISC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.candisc.CANDISC" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerMixin</span></code></p>
+<section id="canonical-discriminant-analysis-candisc">
+<h3>Canonical Discriminant Analysis (CANDISC)<a class="headerlink" href="#canonical-discriminant-analysis-candisc" title="Permalink to this heading"></a></h3>
+</section>
+<section id="description">
+<h3>Description<a class="headerlink" href="#description" title="Permalink to this heading"></a></h3>
+<p>This class inherits from sklearn BaseEstimator and TransformerMixin class</p>
+<p>Performs a Canonical Discriminant Analysis, computes squared
+Mahalanobis distances between class means, and performs both
+univariate and multivariate one-way analyses of variance</p>
+<dl class="field-list simple">
+<dt class="field-odd">param n_components<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type n_components<span class="colon">:</span></dt>
+<dd class="field-even"><p>number of dimensions kept in the results</p>
+</dd>
+<dt class="field-odd">param target<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type target<span class="colon">:</span></dt>
+<dd class="field-even"><p>string, target variable</p>
+</dd>
+<dt class="field-odd">param priors<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type priors<span class="colon">:</span></dt>
+<dd class="field-even"><p>Class priors (sum to 1)</p>
+</dd>
+<dt class="field-odd">param parallelize<span class="colon">:</span></dt>
+<dd class="field-odd"><dl class="simple">
+<dt>If model should be parallelize</dt><dd><ul class="simple">
+<li><p>If True : parallelize using mapply</p></li>
+<li><p>If False : parallelize using apply</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+<dt class="field-even">type parallelize<span class="colon">:</span></dt>
+<dd class="field-even"><p>boolean, default = False</p>
+</dd>
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>summary_information_</strong> (<em>summary information about the variables in the analysis. This information includes the number of observations,</em>) – the number of quantitative variables in the analysis, and the number of classes in the classification variable.
+The frequency of each class is also displayed.</p></li>
+<li><p><strong>eig_</strong> (<em>a pandas dataframe containing all the eigenvalues, the difference between each eigenvalue, the percentage of variance and the cumulative percentage of variance</em>)</p></li>
+<li><p><strong>ind_</strong> (<em>a dictionary of pandas dataframe containing all the results for the active individuals (coordinates)</em>)</p></li>
+<li><p><strong>statistics_</strong> (<em>statistics</em>)</p></li>
+<li><p><strong>classes_</strong> (<em>classes informations</em>)</p></li>
+<li><p><strong>cov_</strong> (<em>covariances</em>)</p></li>
+<li><p><strong>corr_</strong> (<em>correlation</em>)</p></li>
+<li><p><strong>coef_</strong> (<em>pandas dataframe, Weight vector(s).</em>)</p></li>
+<li><p><strong>intercept_</strong> (<em>pandas dataframe, Intercept term.</em>)</p></li>
+<li><p><em>score_coef_</em></p></li>
+<li><p><em>score_intercept_</em></p></li>
+<li><p><strong>svd_</strong> (<em>eigenv value decomposition</em>)</p></li>
+<li><p><strong>call_</strong> (<em>a dictionary with some statistics</em>)</p></li>
+<li><p><strong>model_</strong> (<em>string. The model fitted = ‘candisc’</em>)</p></li>
+<li><p><em>Author(s)</em></p></li>
+<li><p><em>———</em></p></li>
+<li><p><em>Duvérier DJIFACK ZEBAZE duverierdjifack&#64;gmail.com</em></p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<p>SAS Documentation, <a class="reference external" href="https://documentation.sas.com/doc/en/statug/15.2/statug_candisc_toc.htm">https://documentation.sas.com/doc/en/statug/15.2/statug_candisc_toc.htm</a>
+<a class="reference external" href="https://www.rdocumentation.org/packages/candisc/versions/0.8-6/topics/candisc">https://www.rdocumentation.org/packages/candisc/versions/0.8-6/topics/candisc</a>
+<a class="reference external" href="https://www.rdocumentation.org/packages/candisc/versions/0.8-6">https://www.rdocumentation.org/packages/candisc/versions/0.8-6</a>
+Ricco Rakotomalala, Pratique de l’analyse discriminante linéaire, Version 1.0, 2020</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.candisc.CANDISC.decision_function">
+<span class="sig-name descname"><span class="pre">decision_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/candisc.html#CANDISC.decision_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.candisc.CANDISC.decision_function" title="Permalink to this definition"></a></dt>
+<dd><section id="apply-decision-function-to-a-pandas-dataframe-of-samples">
+<h4>Apply decision function to a pandas dataframe of samples<a class="headerlink" href="#apply-decision-function-to-a-pandas-dataframe-of-samples" title="Permalink to this heading"></a></h4>
+<p>The decision function is equal (up to a constant factor) to the
+log-posterior of the model, i.e. <cite>log p(y = k | x)</cite>. In a binary
+classification setting this instead corresponds to the difference
+<cite>log p(y = 1 | x) - log p(y = 0 | x)</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">param X<span class="colon">:</span></dt>
+<dd class="field-odd"><p>DataFrame of samples (test vectors).</p>
+</dd>
+<dt class="field-even">type X<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (<a href="#id68"><span class="problematic" id="id69">n_samples_</span></a>, n_features)</p>
+</dd>
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>C</strong> – Decision function values related to each class, per sample.
+In the two-class case, the shape is (<a href="#id70"><span class="problematic" id="id71">n_samples_</span></a>,), giving the
+log likelihood ratio of the positive class.</p>
+</dd>
+<dt class="field-even">rtype<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (<a href="#id72"><span class="problematic" id="id73">n_samples_</span></a>,) or (<a href="#id74"><span class="problematic" id="id75">n_samples_</span></a>, n_classes)</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.candisc.CANDISC.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/candisc.html#CANDISC.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.candisc.CANDISC.fit" title="Permalink to this definition"></a></dt>
+<dd><section id="fit-the-canonical-discriminant-analysis-model">
+<h4>Fit the Canonical Discriminant Analysis model<a class="headerlink" href="#fit-the-canonical-discriminant-analysis-model" title="Permalink to this heading"></a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">param X<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Training Data</p>
+</dd>
+<dt class="field-even">type X<span class="colon">:</span></dt>
+<dd class="field-even"><p>pandas/polars DataFrame,</p>
+</dd>
+<dt class="field-odd">param Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">param ——–<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">param self<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Fitted estimator</p>
+</dd>
+<dt class="field-even">type self<span class="colon">:</span></dt>
+<dd class="field-even"><p>object</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.candisc.CANDISC.fit_transform">
+<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/candisc.html#CANDISC.fit_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.candisc.CANDISC.fit_transform" title="Permalink to this definition"></a></dt>
+<dd><section id="fit-to-data-then-transform-it">
+<h4>Fit to data, then transform it<a class="headerlink" href="#fit-to-data-then-transform-it" title="Permalink to this heading"></a></h4>
+<p>Fits transformer to <cite>x</cite> and returns a transformed version of X.</p>
+</section>
+<section id="parameters">
+<h4>Parameters:<a class="headerlink" href="#parameters" title="Permalink to this heading"></a></h4>
+<dl>
+<dt>X<span class="classifier">DataFrame of shape (<a href="#id76"><span class="problematic" id="id77">n_samples_</span></a>, <a href="#id78"><span class="problematic" id="id79">n_features_</span></a>)</span></dt><dd><p>Input samples</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>X_new</strong> – Transformed data.</p>
+</dd>
+<dt class="field-even">rtype<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (n_rows, <a href="#id80"><span class="problematic" id="id81">n_features_</span></a>)</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.candisc.CANDISC.pred_table">
+<span class="sig-name descname"><span class="pre">pred_table</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/candisc.html#CANDISC.pred_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.candisc.CANDISC.pred_table" title="Permalink to this definition"></a></dt>
+<dd><section id="prediction-table">
+<h4>Prediction table<a class="headerlink" href="#prediction-table" title="Permalink to this heading"></a></h4>
+<p class="rubric">Notes</p>
+<p>pred_table[i,j] refers to the number of times “i” was observed and the model predicted “j”. Correct predictions are along the diagonal.</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.candisc.CANDISC.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/candisc.html#CANDISC.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.candisc.CANDISC.predict" title="Permalink to this definition"></a></dt>
+<dd><section id="predict-class-labels-for-samples-in-x">
+<h4>Predict class labels for samples in X<a class="headerlink" href="#predict-class-labels-for-samples-in-x" title="Permalink to this heading"></a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">param X<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The data matrix for which we want to get the predictions.</p>
+</dd>
+<dt class="field-even">type X<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (<a href="#id82"><span class="problematic" id="id83">n_samples_</span></a>, <a href="#id84"><span class="problematic" id="id85">n_features_</span></a>)</p>
+</dd>
+<dt class="field-odd">param Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">param ——–<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">param y_pred<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Vectors containing the class labels for each sample</p>
+</dd>
+<dt class="field-even">type y_pred<span class="colon">:</span></dt>
+<dd class="field-even"><p>ndarray of shape (n_samples)</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.candisc.CANDISC.predict_proba">
+<span class="sig-name descname"><span class="pre">predict_proba</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/candisc.html#CANDISC.predict_proba"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.candisc.CANDISC.predict_proba" title="Permalink to this definition"></a></dt>
+<dd><section id="estimate-probability">
+<h4>Estimate probability<a class="headerlink" href="#estimate-probability" title="Permalink to this heading"></a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">param X<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Input data.</p>
+</dd>
+<dt class="field-even">type X<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (<a href="#id86"><span class="problematic" id="id87">n_samples_</span></a>,n_features_)</p>
+</dd>
+<dt class="field-odd">param Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">param ——–<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">param C<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Estimated probabilities.</p>
+</dd>
+<dt class="field-even">type C<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (<a href="#id88"><span class="problematic" id="id89">n_samples_</span></a>,n_classes_)</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.candisc.CANDISC.score">
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/candisc.html#CANDISC.score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.candisc.CANDISC.score" title="Permalink to this definition"></a></dt>
+<dd><section id="return-the-mean-accuracy-on-the-given-test-data-and-labels">
+<h4>Return the mean accuracy on the given test data and labels<a class="headerlink" href="#return-the-mean-accuracy-on-the-given-test-data-and-labels" title="Permalink to this heading"></a></h4>
+<p>In multi-label classification, this is the subset accuracy
+which is a harsh metric since you require for each sample that
+each label set be correctly predicted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">param X<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Test samples.</p>
+</dd>
+<dt class="field-even">type X<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (<a href="#id90"><span class="problematic" id="id91">n_samples_</span></a>, n_features)</p>
+</dd>
+<dt class="field-odd">param y<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True labels for <cite>X</cite>.</p>
+</dd>
+<dt class="field-even">type y<span class="colon">:</span></dt>
+<dd class="field-even"><p>array-like of shape (n_samples,) or (n_samples, n_outputs)</p>
+</dd>
+<dt class="field-odd">param sample_weight<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Sample weights.</p>
+</dd>
+<dt class="field-even">type sample_weight<span class="colon">:</span></dt>
+<dd class="field-even"><p>array-like of shape (n_samples,), default=None</p>
+</dd>
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>score</strong> – Mean accuracy of <code class="docutils literal notranslate"><span class="pre">self.predict(X)</span></code> w.r.t. <cite>y</cite>.</p>
+</dd>
+<dt class="field-even">rtype<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.candisc.CANDISC.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/candisc.html#CANDISC.transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.candisc.CANDISC.transform" title="Permalink to this definition"></a></dt>
+<dd><section id="project-data-to-maximize-class-separation">
+<h4>Project data to maximize class separation<a class="headerlink" href="#project-data-to-maximize-class-separation" title="Permalink to this heading"></a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">param X<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Input data</p>
+</dd>
+<dt class="field-even">type X<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (<a href="#id92"><span class="problematic" id="id93">n_samples_</span></a>, <a href="#id94"><span class="problematic" id="id95">n_features_</span></a>)</p>
+</dd>
+<dt class="field-odd">param Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">param ——–<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">param X_new<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Transformed data.</p>
+</dd>
+<dt class="field-even">type X_new<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (<a href="#id96"><span class="problematic" id="id97">n_samples_</span></a>, <a href="#id98"><span class="problematic" id="id99">n_components_</span></a>)</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+<section id="module-discrimintools.datasets">
+<span id="discrimintools-datasets-module"></span><h2>discrimintools.datasets module<a class="headerlink" href="#module-discrimintools.datasets" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="discrimintools.datasets.load_vins">
+<span class="sig-prename descclassname"><span class="pre">discrimintools.datasets.</span></span><span class="sig-name descname"><span class="pre">load_vins</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/datasets.html#load_vins"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.datasets.load_vins" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="discrimintools.datasets.load_wine">
+<span class="sig-prename descclassname"><span class="pre">discrimintools.datasets.</span></span><span class="sig-name descname"><span class="pre">load_wine</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/datasets.html#load_wine"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.datasets.load_wine" title="Permalink to this definition"></a></dt>
+<dd></dd></dl>
+
+</section>
+<section id="module-discrimintools.disca">
+<span id="discrimintools-disca-module"></span><h2>discrimintools.disca module<a class="headerlink" href="#module-discrimintools.disca" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="discrimintools.disca.DISCA">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">discrimintools.disca.</span></span><span class="sig-name descname"><span class="pre">DISCA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_components</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parallelize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/disca.html#DISCA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.disca.DISCA" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerMixin</span></code></p>
+<section id="discriminant-correspondence-analysis-disca">
+<h3>Discriminant Correspondence Analysis (DISCA)<a class="headerlink" href="#discriminant-correspondence-analysis-disca" title="Permalink to this heading"></a></h3>
+</section>
+<section id="id1">
+<h3>Description<a class="headerlink" href="#id1" title="Permalink to this heading"></a></h3>
+<p>This class inherits from sklearn BaseEstimator and TransformerMixin class</p>
+<p>Performance Discriminant Correspondence Analysis</p>
+</section>
+<section id="id2">
+<h3>Parameters:<a class="headerlink" href="#id2" title="Permalink to this heading"></a></h3>
+<p>n_components : number of dimensions kept in the results</p>
+<p>target : string, target variable</p>
+<p>features : list of qualitatives variables to be included in the analysis.</p>
+<dl class="simple">
+<dt>priors<span class="classifier">The priors statement specifies the prior probabilities of group membership.</span></dt><dd><ul class="simple">
+<li><p>“equal” to set the prior probabilities equal,</p></li>
+<li><p>“proportional” or “prop” to set the prior probabilities proportional to the sample sizes</p></li>
+<li><p>a pandas series which specify the prior probability for each level of the classification variable.</p></li>
+</ul>
+</dd>
+<dt>parallelize<span class="classifier">boolean, default = False</span></dt><dd><dl class="simple">
+<dt>If model should be parallelize</dt><dd><ul class="simple">
+<li><p>If True : parallelize using mapply</p></li>
+<li><p>If False : parallelize using apply</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>call_</strong> (<em>a dictionary with some statistics</em>)</p></li>
+<li><p><strong>ind_</strong> (<em>a dictionary of pandas dataframe containing all the results for the active individuals (coordinates)</em>)</p></li>
+<li><p><strong>var_</strong> (<em>a dictionary of pandas dataframe containing all the results for the active variables (coordinates, correlation between variables and axes, square cosine, contributions)</em>)</p></li>
+<li><p><strong>statistics_</strong> (<em>statistics</em>)</p></li>
+<li><p><strong>classes_</strong> (<em>classes informations</em>)</p></li>
+<li><p><strong>anova_</strong> (<em>analyse of variance</em>)</p></li>
+<li><p><strong>factor_model_</strong> (<em>correspondence analysis model</em>)</p></li>
+<li><p><strong>coef_</strong> (<em>discriminant correspondence analysis coefficients</em>)</p></li>
+<li><p><strong>model_</strong> (<em>string. The model fitted = ‘disca’</em>)</p></li>
+<li><p><em>Author(s)</em></p></li>
+<li><p><em>———</em></p></li>
+<li><p><em>Duvérier DJIFACK ZEBAZE duverierdjifack&#64;gmail.com</em></p></li>
+<li><p><em>Notes</em></p></li>
+<li><p><em>——</em></p></li>
+<li><p><strong>https</strong> (<em>//bookdown.org/teddyswiebold/multivariate_statistical_analysis_using_r/discriminant-correspondence-analysis.html</em>)</p></li>
+<li><p><strong>https</strong> (<em>//search.r-project.org/CRAN/refmans/TExPosition/html/tepDICA.html</em>)</p></li>
+<li><p><strong>http</strong> (<em>//pbil.univ-lyon1.fr/ADE-4/ade4-html/discrimin.coa.html</em>)</p></li>
+<li><p><strong>https</strong> (<em>//rdrr.io/cran/ade4/man/discrimin.coa.html</em>)</p></li>
+<li><p><strong>https</strong> (<em>//stat.ethz.ch/pipermail/r-help/2010-December/263170.html</em>)</p></li>
+<li><p><strong>https</strong> (<em>//www.sciencedirect.com/science/article/pii/S259026012200011X</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.disca.DISCA.decision_function">
+<span class="sig-name descname"><span class="pre">decision_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/disca.html#DISCA.decision_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.disca.DISCA.decision_function" title="Permalink to this definition"></a></dt>
+<dd><section id="apply-decision-function-to-an-array-of-samples">
+<h4>Apply decision function to an array of samples<a class="headerlink" href="#apply-decision-function-to-an-array-of-samples" title="Permalink to this heading"></a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">param X<span class="colon">:</span></dt>
+<dd class="field-odd"><p>DataFrame of samples (test vectors).</p>
+</dd>
+<dt class="field-even">type X<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (<a href="#id100"><span class="problematic" id="id101">n_samples_</span></a>, n_features)</p>
+</dd>
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>C</strong> – Decision function values related to each class, per sample.</p>
+</dd>
+<dt class="field-even">rtype<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (<a href="#id102"><span class="problematic" id="id103">n_samples_</span></a>,) or (<a href="#id104"><span class="problematic" id="id105">n_samples_</span></a>, n_classes)</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.disca.DISCA.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/disca.html#DISCA.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.disca.DISCA.fit" title="Permalink to this definition"></a></dt>
+<dd><section id="fit-the-discriminant-correspondence-analysis-model">
+<h4>Fit the Discriminant Correspondence Analysis model<a class="headerlink" href="#fit-the-discriminant-correspondence-analysis-model" title="Permalink to this heading"></a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">param X<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Training Data</p>
+</dd>
+<dt class="field-even">type X<span class="colon">:</span></dt>
+<dd class="field-even"><p>pandas/polars DataFrame,</p>
+</dd>
+<dt class="field-odd">param Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">param ——–<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">param self<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Fitted estimator</p>
+</dd>
+<dt class="field-even">type self<span class="colon">:</span></dt>
+<dd class="field-even"><p>object</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.disca.DISCA.fit_transform">
+<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/disca.html#DISCA.fit_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.disca.DISCA.fit_transform" title="Permalink to this definition"></a></dt>
+<dd><section id="id3">
+<h4>Fit to data, then transform it<a class="headerlink" href="#id3" title="Permalink to this heading"></a></h4>
+<p>Fits transformer to <cite>X</cite> and returns a transformed version of <cite>X</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">param X<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Input samples.</p>
+</dd>
+<dt class="field-even">type X<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (n_samples, n_features+1)</p>
+</dd>
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>X_new</strong> – Transformed array.</p>
+</dd>
+<dt class="field-even">rtype<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (n_samples, n_features_new)</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.disca.DISCA.pred_table">
+<span class="sig-name descname"><span class="pre">pred_table</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/disca.html#DISCA.pred_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.disca.DISCA.pred_table" title="Permalink to this definition"></a></dt>
+<dd><section id="id4">
+<h4>Prediction table<a class="headerlink" href="#id4" title="Permalink to this heading"></a></h4>
+<p class="rubric">Notes</p>
+<p>pred_table[i,j] refers to the number of times “i” was observed and the model predicted “j”. Correct predictions are along the diagonal.</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.disca.DISCA.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/disca.html#DISCA.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.disca.DISCA.predict" title="Permalink to this definition"></a></dt>
+<dd><section id="id5">
+<h4>Predict class labels for samples in X<a class="headerlink" href="#id5" title="Permalink to this heading"></a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">param X<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The data matrix for which we want to get the predictions.</p>
+</dd>
+<dt class="field-even">type X<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (<a href="#id106"><span class="problematic" id="id107">n_samples_</span></a>, <a href="#id108"><span class="problematic" id="id109">n_features_</span></a>)</p>
+</dd>
+<dt class="field-odd">param Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">param ——–<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">param y_pred<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Vectors containing the class labels for each sample</p>
+</dd>
+<dt class="field-even">type y_pred<span class="colon">:</span></dt>
+<dd class="field-even"><p>ndarray of shape (n_samples)</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.disca.DISCA.predict_proba">
+<span class="sig-name descname"><span class="pre">predict_proba</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/disca.html#DISCA.predict_proba"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.disca.DISCA.predict_proba" title="Permalink to this definition"></a></dt>
+<dd><section id="id6">
+<h4>Estimate probability<a class="headerlink" href="#id6" title="Permalink to this heading"></a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">param X<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Input data.</p>
+</dd>
+<dt class="field-even">type X<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (<a href="#id110"><span class="problematic" id="id111">n_samples_</span></a>,n_features_)</p>
+</dd>
+<dt class="field-odd">param Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">param ——–<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">param C<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Estimated probabilities.</p>
+</dd>
+<dt class="field-even">type C<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (<a href="#id112"><span class="problematic" id="id113">n_samples_</span></a>,n_classes_)</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.disca.DISCA.score">
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/disca.html#DISCA.score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.disca.DISCA.score" title="Permalink to this definition"></a></dt>
+<dd><section id="id7">
+<h4>Return the mean accuracy on the given test data and labels<a class="headerlink" href="#id7" title="Permalink to this heading"></a></h4>
+<p>In multi-label classification, this is the subset accuracy
+which is a harsh metric since you require for each sample that
+each label set be correctly predicted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">param X<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Test samples.</p>
+</dd>
+<dt class="field-even">type X<span class="colon">:</span></dt>
+<dd class="field-even"><p>array-like of shape (n_samples, n_features)</p>
+</dd>
+<dt class="field-odd">param y<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True labels for <cite>X</cite>.</p>
+</dd>
+<dt class="field-even">type y<span class="colon">:</span></dt>
+<dd class="field-even"><p>array-like of shape (n_samples,) or (n_samples, n_outputs)</p>
+</dd>
+<dt class="field-odd">param sample_weight<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Sample weights.</p>
+</dd>
+<dt class="field-even">type sample_weight<span class="colon">:</span></dt>
+<dd class="field-even"><p>array-like of shape (n_samples,), default=None</p>
+</dd>
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>score</strong> – Mean accuracy of <code class="docutils literal notranslate"><span class="pre">self.predict(X)</span></code> w.r.t. <cite>y</cite>.</p>
+</dd>
+<dt class="field-even">rtype<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.disca.DISCA.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/disca.html#DISCA.transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.disca.DISCA.transform" title="Permalink to this definition"></a></dt>
+<dd><section id="apply-the-dimensionality-reduction-on-x">
+<h4>Apply the dimensionality reduction on X<a class="headerlink" href="#apply-the-dimensionality-reduction-on-x" title="Permalink to this heading"></a></h4>
+<p>X is projected on the first axes previous extracted from a training set.
+:param X: New data, where n_rows_sup is the number of supplementary</p>
+<blockquote>
+<div><p>row points and n_vars is the number of variables.
+X is a data table containing a category in each cell.
+Categories can be coded by strings or numeric values.
+X rows correspond to supplementary row points that are
+projected onto the axes.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">type X<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array of string, int or float, shape (n_rows_sup, n_vars)</p>
+</dd>
+<dt class="field-even">param y<span class="colon">:</span></dt>
+<dd class="field-even"><p>y is ignored.</p>
+</dd>
+<dt class="field-odd">type y<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+<dt class="field-even">returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>X_new</strong> – X_new : coordinates of the projections of the supplementary
+row points onto the axes.</p>
+</dd>
+<dt class="field-odd">rtype<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array of float, shape (n_rows_sup, <a href="#id114"><span class="problematic" id="id115">n_components_</span></a>)</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+<section id="module-discrimintools.dismix">
+<span id="discrimintools-dismix-module"></span><h2>discrimintools.dismix module<a class="headerlink" href="#module-discrimintools.dismix" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="discrimintools.dismix.DISMIX">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">discrimintools.dismix.</span></span><span class="sig-name descname"><span class="pre">DISMIX</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_components</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parallelize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/dismix.html#DISMIX"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.dismix.DISMIX" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerMixin</span></code></p>
+<section id="discriminant-analysis-of-mixed-data-dismix">
+<h3>Discriminant Analysis of Mixed Data (DISMIX)<a class="headerlink" href="#discriminant-analysis-of-mixed-data-dismix" title="Permalink to this heading"></a></h3>
+</section>
+<section id="id8">
+<h3>Description<a class="headerlink" href="#id8" title="Permalink to this heading"></a></h3>
+<p>This class inherits from sklearn BaseEstimator and TransformerMixin class</p>
+<p>Performs linear discriminant analysis with both continuous and catogericals variables</p>
+</section>
+<section id="id9">
+<h3>Parameters:<a class="headerlink" href="#id9" title="Permalink to this heading"></a></h3>
+<blockquote>
+<div><p>n_components : number of dimensions kept in the results</p>
+</div></blockquote>
+<p>target : The values of the classification variable define the groups for analysis.</p>
+<p>features : list of mixed variables to be included in the analysis</p>
+<dl class="simple">
+<dt>priors<span class="classifier">The priors statement specifies the prior probabilities of group membership.</span></dt><dd><ul class="simple">
+<li><p>“equal” to set the prior probabilities equal,</p></li>
+<li><p>“proportional” or “prop” to set the prior probabilities proportional to the sample sizes</p></li>
+<li><p>a pandas series which specify the prior probability for each level of the classification variable.</p></li>
+</ul>
+</dd>
+<dt>parallelize<span class="classifier">boolean, default = False</span></dt><dd><dl class="simple">
+<dt>If model should be parallelize</dt><dd><ul class="simple">
+<li><p>If True : parallelize using mapply</p></li>
+<li><p>If False : parallelize using apply</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>call_</strong> (<em>a dictionary with some statistics</em>)</p></li>
+<li><p><strong>coef_</strong> (<em>DataFrame of shape (n_features,n_classes_)</em>)</p></li>
+<li><p><strong>intercept_</strong> (<em>DataFrame of shape (1, n_classes)</em>)</p></li>
+<li><p><strong>lda_model_</strong> (<em>linear discriminant analysis model</em>)</p></li>
+<li><p><strong>factor_model_</strong> (<em>factor analysis of mixed data model</em>)</p></li>
+<li><p><strong>projection_function_</strong> (<em>projection function</em>)</p></li>
+<li><p><strong>coef_</strong> (<em>pandas dataframe of shpz (n_categories, n_classes)</em>)</p></li>
+<li><p><strong>intercept_</strong> (<em>pandas dataframe of shape (1, n_classes)</em>)</p></li>
+<li><p><strong>model_</strong> (<em>string. The model fitted = ‘dismix’</em>)</p></li>
+<li><p><em>Author(s)</em></p></li>
+<li><p><em>———</em></p></li>
+<li><p><em>Duvérier DJIFACK ZEBAZE duverierdjifack&#64;gmail.com</em></p></li>
+<li><p><em>References</em></p></li>
+<li><p><em>———–</em></p></li>
+<li><p><em>Ricco Rakotomalala, Pratique de l’analyse discriminante linéaire, Version 1.0, 2020</em></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.dismix.DISMIX.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/dismix.html#DISMIX.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.dismix.DISMIX.fit" title="Permalink to this definition"></a></dt>
+<dd><section id="fit-the-linear-discriminant-analysis-of-mixed-data-model">
+<h4>Fit the Linear Discriminant Analysis of Mixed Data model<a class="headerlink" href="#fit-the-linear-discriminant-analysis-of-mixed-data-model" title="Permalink to this heading"></a></h4>
+</section>
+<section id="id10">
+<h4>Parameters:<a class="headerlink" href="#id10" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>X<span class="classifier">DataFrame of shape (n_samples, n_features+1)</span></dt><dd><p>Training data</p>
+</dd>
+</dl>
+<p>y : None</p>
+</section>
+<section id="returns">
+<h4>Returns:<a class="headerlink" href="#returns" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>self<span class="classifier">object</span></dt><dd><p>Fitted estimator</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.dismix.DISMIX.fit_transform">
+<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/dismix.html#DISMIX.fit_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.dismix.DISMIX.fit_transform" title="Permalink to this definition"></a></dt>
+<dd><section id="id11">
+<h4>Fit to data, then transform it<a class="headerlink" href="#id11" title="Permalink to this heading"></a></h4>
+<p>Fits transformer to <cite>X</cite> and returns a transformed version of <cite>X</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">param X<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Input samples.</p>
+</dd>
+<dt class="field-even">type X<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (n_samples, n_features+1)</p>
+</dd>
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>X_new</strong> – Transformed array.</p>
+</dd>
+<dt class="field-even">rtype<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (n_samples, n_features_new)</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.dismix.DISMIX.pred_table">
+<span class="sig-name descname"><span class="pre">pred_table</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/dismix.html#DISMIX.pred_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.dismix.DISMIX.pred_table" title="Permalink to this definition"></a></dt>
+<dd><section id="id12">
+<h4>Prediction table<a class="headerlink" href="#id12" title="Permalink to this heading"></a></h4>
+<p class="rubric">Notes</p>
+<p>pred_table[i,j] refers to the number of times “i” was observed and the model predicted “j”. Correct predictions are along the diagonal.</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.dismix.DISMIX.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/dismix.html#DISMIX.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.dismix.DISMIX.predict" title="Permalink to this definition"></a></dt>
+<dd><section id="id13">
+<h4>Predict class labels for samples in X<a class="headerlink" href="#id13" title="Permalink to this heading"></a></h4>
+</section>
+<section id="id14">
+<h4>Parameters:<a class="headerlink" href="#id14" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>X<span class="classifier">DataFrame of shape (n_samples, n_features)</span></dt><dd><p>The dataframe for which we want to get the predictions</p>
+</dd>
+</dl>
+</section>
+<section id="id15">
+<h4>Returns:<a class="headerlink" href="#id15" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>y_pred<span class="classifier">DtaFrame of shape (n_samples, 1)</span></dt><dd><p>DataFrame containing the class labels for each sample.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.dismix.DISMIX.predict_proba">
+<span class="sig-name descname"><span class="pre">predict_proba</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/dismix.html#DISMIX.predict_proba"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.dismix.DISMIX.predict_proba" title="Permalink to this definition"></a></dt>
+<dd><section id="id16">
+<h4>Estimate probability<a class="headerlink" href="#id16" title="Permalink to this heading"></a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">param X<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Input data</p>
+</dd>
+<dt class="field-even">type X<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (n_samples, n_features)</p>
+</dd>
+<dt class="field-odd">param Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">param ——-<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">param C<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Estimate probabilities</p>
+</dd>
+<dt class="field-even">type C<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (n_samples, n_classes)</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.dismix.DISMIX.score">
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/dismix.html#DISMIX.score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.dismix.DISMIX.score" title="Permalink to this definition"></a></dt>
+<dd><section id="id17">
+<h4>Return the mean accuracy on the given test data and labels<a class="headerlink" href="#id17" title="Permalink to this heading"></a></h4>
+<p>In multi-label classification, this is the subset accuracy
+which is a harsh metric since you require for each sample that
+each label set be correctly predicted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">param X<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Test samples.</p>
+</dd>
+<dt class="field-even">type X<span class="colon">:</span></dt>
+<dd class="field-even"><p>array-like of shape (n_samples, n_features)</p>
+</dd>
+<dt class="field-odd">param y<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True labels for <cite>X</cite>.</p>
+</dd>
+<dt class="field-even">type y<span class="colon">:</span></dt>
+<dd class="field-even"><p>array-like of shape (n_samples,) or (n_samples, n_outputs)</p>
+</dd>
+<dt class="field-odd">param sample_weight<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Sample weights.</p>
+</dd>
+<dt class="field-even">type sample_weight<span class="colon">:</span></dt>
+<dd class="field-even"><p>array-like of shape (n_samples,), default=None</p>
+</dd>
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>score</strong> – Mean accuracy of <code class="docutils literal notranslate"><span class="pre">self.predict(X)</span></code> w.r.t. <cite>y</cite>.</p>
+</dd>
+<dt class="field-even">rtype<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.dismix.DISMIX.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/dismix.html#DISMIX.transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.dismix.DISMIX.transform" title="Permalink to this definition"></a></dt>
+<dd><p>Project data to maximize class separation</p>
+<section id="id18">
+<h4>Parameters:<a class="headerlink" href="#id18" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>X<span class="classifier">DataFrame of shape (n_samples, n_features)</span></dt><dd><p>Input data</p>
+</dd>
+</dl>
+</section>
+<section id="id19">
+<h4>Returns:<a class="headerlink" href="#id19" title="Permalink to this heading"></a></h4>
+<p>X_new : DataFrame of shape (n_samples, <a href="#id116"><span class="problematic" id="id117">n_components_</span></a>)</p>
+</section>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+<section id="module-discrimintools.disqual">
+<span id="discrimintools-disqual-module"></span><h2>discrimintools.disqual module<a class="headerlink" href="#module-discrimintools.disqual" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="discrimintools.disqual.DISQUAL">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">discrimintools.disqual.</span></span><span class="sig-name descname"><span class="pre">DISQUAL</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_components</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parallelize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/disqual.html#DISQUAL"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.disqual.DISQUAL" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerMixin</span></code></p>
+<section id="discriminant-analysis-for-qualitatives-categoricals-variables-disqual">
+<h3>Discriminant Analysis for qualitatives/categoricals variables (DISQUAL)<a class="headerlink" href="#discriminant-analysis-for-qualitatives-categoricals-variables-disqual" title="Permalink to this heading"></a></h3>
+</section>
+<section id="id20">
+<h3>Description<a class="headerlink" href="#id20" title="Permalink to this heading"></a></h3>
+<p>This class inherits from sklearn BaseEstimator and TransformerMixin class</p>
+<p>Performs discriminant analysis for categorical variables using multiple correspondence analysis (MCA) and linear discriminant analysis</p>
+</section>
+<section id="id21">
+<h3>Parameters:<a class="headerlink" href="#id21" title="Permalink to this heading"></a></h3>
+<p>n_components : number of dimensions kept in the results</p>
+<p>target : The values of the classification variable define the groups for analysis.</p>
+<p>features : list of qualitatives variables to be included in the analysis.</p>
+<dl class="simple">
+<dt>priors<span class="classifier">The priors statement specifies the prior probabilities of group membership.</span></dt><dd><ul class="simple">
+<li><p>“equal” to set the prior probabilities equal,</p></li>
+<li><p>“proportional” or “prop” to set the prior probabilities proportional to the sample sizes</p></li>
+<li><p>a pandas series which specify the prior probability for each level of the classification variable.</p></li>
+</ul>
+</dd>
+<dt>parallelize<span class="classifier">boolean, default = False</span></dt><dd><dl class="simple">
+<dt>If model should be parallelize</dt><dd><ul class="simple">
+<li><p>If True : parallelize using mapply</p></li>
+<li><p>If False : parallelize using apply</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+<section id="id22">
+<h3>Returns:<a class="headerlink" href="#id22" title="Permalink to this heading"></a></h3>
+<p><a href="#id118"><span class="problematic" id="id119">call_</span></a> : a dictionary with some statistics</p>
+<p><a href="#id120"><span class="problematic" id="id121">statistics_</span></a> : Chi-square test of independence of variables in a contingency table.</p>
+<p><a href="#id122"><span class="problematic" id="id123">coef_</span></a> : DataFrame of shape (n_features,n_classes_)</p>
+<p><a href="#id124"><span class="problematic" id="id125">intercept_</span></a> : DataFrame of shape (1, n_classes)</p>
+<p><a href="#id126"><span class="problematic" id="id127">lda_model_</span></a> : linear discriminant analysis model</p>
+<p><a href="#id128"><span class="problematic" id="id129">factor_model_</span></a> : multiple correspondence analysis model</p>
+<p><a href="#id130"><span class="problematic" id="id131">projection_function_</span></a> : projection function</p>
+<p><a href="#id132"><span class="problematic" id="id133">coef_</span></a> : pandas dataframe of shpz (n_categories, n_classes)</p>
+<p><a href="#id134"><span class="problematic" id="id135">intercept_</span></a> : pandas dataframe of shape (1, n_classes)</p>
+<p><a href="#id136"><span class="problematic" id="id137">model_</span></a> : string. The model fitted = ‘disqual’</p>
+</section>
+<section id="author-s">
+<h3>Author(s)<a class="headerlink" href="#author-s" title="Permalink to this heading"></a></h3>
+<p>Duvérier DJIFACK ZEBAZE <a class="reference external" href="mailto:duverierdjifack&#37;&#52;&#48;gmail&#46;com">duverierdjifack<span>&#64;</span>gmail<span>&#46;</span>com</a></p>
+</section>
+<section id="references">
+<h3>References:<a class="headerlink" href="#references" title="Permalink to this heading"></a></h3>
+<p><a class="reference external" href="https://lemakistatheux.wordpress.com/category/outils-danalyse-supervisee/la-methode-disqual/">https://lemakistatheux.wordpress.com/category/outils-danalyse-supervisee/la-methode-disqual/</a>
+Ricco Rakotomalala, Pratique de l’analyse discriminante linéaire, Version 1.0, 2020
+Saporta G., Probabilité, analyse des données et Statistique, Technip, 2006
+Tufféry S., Data Mining et statistique décisionnelle - L’intelligence des données, Technip, 2012</p>
+<p>#
+prodécure SAS: <a class="reference external" href="http://od-datamining.com/download/#macro">http://od-datamining.com/download/#macro</a>
+Package et fonction R :
+<a class="reference external" href="http://finzi.psych.upenn.edu/library/DiscriMiner/html/disqual.html">http://finzi.psych.upenn.edu/library/DiscriMiner/html/disqual.html</a>
+<a class="reference external" href="https://github.com/gastonstat/DiscriMiner">https://github.com/gastonstat/DiscriMiner</a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.disqual.DISQUAL.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/disqual.html#DISQUAL.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.disqual.DISQUAL.fit" title="Permalink to this definition"></a></dt>
+<dd><section id="fit-the-linear-discriminant-analysis-with-categories-variables-model">
+<h4>Fit the Linear Discriminant Analysis with categories variables model<a class="headerlink" href="#fit-the-linear-discriminant-analysis-with-categories-variables-model" title="Permalink to this heading"></a></h4>
+</section>
+<section id="id23">
+<h4>Parameters:<a class="headerlink" href="#id23" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>X<span class="classifier">pandas/polars DataFrame of shape (n_samples, n_features+1)</span></dt><dd><p>Training data</p>
+</dd>
+</dl>
+<p>y : None</p>
+</section>
+<section id="id24">
+<h4>Returns:<a class="headerlink" href="#id24" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>self<span class="classifier">object</span></dt><dd><p>Fitted estimator</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.disqual.DISQUAL.fit_transform">
+<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/disqual.html#DISQUAL.fit_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.disqual.DISQUAL.fit_transform" title="Permalink to this definition"></a></dt>
+<dd><section id="id25">
+<h4>Fit to data, then transform it<a class="headerlink" href="#id25" title="Permalink to this heading"></a></h4>
+<p>Fits transformer to <cite>X</cite> and returns a transformed version of <cite>X</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">param X<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Input samples.</p>
+</dd>
+<dt class="field-even">type X<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (n_samples, n_features+1)</p>
+</dd>
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>X_new</strong> – Transformed array.</p>
+</dd>
+<dt class="field-even">rtype<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (n_samples, n_features_new)</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.disqual.DISQUAL.pred_table">
+<span class="sig-name descname"><span class="pre">pred_table</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/disqual.html#DISQUAL.pred_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.disqual.DISQUAL.pred_table" title="Permalink to this definition"></a></dt>
+<dd><section id="id26">
+<h4>Prediction table<a class="headerlink" href="#id26" title="Permalink to this heading"></a></h4>
+<p class="rubric">Notes</p>
+<p>pred_table[i,j] refers to the number of times “i” was observed and the model predicted “j”. Correct predictions are along the diagonal.</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.disqual.DISQUAL.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/disqual.html#DISQUAL.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.disqual.DISQUAL.predict" title="Permalink to this definition"></a></dt>
+<dd><section id="id27">
+<h4>Predict class labels for samples in X<a class="headerlink" href="#id27" title="Permalink to this heading"></a></h4>
+</section>
+<section id="id28">
+<h4>Parameters:<a class="headerlink" href="#id28" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>X<span class="classifier">DataFrame of shape (n_samples, n_features)</span></dt><dd><p>The dataframe for which we want to get the predictions</p>
+</dd>
+</dl>
+</section>
+<section id="id29">
+<h4>Returns:<a class="headerlink" href="#id29" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>y_pred<span class="classifier">DtaFrame of shape (n_samples, 1)</span></dt><dd><p>DataFrame containing the class labels for each sample.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.disqual.DISQUAL.predict_proba">
+<span class="sig-name descname"><span class="pre">predict_proba</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/disqual.html#DISQUAL.predict_proba"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.disqual.DISQUAL.predict_proba" title="Permalink to this definition"></a></dt>
+<dd><section id="id30">
+<h4>Estimate probability<a class="headerlink" href="#id30" title="Permalink to this heading"></a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">param X<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Input data</p>
+</dd>
+<dt class="field-even">type X<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (n_samples, n_features)</p>
+</dd>
+<dt class="field-odd">param Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">param ——-<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">param C<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Estimate probabilities</p>
+</dd>
+<dt class="field-even">type C<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (n_samples, n_classes)</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.disqual.DISQUAL.score">
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/disqual.html#DISQUAL.score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.disqual.DISQUAL.score" title="Permalink to this definition"></a></dt>
+<dd><section id="id31">
+<h4>Return the mean accuracy on the given test data and labels<a class="headerlink" href="#id31" title="Permalink to this heading"></a></h4>
+<p>In multi-label classification, this is the subset accuracy
+which is a harsh metric since you require for each sample that
+each label set be correctly predicted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">param X<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Test samples.</p>
+</dd>
+<dt class="field-even">type X<span class="colon">:</span></dt>
+<dd class="field-even"><p>array-like of shape (n_samples, n_features)</p>
+</dd>
+<dt class="field-odd">param y<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True labels for <cite>X</cite>.</p>
+</dd>
+<dt class="field-even">type y<span class="colon">:</span></dt>
+<dd class="field-even"><p>array-like of shape (n_samples,) or (n_samples, n_outputs)</p>
+</dd>
+<dt class="field-odd">param sample_weight<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Sample weights.</p>
+</dd>
+<dt class="field-even">type sample_weight<span class="colon">:</span></dt>
+<dd class="field-even"><p>array-like of shape (n_samples,), default=None</p>
+</dd>
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>score</strong> – Mean accuracy of <code class="docutils literal notranslate"><span class="pre">self.predict(X)</span></code> w.r.t. <cite>y</cite>.</p>
+</dd>
+<dt class="field-even">rtype<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.disqual.DISQUAL.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/disqual.html#DISQUAL.transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.disqual.DISQUAL.transform" title="Permalink to this definition"></a></dt>
+<dd><section id="id32">
+<h4>Project data to maximize class separation<a class="headerlink" href="#id32" title="Permalink to this heading"></a></h4>
+</section>
+<section id="id33">
+<h4>Parameters:<a class="headerlink" href="#id33" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>X<span class="classifier">DataFrame of shape (n_samples, n_features)</span></dt><dd><p>Input data</p>
+</dd>
+</dl>
+</section>
+<section id="id34">
+<h4>Returns:<a class="headerlink" href="#id34" title="Permalink to this heading"></a></h4>
+<p>X_new : DataFrame of shape (n_samples, <a href="#id138"><span class="problematic" id="id139">n_components_</span></a>)</p>
+</section>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+<section id="module-discrimintools.eta2">
+<span id="discrimintools-eta2-module"></span><h2>discrimintools.eta2 module<a class="headerlink" href="#module-discrimintools.eta2" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="discrimintools.eta2.eta2">
+<span class="sig-prename descclassname"><span class="pre">discrimintools.eta2.</span></span><span class="sig-name descname"><span class="pre">eta2</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">categories</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">value</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">digits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">4</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/eta2.html#eta2"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.eta2.eta2" title="Permalink to this definition"></a></dt>
+<dd><section id="calcul-du-rapport-de-correltion-eta-carre">
+<h3>Calcul du rapport de corréltion eta carré<a class="headerlink" href="#calcul-du-rapport-de-correltion-eta-carre" title="Permalink to this heading"></a></h3>
+</section>
+<section id="id35">
+<h3>Description<a class="headerlink" href="#id35" title="Permalink to this heading"></a></h3>
+<p>Cette fonction calcule le rapport de corrélation eta carré qui est une mesure d’association importante entre une variable quantitative et une variable qualitative.</p>
+<dl class="field-list simple">
+<dt class="field-odd">param categories<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type categories<span class="colon">:</span></dt>
+<dd class="field-even"><p>un facteur associé à la variable qualitative</p>
+</dd>
+<dt class="field-odd">param value<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type value<span class="colon">:</span></dt>
+<dd class="field-even"><p>un vecteur associé à la variable quantitatives</p>
+</dd>
+<dt class="field-odd">param digits<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type digits<span class="colon">:</span></dt>
+<dd class="field-even"><p>int, default=3. Number of decimal printed</p>
+</dd>
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><em>a dictionary of numeric elements</em></p></li>
+<li><p><strong>Sum. Intra</strong> (<em>la somme des carrés intra</em>)</p></li>
+<li><p><strong>Sum. Inter</strong> (<em>La somme des carrés inter</em>)</p></li>
+<li><p><strong>Correlation ratio</strong> (<em>La valeur du rapport de corrélation empirique</em>)</p></li>
+<li><p><strong>F-stats</strong> (<em>La statistique de test F de Fisher</em>)</p></li>
+<li><p><strong>pvalue</strong> (<em>la probabilité critique</em>)</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<ol class="upperalpha simple" start="6">
+<li><p>Bertrand, M. Maumy-Bertrand, Initiation à la Statistique avec R, Dunod, 4ème édition, 2023.</p></li>
+</ol>
+</section>
+<section id="id36">
+<h3>Author(s)<a class="headerlink" href="#id36" title="Permalink to this heading"></a></h3>
+<p>Duvérier DJIFACK ZEBAZE <a class="reference external" href="mailto:duverierdjifack&#37;&#52;&#48;gmail&#46;com">duverierdjifack<span>&#64;</span>gmail<span>&#46;</span>com</a></p>
+<p>see also <a class="reference external" href="https://stackoverflow.com/questions/52083501/how-to-compute-correlation-ratio-or-eta-in-python">https://stackoverflow.com/questions/52083501/how-to-compute-correlation-ratio-or-eta-in-python</a></p>
+</section>
+</dd></dl>
+
+</section>
+<section id="module-discrimintools.fviz_candisc">
+<span id="discrimintools-fviz-candisc-module"></span><h2>discrimintools.fviz_candisc module<a class="headerlink" href="#module-discrimintools.fviz_candisc" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="discrimintools.fviz_candisc.fviz_candisc">
+<span class="sig-prename descclassname"><span class="pre">discrimintools.fviz_candisc.</span></span><span class="sig-name descname"><span class="pre">fviz_candisc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">self,</span> <span class="pre">axis=[0,</span> <span class="pre">1],</span> <span class="pre">x_label=None,</span> <span class="pre">y_label=None,</span> <span class="pre">x_lim=None,</span> <span class="pre">y_lim=None,</span> <span class="pre">title=None,</span> <span class="pre">geom=['point',</span> <span class="pre">'text'],</span> <span class="pre">point_size=1.5,</span> <span class="pre">text_size=8,</span> <span class="pre">text_type='text',</span> <span class="pre">add_grid=True,</span> <span class="pre">add_hline=True,</span> <span class="pre">add_vline=True,</span> <span class="pre">repel=False,</span> <span class="pre">hline_color='black',</span> <span class="pre">hline_style='dashed',</span> <span class="pre">vline_color='black',</span> <span class="pre">vline_style='dashed',</span> <span class="pre">ha='center',</span> <span class="pre">va='center',</span> <span class="pre">ggtheme=&lt;plotnine.themes.theme_minimal.theme_minimal</span> <span class="pre">object&gt;</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">&lt;module</span> <span class="pre">'plotnine'</span> <span class="pre">from</span> <span class="pre">'C:\\Users\\duver\\AppData\\Roaming\\Python\\Python310\\site-packages\\plotnine\\__init__.py'&gt;</span></span></span><a class="reference internal" href="_modules/discrimintools/fviz_candisc.html#fviz_candisc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.fviz_candisc.fviz_candisc" title="Permalink to this definition"></a></dt>
+<dd><section id="draw-the-canonical-discriminant-analysis-candisc-individuals-graphs">
+<h3>Draw the Canonical Discriminant Analysis (CANDISC) individuals graphs<a class="headerlink" href="#draw-the-canonical-discriminant-analysis-candisc-individuals-graphs" title="Permalink to this heading"></a></h3>
+</section>
+<section id="author">
+<h3>Author:<a class="headerlink" href="#author" title="Permalink to this heading"></a></h3>
+<p>Duvérier DJIFACK ZEBAZE <a class="reference external" href="mailto:duverierdjifack&#37;&#52;&#48;gmail&#46;com">duverierdjifack<span>&#64;</span>gmail<span>&#46;</span>com</a></p>
+</section>
+</dd></dl>
+
+</section>
+<section id="module-discrimintools.fviz_disca">
+<span id="discrimintools-fviz-disca-module"></span><h2>discrimintools.fviz_disca module<a class="headerlink" href="#module-discrimintools.fviz_disca" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="discrimintools.fviz_disca.fviz_disca_ind">
+<span class="sig-prename descclassname"><span class="pre">discrimintools.fviz_disca.</span></span><span class="sig-name descname"><span class="pre">fviz_disca_ind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">self,</span> <span class="pre">axis=[0,</span> <span class="pre">1],</span> <span class="pre">x_lim=None,</span> <span class="pre">y_lim=None,</span> <span class="pre">x_label=None,</span> <span class="pre">y_label=None,</span> <span class="pre">title=None,</span> <span class="pre">geom=['point',</span> <span class="pre">'text'],</span> <span class="pre">repel=True,</span> <span class="pre">point_size=1.5,</span> <span class="pre">text_size=8,</span> <span class="pre">text_type='text',</span> <span class="pre">add_grid=True,</span> <span class="pre">add_hline=True,</span> <span class="pre">add_vline=True,</span> <span class="pre">ha='center',</span> <span class="pre">va='center',</span> <span class="pre">hline_color='black',</span> <span class="pre">hline_style='dashed',</span> <span class="pre">vline_color='black',</span> <span class="pre">vline_style='dashed',</span> <span class="pre">add_group=True,</span> <span class="pre">center_marker_size=5,</span> <span class="pre">ggtheme=&lt;plotnine.themes.theme_minimal.theme_minimal</span> <span class="pre">object&gt;</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/fviz_disca.html#fviz_disca_ind"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.fviz_disca.fviz_disca_ind" title="Permalink to this definition"></a></dt>
+<dd><section id="draw-the-discriminant-correspondence-analysis-candisc-individuals-graphs">
+<h3>Draw the Discriminant Correspondence Analysis (CANDISC) individuals graphs<a class="headerlink" href="#draw-the-discriminant-correspondence-analysis-candisc-individuals-graphs" title="Permalink to this heading"></a></h3>
+</section>
+<section id="id37">
+<h3>Author:<a class="headerlink" href="#id37" title="Permalink to this heading"></a></h3>
+<p>Duvérier DJIFACK ZEBAZE <a class="reference external" href="mailto:duverierdjifack&#37;&#52;&#48;gmail&#46;com">duverierdjifack<span>&#64;</span>gmail<span>&#46;</span>com</a></p>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="discrimintools.fviz_disca.fviz_disca_mod">
+<span class="sig-prename descclassname"><span class="pre">discrimintools.fviz_disca.</span></span><span class="sig-name descname"><span class="pre">fviz_disca_mod</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="pre">self,</span> <span class="pre">axis=[0,</span> <span class="pre">1],</span> <span class="pre">x_lim=None,</span> <span class="pre">y_lim=None,</span> <span class="pre">x_label=None,</span> <span class="pre">y_label=None,</span> <span class="pre">title=None,</span> <span class="pre">color='black',</span> <span class="pre">geom=['point',</span> <span class="pre">'text'],</span> <span class="pre">text_type='text',</span> <span class="pre">marker='o',</span> <span class="pre">point_size=1.5,</span> <span class="pre">text_size=8,</span> <span class="pre">add_grid=True,</span> <span class="pre">add_group=True,</span> <span class="pre">color_sup='blue',</span> <span class="pre">marker_sup='^',</span> <span class="pre">add_hline=True,</span> <span class="pre">add_vline=True,</span> <span class="pre">ha='center',</span> <span class="pre">va='center',</span> <span class="pre">hline_color='black',</span> <span class="pre">hline_style='dashed',</span> <span class="pre">vline_color='black',</span> <span class="pre">vline_style='dashed',</span> <span class="pre">repel=False,</span> <span class="pre">ggtheme=&lt;plotnine.themes.theme_minimal.theme_minimal</span> <span class="pre">object&gt;</span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">&lt;module</span> <span class="pre">'plotnine'</span> <span class="pre">from</span> <span class="pre">'C:\\Users\\duver\\AppData\\Roaming\\Python\\Python310\\site-packages\\plotnine\\__init__.py'&gt;</span></span></span><a class="reference internal" href="_modules/discrimintools/fviz_disca.html#fviz_disca_mod"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.fviz_disca.fviz_disca_mod" title="Permalink to this definition"></a></dt>
+<dd><section id="visualize-discriminant-correspondence-analysis-graph-of-variables-categories">
+<h3>Visualize Discriminant Correspondence Analysis - Graph of variables/categories<a class="headerlink" href="#visualize-discriminant-correspondence-analysis-graph-of-variables-categories" title="Permalink to this heading"></a></h3>
+</section>
+<section id="id38">
+<h3>Description<a class="headerlink" href="#id38" title="Permalink to this heading"></a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">param self<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type self<span class="colon">:</span></dt>
+<dd class="field-even"><p>an object of class DISCA</p>
+</dd>
+<dt class="field-odd">param axis<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type axis<span class="colon">:</span></dt>
+<dd class="field-even"><p>a numeric list or vector of length 2 specifying the dimensions to be plotted, default = [0,1]</p>
+</dd>
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><em>a plotnine graph</em></p></li>
+<li><p><em>Author(s)</em></p></li>
+<li><p><em>———</em></p></li>
+<li><p><em>Duvérier DJIFACK ZEBAZE duverierdjifack&#64;gmail.com</em></p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+<section id="module-discrimintools.get_candisc">
+<span id="discrimintools-get-candisc-module"></span><h2>discrimintools.get_candisc module<a class="headerlink" href="#module-discrimintools.get_candisc" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="discrimintools.get_candisc.get_candisc">
+<span class="sig-prename descclassname"><span class="pre">discrimintools.get_candisc.</span></span><span class="sig-name descname"><span class="pre">get_candisc</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">choice</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ind'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/get_candisc.html#get_candisc"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.get_candisc.get_candisc" title="Permalink to this definition"></a></dt>
+<dd><section id="extract-the-results-candisc">
+<h3>Extract the results - CANDISC<a class="headerlink" href="#extract-the-results-candisc" title="Permalink to this heading"></a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">param self<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type self<span class="colon">:</span></dt>
+<dd class="field-even"><p>an object of class CANDISC</p>
+</dd>
+<dt class="field-odd">param choice<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">returns<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><em>a dictionary or a pandas dataframe</em></p></li>
+<li><p><em>Author(s)</em></p></li>
+<li><p><em>———</em></p></li>
+<li><p><em>Duvérier DJIFACK ZEBAZE duverierdjifack&#64;gmail.com</em></p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="discrimintools.get_candisc.get_candisc_coef">
+<span class="sig-prename descclassname"><span class="pre">discrimintools.get_candisc.</span></span><span class="sig-name descname"><span class="pre">get_candisc_coef</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">choice</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'absolute'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/get_candisc.html#get_candisc_coef"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.get_candisc.get_candisc_coef" title="Permalink to this definition"></a></dt>
+<dd><section id="extract-coefficients-candisc">
+<h3>Extract coefficients - CANDISC<a class="headerlink" href="#extract-coefficients-candisc" title="Permalink to this heading"></a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">param self<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type self<span class="colon">:</span></dt>
+<dd class="field-even"><p>an object of class CANDISC</p>
+</dd>
+<dt class="field-odd">param choice<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type choice<span class="colon">:</span></dt>
+<dd class="field-even"><p>the element to subset from the output. Allowed values are “absolute” (for canonical coefficients) or “score” (for class coefficients)</p>
+</dd>
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><em>a pandas dataframe containing coefficients</em></p></li>
+<li><p><em>Author(s)</em></p></li>
+<li><p><em>———</em></p></li>
+<li><p><em>Duvérier DJIFACK ZEBAZE duverierdjifack&#64;gmail.com</em></p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="discrimintools.get_candisc.get_candisc_ind">
+<span class="sig-prename descclassname"><span class="pre">discrimintools.get_candisc.</span></span><span class="sig-name descname"><span class="pre">get_candisc_ind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/get_candisc.html#get_candisc_ind"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.get_candisc.get_candisc_ind" title="Permalink to this definition"></a></dt>
+<dd><section id="extract-the-results-for-individuals-candisc">
+<h3>Extract the results for individuals - CANDISC<a class="headerlink" href="#extract-the-results-for-individuals-candisc" title="Permalink to this heading"></a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">param self<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type self<span class="colon">:</span></dt>
+<dd class="field-even"><p>an object of class CANDISC</p>
+</dd>
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><em>a dictionary of dataframes containing all the results for the active individuals including</em></p></li>
+<li><p><strong>- coord</strong> (<em>coordinates for the individuals</em>)</p></li>
+<li><p><em>Author(s)</em></p></li>
+<li><p><em>———</em></p></li>
+<li><p><em>Duvérier DJIFACK ZEBAZE duverierdjifack&#64;gmail.com</em></p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="discrimintools.get_candisc.get_candisc_var">
+<span class="sig-prename descclassname"><span class="pre">discrimintools.get_candisc.</span></span><span class="sig-name descname"><span class="pre">get_candisc_var</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">choice</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'correlation'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/get_candisc.html#get_candisc_var"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.get_candisc.get_candisc_var" title="Permalink to this definition"></a></dt>
+<dd><section id="extract-the-results-for-variables-candisc">
+<h3>Extract the results for variables - CANDISC<a class="headerlink" href="#extract-the-results-for-variables-candisc" title="Permalink to this heading"></a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">param self<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type self<span class="colon">:</span></dt>
+<dd class="field-even"><p>an object of class CANDISC</p>
+</dd>
+<dt class="field-odd">param choice<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type choice<span class="colon">:</span></dt>
+<dd class="field-even"><p>the element to subset from the output. Allowed values are “correlation” (for canonical correlation) or “covariance” (for covariance).</p>
+</dd>
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><em>a dictionary of dataframes containings all the results for the variables</em></p></li>
+<li><p><em>Author(s)</em></p></li>
+<li><p><em>———</em></p></li>
+<li><p><em>Duvérier DJIFACK ZEBAZE duverierdjifack&#64;gmail.com</em></p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="discrimintools.get_candisc.summaryCANDISC">
+<span class="sig-prename descclassname"><span class="pre">discrimintools.get_candisc.</span></span><span class="sig-name descname"><span class="pre">summaryCANDISC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">digits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nb_element</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_markdown</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tablefmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pipe'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/get_candisc.html#summaryCANDISC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.get_candisc.summaryCANDISC" title="Permalink to this definition"></a></dt>
+<dd><section id="printing-summaries-of-canonical-discriminant-analysis-model">
+<h3>Printing summaries of Canonical Discriminant Analysis model<a class="headerlink" href="#printing-summaries-of-canonical-discriminant-analysis-model" title="Permalink to this heading"></a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">param self<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type self<span class="colon">:</span></dt>
+<dd class="field-even"><p>an object of class CANDISC</p>
+</dd>
+<dt class="field-odd">param digits<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type digits<span class="colon">:</span></dt>
+<dd class="field-even"><p>int, default=3. Number of decimal printed</p>
+</dd>
+<dt class="field-odd">param nb_element<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type nb_element<span class="colon">:</span></dt>
+<dd class="field-even"><p>int, default = 10. Number of element</p>
+</dd>
+<dt class="field-odd">param ncp<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type ncp<span class="colon">:</span></dt>
+<dd class="field-even"><p>int, default = 3. Number of componennts</p>
+</dd>
+<dt class="field-odd">param to_markdown<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type to_markdown<span class="colon">:</span></dt>
+<dd class="field-even"><p>Print DataFrame in Markdown-friendly format.</p>
+</dd>
+<dt class="field-odd">param tablefmt<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type tablefmt<span class="colon">:</span></dt>
+<dd class="field-even"><p>Table format. For more about tablefmt, see : <a class="reference external" href="https://pypi.org/project/tabulate/">https://pypi.org/project/tabulate/</a></p>
+</dd>
+<dt class="field-odd">param **kwargs<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type **kwargs<span class="colon">:</span></dt>
+<dd class="field-even"><p>These parameters will be passed to tabulate.</p>
+</dd>
+<dt class="field-odd">param Author(s)<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">param ———<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">param Duvérier DJIFACK ZEBAZE <a class="reference external" href="mailto:duverierdjifack&#37;&#52;&#48;gmail&#46;com">duverierdjifack<span>&#64;</span>gmail<span>&#46;</span>com</a><span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+<section id="module-discrimintools.get_disca">
+<span id="discrimintools-get-disca-module"></span><h2>discrimintools.get_disca module<a class="headerlink" href="#module-discrimintools.get_disca" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="discrimintools.get_disca.get_disca">
+<span class="sig-prename descclassname"><span class="pre">discrimintools.get_disca.</span></span><span class="sig-name descname"><span class="pre">get_disca</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">choice</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ind'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/get_disca.html#get_disca"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.get_disca.get_disca" title="Permalink to this definition"></a></dt>
+<dd><section id="extract-the-results-disca">
+<h3>Extract the results - DISCA<a class="headerlink" href="#extract-the-results-disca" title="Permalink to this heading"></a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">param self<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type self<span class="colon">:</span></dt>
+<dd class="field-even"><p>an object of class DISCA</p>
+</dd>
+<dt class="field-odd">param choice<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">returns<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><em>a dictionary or a pandas dataframe</em></p></li>
+<li><p><em>Author(s)</em></p></li>
+<li><p><em>———</em></p></li>
+<li><p><em>Duvérier DJIFACK ZEBAZE duverierdjifack&#64;gmail.com</em></p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="discrimintools.get_disca.get_disca_classes">
+<span class="sig-prename descclassname"><span class="pre">discrimintools.get_disca.</span></span><span class="sig-name descname"><span class="pre">get_disca_classes</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/get_disca.html#get_disca_classes"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.get_disca.get_disca_classes" title="Permalink to this definition"></a></dt>
+<dd><section id="extract-the-results-for-groups-disca">
+<h3>Extract the results for groups - DISCA<a class="headerlink" href="#extract-the-results-for-groups-disca" title="Permalink to this heading"></a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">param self<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type self<span class="colon">:</span></dt>
+<dd class="field-even"><p>an object of class DISCA</p>
+</dd>
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><em>a dictionary of dataframes containing all the results for the groups including</em></p></li>
+<li><p><strong>- coord</strong> (<em>coordinates for the individuals</em>)</p></li>
+<li><p><em>Author(s)</em></p></li>
+<li><p><em>———</em></p></li>
+<li><p><em>Duvérier DJIFACK ZEBAZE duverierdjifack&#64;gmail.com</em></p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="discrimintools.get_disca.get_disca_coef">
+<span class="sig-prename descclassname"><span class="pre">discrimintools.get_disca.</span></span><span class="sig-name descname"><span class="pre">get_disca_coef</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/get_disca.html#get_disca_coef"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.get_disca.get_disca_coef" title="Permalink to this definition"></a></dt>
+<dd><section id="extract-coefficients-disca">
+<h3>Extract coefficients - DISCA<a class="headerlink" href="#extract-coefficients-disca" title="Permalink to this heading"></a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">param self<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type self<span class="colon">:</span></dt>
+<dd class="field-even"><p>an object of class DISCA</p>
+</dd>
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><em>a pandas dataframe containing coefficients</em></p></li>
+<li><p><em>Author(s)</em></p></li>
+<li><p><em>———</em></p></li>
+<li><p><em>Duvérier DJIFACK ZEBAZE duverierdjifack&#64;gmail.com</em></p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="discrimintools.get_disca.get_disca_ind">
+<span class="sig-prename descclassname"><span class="pre">discrimintools.get_disca.</span></span><span class="sig-name descname"><span class="pre">get_disca_ind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/get_disca.html#get_disca_ind"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.get_disca.get_disca_ind" title="Permalink to this definition"></a></dt>
+<dd><section id="extract-the-results-for-individuals-disca">
+<h3>Extract the results for individuals - DISCA<a class="headerlink" href="#extract-the-results-for-individuals-disca" title="Permalink to this heading"></a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">param self<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type self<span class="colon">:</span></dt>
+<dd class="field-even"><p>an object of class DISCA</p>
+</dd>
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><em>a dictionary of dataframes containing all the results for the active individuals including</em></p></li>
+<li><p><strong>- coord</strong> (<em>coordinates for the individuals</em>)</p></li>
+<li><p><em>Author(s)</em></p></li>
+<li><p><em>———</em></p></li>
+<li><p><em>Duvérier DJIFACK ZEBAZE duverierdjifack&#64;gmail.com</em></p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="discrimintools.get_disca.get_disca_var">
+<span class="sig-prename descclassname"><span class="pre">discrimintools.get_disca.</span></span><span class="sig-name descname"><span class="pre">get_disca_var</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/get_disca.html#get_disca_var"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.get_disca.get_disca_var" title="Permalink to this definition"></a></dt>
+<dd><section id="extract-the-results-for-variables-categories-disca">
+<h3>Extract the results for variables/categories - DISCA<a class="headerlink" href="#extract-the-results-for-variables-categories-disca" title="Permalink to this heading"></a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">param self<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type self<span class="colon">:</span></dt>
+<dd class="field-even"><p>an object of class DISCA</p>
+</dd>
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><em>a dictionary of dataframes containing all the results for the active variables including</em></p></li>
+<li><p><strong>- coord</strong> (<em>coordinates for the variables/categories</em>)</p></li>
+<li><p><strong>- contrib</strong> (<em>contributions for the variables/categories</em>)</p></li>
+<li><p><em>Author(s)</em></p></li>
+<li><p><em>———</em></p></li>
+<li><p><em>Duvérier DJIFACK ZEBAZE duverierdjifack&#64;gmail.com</em></p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="discrimintools.get_disca.summaryDISCA">
+<span class="sig-prename descclassname"><span class="pre">discrimintools.get_disca.</span></span><span class="sig-name descname"><span class="pre">summaryDISCA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">digits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nb_element</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ncp</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_markdown</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tablefmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pipe'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/get_disca.html#summaryDISCA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.get_disca.summaryDISCA" title="Permalink to this definition"></a></dt>
+<dd><section id="printing-summaries-of-discriminant-correspondence-analysis-model">
+<h3>Printing summaries of Discriminant Correspondence Analysis model<a class="headerlink" href="#printing-summaries-of-discriminant-correspondence-analysis-model" title="Permalink to this heading"></a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">param self<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type self<span class="colon">:</span></dt>
+<dd class="field-even"><p>an object of class DISCA</p>
+</dd>
+<dt class="field-odd">param digits<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type digits<span class="colon">:</span></dt>
+<dd class="field-even"><p>int, default=3. Number of decimal printed</p>
+</dd>
+<dt class="field-odd">param nb_element<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type nb_element<span class="colon">:</span></dt>
+<dd class="field-even"><p>int, default = 10. Number of element</p>
+</dd>
+<dt class="field-odd">param ncp<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type ncp<span class="colon">:</span></dt>
+<dd class="field-even"><p>int, default = 3. Number of componennts</p>
+</dd>
+<dt class="field-odd">param to_markdown<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type to_markdown<span class="colon">:</span></dt>
+<dd class="field-even"><p>Print DataFrame in Markdown-friendly format.</p>
+</dd>
+<dt class="field-odd">param tablefmt<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type tablefmt<span class="colon">:</span></dt>
+<dd class="field-even"><p>Table format. For more about tablefmt, see : <a class="reference external" href="https://pypi.org/project/tabulate/">https://pypi.org/project/tabulate/</a></p>
+</dd>
+<dt class="field-odd">param **kwargs<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type **kwargs<span class="colon">:</span></dt>
+<dd class="field-even"><p>These parameters will be passed to tabulate.</p>
+</dd>
+<dt class="field-odd">param Author(s)<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">param ———<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">param Duvérier DJIFACK ZEBAZE <a class="reference external" href="mailto:duverierdjifack&#37;&#52;&#48;gmail&#46;com">duverierdjifack<span>&#64;</span>gmail<span>&#46;</span>com</a><span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+<section id="module-discrimintools.get_lda">
+<span id="discrimintools-get-lda-module"></span><h2>discrimintools.get_lda module<a class="headerlink" href="#module-discrimintools.get_lda" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="discrimintools.get_lda.get_lda">
+<span class="sig-prename descclassname"><span class="pre">discrimintools.get_lda.</span></span><span class="sig-name descname"><span class="pre">get_lda</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">choice</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'ind'</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/get_lda.html#get_lda"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.get_lda.get_lda" title="Permalink to this definition"></a></dt>
+<dd><section id="extract-the-results-lda">
+<h3>Extract the results - LDA<a class="headerlink" href="#extract-the-results-lda" title="Permalink to this heading"></a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">param self<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type self<span class="colon">:</span></dt>
+<dd class="field-even"><p>an object of class LDA</p>
+</dd>
+<dt class="field-odd">param choice<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">returns<span class="colon">:</span></dt>
+<dd class="field-even"><ul class="simple">
+<li><p><em>a dictionary or a pandas dataframe</em></p></li>
+<li><p><em>Author(s)</em></p></li>
+<li><p><em>———</em></p></li>
+<li><p><em>Duvérier DJIFACK ZEBAZE duverierdjifack&#64;gmail.com</em></p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="discrimintools.get_lda.get_lda_coef">
+<span class="sig-prename descclassname"><span class="pre">discrimintools.get_lda.</span></span><span class="sig-name descname"><span class="pre">get_lda_coef</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/get_lda.html#get_lda_coef"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.get_lda.get_lda_coef" title="Permalink to this definition"></a></dt>
+<dd><section id="extract-coefficients-lda">
+<h3>Extract coefficients - LDA<a class="headerlink" href="#extract-coefficients-lda" title="Permalink to this heading"></a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">param self<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type self<span class="colon">:</span></dt>
+<dd class="field-even"><p>an object of class LDA</p>
+</dd>
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><em>a pandas dataframe containing coefficients</em></p></li>
+<li><p><em>Author(s)</em></p></li>
+<li><p><em>———</em></p></li>
+<li><p><em>Duvérier DJIFACK ZEBAZE duverierdjifack&#64;gmail.com</em></p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="discrimintools.get_lda.get_lda_cov">
+<span class="sig-prename descclassname"><span class="pre">discrimintools.get_lda.</span></span><span class="sig-name descname"><span class="pre">get_lda_cov</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/get_lda.html#get_lda_cov"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.get_lda.get_lda_cov" title="Permalink to this definition"></a></dt>
+<dd><section id="extract-the-results-for-variables-lda">
+<h3>Extract the results for variables - LDA<a class="headerlink" href="#extract-the-results-for-variables-lda" title="Permalink to this heading"></a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">param self<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type self<span class="colon">:</span></dt>
+<dd class="field-even"><p>an object of class LDA</p>
+</dd>
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><em>a dictionary of dataframes containings all the results for the variables</em></p></li>
+<li><p><em>Author(s)</em></p></li>
+<li><p><em>———</em></p></li>
+<li><p><em>Duvérier DJIFACK ZEBAZE duverierdjifack&#64;gmail.com</em></p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="discrimintools.get_lda.get_lda_ind">
+<span class="sig-prename descclassname"><span class="pre">discrimintools.get_lda.</span></span><span class="sig-name descname"><span class="pre">get_lda_ind</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/get_lda.html#get_lda_ind"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.get_lda.get_lda_ind" title="Permalink to this definition"></a></dt>
+<dd><section id="extract-the-results-for-individuals-lda">
+<h3>Extract the results for individuals - LDA<a class="headerlink" href="#extract-the-results-for-individuals-lda" title="Permalink to this heading"></a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">param self<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type self<span class="colon">:</span></dt>
+<dd class="field-even"><p>an object of class LDA</p>
+</dd>
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><em>a dictionary of dataframes containing all the results for the active individuals including</em></p></li>
+<li><p><strong>- scores</strong> (<em>scores for the individuals</em>)</p></li>
+<li><p><strong>- generalied_dist2</strong> (<em>generalized distance</em>)</p></li>
+<li><p><em>Author(s)</em></p></li>
+<li><p><em>———</em></p></li>
+<li><p><em>Duvérier DJIFACK ZEBAZE duverierdjifack&#64;gmail.com</em></p></li>
+</ul>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="discrimintools.get_lda.summaryLDA">
+<span class="sig-prename descclassname"><span class="pre">discrimintools.get_lda.</span></span><span class="sig-name descname"><span class="pre">summaryLDA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">self</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">digits</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">3</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nb_element</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">to_markdown</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tablefmt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'pipe'</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/get_lda.html#summaryLDA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.get_lda.summaryLDA" title="Permalink to this definition"></a></dt>
+<dd><section id="printing-summaries-of-linear-discriminant-analysis-model">
+<h3>Printing summaries of Linear Discriminant Analysis model<a class="headerlink" href="#printing-summaries-of-linear-discriminant-analysis-model" title="Permalink to this heading"></a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">param self<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type self<span class="colon">:</span></dt>
+<dd class="field-even"><p>an object of class LDA</p>
+</dd>
+<dt class="field-odd">param digits<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type digits<span class="colon">:</span></dt>
+<dd class="field-even"><p>int, default=3. Number of decimal printed</p>
+</dd>
+<dt class="field-odd">param nb_element<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type nb_element<span class="colon">:</span></dt>
+<dd class="field-even"><p>int, default = 10. Number of element</p>
+</dd>
+<dt class="field-odd">param to_markdown<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type to_markdown<span class="colon">:</span></dt>
+<dd class="field-even"><p>Print DataFrame in Markdown-friendly format.</p>
+</dd>
+<dt class="field-odd">param tablefmt<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type tablefmt<span class="colon">:</span></dt>
+<dd class="field-even"><p>Table format. For more about tablefmt, see : <a class="reference external" href="https://pypi.org/project/tabulate/">https://pypi.org/project/tabulate/</a></p>
+</dd>
+<dt class="field-odd">param **kwargs<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type **kwargs<span class="colon">:</span></dt>
+<dd class="field-even"><p>These parameters will be passed to tabulate.</p>
+</dd>
+<dt class="field-odd">param Author(s)<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">param ———<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">param Duvérier DJIFACK ZEBAZE <a class="reference external" href="mailto:duverierdjifack&#37;&#52;&#48;gmail&#46;com">duverierdjifack<span>&#64;</span>gmail<span>&#46;</span>com</a><span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+<section id="module-discrimintools.lda">
+<span id="discrimintools-lda-module"></span><h2>discrimintools.lda module<a class="headerlink" href="#module-discrimintools.lda" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="discrimintools.lda.LDA">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">discrimintools.lda.</span></span><span class="sig-name descname"><span class="pre">LDA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/lda.html#LDA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.lda.LDA" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerMixin</span></code></p>
+<section id="linear-discriminant-analysis-lda">
+<h3>Linear Discriminant Analysis (LDA)<a class="headerlink" href="#linear-discriminant-analysis-lda" title="Permalink to this heading"></a></h3>
+</section>
+<section id="id39">
+<h3>Description<a class="headerlink" href="#id39" title="Permalink to this heading"></a></h3>
+<p>This class inherits from sklearn BaseEstimator and TransformerMixin class</p>
+<p>Develops a discriminant criterion to classify each observation into groups</p>
+</section>
+<section id="id40">
+<h3>Parameters:<a class="headerlink" href="#id40" title="Permalink to this heading"></a></h3>
+<p>target : The values of the classification variable define the groups for analysis.</p>
+<p>features : list of quantitative variables to be included in the analysis. The default is all numeric variables in dataset</p>
+<dl class="simple">
+<dt>priors<span class="classifier">The priors statement specifies the prior probabilities of group membership.</span></dt><dd><ul class="simple">
+<li><p>“equal” to set the prior probabilities equal,</p></li>
+<li><p>“proportional” or “prop” to set the prior probabilities proportional to the sample sizes</p></li>
+<li><p>a pandas series which specify the prior probability for each level of the classification variable.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>call_</strong> (<em>a dictionary with some statistics</em>)</p></li>
+<li><p><strong>coef_</strong> (<em>DataFrame of shape (n_features,n_classes_)</em>)</p></li>
+<li><p><strong>intercept_</strong> (<em>DataFrame of shape (1, n_classes)</em>)</p></li>
+<li><p><strong>summary_information_</strong> (<em>summary information about the variables in the analysis. This information includes the number of observations,</em>) – the number of quantitative variables in the analysis, and the number of classes in the classification variable.
+The frequency of each class is also displayed.</p></li>
+<li><p><strong>ind_</strong> (<em>a dictionary of pandas dataframe containing all the results for the active individuals (coordinates)</em>)</p></li>
+<li><p><strong>statistics_</strong> (<em>statistics</em>)</p></li>
+<li><p><strong>classes_</strong> (<em>classes informations</em>)</p></li>
+<li><p><strong>cov_</strong> (<em>covariances</em>)</p></li>
+<li><p><strong>model_</strong> (<em>string. The model fitted = ‘lda’</em>)</p></li>
+<li><p><em>Author(s)</em></p></li>
+<li><p><em>———</em></p></li>
+<li><p><em>Duvérier DJIFACK ZEBAZE duverierdjifack&#64;gmail.com</em></p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<p>SAS Documentation, <a class="reference external" href="https://documentation.sas.com/doc/en/pgmsascdc/9.4_3.3/statug/statug_discrim_overview.htm">https://documentation.sas.com/doc/en/pgmsascdc/9.4_3.3/statug/statug_discrim_overview.htm</a>
+Ricco Rakotomalala, Pratique de l’analyse discriminante linéaire, Version 1.0, 2020</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.lda.LDA.decision_function">
+<span class="sig-name descname"><span class="pre">decision_function</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/lda.html#LDA.decision_function"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.lda.LDA.decision_function" title="Permalink to this definition"></a></dt>
+<dd><section id="id41">
+<h4>Apply decision function to an array of samples<a class="headerlink" href="#id41" title="Permalink to this heading"></a></h4>
+<p>The decision function is equal (up to a constant factor) to the
+log-posterior of the model, i.e. <cite>log p(y = k | x)</cite>. In a binary
+classification setting this instead corresponds to the difference
+<cite>log p(y = 1 | x) - log p(y = 0 | x)</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">param X<span class="colon">:</span></dt>
+<dd class="field-odd"><p>DataFrame of samples (test vectors).</p>
+</dd>
+<dt class="field-even">type X<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (<a href="#id140"><span class="problematic" id="id141">n_samples_</span></a>, n_features)</p>
+</dd>
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>C</strong> – Decision function values related to each class, per sample.
+In the two-class case, the shape is (<a href="#id142"><span class="problematic" id="id143">n_samples_</span></a>,), giving the
+log likelihood ratio of the positive class.</p>
+</dd>
+<dt class="field-even">rtype<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (<a href="#id144"><span class="problematic" id="id145">n_samples_</span></a>,) or (<a href="#id146"><span class="problematic" id="id147">n_samples_</span></a>, n_classes)</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.lda.LDA.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/lda.html#LDA.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.lda.LDA.fit" title="Permalink to this definition"></a></dt>
+<dd><section id="fit-the-linear-discriminant-analysis-model">
+<h4>Fit the Linear Discriminant Analysis model<a class="headerlink" href="#fit-the-linear-discriminant-analysis-model" title="Permalink to this heading"></a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">param X<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Training Data</p>
+</dd>
+<dt class="field-even">type X<span class="colon">:</span></dt>
+<dd class="field-even"><p>pandas/polars DataFrame,</p>
+</dd>
+<dt class="field-odd">param Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">param ——–<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">param self<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Fitted estimator</p>
+</dd>
+<dt class="field-even">type self<span class="colon">:</span></dt>
+<dd class="field-even"><p>object</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.lda.LDA.fit_transform">
+<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/lda.html#LDA.fit_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.lda.LDA.fit_transform" title="Permalink to this definition"></a></dt>
+<dd><section id="id42">
+<h4>Fit to data, then transform it<a class="headerlink" href="#id42" title="Permalink to this heading"></a></h4>
+<p>Fits transformer to <cite>x</cite> and returns a transformed version of X.</p>
+</section>
+<section id="id43">
+<h4>Parameters:<a class="headerlink" href="#id43" title="Permalink to this heading"></a></h4>
+<dl>
+<dt>X<span class="classifier">DataFrame of shape (<a href="#id148"><span class="problematic" id="id149">n_samples_</span></a>, n_features_+1)</span></dt><dd><p>Input samples</p>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>X_new</strong> – Transformed data.</p>
+</dd>
+<dt class="field-even">rtype<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (n_rows, <a href="#id150"><span class="problematic" id="id151">n_classes_</span></a>)</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.lda.LDA.pred_table">
+<span class="sig-name descname"><span class="pre">pred_table</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/lda.html#LDA.pred_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.lda.LDA.pred_table" title="Permalink to this definition"></a></dt>
+<dd><section id="id44">
+<h4>Prediction table<a class="headerlink" href="#id44" title="Permalink to this heading"></a></h4>
+<p class="rubric">Notes</p>
+<p>pred_table[i,j] refers to the number of times “i” was observed and the model predicted “j”. Correct predictions are along the diagonal.</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.lda.LDA.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/lda.html#LDA.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.lda.LDA.predict" title="Permalink to this definition"></a></dt>
+<dd><section id="id45">
+<h4>Predict class labels for samples in X<a class="headerlink" href="#id45" title="Permalink to this heading"></a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">param X<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The data matrix for which we want to get the predictions.</p>
+</dd>
+<dt class="field-even">type X<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (<a href="#id152"><span class="problematic" id="id153">n_samples_</span></a>, <a href="#id154"><span class="problematic" id="id155">n_features_</span></a>)</p>
+</dd>
+<dt class="field-odd">param Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">param ——–<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">param y_pred<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Vectors containing the class labels for each sample</p>
+</dd>
+<dt class="field-even">type y_pred<span class="colon">:</span></dt>
+<dd class="field-even"><p>ndarray of shape (n_samples)</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.lda.LDA.predict_proba">
+<span class="sig-name descname"><span class="pre">predict_proba</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/lda.html#LDA.predict_proba"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.lda.LDA.predict_proba" title="Permalink to this definition"></a></dt>
+<dd><section id="id46">
+<h4>Estimate probability<a class="headerlink" href="#id46" title="Permalink to this heading"></a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">param X<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Input data.</p>
+</dd>
+<dt class="field-even">type X<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (<a href="#id156"><span class="problematic" id="id157">n_samples_</span></a>,n_features_)</p>
+</dd>
+<dt class="field-odd">param Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">param ——–<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">param C<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Estimated probabilities.</p>
+</dd>
+<dt class="field-even">type C<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (<a href="#id158"><span class="problematic" id="id159">n_samples_</span></a>,n_classes_)</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.lda.LDA.score">
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/lda.html#LDA.score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.lda.LDA.score" title="Permalink to this definition"></a></dt>
+<dd><section id="id47">
+<h4>Return the mean accuracy on the given test data and labels<a class="headerlink" href="#id47" title="Permalink to this heading"></a></h4>
+<p>In multi-label classification, this is the subset accuracy
+which is a harsh metric since you require for each sample that
+each label set be correctly predicted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">param X<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Test samples.</p>
+</dd>
+<dt class="field-even">type X<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (<a href="#id160"><span class="problematic" id="id161">n_samples_</span></a>, n_features)</p>
+</dd>
+<dt class="field-odd">param y<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True labels for <cite>X</cite>.</p>
+</dd>
+<dt class="field-even">type y<span class="colon">:</span></dt>
+<dd class="field-even"><p>array-like of shape (n_samples,) or (n_samples, n_outputs)</p>
+</dd>
+<dt class="field-odd">param sample_weight<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Sample weights.</p>
+</dd>
+<dt class="field-even">type sample_weight<span class="colon">:</span></dt>
+<dd class="field-even"><p>array-like of shape (n_samples,), default=None</p>
+</dd>
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>score</strong> – Mean accuracy of <code class="docutils literal notranslate"><span class="pre">self.predict(X)</span></code> w.r.t. <cite>y</cite>.</p>
+</dd>
+<dt class="field-even">rtype<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.lda.LDA.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/lda.html#LDA.transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.lda.LDA.transform" title="Permalink to this definition"></a></dt>
+<dd><section id="id48">
+<h4>Project data to maximize class separation<a class="headerlink" href="#id48" title="Permalink to this heading"></a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">param X<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Input data</p>
+</dd>
+<dt class="field-even">type X<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (<a href="#id162"><span class="problematic" id="id163">n_samples_</span></a>, <a href="#id164"><span class="problematic" id="id165">n_features_</span></a>)</p>
+</dd>
+<dt class="field-odd">param Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">param ——–<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">param X_new<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Transformed data.</p>
+</dd>
+<dt class="field-even">type X_new<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (<a href="#id166"><span class="problematic" id="id167">n_samples_</span></a>, <a href="#id168"><span class="problematic" id="id169">n_classes_</span></a>)</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+<section id="module-discrimintools.pcada">
+<span id="discrimintools-pcada-module"></span><h2>discrimintools.pcada module<a class="headerlink" href="#module-discrimintools.pcada" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="discrimintools.pcada.PCADA">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">discrimintools.pcada.</span></span><span class="sig-name descname"><span class="pre">PCADA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_components</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">features</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">parallelize</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/pcada.html#PCADA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.pcada.PCADA" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerMixin</span></code></p>
+<section id="principal-components-analysis-discriminant-analysis-pcada">
+<h3>Principal Components Analysis - Discriminant Analysis (PCADA)<a class="headerlink" href="#principal-components-analysis-discriminant-analysis-pcada" title="Permalink to this heading"></a></h3>
+</section>
+<section id="id49">
+<h3>Description<a class="headerlink" href="#id49" title="Permalink to this heading"></a></h3>
+<p>This class inherits from sklearn BaseEstimator and TransformerMixin class</p>
+<p>Performs principal components analysis - discriminant analysis</p>
+</section>
+<section id="id50">
+<h3>Parameters:<a class="headerlink" href="#id50" title="Permalink to this heading"></a></h3>
+<p>n_components : number of dimensions kept in the results</p>
+<p>target : The values of the classification variable define the groups for analysis.</p>
+<p>features : list of quantitative variables to be included in the analysis. The default is all numeric variables in dataset</p>
+<dl class="simple">
+<dt>priors<span class="classifier">The priors statement specifies the prior probabilities of group membership.</span></dt><dd><ul class="simple">
+<li><p>“equal” to set the prior probabilities equal,</p></li>
+<li><p>“proportional” or “prop” to set the prior probabilities proportional to the sample sizes</p></li>
+<li><p>a pandas series which specify the prior probability for each level of the classification variable.</p></li>
+</ul>
+</dd>
+<dt>parallelize<span class="classifier">boolean, default = False</span></dt><dd><dl class="simple">
+<dt>If model should be parallelize</dt><dd><ul class="simple">
+<li><p>If True : parallelize using mapply</p></li>
+<li><p>If False : parallelize using apply</p></li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+<section id="id51">
+<h3>Returns:<a class="headerlink" href="#id51" title="Permalink to this heading"></a></h3>
+<p><a href="#id170"><span class="problematic" id="id171">coef_</span></a> : DataFrame of shape (n_features,n_classes_)</p>
+<p><a href="#id172"><span class="problematic" id="id173">intercept_</span></a> : DataFrame of shape (1, n_classes)</p>
+<p><a href="#id174"><span class="problematic" id="id175">lda_model_</span></a> : linear discriminant analysis model</p>
+<p><a href="#id176"><span class="problematic" id="id177">factor_model_</span></a> : principal components analysis model</p>
+<p><a href="#id178"><span class="problematic" id="id179">projection_function_</span></a> : projection function</p>
+<p><a href="#id180"><span class="problematic" id="id181">coef_</span></a> : pandas dataframe of shpz (n_categories, n_classes)</p>
+<p><a href="#id182"><span class="problematic" id="id183">intercept_</span></a> : pandas dataframe of shape (1, n_classes)</p>
+<p><a href="#id184"><span class="problematic" id="id185">model_</span></a> : string. The model fitted = ‘disqual’</p>
+</section>
+<section id="id52">
+<h3>Author(s)<a class="headerlink" href="#id52" title="Permalink to this heading"></a></h3>
+<p>Duvérier DJIFACK ZEBAZE <a class="reference external" href="mailto:duverierdjifack&#37;&#52;&#48;gmail&#46;com">duverierdjifack<span>&#64;</span>gmail<span>&#46;</span>com</a></p>
+</section>
+<section id="id53">
+<h3>References:<a class="headerlink" href="#id53" title="Permalink to this heading"></a></h3>
+<p>Ricco Rakotomalala, Pratique de l’analyse discriminante linéaire, Version 1.0, 2020</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.pcada.PCADA.fit">
+<span class="sig-name descname"><span class="pre">fit</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/pcada.html#PCADA.fit"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.pcada.PCADA.fit" title="Permalink to this definition"></a></dt>
+<dd><section id="id54">
+<h4>Fit the Linear Discriminant Analysis with categories variables model<a class="headerlink" href="#id54" title="Permalink to this heading"></a></h4>
+</section>
+<section id="id55">
+<h4>Parameters:<a class="headerlink" href="#id55" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>X<span class="classifier">pandas/polars DataFrame of shape (n_samples, n_features+1)</span></dt><dd><p>Training data</p>
+</dd>
+</dl>
+<p>y : None</p>
+</section>
+<section id="id56">
+<h4>Returns:<a class="headerlink" href="#id56" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>self<span class="classifier">object</span></dt><dd><p>Fitted estimator</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.pcada.PCADA.fit_transform">
+<span class="sig-name descname"><span class="pre">fit_transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/pcada.html#PCADA.fit_transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.pcada.PCADA.fit_transform" title="Permalink to this definition"></a></dt>
+<dd><section id="id57">
+<h4>Fit to data, then transform it<a class="headerlink" href="#id57" title="Permalink to this heading"></a></h4>
+<p>Fits transformer to <cite>X</cite> and returns a transformed version of <cite>X</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">param X<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Input samples.</p>
+</dd>
+<dt class="field-even">type X<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (n_samples, n_features+1)</p>
+</dd>
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>X_new</strong> – Transformed array.</p>
+</dd>
+<dt class="field-even">rtype<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (n_samples, n_features_new)</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.pcada.PCADA.pred_table">
+<span class="sig-name descname"><span class="pre">pred_table</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/pcada.html#PCADA.pred_table"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.pcada.PCADA.pred_table" title="Permalink to this definition"></a></dt>
+<dd><section id="id58">
+<h4>Prediction table<a class="headerlink" href="#id58" title="Permalink to this heading"></a></h4>
+<p class="rubric">Notes</p>
+<p>pred_table[i,j] refers to the number of times “i” was observed and the model predicted “j”. Correct predictions are along the diagonal.</p>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.pcada.PCADA.predict">
+<span class="sig-name descname"><span class="pre">predict</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/pcada.html#PCADA.predict"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.pcada.PCADA.predict" title="Permalink to this definition"></a></dt>
+<dd><section id="id59">
+<h4>Predict class labels for samples in X<a class="headerlink" href="#id59" title="Permalink to this heading"></a></h4>
+</section>
+<section id="id60">
+<h4>Parameters:<a class="headerlink" href="#id60" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>X<span class="classifier">DataFrame of shape (n_samples, n_features)</span></dt><dd><p>The dataframe for which we want to get the predictions</p>
+</dd>
+</dl>
+</section>
+<section id="id61">
+<h4>Returns:<a class="headerlink" href="#id61" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>y_pred<span class="classifier">DtaFrame of shape (n_samples, 1)</span></dt><dd><p>DataFrame containing the class labels for each sample.</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.pcada.PCADA.predict_proba">
+<span class="sig-name descname"><span class="pre">predict_proba</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/pcada.html#PCADA.predict_proba"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.pcada.PCADA.predict_proba" title="Permalink to this definition"></a></dt>
+<dd><section id="id62">
+<h4>Estimate probability<a class="headerlink" href="#id62" title="Permalink to this heading"></a></h4>
+<dl class="field-list simple">
+<dt class="field-odd">param X<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Input data</p>
+</dd>
+<dt class="field-even">type X<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (n_samples, n_features)</p>
+</dd>
+<dt class="field-odd">param Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">param ——-<span class="colon">:</span></dt>
+<dd class="field-even"><p></p></dd>
+<dt class="field-odd">param C<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Estimate probabilities</p>
+</dd>
+<dt class="field-even">type C<span class="colon">:</span></dt>
+<dd class="field-even"><p>DataFrame of shape (n_samples, n_classes)</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.pcada.PCADA.score">
+<span class="sig-name descname"><span class="pre">score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sample_weight</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/pcada.html#PCADA.score"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.pcada.PCADA.score" title="Permalink to this definition"></a></dt>
+<dd><section id="id63">
+<h4>Return the mean accuracy on the given test data and labels<a class="headerlink" href="#id63" title="Permalink to this heading"></a></h4>
+<p>In multi-label classification, this is the subset accuracy
+which is a harsh metric since you require for each sample that
+each label set be correctly predicted.</p>
+<dl class="field-list simple">
+<dt class="field-odd">param X<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Test samples.</p>
+</dd>
+<dt class="field-even">type X<span class="colon">:</span></dt>
+<dd class="field-even"><p>array-like of shape (n_samples, n_features)</p>
+</dd>
+<dt class="field-odd">param y<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True labels for <cite>X</cite>.</p>
+</dd>
+<dt class="field-even">type y<span class="colon">:</span></dt>
+<dd class="field-even"><p>array-like of shape (n_samples,) or (n_samples, n_outputs)</p>
+</dd>
+<dt class="field-odd">param sample_weight<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Sample weights.</p>
+</dd>
+<dt class="field-even">type sample_weight<span class="colon">:</span></dt>
+<dd class="field-even"><p>array-like of shape (n_samples,), default=None</p>
+</dd>
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>score</strong> – Mean accuracy of <code class="docutils literal notranslate"><span class="pre">self.predict(X)</span></code> w.r.t. <cite>y</cite>.</p>
+</dd>
+<dt class="field-even">rtype<span class="colon">:</span></dt>
+<dd class="field-even"><p>float</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="discrimintools.pcada.PCADA.transform">
+<span class="sig-name descname"><span class="pre">transform</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/pcada.html#PCADA.transform"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.pcada.PCADA.transform" title="Permalink to this definition"></a></dt>
+<dd><section id="id64">
+<h4>Project data to maximize class separation<a class="headerlink" href="#id64" title="Permalink to this heading"></a></h4>
+</section>
+<section id="id65">
+<h4>Parameters:<a class="headerlink" href="#id65" title="Permalink to this heading"></a></h4>
+<dl class="simple">
+<dt>X<span class="classifier">DataFrame of shape (n_samples, n_features)</span></dt><dd><p>Input data</p>
+</dd>
+</dl>
+</section>
+<section id="id66">
+<h4>Returns:<a class="headerlink" href="#id66" title="Permalink to this heading"></a></h4>
+<p>X_new : DataFrame of shape (n_samples, <a href="#id186"><span class="problematic" id="id187">n_components_</span></a>)</p>
+</section>
+</dd></dl>
+
+</section>
+</dd></dl>
+
+</section>
+<section id="module-discrimintools.revaluate_cat_variable">
+<span id="discrimintools-revaluate-cat-variable-module"></span><h2>discrimintools.revaluate_cat_variable module<a class="headerlink" href="#module-discrimintools.revaluate_cat_variable" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="discrimintools.revaluate_cat_variable.revaluate_cat_variable">
+<span class="sig-prename descclassname"><span class="pre">discrimintools.revaluate_cat_variable.</span></span><span class="sig-name descname"><span class="pre">revaluate_cat_variable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">X</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/revaluate_cat_variable.html#revaluate_cat_variable"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.revaluate_cat_variable.revaluate_cat_variable" title="Permalink to this definition"></a></dt>
+<dd><section id="revaluate-categorical-variable">
+<h3>Revaluate Categorical variable<a class="headerlink" href="#revaluate-categorical-variable" title="Permalink to this heading"></a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">param X<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type X<span class="colon">:</span></dt>
+<dd class="field-even"><p>pandas DataFrame of shape (n_rows, n_columns)</p>
+</dd>
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>X</strong></p>
+</dd>
+<dt class="field-even">rtype<span class="colon">:</span></dt>
+<dd class="field-even"><p>pandas DataFrame of shape (n_rows, n_columns)</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+<section id="module-discrimintools.stepdisc">
+<span id="discrimintools-stepdisc-module"></span><h2>discrimintools.stepdisc module<a class="headerlink" href="#module-discrimintools.stepdisc" title="Permalink to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="discrimintools.stepdisc.STEPDISC">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">discrimintools.stepdisc.</span></span><span class="sig-name descname"><span class="pre">STEPDISC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">model</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'forward'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alpha</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0.01</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lambda_init</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">model_train</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/stepdisc.html#STEPDISC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.stepdisc.STEPDISC" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">BaseEstimator</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">TransformerMixin</span></code></p>
+<section id="stepwise-discriminant-analysis-stepdisc">
+<h3>Stepwise Discriminant Analysis (STEPDISC)<a class="headerlink" href="#stepwise-discriminant-analysis-stepdisc" title="Permalink to this heading"></a></h3>
+</section>
+<section id="id67">
+<h3>Description<a class="headerlink" href="#id67" title="Permalink to this heading"></a></h3>
+<p>This class inherits from sklearn BaseEstimator and TransformerMixin class</p>
+<p>Performs a stepwise discriminant analysis to select a subset of the quantitative variables for use
+in discriminating among the classes. It can be used for forward selection, backward elimination.</p>
+<dl class="field-list simple">
+<dt class="field-odd">param model<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type model<span class="colon">:</span></dt>
+<dd class="field-even"><p>an object of class LDA, CANDISC</p>
+</dd>
+<dt class="field-odd">param method<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p>“forward” for forward selection,</p></li>
+<li><p>“backward” for backward elimination</p></li>
+</ul>
+</dd>
+<dt class="field-even">type method<span class="colon">:</span></dt>
+<dd class="field-even"><p>the feature selection method to be used :</p>
+</dd>
+<dt class="field-odd">param alpha<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type alpha<span class="colon">:</span></dt>
+<dd class="field-even"><p>Specifies the significance level for adding or retaining variables in stepwise variable selection, default = 0.01</p>
+</dd>
+<dt class="field-odd">param lambda_init<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type lambda_init<span class="colon">:</span></dt>
+<dd class="field-even"><p>Initial Wilks Lambda/ Default = None</p>
+</dd>
+<dt class="field-odd">param model_train<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type model_train<span class="colon">:</span></dt>
+<dd class="field-even"><p>if model should be train with selected variables</p>
+</dd>
+<dt class="field-odd">param verbose<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p>if True, print intermediary steps during feature selection (default)</p></li>
+<li><p>if False</p></li>
+</ul>
+</dd>
+<dt class="field-even">type verbose<span class="colon">:</span></dt>
+<dd class="field-even"><p>boolean,</p>
+</dd>
+<dt class="field-odd">returns<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>call_</strong> (<em>a dictionary with some statistics</em>)</p></li>
+<li><p><strong>results_</strong> (<em>a dictionary with stepwise results</em>)</p></li>
+<li><p><strong>model_</strong> (<em>string. The model fitted = ‘stepdisc’</em>)</p></li>
+<li><p><em>Author(s)</em></p></li>
+<li><p><em>———</em></p></li>
+<li><p><em>Duvérier DJIFACK ZEBAZE duverierdjifack&#64;gmail.com</em></p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">References</p>
+<p>SAS documentation, <a class="reference external" href="https://documentation.sas.com/doc/en/pgmsascdc/9.4_3.3/statug/statug_stepdisc_overview.htm">https://documentation.sas.com/doc/en/pgmsascdc/9.4_3.3/statug/statug_stepdisc_overview.htm</a>
+Ricco Rakotomalala, Pratique de l’analyse discriminante linéaire, Version 1.0, 2020</p>
+</section>
+</dd></dl>
+
+</section>
+<section id="module-discrimintools.text_label">
+<span id="discrimintools-text-label-module"></span><h2>discrimintools.text_label module<a class="headerlink" href="#module-discrimintools.text_label" title="Permalink to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="discrimintools.text_label.text_label">
+<span class="sig-prename descclassname"><span class="pre">discrimintools.text_label.</span></span><span class="sig-name descname"><span class="pre">text_label</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">texttype</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/discrimintools/text_label.html#text_label"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.text_label.text_label" title="Permalink to this definition"></a></dt>
+<dd><section id="function-to-choose-between-geom-text-and-geom-label">
+<h3>Function to choose between <code class="docutils literal notranslate"><span class="pre">geom_text</span></code> and <code class="docutils literal notranslate"><span class="pre">geom_label</span></code><a class="headerlink" href="#function-to-choose-between-geom-text-and-geom-label" title="Permalink to this heading"></a></h3>
+<dl class="field-list simple">
+<dt class="field-odd">param text_type<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type text_type<span class="colon">:</span></dt>
+<dd class="field-even"><p>{“text”, “label”}, default = “text”</p>
+</dd>
+<dt class="field-odd">param **kwargs<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p></dd>
+<dt class="field-even">type **kwargs<span class="colon">:</span></dt>
+<dd class="field-even"><p>geom parameters</p>
+</dd>
+</dl>
+</section>
+</dd></dl>
+
+</section>
+<section id="module-discrimintools">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-discrimintools" title="Permalink to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="modules.html" class="btn btn-neutral float-left" title="discrimintools" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Duvérier DJIFACK ZEBAZE.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

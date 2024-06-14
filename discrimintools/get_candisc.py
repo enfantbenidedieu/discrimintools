@@ -5,20 +5,42 @@ import pandas as pd
 def get_candisc_ind(self):
     """
     Extract the results for individuals - CANDISC
-    -----------------------------------------
+    ---------------------------------------------
+
+    Description
+    -----------
+    Extract the results (factor coordinates) for active individuals from Canonical Discriminant Analysis (CANDISC) outputs.
+
+    Usage
+    ````python
+    >>> get_candisc_ind(self)
+    ```
 
     Parameters
     ----------
-    self : an object of class CANDISC
+    `self` : an object of class CANDISC
 
     Returns
     -------
-    a dictionary of dataframes containing all the results for the active individuals including:
-    - coord : coordinates for the individuals
+    dictionary of dataframes containing all the results for the active individuals including:
+    
+    `coord` : factor coordinates for the individuals
 
     Author(s)
     ---------
     Duvérier DJIFACK ZEBAZE duverierdjifack@gmail.com
+
+    Examples
+    --------
+    ```python
+    >>> # Load iris dataset
+    >>> from seaborn import load_dataset
+    >>> iris = load_dataset("iris")
+    >>> from discrimintools import CANDISC, get_candisc_ind
+    >>> candisc = CANDISC(n_components=2,target=["species"],priors="prop",parallelize=False)
+    >>> candisc.fit(iris)
+    >>> ind = get_candisc_ind(candisc)
+    ```
     """
     if self.model_ != "candisc":
         raise TypeError("'self' must be an object of class CANDISC.")
@@ -29,19 +51,46 @@ def get_candisc_var(self,choice="correlation"):
     Extract the results for variables - CANDISC
     -------------------------------------------
 
+    Description
+    -----------
+    Extract the results (covariance, canonical correlation) for variables from Canonical Discriminant Analysis (CANDISC) outputs.
+
+    Usage
+    -----
+    ```python
+    >>> get_candisc_var(self,choice=("correlation","covariance"))
+    ```
+
     Parameters
     ----------
-    self : an object of class CANDISC
+    `self` : an object of class CANDISC
 
-    choice : the element to subset from the output. Allowed values are "correlation" (for canonical correlation) or "covariance" (for covariance).
+    `choice` : the element to subset from the output. Allowed values are :
+        * "correlation" for canonical correlation (total, withon, between)
+        * "covariance" for covariance (total, within, between)
 
     Returns
     -------
-    a dictionary of dataframes containings all the results for the variables
+    dictionary of dataframes containing all the results for the variables
 
     Author(s)
     ---------
     Duvérier DJIFACK ZEBAZE duverierdjifack@gmail.com
+
+    Examples
+    --------
+    ```python
+    >>> # load iris dataset
+    >>> from seaborn import load_dataset
+    >>> iris = load_dataset("iris")
+    >>> from discrimintools import CANDISC, get_candisc_var
+    >>> candisc = CANDISC(n_components=2,target=["species"],priors="prop",parallelize=False)
+    >>> candisc.fit(iris)
+    >>> # results for canonical correlation
+    >>> corr = get_candisc_var(candisc,choice="correlation") 
+    >>> # results for covariance
+    >>> covar = get_candisc(candisc,choice="covariance") 
+    ```
     """
     if self.model_ != "candisc":
         raise TypeError("'self' must be an object of class CANDISC")
@@ -59,19 +108,46 @@ def get_candisc_coef(self,choice="absolute"):
     Extract coefficients - CANDISC
     ------------------------------
 
+    Description
+    -----------
+    Extract coefficients (canonical coefficients, coefficients of classification function) from Canonical Discriminant Analysis (CANDISC) outputs.
+
+    Usage
+    -----
+    ```python
+    >>> get_candisc_coef(self,choice=("absolute","score"))
+    ```
+    
     Parameters
     ----------
     self : an object of class CANDISC
 
-    choice : the element to subset from the output. Allowed values are "absolute" (for canonical coefficients) or "score" (for class coefficients)
+    choice : the element to subset from the output. Allowed values are :
+        * "absolute" for canonical coefficients
+        * "score" for coefficients of classification function
 
     Returns
     -------
-    a pandas dataframe containing coefficients
+    pandas dataframe containing coefficients
 
     Author(s)
     ---------
     Duvérier DJIFACK ZEBAZE duverierdjifack@gmail.com
+
+    Examples
+    --------
+    ```python
+    >>> # load iris dataset
+    >>> from seaborn import load_dataset
+    >>> iris = load_dataset("iris")
+    >>> from discrimintools import CANDISC, get_candisc_coef
+    >>> candisc = CANDISC(n_components=2,target=["species"],priors="prop",parallelize=False)
+    >>> candisc.fit(iris)
+    >>> # results for canonical coefficients
+    >>> cancoef = get_candisc_coef(candisc,choice="absolute") 
+    >>> # results for classification coefficients
+    >>> classcoef = get_candisc_coef(candisc,choice="score") 
+    ```
     """
     if self.model_ != "candisc":
         raise TypeError("'self' must be an object of class CANDISC")
@@ -86,11 +162,26 @@ def get_candisc(self,choice = "ind"):
     Extract the results - CANDISC
     -----------------------------
 
+    Description
+    -----------
+    Extract results (individuals coordinates, canonical correlation, covariance, canonical coefficients, coefficients of classification function) from Canonical Discriminant Analysis (CANDISC) outputs.
+
+    Usage
+    -----
+    ```python
+    >>> get_candisc(self,choice = ("ind","correlation","covariance","absolute","score"))
+    ```
+
     Parameters
     ----------
-    self : an object of class CANDISC
+    `self` : an object of class CANDISC
 
-    choice :
+    choice : the element to subset from the output. Allowed values are : 
+        * "ind" for individuals coordinates
+        * "correlation" for canonical correlation
+        * "covariance" for covariance
+        * "absolute" for canonical coefficients
+        * "score" for coefficients of classification function.
 
     Returns
     -------
@@ -99,6 +190,27 @@ def get_candisc(self,choice = "ind"):
     Author(s)
     ---------
     Duvérier DJIFACK ZEBAZE duverierdjifack@gmail.com
+
+    Examples
+    --------
+    ```python
+    >>> # load iris dataset
+    >>> from seaborn import load_dataset
+    >>> iris = load_dataset("iris")
+    >>> from discrimintools import CANDISC, get_candisc
+    >>> candisc = CANDISC(n_components=2,target=["species"],priors="prop",parallelize=False)
+    >>> candisc.fit(iris)
+    >>> # Results for individuals
+    >>> ind = get_candisc(candisc, choice = "ind")
+    >>> # Results for variables - Canonical correlation
+    >>> cancorr = get_candisc(candisc, choice = "correlation")
+    >>> # Results for variables - covariance
+    >>> covar = get_candisc(candisc, choice = "covariance")
+    >>> # Canonical coefficients
+    >>> cancoef = get_candisc(candisc, choice = "absolute")
+    >>> # Coefficients of classification function
+    >>> classcoef = get_candisc(candisc, choice = "score")
+    ```
     """
     if self.model_ != "candisc":
         raise TypeError("'self' must be an object of class CANDISC")
@@ -118,25 +230,47 @@ def summaryCANDISC(self,digits=3,nb_element=10,ncp=3,to_markdown=False,tablefmt 
     Printing summaries of Canonical Discriminant Analysis model
     -----------------------------------------------------------
 
+    Description
+    -----------
+    Printing summaries of canonical discriminant analysis objects.
+
+    Usage
+    -----
+    ```python
+    >>> summaryCANDISC(self,digits=3,nb_element=10,ncp=3,to_markdown=False,tablefmt = "pipe",**kwargs)
+    ```
+
     Parameters
     ----------
-    self        :   an object of class CANDISC
+    self :   an object of class CANDISC
 
-    digits      :   int, default=3. Number of decimal printed
+    digits :   int, default=3. Number of decimal printed
 
-    nb_element  :   int, default = 10. Number of element
+    nb_element :   int, default = 10. Number of element written
 
-    ncp         :   int, default = 3. Number of componennts
+    ncp :   int, default = 3. Number of componennts
 
-    to_markdown :   Print DataFrame in Markdown-friendly format.
+    to_markdown :   print summaries in markdown-friendly format.
 
-    tablefmt    :   Table format. For more about tablefmt, see : https://pypi.org/project/tabulate/
+    tablefmt :   table format. For more about tablefmt, see : https://pypi.org/project/tabulate/
 
-    **kwargs    :   These parameters will be passed to tabulate.
+    **kwargs :   these parameters will be passed to tabulate.
 
     Author(s)
     ---------
     Duvérier DJIFACK ZEBAZE duverierdjifack@gmail.com
+
+    Examples
+    --------
+    ```python
+    >>> # load iris dataset
+    >>> from seaborn import load_dataset
+    >>> iris = load_dataset("iris")
+    >>> from discrimintools import CANDISC, summaryCANDISC
+    >>> candisc = CANDISC(n_components=2,target=["species"],priors="prop",parallelize=False)
+    >>> candisc.fit(iris)
+    >>> summaryCANDISC(candisc)
+    ```
     """
 
     if self.model_ != "candisc":

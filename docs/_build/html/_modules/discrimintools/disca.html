@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>discrimintools.disca &mdash; discrimintools 0.0.2 documentation</title>
+      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+        <script src="../../_static/doctools.js"></script>
+        <script src="../../_static/sphinx_highlight.js"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            discrimintools
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../modules.html">discrimintools</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">discrimintools</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../index.html">Module code</a></li>
+      <li class="breadcrumb-item active">discrimintools.disca</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Source code for discrimintools.disca</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">polars</span> <span class="k">as</span> <span class="nn">pl</span>
+<span class="kn">import</span> <span class="nn">scipy</span> <span class="k">as</span> <span class="nn">sp</span>
+
+<span class="kn">from</span> <span class="nn">scipy.spatial.distance</span> <span class="kn">import</span> <span class="n">pdist</span><span class="p">,</span><span class="n">squareform</span>
+<span class="kn">from</span> <span class="nn">sklearn.base</span> <span class="kn">import</span> <span class="n">BaseEstimator</span><span class="p">,</span> <span class="n">TransformerMixin</span>
+<span class="kn">from</span> <span class="nn">mapply.mapply</span> <span class="kn">import</span> <span class="n">mapply</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+
+<span class="kn">from</span> <span class="nn">scientisttools</span> <span class="kn">import</span> <span class="n">CA</span>
+
+
+<span class="c1">##########################################################################################</span>
+<span class="c1">#           Discriminant Corrrespondence Analysis (DISCA)</span>
+<span class="c1">##########################################################################################</span>
+<div class="viewcode-block" id="DISCA"><a class="viewcode-back" href="../../discrimintools.html#discrimintools.disca.DISCA">[docs]</a><span class="k">class</span> <span class="nc">DISCA</span><span class="p">(</span><span class="n">BaseEstimator</span><span class="p">,</span><span class="n">TransformerMixin</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Discriminant Correspondence Analysis (DISCA)</span>
+<span class="sd">    --------------------------------------------</span>
+
+<span class="sd">    Description</span>
+<span class="sd">    -----------</span>
+
+<span class="sd">    This class inherits from sklearn BaseEstimator and TransformerMixin class</span>
+
+<span class="sd">    Performance Discriminant Correspondence Analysis</span>
+
+<span class="sd">    Parameters:</span>
+<span class="sd">    ----------</span>
+<span class="sd">    n_components : number of dimensions kept in the results</span>
+
+<span class="sd">    target : string, target variable</span>
+
+<span class="sd">    features : list of qualitatives variables to be included in the analysis.</span>
+
+<span class="sd">    priors : The priors statement specifies the prior probabilities of group membership.</span>
+<span class="sd">                - &quot;equal&quot; to set the prior probabilities equal,</span>
+<span class="sd">                - &quot;proportional&quot; or &quot;prop&quot; to set the prior probabilities proportional to the sample sizes</span>
+<span class="sd">                - a pandas series which specify the prior probability for each level of the classification variable.</span>
+<span class="sd">    </span>
+<span class="sd">    parallelize : boolean, default = False</span>
+<span class="sd">        If model should be parallelize</span>
+<span class="sd">            - If True : parallelize using mapply</span>
+<span class="sd">            - If False : parallelize using apply</span>
+
+<span class="sd">    Return</span>
+<span class="sd">    ------</span>
+
+<span class="sd">    call_ : a dictionary with some statistics</span>
+
+<span class="sd">    ind_ : a dictionary of pandas dataframe containing all the results for the active individuals (coordinates)</span>
+
+<span class="sd">    var_ : a dictionary of pandas dataframe containing all the results for the active variables (coordinates, correlation between variables and axes, square cosine, contributions)</span>
+
+<span class="sd">    statistics_ : statistics</span>
+
+<span class="sd">    classes_ : classes informations</span>
+
+<span class="sd">    anova_ : analyse of variance </span>
+
+<span class="sd">    factor_model_ : correspondence analysis model</span>
+
+<span class="sd">    coef_ : discriminant correspondence analysis coefficients</span>
+
+<span class="sd">    model_ : string. The model fitted = &#39;disca&#39;</span>
+
+<span class="sd">    Author(s)</span>
+<span class="sd">    ---------</span>
+<span class="sd">    Duvérier DJIFACK ZEBAZE duverierdjifack@gmail.com</span>
+
+<span class="sd">    Notes:</span>
+<span class="sd">    ------</span>
+<span class="sd">    https://bookdown.org/teddyswiebold/multivariate_statistical_analysis_using_r/discriminant-correspondence-analysis.html</span>
+<span class="sd">    https://search.r-project.org/CRAN/refmans/TExPosition/html/tepDICA.html</span>
+<span class="sd">    http://pbil.univ-lyon1.fr/ADE-4/ade4-html/discrimin.coa.html</span>
+<span class="sd">    https://rdrr.io/cran/ade4/man/discrimin.coa.html</span>
+<span class="sd">    https://stat.ethz.ch/pipermail/r-help/2010-December/263170.html</span>
+<span class="sd">    https://www.sciencedirect.com/science/article/pii/S259026012200011X    </span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span>
+                 <span class="n">n_components</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">target</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">features</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">priors</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+                 <span class="n">parallelize</span> <span class="o">=</span> <span class="kc">False</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span> <span class="o">=</span> <span class="n">n_components</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="o">=</span> <span class="n">target</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">features</span> <span class="o">=</span> <span class="n">features</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">priors</span> <span class="o">=</span> <span class="n">priors</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">parallelize</span> <span class="o">=</span> <span class="n">parallelize</span>
+    
+<div class="viewcode-block" id="DISCA.fit"><a class="viewcode-back" href="../../discrimintools.html#discrimintools.disca.DISCA.fit">[docs]</a>    <span class="k">def</span> <span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fit the Discriminant Correspondence Analysis model</span>
+<span class="sd">        --------------------------------------------------</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : pandas/polars DataFrame,</span>
+<span class="sd">            Training Data</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">        --------</span>
+<span class="sd">        self : object</span>
+<span class="sd">            Fitted estimator</span>
+<span class="sd">        &quot;&quot;&quot;</span> 
+
+        <span class="c1"># check if X is an instance of polars dataframe</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span>     
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="si">}</span><span class="s2"> is not supported. Please convert to a DataFrame with &quot;</span>
+            <span class="s2">&quot;pd.DataFrame. For more information see: &quot;</span>
+            <span class="s2">&quot;https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># Set parallelize</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parallelize</span><span class="p">:</span>
+            <span class="n">n_workers</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">n_workers</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="c1"># Check if target is None</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;target&#39; must be assigned&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">,</span><span class="nb">list</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;target&#39; must be a list&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">)</span><span class="o">&gt;</span><span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;target&#39; must be a list of length one&quot;</span><span class="p">)</span>
+
+        <span class="c1">###############################################################################################################&quot;</span>
+        <span class="c1"># Drop level if ndim greater than 1 and reset columns name</span>
+        <span class="c1">###############################################################################################################</span>
+        <span class="k">if</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">nlevels</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="n">X</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">droplevel</span><span class="p">()</span>
+        
+         <span class="c1"># Save data</span>
+        <span class="n">Xtot</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+        
+        <span class="c1">#######################################################################################################################</span>
+        <span class="c1"># Split Data into two : x and y</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">]</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">)</span>
+
+        <span class="c1"># Set features labels/names</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">features</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">features</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">features</span><span class="p">,</span><span class="nb">list</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;features&#39; must be a list of variable names&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">features</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">features</span>
+        
+        <span class="c1">###### Select features</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">[</span><span class="n">features</span><span class="p">]</span>
+        
+        <span class="c1"># Redefine X</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1"># Number of rows and continuous variables</span>
+        <span class="n">n_samples</span><span class="p">,</span> <span class="n">n_features</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">shape</span>
+
+        <span class="c1">##### Category</span>
+        <span class="n">classes</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">y</span><span class="p">)</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+        <span class="c1"># Number of groups</span>
+        <span class="n">n_classes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">classes</span><span class="p">)</span>
+
+         <span class="c1">################################################ Check if all columns are categoricals</span>
+        <span class="n">all_cat</span> <span class="o">=</span> <span class="nb">all</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">api</span><span class="o">.</span><span class="n">types</span><span class="o">.</span><span class="n">is_string_dtype</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">col</span><span class="p">])</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">all_cat</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;All features must be categoricals&quot;</span><span class="p">)</span>
+        
+        <span class="c1">################################################ Chi2 -test</span>
+        <span class="n">chi2_test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;statistic&quot;</span><span class="p">,</span><span class="s2">&quot;ddl&quot;</span><span class="p">,</span><span class="s2">&quot;pvalue&quot;</span><span class="p">],</span><span class="n">index</span><span class="o">=</span><span class="n">x</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="s2">&quot;float&quot;</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+            <span class="n">tab</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">col</span><span class="p">],</span><span class="n">y</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+            <span class="n">chi2</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">chi2_contingency</span><span class="p">(</span><span class="n">observed</span><span class="o">=</span><span class="n">tab</span><span class="p">,</span><span class="n">correction</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">chi2_test</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">col</span><span class="p">,:]</span> <span class="o">=</span> <span class="p">[</span><span class="n">chi2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">chi2</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">chi2</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+        <span class="n">chi2_test</span> <span class="o">=</span> <span class="n">chi2_test</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;pvalue&quot;</span><span class="p">])</span>
+        <span class="n">chi2_test</span><span class="p">[</span><span class="s2">&quot;ddl&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">chi2_test</span><span class="p">[</span><span class="s2">&quot;ddl&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="n">statistics</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;chi2&quot;</span> <span class="p">:</span> <span class="n">chi2_test</span><span class="p">}</span>
+
+        <span class="c1">######################################################################################</span>
+        <span class="c1"># Tableau des indicatrices</span>
+        <span class="n">dummies</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="n">pd</span><span class="o">.</span><span class="n">get_dummies</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">col</span><span class="p">],</span><span class="n">prefix</span><span class="o">=</span><span class="n">col</span><span class="p">,</span><span class="n">prefix_sep</span><span class="o">=</span><span class="s2">&quot;_&quot;</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="nb">float</span><span class="p">)</span> <span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">x</span><span class="o">.</span><span class="n">columns</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1">############################################################</span>
+        <span class="c1"># Construction de la matrice M</span>
+        <span class="n">M</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">y</span><span class="p">,</span><span class="n">dummies</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+
+        <span class="c1">#########################################################################################</span>
+        <span class="c1">#   Correspondence Analysis (CA)</span>
+        <span class="c1">######################################################################################</span>
+        <span class="c1"># Correspondence Analysis</span>
+        <span class="n">global_ca</span> <span class="o">=</span> <span class="n">CA</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">n_components</span><span class="p">,</span><span class="n">parallelize</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parallelize</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">M</span><span class="p">)</span>
+        
+        <span class="c1"># Calcul des profils - Effectifs par classes (pour chaque descripteurs)</span>
+        <span class="n">n_l</span> <span class="o">=</span> <span class="n">M</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="c1"># Profil marginal</span>
+        <span class="n">G</span> <span class="o">=</span> <span class="n">n_l</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">n_l</span><span class="p">)</span>
+
+        <span class="c1"># Tableau des profils - Matric des profils</span>
+        <span class="n">profils</span> <span class="o">=</span> <span class="n">mapply</span><span class="p">(</span><span class="n">M</span><span class="p">,</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">x</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">progressbar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">n_workers</span><span class="o">=</span><span class="n">n_workers</span><span class="p">)</span>
+        
+        <span class="c1"># Distance entre un groupe et l&#39;origine</span>
+        <span class="n">dist2</span> <span class="o">=</span> <span class="n">mapply</span><span class="p">(</span><span class="n">profils</span><span class="p">,</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">x</span><span class="o">-</span><span class="n">G</span><span class="o">.</span><span class="n">values</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="n">G</span><span class="o">.</span><span class="n">values</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">progressbar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">n_workers</span><span class="o">=</span><span class="n">n_workers</span><span class="p">)</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(</span><span class="s2">&quot;dist2&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Distance entre les groupes - Matrice des distances par paires de classes</span>
+        <span class="n">dist</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">squareform</span><span class="p">(</span><span class="n">pdist</span><span class="p">(</span><span class="n">profils</span><span class="p">,</span><span class="n">metric</span><span class="o">=</span><span class="s2">&quot;seuclidean&quot;</span><span class="p">,</span><span class="n">V</span><span class="o">=</span><span class="n">G</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span><span class="n">index</span><span class="o">=</span><span class="n">classes</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="n">classes</span><span class="p">)</span>
+
+        <span class="c1">###########################################</span>
+        <span class="n">mod_stats</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">n_l</span><span class="p">,</span><span class="n">G</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">mod_stats</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Frequence&quot;</span><span class="p">,</span><span class="s2">&quot;Proportion&quot;</span><span class="p">]</span>
+        <span class="n">statistics</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="n">statistics</span><span class="p">,</span><span class="o">**</span><span class="p">{</span><span class="s2">&quot;categories&quot;</span> <span class="p">:</span> <span class="n">mod_stats</span><span class="p">}}</span>
+        
+        <span class="c1"># Number of element </span>
+        <span class="n">n_k</span><span class="p">,</span> <span class="n">p_k</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">),</span> <span class="n">y</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1"># Initial prior - proportion of each element</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">priors</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;priors&#39; must be assigned&quot;</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">priors</span> <span class="ow">in</span> <span class="p">[</span><span class="s2">&quot;proportional&quot;</span><span class="p">,</span><span class="s2">&quot;prop&quot;</span><span class="p">]:</span>
+            <span class="n">priors</span> <span class="o">=</span> <span class="n">p_k</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">priors</span> <span class="o">==</span> <span class="s2">&quot;equal&quot;</span><span class="p">:</span>
+            <span class="n">priors</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="mi">1</span><span class="o">/</span><span class="n">n_classes</span><span class="p">]</span><span class="o">*</span><span class="n">n_classes</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="n">classes</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">priors</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">([</span><span class="n">x</span><span class="o">/</span><span class="bp">self</span><span class="o">.</span><span class="n">priors</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">priors</span><span class="o">.</span><span class="n">values</span><span class="p">],</span><span class="n">index</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">priors</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+
+        <span class="c1"># Store some informations</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call_</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;X&quot;</span> <span class="p">:</span> <span class="n">X</span><span class="p">,</span>
+                      <span class="s2">&quot;target&quot;</span> <span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">target</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span>
+                      <span class="s2">&quot;features&quot;</span> <span class="p">:</span> <span class="n">features</span><span class="p">,</span>
+                      <span class="s2">&quot;n_features&quot;</span> <span class="p">:</span> <span class="n">n_features</span><span class="p">,</span>
+                      <span class="s2">&quot;n_samples&quot;</span> <span class="p">:</span> <span class="n">n_samples</span><span class="p">,</span>
+                      <span class="s2">&quot;n_classes&quot;</span> <span class="p">:</span> <span class="n">n_classes</span><span class="p">,</span>
+                      <span class="s2">&quot;priors&quot;</span> <span class="p">:</span> <span class="n">priors</span><span class="p">}</span>
+        
+        <span class="c1">#############################</span>
+        <span class="c1"># Class level information</span>
+        <span class="n">class_level_information</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">n_k</span><span class="p">,</span><span class="n">p_k</span><span class="p">,</span><span class="n">priors</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="n">class_level_information</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Frequency&quot;</span><span class="p">,</span><span class="s2">&quot;Proportion&quot;</span><span class="p">,</span><span class="s2">&quot;Prior Probability&quot;</span><span class="p">]</span>
+        <span class="n">statistics</span><span class="p">[</span><span class="s2">&quot;information&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">class_level_information</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">statistics_</span> <span class="o">=</span> <span class="n">statistics</span>
+
+        <span class="c1">#######################################################</span>
+        <span class="c1"># Coefficient des fonctions discriminantes canoniques</span>
+        <span class="n">coef</span> <span class="o">=</span> <span class="n">mapply</span><span class="p">(</span><span class="n">global_ca</span><span class="o">.</span><span class="n">col_</span><span class="p">[</span><span class="s2">&quot;coord&quot;</span><span class="p">],</span><span class="k">lambda</span> <span class="n">col</span> <span class="p">:</span> <span class="n">col</span><span class="o">/</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">global_ca</span><span class="o">.</span><span class="n">eig_</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:</span><span class="n">global_ca</span><span class="o">.</span><span class="n">call_</span><span class="p">[</span><span class="s2">&quot;n_components&quot;</span><span class="p">],</span><span class="mi">0</span><span class="p">])),</span>
+                      <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">progressbar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">n_workers</span><span class="o">=</span><span class="n">n_workers</span><span class="p">)</span>
+        
+        <span class="c1">####################################################################</span>
+        <span class="c1"># Coordonnées des individus à partir du tableau des indicatrices</span>
+        <span class="n">row_coord</span> <span class="o">=</span> <span class="n">dummies</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">coef</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ind_</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;coord&quot;</span> <span class="p">:</span> <span class="n">row_coord</span><span class="p">}</span>
+        
+        <span class="c1"># Somme des carrés totales - totla sum of squared</span>
+        <span class="n">tss</span> <span class="o">=</span> <span class="n">mapply</span><span class="p">(</span><span class="n">row_coord</span><span class="p">,</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">progressbar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">n_workers</span><span class="o">=</span><span class="n">n_workers</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        
+        <span class="c1"># Rapport de corrélation - Correlation ratio</span>
+        <span class="n">eta2</span> <span class="o">=</span> <span class="p">((</span><span class="n">x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">*</span><span class="n">global_ca</span><span class="o">.</span><span class="n">eig_</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">0</span><span class="p">])</span><span class="o">/</span><span class="n">tss</span><span class="p">)</span>
+        <span class="n">eta2</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;Eta2&quot;</span>
+
+        <span class="c1">##################################################################################</span>
+        <span class="c1"># Information sur les classes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span> <span class="o">=</span> <span class="n">global_ca</span><span class="o">.</span><span class="n">row_</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span> <span class="o">=</span> <span class="p">{</span><span class="o">**</span><span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">,</span> <span class="o">**</span><span class="p">{</span><span class="s2">&quot;classes&quot;</span> <span class="p">:</span> <span class="n">classes</span><span class="p">,</span> <span class="s2">&quot;dist2&quot;</span> <span class="p">:</span> <span class="n">dist2</span><span class="p">,</span> <span class="s2">&quot;dist&quot;</span> <span class="p">:</span> <span class="n">dist</span><span class="p">}}</span>
+
+        <span class="c1">##################################################################################</span>
+        <span class="c1"># Informations sur les categories</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">var_</span> <span class="o">=</span> <span class="n">global_ca</span><span class="o">.</span><span class="n">col_</span>
+
+        <span class="c1">#################################################################################</span>
+        <span class="c1"># Correspondance Analysis</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">factor_model_</span> <span class="o">=</span> <span class="n">global_ca</span>
+
+        <span class="c1">########################### DISCA Coefficients</span>
+        <span class="c1"># Score function</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coef_</span> <span class="o">=</span> <span class="n">coef</span>
+        
+        <span class="c1"># Analysis of variance</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">anova_</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;Eta2&quot;</span> <span class="p">:</span> <span class="n">eta2</span><span class="p">,</span><span class="s2">&quot;canonical_Eta2&quot;</span> <span class="p">:</span> <span class="n">mapply</span><span class="p">(</span><span class="n">eta2</span><span class="p">,</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">progressbar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">n_workers</span><span class="o">=</span><span class="n">n_workers</span><span class="p">)}</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_</span> <span class="o">=</span> <span class="s2">&quot;disca&quot;</span>
+        
+        <span class="k">return</span> <span class="bp">self</span></div>
+        
+<div class="viewcode-block" id="DISCA.fit_transform"><a class="viewcode-back" href="../../discrimintools.html#discrimintools.disca.DISCA.fit_transform">[docs]</a>    <span class="k">def</span> <span class="nf">fit_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fit to data, then transform it</span>
+<span class="sd">        ------------------------------</span>
+
+<span class="sd">        Fits transformer to `X` and returns a transformed version of `X`.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : DataFrame of shape (n_samples, n_features+1)</span>
+<span class="sd">            Input samples.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        X_new :  DataFrame of shape (n_samples, n_features_new)</span>
+<span class="sd">            Transformed array.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_</span><span class="p">[</span><span class="s2">&quot;coord&quot;</span><span class="p">]</span></div>
+    
+<div class="viewcode-block" id="DISCA.transform"><a class="viewcode-back" href="../../discrimintools.html#discrimintools.disca.DISCA.transform">[docs]</a>    <span class="k">def</span> <span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot; </span>
+<span class="sd">        Apply the dimensionality reduction on X</span>
+<span class="sd">        --------------------------------------- </span>
+<span class="sd">        </span>
+<span class="sd">        X is projected on the first axes previous extracted from a training set.</span>
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : array of string, int or float, shape (n_rows_sup, n_vars)</span>
+<span class="sd">            New data, where n_rows_sup is the number of supplementary</span>
+<span class="sd">            row points and n_vars is the number of variables.</span>
+<span class="sd">            X is a data table containing a category in each cell.</span>
+<span class="sd">            Categories can be coded by strings or numeric values.</span>
+<span class="sd">            X rows correspond to supplementary row points that are</span>
+<span class="sd">            projected onto the axes.</span>
+<span class="sd">        </span>
+<span class="sd">        y : None</span>
+<span class="sd">            y is ignored.</span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        X_new : array of float, shape (n_rows_sup, n_components_)</span>
+<span class="sd">            X_new : coordinates of the projections of the supplementary</span>
+<span class="sd">            row points onto the axes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1"># check if X is an instance of polars dataframe</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span>
+        
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+           <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="si">}</span><span class="s2"> is not supported. Please convert to a DataFrame with &quot;</span>
+            <span class="s2">&quot;pd.DataFrame. For more information see: &quot;</span>
+            <span class="s2">&quot;https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html&quot;</span><span class="p">)</span>
+        
+         <span class="c1">##### Chack if target in X columns</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]</span> <span class="ow">in</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">():</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]])</span>
+        
+        <span class="c1">####### Select features</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="p">[</span><span class="s2">&quot;features&quot;</span><span class="p">]]</span>
+
+        <span class="c1">#self._compute_row_sup_stats(X)</span>
+        <span class="n">n_rows</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">n_cols</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_</span><span class="p">[</span><span class="s2">&quot;coord&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">n_rows</span><span class="p">,</span><span class="n">n_cols</span><span class="p">))</span>
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">n_rows</span><span class="p">,</span><span class="mi">1</span><span class="p">):</span>
+            <span class="n">values</span> <span class="o">=</span> <span class="p">[</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">+</span><span class="s2">&quot;_&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">k</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">])]</span>
+            <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">n_cols</span><span class="p">):</span>
+                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_</span><span class="p">[</span><span class="s2">&quot;coord&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">tolist</span><span class="p">()[</span><span class="n">j</span><span class="p">]</span> <span class="ow">in</span> <span class="n">values</span><span class="p">:</span>
+                    <span class="n">Y</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="n">row_sup_dummies</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">Y</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">var_</span><span class="p">[</span><span class="s2">&quot;coord&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">row_sup_dummies</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coef_</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="DISCA.decision_function"><a class="viewcode-back" href="../../discrimintools.html#discrimintools.disca.DISCA.decision_function">[docs]</a>    <span class="k">def</span> <span class="nf">decision_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Apply decision function to an array of samples</span>
+<span class="sd">        ----------------------------------------------</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : DataFrame of shape (n_samples_, n_features)</span>
+<span class="sd">            DataFrame of samples (test vectors).</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        C : DataFrame of shape (n_samples_,) or (n_samples_, n_classes)</span>
+<span class="sd">            Decision function values related to each class, per sample.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># check if X is an instance of polars dataframe</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span>
+
+        <span class="c1"># Check if X is a pandas DataFrame</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+           <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="si">}</span><span class="s2"> is not supported. Please convert to a DataFrame with &quot;</span>
+            <span class="s2">&quot;pd.DataFrame. For more information see: &quot;</span>
+            <span class="s2">&quot;https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html&quot;</span><span class="p">)</span>
+
+        <span class="c1"># Set parallelize</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parallelize</span><span class="p">:</span>
+            <span class="n">n_workers</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">n_workers</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="c1"># Coordonnées des individus</span>
+        <span class="n">coord</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="c1"># Distance euclidiennes aux centres de classes</span>
+        <span class="n">scores</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">((</span><span class="n">mapply</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">[</span><span class="s2">&quot;coord&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">coord</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">i</span><span class="p">,:]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;columns&quot;</span><span class="p">),</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">x</span><span class="o">**</span><span class="mi">2</span><span class="p">),</span>
+                                   <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">progressbar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">n_workers</span><span class="o">=</span><span class="n">n_workers</span><span class="p">)</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="o">.</span><span class="n">rename_axis</span><span class="p">(</span><span class="kc">None</span><span class="p">)</span><span class="o">.</span><span class="n">T</span> 
+                            <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">coord</span><span class="o">.</span><span class="n">index</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">scores</span></div>
+
+<div class="viewcode-block" id="DISCA.predict_proba"><a class="viewcode-back" href="../../discrimintools.html#discrimintools.disca.DISCA.predict_proba">[docs]</a>    <span class="k">def</span> <span class="nf">predict_proba</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Estimate probability</span>
+<span class="sd">        --------------------</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : DataFrame of shape (n_samples_,n_features_)</span>
+<span class="sd">            Input data.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">        --------</span>
+<span class="sd">        C : DataFrame of shape (n_samples_,n_classes_)</span>
+<span class="sd">            Estimated probabilities.</span>
+<span class="sd">        </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="c1"># check if X is an instance of polars dataframe</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">pl</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">to_pandas</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="si">}</span><span class="s2"> is not supported. Please convert to a DataFrame with &quot;</span>
+            <span class="s2">&quot;pd.DataFrame. For more information see: &quot;</span>
+            <span class="s2">&quot;https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html&quot;</span><span class="p">)</span>
+        
+        <span class="c1"># Set parallelize</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">parallelize</span><span class="p">:</span>
+            <span class="n">n_workers</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">n_workers</span> <span class="o">=</span> <span class="mi">1</span>
+
+        <span class="c1"># Decision</span>
+        <span class="n">scores</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">decision_function</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="c1"># Distance généralisée : scores - 2*log(p_k)</span>
+        <span class="n">DG</span> <span class="o">=</span> <span class="n">scores</span><span class="o">.</span><span class="n">sub</span><span class="p">((</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="p">[</span><span class="s2">&quot;priors&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;prior&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">T</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">scores</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)),</span><span class="n">axis</span><span class="o">=</span><span class="s2">&quot;columns&quot;</span><span class="p">)</span>
+    
+        <span class="c1"># Probabilité d&#39;appartenance - transformation </span>
+        <span class="n">C</span> <span class="o">=</span> <span class="n">mapply</span><span class="p">(</span><span class="n">mapply</span><span class="p">(</span><span class="n">DG</span><span class="p">,</span><span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mf">0.5</span><span class="o">*</span><span class="n">x</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">progressbar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">n_workers</span><span class="o">=</span><span class="n">n_workers</span><span class="p">),</span>
+                   <span class="k">lambda</span> <span class="n">x</span> <span class="p">:</span> <span class="n">x</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">x</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">progressbar</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span><span class="n">n_workers</span><span class="o">=</span><span class="n">n_workers</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">C</span></div>
+    
+<div class="viewcode-block" id="DISCA.predict"><a class="viewcode-back" href="../../discrimintools.html#discrimintools.disca.DISCA.predict">[docs]</a>    <span class="k">def</span> <span class="nf">predict</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Predict class labels for samples in X</span>
+<span class="sd">        -------------------------------------</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : DataFrame of shape (n_samples_, n_features_)</span>
+<span class="sd">            The data matrix for which we want to get the predictions.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">        --------</span>
+<span class="sd">        y_pred : ndarray of shape (n_samples)</span>
+<span class="sd">            Vectors containing the class labels for each sample</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span>
+            <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">X</span><span class="p">)</span><span class="si">}</span><span class="s2"> is not supported. Please convert to a DataFrame with &quot;</span>
+            <span class="s2">&quot;pd.DataFrame. For more information see: &quot;</span>
+            <span class="s2">&quot;https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html&quot;</span><span class="p">)</span>
+        
+        <span class="n">predict_proba</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="n">predict</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">[</span><span class="s2">&quot;classes&quot;</span><span class="p">])[</span><span class="n">np</span><span class="o">.</span><span class="n">argmax</span><span class="p">(</span><span class="n">predict_proba</span><span class="o">.</span><span class="n">values</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)]</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">predict</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">index</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;prediction&quot;</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="DISCA.score"><a class="viewcode-back" href="../../discrimintools.html#discrimintools.disca.DISCA.score">[docs]</a>    <span class="k">def</span> <span class="nf">score</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">sample_weight</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Return the mean accuracy on the given test data and labels</span>
+<span class="sd">        ----------------------------------------------------------</span>
+
+<span class="sd">        In multi-label classification, this is the subset accuracy</span>
+<span class="sd">        which is a harsh metric since you require for each sample that</span>
+<span class="sd">        each label set be correctly predicted.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : array-like of shape (n_samples, n_features)</span>
+<span class="sd">            Test samples.</span>
+
+<span class="sd">        y : array-like of shape (n_samples,) or (n_samples, n_outputs)</span>
+<span class="sd">            True labels for `X`.</span>
+
+<span class="sd">        sample_weight : array-like of shape (n_samples,), default=None</span>
+<span class="sd">            Sample weights.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        score : float</span>
+<span class="sd">            Mean accuracy of ``self.predict(X)`` w.r.t. `y`.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="n">sample_weight</span><span class="o">=</span><span class="n">sample_weight</span><span class="p">)</span></div>
+    
+<div class="viewcode-block" id="DISCA.pred_table"><a class="viewcode-back" href="../../discrimintools.html#discrimintools.disca.DISCA.pred_table">[docs]</a>    <span class="k">def</span> <span class="nf">pred_table</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Prediction table</span>
+<span class="sd">        ----------------</span>
+<span class="sd">        </span>
+<span class="sd">        Notes</span>
+<span class="sd">        -----</span>
+<span class="sd">        pred_table[i,j] refers to the number of times “i” was observed and the model predicted “j”. Correct predictions are along the diagonal.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">pred</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="p">[</span><span class="s2">&quot;X&quot;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">crosstab</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="p">[</span><span class="s2">&quot;X&quot;</span><span class="p">][</span><span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="p">[</span><span class="s2">&quot;target&quot;</span><span class="p">]],</span><span class="n">pred</span><span class="p">)</span></div></div>
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Duvérier DJIFACK ZEBAZE.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
