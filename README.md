@@ -1,6 +1,17 @@
-<center>
-    <img src="./figures/discrimintools.svg" alt="centered image" height="50%"/>
-</center>
+<p align="center">
+    <img src="./figures/discrimintools.svg" height=300></img>
+</p>
+
+<div align="center">
+
+[![GitHub](https://shields.io/badge/license-MIT-informational)](https://github.com/enfantbenidedieu/discrimintools/blob/master/LICENSE)
+[![PyPI](https://img.shields.io/pypi/v/discrimintools.svg?color=dark-green)](https://pypi.org/project/discrimintools/)
+[![Downloads](https://static.pepy.tech/badge/discrimintools)](https://pepy.tech/project/discrimintools)
+[![Downloads](https://static.pepy.tech/badge/discrimintools/month)](https://pepy.tech/project/discrimintools)
+[![Downloads](https://static.pepy.tech/badge/discrimintools/week)](https://pepy.tech/project/discrimintools)
+
+</div>
+
 
 # discrimintools : Python library for Discriminant Analysis (DA)
 
@@ -28,7 +39,7 @@ With this discrimintools package, you can perform :
 
 discrimintools requires 
 
-```python
+```bash
 Python >= 3.10
 numpy >=1.26.4
 pandas >=2.2.2
@@ -45,8 +56,48 @@ scipy >=1.10.1
 
 You can install discrimintools using pip :
 
-```python
+```bash
 pip install discrimintools
+```
+
+## Example
+
+```python
+from discrimintools.datasets import load_wine
+wine = load_wine()
+wine.info()
+```
+
+```
+<class 'pandas.core.frame.DataFrame'>
+RangeIndex: 178 entries, 0 to 177
+Data columns (total 14 columns):
+ #   Column          Non-Null Count  Dtype   
+---  ------          --------------  -----   
+ 0   Cultivar        178 non-null    category
+ 1   Alcohol         178 non-null    float64 
+ 2   MalicAcid       178 non-null    float64 
+ 3   Ash             178 non-null    float64 
+ 4   AlcAsh          178 non-null    float64 
+ 5   Mg              178 non-null    int32   
+ 6   Phenols         178 non-null    float64 
+ 7   Flav            178 non-null    float64 
+ 8   NonFlavPhenols  178 non-null    float64 
+ 9   Proa            178 non-null    float64 
+ 10  Color           178 non-null    float64 
+ 11  Hue             178 non-null    float64 
+ 12  OD              178 non-null    float64 
+ 13  Proline         178 non-null    int32   
+dtypes: category(1), float64(11), int32(2)
+memory usage: 17.1 KB
+```
+
+
+```python
+# Linear Discriminant Analysis (LDA)
+from discrimintools import LDA
+res_lda = LDA(target=["Cultivar"],features=None,priors="prop")
+res_lda.fit(wine)
 ```
 
 ## Documentation
