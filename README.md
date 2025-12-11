@@ -120,22 +120,15 @@ We performs a linear discriminant analysis with ``alcools`` dataset.
 ```python
 from discrimintools.datasets import load_alcools()
 D = load_alcools() # load training data
-D.info()
-```
-
-```python
 from discrimintools import DISCRIM
 y, X = D['TYPE'], D.drop(columns=['TYPE']) # split into X and y
 clf = DISCRIM()
 clf.fit(X,y)
 ```
-```bash
-
-```
 
 ## Documentation <a name="doc"></a>
 
-The official documentation is hosted on 
+The official documentation is hosted on [https://discrimintools.readthedocs.io](https://discrimintools.readthedocs.io).
 
 ## About Us <a name="about_us"></a>
 
