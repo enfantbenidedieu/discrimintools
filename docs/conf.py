@@ -3,12 +3,10 @@ import sys
 
 sys.path.insert(0, os.path.abspath("../../discrimintools"))
 
-import discrimintools
-project = str(discrimintools.__name__)
-author = str(discrimintools.__author__)
-release = str(discrimintools.__version__)
+project = "discrimintools"
+author = "Duvérier DJIFACK ZEBAZE"
+release = "0.1.0"
 copyright = "2025, {}".format(author)
-
 
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
