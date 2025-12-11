@@ -51,7 +51,7 @@ discrimintools provides functions for:
     * Stepwise Discriminant Analysis (backward & forward) - [STEPDISC](https://support.sas.com/documentation/onlinedoc/stat/131/stepdisc.pdf)
 
 2. **Factor Analysis (FA)**:
-    * Genreal Factor Analysis (PCA, MCA & FAMD)  - [GFA](https://pypi.org/project/scientisttools/)
+    * General Factor Analysis (PCA, MCA & FAMD)  - [GFA](https://pypi.org/project/scientisttools/)
     * Mixed Principal Component Analysis - [MPCA](https://www.researchgate.net/publication/5087866_Analyse_en_composantes_principales_mixte)
 
 3. **Regularized Discriminant Analysis (RDA)**:
@@ -59,6 +59,7 @@ discrimintools provides functions for:
     * General Factor Analysis Linear Discriminant Analysis ([PCADA](https://eric.univ-lyon2.fr/ricco/tanagra/fichiers/fr_Tanagra_Deploying_Predictive_Models_with_R.pdf), [DISQUAL](https://eric.univ-lyon2.fr/ricco/tanagra/fichiers/fr_Tanagra_Pipeline_Python.pdf[) & [DISMIX](https://tutoriels-data-science.blogspot.com/p/tutoriels-en-francais.html#S6wTBImDN7Q)) - GFALDA
     * Discriminant Analysis on Mixed Predictors - [MDA](https://www.researchgate.net/publication/265751966_Discriminant_Analysis_on_Mixed_Predictors)
     * Partial Least Squares Discriminant Analysis - [PLSDA](https://eric.univ-lyon2.fr/ricco/tanagra/fichiers/en_Tanagra_PLS_DA.pdf)
+    * Partial Least Squares Logistic Regression - [PLSLOGIT](https://inria.hal.science/inria-00494857v1/document)
     * Partial Least Squares Linear Discriminant Analysis - [PLSDA](https://eric.univ-lyon2.fr/ricco/tanagra/fichiers/en_Tanagra_PLS_DA.pdf)
 
 ## Installation <a name="installation"></a>
@@ -110,6 +111,7 @@ discrimintools is compatible with python version which supports both dependencie
 | tabulate          |  0.9.0   |
 | plotnine          |  0.15.1  |
 | adjustText        |  1.3.0   |
+| great_tables      |  0.20.0  |
 
 ## Example <a name="example"></a>
 
