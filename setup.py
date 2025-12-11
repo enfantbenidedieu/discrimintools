@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 import setuptools
 
 with open("README.md", "r",encoding="utf-8") as fh:
@@ -8,32 +7,41 @@ with open("README.md", "r",encoding="utf-8") as fh:
 # Setting up
 setuptools.setup(
     name="discrimintools",
-    version="0.0.3",
+    version="0.1.0",
     author="Duvérier DJIFACK ZEBAZE",
     author_email="duverierdjifack@gmail.com",
     description="Python package dedicated to Discriminant Analysis (DA) distributed under the MIT License",
     long_description_content_type="text/markdown",
     long_description=long_description,
-    packages=setuptools.find_packages(),
-    install_requires=["numpy>=1.26.4",
-                      "pandas>=2.2.2",
-                      "scikit-learn>=1.2.2",
-                      "polars>=0.19.2",
-                      "plotnine>=0.10.1",
-                      "mapply>=0.1.21",
-                      "scientisttools>=0.1.5",
-                      "statsmodels>=0.14.0",
-                      "scipy>=1.10.1"],
-    python_requires=">=3.10",
-    include_package_data=True,
-    package_data={"": ["data/*.xlsx",
-                       "data/*.xls",
-                       "data/*.txt",
-                       "data/*.csv",
-                       "data/*.rda"]},
+    url="https://github.com/enfantbenidedieu/discrimintools",
+    packages=setuptools.find_packages(where="discrimintools"),
     classifiers=[
-        "Programming Language :: Python :: 3",
+        "Intended Audience :: Science/Research",
+        "Intended Audience :: Developers",
+        "Programming Language :: Python",
+        "Topic :: Software Development",
+        "Topic :: Scientific/Engineering",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
-    ]
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.11",
+    ],
+    python_requires=">=3.11",
+    install_requires=[
+        "statsmodels>=0.14.6",
+        "scikit-learn>=1.8.0",
+        "openpyxl>=3.1.5",
+        "tabulate>=0.9.0",
+        "plotnine>=0.15.1",
+        "adjustText>=1.3.0"
+        "ipython>=9.8.0",
+        "great_tables>=0.20.0"
+    ],
+    keywords="linear discriminant analysis, quadratic discriminant analysis, disqual, dismix, dica",
+    project_urls={
+        "Bug Reports": "https://github.com/enfantbenidedieu/discrimintools/issues",
+        "Source": "https://github.com/enfantbenidedieu/discrimintools",
+        "Documentation": "",
+    },
+    
 )
