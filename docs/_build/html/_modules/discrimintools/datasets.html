@@ -1,0 +1,1142 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>discrimintools.datasets &#8212; discrimintools 0.1.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=01f34227"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/discrimintools/datasets';</script>
+    <link rel="icon" href="../../_static/discrimintools.svg"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/discrimintools.svg" class="logo__image only-light" alt=""/>
+    <img src="../../_static/discrimintools.svg" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">discrimintools</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../source/install/index.html">
+    Install
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../source/getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../source/user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../source/reference/index.html">
+    API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../source/examples/index.html">
+    Examples
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/enfantbenidedieu/discrimintools" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../source/install/index.html">
+    Install
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../source/getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../source/user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../source/reference/index.html">
+    API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../source/examples/index.html">
+    Examples
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/enfantbenidedieu/discrimintools" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">discrimintools.datasets</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for discrimintools.datasets</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">__future__</span><span class="w"> </span><span class="kn">import</span> <span class="n">annotations</span>
+
+<span class="kn">from</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="kn">import</span> <span class="n">read_excel</span><span class="p">,</span> <span class="n">read_csv</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pathlib</span><span class="w"> </span><span class="kn">import</span> <span class="n">Path</span>
+
+<span class="n">DATASETS_DIR</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="vm">__file__</span><span class="p">)</span><span class="o">.</span><span class="n">parent</span> <span class="o">/</span> <span class="s2">&quot;datasets&quot;</span>
+
+<div class="viewcode-block" id="load_alcools">
+<a class="viewcode-back" href="../../source/reference/datasets/discrimintools.datasets.load_alcools.html#discrimintools.datasets.load_alcools">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_alcools</span><span class="p">(</span><span class="n">element</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Alcools dataset</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    element : str, default = &#39;train&#39;</span>
+<span class="sd">        The dataset to load. Possible values are:</span>
+
+<span class="sd">        - &#39;train&#39; for training dataset. </span>
+<span class="sd">        - &#39;test&#39; for testing dataset.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    alcools : DataFrame of shape (n_samples, n_columns)</span>
+<span class="sd">        The alcools dataset.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    [1] Ricco Rakotomalala (2020), « `Pratique de l&#39;Analyse Discriminante Linéaire &lt;https://hal.science/hal-04868585v1/file/Pratique_Analyse_Discriminante_Lineaire.pdf&gt;`_ », Version 1.0, Université Lumière Lyon 2.</span>
+<span class="sd">    </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from discrimintools.datasets import load_alcools</span>
+<span class="sd">    &gt;&gt;&gt; from discrimintools import DISCRIM</span>
+<span class="sd">    &gt;&gt;&gt; D = load_alcools(&quot;train&quot;) # load training data</span>
+<span class="sd">    &gt;&gt;&gt; y, X = D[&quot;TYPE&quot;], D.drop(columns=[&quot;TYPE&quot;]) # split into X and y</span>
+<span class="sd">    &gt;&gt;&gt; clf = DISCRIM()</span>
+<span class="sd">    &gt;&gt;&gt; clf.fit(X,y)</span>
+<span class="sd">    DISCRIM(priors=&#39;prop&#39;)</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">element</span> <span class="o">==</span> <span class="s2">&quot;train&quot;</span><span class="p">:</span>
+        <span class="n">alcools</span> <span class="o">=</span> <span class="n">read_excel</span><span class="p">(</span><span class="n">DATASETS_DIR</span><span class="o">/</span><span class="s2">&quot;alcools.xlsx&quot;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Feuil1&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">element</span> <span class="o">==</span> <span class="s2">&quot;test&quot;</span><span class="p">:</span>
+        <span class="n">alcools</span> <span class="o">=</span> <span class="n">read_excel</span><span class="p">(</span><span class="n">DATASETS_DIR</span><span class="o">/</span><span class="s2">&quot;alcools.xlsx&quot;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Feuil2&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;element&#39; should be one of &#39;train&#39;, &#39;test&#39;.&quot;</span><span class="p">)</span>
+    <span class="c1">#set cocumentation</span>
+    <span class="n">alcools</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    Alcools dataset</span>
+
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">alcools</span></div>
+
+
+<div class="viewcode-block" id="load_autos">
+<a class="viewcode-back" href="../../source/reference/datasets/discrimintools.datasets.load_autos.html#discrimintools.datasets.load_autos">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_autos</span><span class="p">(</span><span class="n">element</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Autos dataset</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    element : str, default = &#39;train&#39;</span>
+<span class="sd">        The dataset to load. Possible values are:</span>
+
+<span class="sd">        - &#39;train&#39; for training dataset. </span>
+<span class="sd">        - &#39;test&#39; for testing dataset.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    autos : DataFrame of shape (n_samples, n_columns)</span>
+<span class="sd">        The autos dataset.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    [1] Saporta Gilbert (2011), « `Probabilités, Analyse des données et Statistiques &lt;https://en.pdfdrive.to/dl/probabilites-analyses-des-donnees-et-statistiques&gt;`_ », Editions TECHNIP, 3ed.</span>
+
+<span class="sd">    [2] Ricco Rakotomalala (2020), « `Pratique Des Méthodes Factorielles avec Python &lt;https://hal.science/hal-04868625v1/document&gt;`_ », Version 1.0, Université Lumière Lyon 2.</span>
+<span class="sd">    </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from discrimintools.datasets import load_autos</span>
+<span class="sd">    &gt;&gt;&gt; from discrimintools import DISCRIM</span>
+<span class="sd">    &gt;&gt;&gt; D = load_autos(&quot;train&quot;) # load training data</span>
+<span class="sd">    &gt;&gt;&gt; y, X = D[&quot;Finition&quot;], D.drop(columns=[&quot;Finition&quot;]) # split into X and y</span>
+<span class="sd">    &gt;&gt;&gt; clf = DISCRIM(classes=(&quot;M&quot;,&quot;B&quot;,&quot;TB&quot;))</span>
+<span class="sd">    &gt;&gt;&gt; clf.fit(X,y)</span>
+<span class="sd">    DISCRIM(priors=&#39;prop&#39;,classes=(&#39;M&#39;,&#39;B&#39;,&#39;TB&#39;))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">element</span> <span class="o">==</span> <span class="s2">&quot;train&quot;</span><span class="p">:</span>
+        <span class="n">autos</span> <span class="o">=</span> <span class="n">read_excel</span><span class="p">(</span><span class="n">DATASETS_DIR</span><span class="o">/</span><span class="s2">&quot;autos.xlsx&quot;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Feuil1&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">element</span> <span class="o">==</span> <span class="s2">&quot;test&quot;</span><span class="p">:</span>
+        <span class="n">autos</span> <span class="o">=</span> <span class="n">read_excel</span><span class="p">(</span><span class="n">DATASETS_DIR</span><span class="o">/</span><span class="s2">&quot;autos.xlsx&quot;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Feuil2&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;element&#39; should be one of &#39;train&#39;, &#39;test&#39;.&quot;</span><span class="p">)</span>
+    <span class="c1">#set cocumentation</span>
+    <span class="n">autos</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    Autos dataset</span>
+
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">autos</span></div>
+
+
+<div class="viewcode-block" id="load_canines">
+<a class="viewcode-back" href="../../source/reference/datasets/discrimintools.datasets.load_canines.html#discrimintools.datasets.load_canines">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_canines</span><span class="p">(</span><span class="n">element</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Canines dataset</span>
+<span class="sd">    </span>
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    element : str, default = &#39;train&#39;</span>
+<span class="sd">        The dataset to load. Possible values are:</span>
+
+<span class="sd">        - &#39;train&#39; for training dataset. </span>
+<span class="sd">        - &#39;test&#39; for testing dataset.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    canines : DataFrame of shape (n_samples, n_columns)</span>
+<span class="sd">        The canines dataset.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    [1] Ricco Rakotomalala (2008), « `AFCM - Races canines &lt;https://eric.univ-lyon2.fr/ricco/tanagra/fichiers/fr_Tanagra_Acm.pdf&gt;`_ ».</span>
+
+<span class="sd">    [2] Ricco Rakotomalala (2009), « `Analyse des Correspondances Multiple avec R &lt;https://eric.univ-lyon2.fr/ricco/cours/didacticiels/R/afcm_avec_r.pdf&gt;`_ ».</span>
+
+<span class="sd">    [3] Tenenhaus Michel (1996), « Méthodes statistiques en gestion », Dunod.</span>
+
+<span class="sd">    [4] Tenenhaus Michel (2007), « Statistique - Méthodes pour décrire, expliquer et prévoir », Dunod.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from discrimintools.datasets import load_canines</span>
+<span class="sd">    &gt;&gt;&gt; from discrimintools import DiCA</span>
+<span class="sd">    &gt;&gt;&gt; D = load_canines(&quot;train&quot;) # load training data</span>
+<span class="sd">    &gt;&gt;&gt; y, X = D[&quot;Fonction&quot;], D.drop(columns=[&quot;Fonction&quot;]) # split into X and y</span>
+<span class="sd">    &gt;&gt;&gt; clf = DiCA()</span>
+<span class="sd">    &gt;&gt;&gt; clf.fit(X,y)</span>
+<span class="sd">    DiCA()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">element</span> <span class="o">==</span> <span class="s2">&quot;train&quot;</span><span class="p">:</span>
+        <span class="n">canines</span> <span class="o">=</span> <span class="n">read_excel</span><span class="p">(</span><span class="n">DATASETS_DIR</span><span class="o">/</span><span class="s2">&quot;canines.xlsx&quot;</span><span class="p">,</span><span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Feuil1&quot;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">element</span> <span class="o">==</span> <span class="s2">&quot;test&quot;</span><span class="p">:</span>
+        <span class="n">canines</span> <span class="o">=</span> <span class="n">read_excel</span><span class="p">(</span><span class="n">DATASETS_DIR</span><span class="o">/</span><span class="s2">&quot;canines.xlsx&quot;</span><span class="p">,</span><span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Feuil2&quot;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;element&#39; should be one of &#39;train&#39; or &#39;test&#39;.&quot;</span><span class="p">)</span>
+    <span class="c1">#set cocumentation</span>
+    <span class="n">canines</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    Canines dataset</span>
+
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">canines</span></div>
+
+
+<div class="viewcode-block" id="load_dataset">
+<a class="viewcode-back" href="../../source/reference/datasets/discrimintools.datasets.load_dataset.html#discrimintools.datasets.load_dataset">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_dataset</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;iris&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Load an example dataset</span>
+
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    This function provides quick access to a small number of example datasets that are useful.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    name : str, default = &#39;iris&#39;</span>
+<span class="sd">        The name of the dataset. Possible values are:</span>
+
+<span class="sd">        - &#39;breast&#39; for the Breat Cancer dataset.</span>
+<span class="sd">        - &#39;cultivar&#39; for the Chemical composition of three cultivars of wine.</span>
+<span class="sd">        - &#39;fish&#39; for the fish dataset</span>
+<span class="sd">        - &#39;iris&#39; for the iris dataset</span>
+<span class="sd">        - &#39;sonar&#39; for the sonar dataset</span>
+<span class="sd">        - &#39;wavenoise&#39; for the wavenoise dataset</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    data : DataFrame of shape (n_samples, n_columns)</span>
+<span class="sd">        The dataset loaded.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;breast&quot;</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">read_excel</span><span class="p">(</span><span class="n">DATASETS_DIR</span><span class="o">/</span><span class="s2">&quot;breast_cancer.xlsx&quot;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">sheet_name</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;class&quot;</span> <span class="p">:</span> <span class="s2">&quot;Class&quot;</span><span class="p">})</span>
+        <span class="n">data</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        Breat Cancer dataset</span>
+
+<span class="s2">        &quot;&quot;&quot;</span>
+    <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;cultivar&quot;</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">read_excel</span><span class="p">(</span><span class="n">DATASETS_DIR</span><span class="o">/</span><span class="s2">&quot;cultivar.xlsx&quot;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">sheet_name</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">data</span><span class="o">.</span><span class="vm">__doc__</span><span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        Wine: Chemical composition of three cultivars of wine</span>
+
+<span class="s2">        For more, see https://archive.ics.uci.edu/dataset/109/wine</span>
+
+<span class="s2">        Examples</span>
+<span class="s2">        --------</span>
+<span class="s2">        &gt;&gt;&gt; from discrimintools.datasets import load_dataset</span>
+<span class="s2">        &gt;&gt;&gt; from discrimintools import CANDISC</span>
+<span class="s2">        &gt;&gt;&gt; D = load_dataset(&quot;cultivar&quot;) # load data</span>
+<span class="s2">        &gt;&gt;&gt; y, X = D[&quot;Cultivar&quot;], D.drop(columns=[&quot;Cultivar&quot;]) # split into X and y</span>
+<span class="s2">        &gt;&gt;&gt; clf = CANDISC()</span>
+<span class="s2">        &gt;&gt;&gt; clf.fit(X,y)</span>
+<span class="s2">        CANDISC()</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+    <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;fish&quot;</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">read_excel</span><span class="p">(</span><span class="n">DATASETS_DIR</span><span class="o">/</span><span class="s2">&quot;fish.xlsx&quot;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="n">data</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        Fish dataset</span>
+
+<span class="s2">        Note</span>
+<span class="s2">        ----</span>
+<span class="s2">        The data in this example are measurements of 159 fish caught in Finland&#39;s Lake Laengelmaevesi; this data set</span>
+<span class="s2">        is available from the Puranen. For each of the seven species (bream, roach, whitefish, parkki, perch, pike, and</span>
+<span class="s2">        smelt), the weight, length, height, and width of each fish are tallied. Three different length measurements are</span>
+<span class="s2">        recorded: from the nose of the fish to the beginning of its tail, from the nose to the notch of its tail, and from</span>
+<span class="s2">        the nose to the end of its tail. The height and width are recorded as percentages of the third length variable.</span>
+
+<span class="s2">        &quot;&quot;&quot;</span>
+    <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;iris&quot;</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">read_csv</span><span class="p">(</span><span class="n">DATASETS_DIR</span><span class="o">/</span><span class="s2">&quot;iris.csv&quot;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">sep</span><span class="o">=</span><span class="s2">&quot;,&quot;</span><span class="p">)</span>
+        <span class="n">data</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        Iris dataset</span>
+
+<span class="s2">        Examples</span>
+<span class="s2">        --------</span>
+<span class="s2">        &gt;&gt;&gt; from discrimintools.datasets import load_dataset</span>
+<span class="s2">        &gt;&gt;&gt; from discrimintools import CANDISC</span>
+<span class="s2">        &gt;&gt;&gt; D = load_dataset(&quot;iris&quot;) # load data</span>
+<span class="s2">        &gt;&gt;&gt; y, X = DTrain[&quot;Species&quot;], D.drop(columns=[&quot;Species&quot;]) # split into X and y</span>
+<span class="s2">        &gt;&gt;&gt; clf = CANDISC()</span>
+<span class="s2">        &gt;&gt;&gt; clf.fit(XTrain,yTrain)</span>
+<span class="s2">        CANDISC()</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+    <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;sonar&quot;</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">read_excel</span><span class="p">(</span><span class="n">DATASETS_DIR</span><span class="o">/</span><span class="s2">&quot;sonar.xlsx&quot;</span><span class="p">,</span><span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Feuil1&quot;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">data</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        Sonar dataset</span>
+
+<span class="s2">        Examples</span>
+<span class="s2">        --------</span>
+<span class="s2">        &gt;&gt;&gt; from discrimintools.datasets import load_dataset</span>
+<span class="s2">        &gt;&gt;&gt; from discrimintools import DISCRIM, STEPDISC</span>
+<span class="s2">        &gt;&gt;&gt; DTrain = load_dataset(&quot;sonar&quot;) # load data</span>
+<span class="s2">        &gt;&gt;&gt; yTrain, XTrain = DTrain[&quot;Class&quot;], DTrain.drop(columns=[&quot;Class&quot;]) # split into X and y</span>
+<span class="s2">        &gt;&gt;&gt; #linear discriminant analysis (LDA)</span>
+<span class="s2">        &gt;&gt;&gt; clf = DISCRIM()</span>
+<span class="s2">        &gt;&gt;&gt; clf.fit(XTrain,yTrain)</span>
+<span class="s2">        DISCRIM(priors=&quot;prop&quot;)</span>
+<span class="s2">        &gt;&gt;&gt; #stepwise discriminant analysis (STEPDISC)</span>
+<span class="s2">        &gt;&gt;&gt; clf2 = STEPDISC(method=&quot;backward&quot;)</span>
+<span class="s2">        &gt;&gt;&gt; clf2.fit(clf)</span>
+<span class="s2">        STEPDISC(method=&quot;backward&quot;)</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+    <span class="k">elif</span> <span class="n">name</span> <span class="o">==</span> <span class="s2">&quot;wavenoise&quot;</span><span class="p">:</span>
+        <span class="n">data</span> <span class="o">=</span> <span class="n">read_excel</span><span class="p">(</span><span class="n">DATASETS_DIR</span><span class="o">/</span><span class="s2">&quot;wavenoise.xlsx&quot;</span><span class="p">,</span><span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Feuil1&quot;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+        <span class="n">data</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">        Wave Noise dataset</span>
+
+<span class="s2">        Examples</span>
+<span class="s2">        --------</span>
+<span class="s2">        &gt;&gt;&gt; from discrimintools.datasets import load_dataset</span>
+<span class="s2">        &gt;&gt;&gt; from discrimintools import DISCRIM, STEPDISC</span>
+<span class="s2">        &gt;&gt;&gt; D = load_dataset(&quot;wavenoise&quot;) # load data</span>
+<span class="s2">        &gt;&gt;&gt; y, X = D[&quot;classe&quot;], D.drop(columns=[&quot;classe&quot;]) # split into X and y</span>
+<span class="s2">        &gt;&gt;&gt; #linear discriminant analysis (LDA)</span>
+<span class="s2">        &gt;&gt;&gt; clf = DISCRIM()</span>
+<span class="s2">        &gt;&gt;&gt; clf.fit(X,y)</span>
+<span class="s2">        DISCRIM(priors=&#39;prop&#39;)</span>
+<span class="s2">        &gt;&gt;&gt; #stepwise discriminant analysis (STEPDISC)</span>
+<span class="s2">        &gt;&gt;&gt; clf2 = STEPDISC(method=&quot;backward&quot;)</span>
+<span class="s2">        &gt;&gt;&gt; clf2.fit(clf)</span>
+<span class="s2">        STEPDISC(method=&quot;backward&quot;)</span>
+<span class="s2">        &quot;&quot;&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> not supported&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+    
+    <span class="k">return</span> <span class="n">data</span></div>
+
+
+<div class="viewcode-block" id="load_divay">
+<a class="viewcode-back" href="../../source/reference/datasets/discrimintools.datasets.load_divay.html#discrimintools.datasets.load_divay">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_divay</span><span class="p">(</span><span class="n">element</span> <span class="o">=</span> <span class="s2">&quot;train&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Divay dataset</span>
+
+<span class="sd">    Note</span>
+<span class="sd">    ----</span>
+<span class="sd">    12 wines coming from 3 diferent origins (4 wines per origin).</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    element : str, default = &#39;train&#39;</span>
+<span class="sd">        The dataset to load. Possible values are:</span>
+
+<span class="sd">        - &#39;train&#39; for training dataset. </span>
+<span class="sd">        - &#39;test&#39; for testing dataset.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    divay : DataFrame of shape (n_samples, n_columns) </span>
+<span class="sd">        The divay dataset.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    [1] Abdi, H. (2007). `Discriminant correspondence analysis &lt;https://personal.utdallas.edu/~herve/Abdi-DCA2007-pretty.pdf&gt;`_. In N.J. Salkind (Ed.): Encyclopedia of Measurement and Statistics. Thousand Oaks (CA): Sage. pp. 270-275.</span>
+
+<span class="sd">    [2] Ricco Rakotomalala (2012), `Analyse des correspondances discriminante &lt;https://eric.univ-lyon2.fr/ricco/tanagra/fichiers/fr_Tanagra_Discriminant_Correspondence_Analysis.pdf&gt;`_,</span>
+
+<span class="sd">    [3] Ricco Rakotomalala (2020), `Pratique de l&#39;Analyse Discriminante Linéaire &lt;https://hal.science/hal-04868585v1/file/Pratique_Analyse_Discriminante_Lineaire.pdf&gt;`_, Version 1.0.</span>
+<span class="sd">    </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from discrimintools.datasets import load_divay</span>
+<span class="sd">    &gt;&gt;&gt; from discrimintools import DiCA</span>
+<span class="sd">    &gt;&gt;&gt; D = load_divay() # load training data</span>
+<span class="sd">    &gt;&gt;&gt; y, X = D[&quot;Region&quot;], D.drop(columns=[&quot;Region&quot;]) # split into X and y</span>
+<span class="sd">    &gt;&gt;&gt; clf = DiCA()</span>
+<span class="sd">    &gt;&gt;&gt; clf.fit(X,y)</span>
+<span class="sd">    DiCA()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">element</span> <span class="o">==</span> <span class="s2">&quot;train&quot;</span><span class="p">:</span>
+        <span class="n">divay</span> <span class="o">=</span> <span class="n">read_excel</span><span class="p">(</span><span class="n">DATASETS_DIR</span><span class="o">/</span><span class="s2">&quot;divay.xlsx&quot;</span><span class="p">,</span><span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Feuil1&quot;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">element</span> <span class="o">==</span> <span class="s2">&quot;test&quot;</span><span class="p">:</span>
+        <span class="n">divay</span> <span class="o">=</span> <span class="n">read_excel</span><span class="p">(</span><span class="n">DATASETS_DIR</span><span class="o">/</span><span class="s2">&quot;divay.xlsx&quot;</span><span class="p">,</span><span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Feuil2&quot;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;element&#39; should be one of &#39;train&#39;, &#39;test&#39;&quot;</span><span class="p">)</span>
+    <span class="c1">#set cocumentation</span>
+    <span class="n">divay</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    Divay dataset</span>
+
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">divay</span></div>
+
+
+<div class="viewcode-block" id="load_heart">
+<a class="viewcode-back" href="../../source/reference/datasets/discrimintools.datasets.load_heart.html#discrimintools.datasets.load_heart">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_heart</span><span class="p">(</span><span class="n">element</span> <span class="o">=</span> <span class="s2">&quot;subset&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Heart dataset</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    element : str, default = &#39;train&#39;</span>
+<span class="sd">        The dataset to load. Possible values are:</span>
+
+<span class="sd">        - &#39;subset&#39; for subset of all dataset (with few columns).</span>
+<span class="sd">        - &#39;train&#39; for training dataset. </span>
+<span class="sd">        - &#39;test&#39; for testing dataset.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    heart : DataFrame of shape (n_samples, n_columns)</span>
+<span class="sd">        The heart dataset.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    [1] Ricco Rakotomalala (2020), « `Pratique de l&#39;Analyse Discriminante Linéaire &lt;https://hal.science/hal-04868585v1/file/Pratique_Analyse_Discriminante_Lineaire.pdf&gt;`_ », Version 1.0, Université Lumière Lyon 2.</span>
+<span class="sd">    </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from discrimintools.datasets import load_heart</span>
+<span class="sd">    &gt;&gt;&gt; from discrimintools import LDAPC</span>
+<span class="sd">    &gt;&gt;&gt; D = load_heart(&quot;subset&quot;) # load subset data</span>
+<span class="sd">    &gt;&gt;&gt; y, X = D[&quot;disease&quot;], D.drop(columns=[&quot;disease&quot;]) # split into X and y</span>
+<span class="sd">    &gt;&gt;&gt; clf = LDAPC(n_components=5)</span>
+<span class="sd">    &gt;&gt;&gt; clf.fit(X,y)</span>
+<span class="sd">    LDAPC()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">element</span> <span class="o">==</span> <span class="s2">&quot;train&quot;</span><span class="p">:</span>
+        <span class="n">heart</span> <span class="o">=</span> <span class="n">read_excel</span><span class="p">(</span><span class="n">DATASETS_DIR</span><span class="o">/</span><span class="s2">&quot;heart.xlsx&quot;</span><span class="p">,</span><span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Feuil1&quot;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;status == &#39;train&#39;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">element</span> <span class="o">==</span> <span class="s2">&quot;test&quot;</span><span class="p">:</span>
+        <span class="n">heart</span> <span class="o">=</span> <span class="n">read_excel</span><span class="p">(</span><span class="n">DATASETS_DIR</span><span class="o">/</span><span class="s2">&quot;heart.xlsx&quot;</span><span class="p">,</span><span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Feuil1&quot;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s2">&quot;status == &#39;test&#39;&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;status&quot;</span><span class="p">])</span>
+    <span class="k">elif</span> <span class="n">element</span> <span class="o">==</span> <span class="s2">&quot;subset&quot;</span><span class="p">:</span>
+        <span class="n">heart</span> <span class="o">=</span> <span class="n">read_excel</span><span class="p">(</span><span class="n">DATASETS_DIR</span><span class="o">/</span><span class="s2">&quot;heart.xlsx&quot;</span><span class="p">,</span><span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Feuil2&quot;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;element&#39; should be one of &#39;train&#39;, &#39;test&#39;, &#39;subset&#39;&quot;</span><span class="p">)</span>
+    <span class="c1">#set documentation</span>
+    <span class="n">heart</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    Heart dataset</span>
+
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">heart</span></div>
+
+
+<div class="viewcode-block" id="load_infidelity">
+<a class="viewcode-back" href="../../source/reference/datasets/discrimintools.datasets.load_infidelity.html#discrimintools.datasets.load_infidelity">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_infidelity</span><span class="p">(</span><span class="n">element</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Infidelity dataset</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    element : str, default = &#39;train&#39;</span>
+<span class="sd">        The dataset to load. Possible values are:</span>
+
+<span class="sd">        - &#39;train&#39; for training dataset. </span>
+<span class="sd">        - &#39;test&#39; for testing dataset.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    infidelity : DataFrame of shape (n_samples, n_columns)</span>
+<span class="sd">        The infidelity dataset.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    [1] Ricco Rakotomalala (2020), « `Régression logistique sous Python &lt;https://eric.univ-lyon2.fr/ricco/tanagra/fichiers/fr_Tanagra_Python_Regression_Logistique.pdf&gt;`_ », Université Lumière Lyon 2.</span>
+<span class="sd">    </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from discrimintools.datasets import load_infidelity</span>
+<span class="sd">    &gt;&gt;&gt; from discrimintools import PLSGLM</span>
+<span class="sd">    &gt;&gt;&gt; D = load_infidelity(&quot;train&quot;) # load training data</span>
+<span class="sd">    &gt;&gt;&gt; y, X = D[&quot;Infidelity&quot;], D.drop(columns=[&quot;Infidelity&quot;]) # split into X and y</span>
+<span class="sd">    &gt;&gt;&gt; clf = PLSGLM()</span>
+<span class="sd">    &gt;&gt;&gt; clf.fit(X,y)</span>
+<span class="sd">    PLSGLM()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">element</span> <span class="o">==</span> <span class="s2">&quot;train&quot;</span><span class="p">:</span>
+        <span class="n">infidelity</span> <span class="o">=</span> <span class="n">read_excel</span><span class="p">(</span><span class="n">DATASETS_DIR</span><span class="o">/</span><span class="s2">&quot;infidelity.xlsx&quot;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Feuil1&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">element</span> <span class="o">==</span> <span class="s2">&quot;test&quot;</span><span class="p">:</span>
+        <span class="n">infidelity</span> <span class="o">=</span> <span class="n">read_excel</span><span class="p">(</span><span class="n">DATASETS_DIR</span><span class="o">/</span><span class="s2">&quot;infidelity.xlsx&quot;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Feuil2&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;element&#39; should be one of &#39;train&#39;, &#39;test&#39;.&quot;</span><span class="p">)</span>
+    <span class="c1">#set cocumentation</span>
+    <span class="n">infidelity</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    Infidelity dataset</span>
+
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">infidelity</span></div>
+
+
+<div class="viewcode-block" id="load_mushroom">
+<a class="viewcode-back" href="../../source/reference/datasets/discrimintools.datasets.load_mushroom.html#discrimintools.datasets.load_mushroom">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_mushroom</span><span class="p">(</span><span class="n">element</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Mushroom dataset</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    element : str, default = &#39;train&#39;</span>
+<span class="sd">        The dataset to load. Possible values are:</span>
+
+<span class="sd">        - &#39;train&#39; for training dataset. </span>
+<span class="sd">        - &#39;test&#39; for testing dataset.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    mushroom : DataFrame of shape (n_samples, n_columns) </span>
+<span class="sd">        The mushroom dataset.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    [1] Ricco Rakotomalala (2020), « `Pratique de l&#39;Analyse Discriminante Linéaire &lt;https://hal.science/hal-04868585v1/file/Pratique_Analyse_Discriminante_Lineaire.pdf&gt;`_ », Version 1.0, Université Lumière Lyon 2.</span>
+<span class="sd">    </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from discrimintools.dataset import load_mushroom</span>
+<span class="sd">    &gt;&gt;&gt; from discrimintools import LDAPC</span>
+<span class="sd">    &gt;&gt;&gt; D = load_mushroom(&quot;train&quot;) # load training data</span>
+<span class="sd">    &gt;&gt;&gt; y, X = D[&quot;classe&quot;], D.drop(columns=[&quot;classe&quot;]) # split into X and y</span>
+<span class="sd">    &gt;&gt;&gt; clf = LDAPC(n_components=5)</span>
+<span class="sd">    &gt;&gt;&gt; clf.fit(X,y)</span>
+<span class="sd">    LDAPC()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">element</span> <span class="o">==</span> <span class="s2">&quot;train&quot;</span><span class="p">:</span>
+        <span class="n">mushroom</span> <span class="o">=</span> <span class="n">read_excel</span><span class="p">(</span><span class="n">DATASETS_DIR</span><span class="o">/</span><span class="s2">&quot;mushroom.xlsx&quot;</span><span class="p">,</span><span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Feuil1&quot;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">element</span> <span class="o">==</span> <span class="s2">&quot;test&quot;</span><span class="p">:</span>
+        <span class="n">mushroom</span> <span class="o">=</span> <span class="n">read_excel</span><span class="p">(</span><span class="n">DATASETS_DIR</span><span class="o">/</span><span class="s2">&quot;mushroom.xlsx&quot;</span><span class="p">,</span><span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Feuil2&quot;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;element&#39; should be one of &#39;train&#39;, &#39;test&#39;&quot;</span><span class="p">)</span>
+    <span class="c1">#set documentation</span>
+    <span class="n">mushroom</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    Mushroom dataset</span>
+
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">mushroom</span></div>
+
+
+<div class="viewcode-block" id="load_oliveoil">
+<a class="viewcode-back" href="../../source/reference/datasets/discrimintools.datasets.load_oliveoil.html#discrimintools.datasets.load_oliveoil">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_oliveoil</span><span class="p">(</span><span class="n">element</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Olive oil dataset</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    element : str, default = &#39;train&#39;</span>
+<span class="sd">        The dataset to load. Possible values are:</span>
+
+<span class="sd">        - &#39;train&#39; for training dataset. </span>
+<span class="sd">        - &#39;test&#39; for testing dataset.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    oil : DataFrame of shape (n_samples, n_columns) </span>
+<span class="sd">        The olive oil dataset.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    [1] Ricco Rakotomalala (2020), « `Pratique de l&#39;Analyse Discriminante Linéaire &lt;https://hal.science/hal-04868585v1/file/Pratique_Analyse_Discriminante_Lineaire.pdf&gt;`_ », Version 1.0, Université Lumière Lyon 2.</span>
+<span class="sd">    </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from discrimintools.datasets import load_oliveoil</span>
+<span class="sd">    &gt;&gt;&gt; from discrimintools import CANDISC</span>
+<span class="sd">    &gt;&gt;&gt; D = load_oliveoil(&quot;train&quot;) # load training data</span>
+<span class="sd">    &gt;&gt;&gt; y, X = D[&quot;CLASSE&quot;], D.drop(columns=[&quot;CLASSE&quot;]) # split into X and y</span>
+<span class="sd">    &gt;&gt;&gt; clf = CANDISC(n_components=2)</span>
+<span class="sd">    &gt;&gt;&gt; clf.fit(X,y)</span>
+<span class="sd">    CANDISC()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">element</span> <span class="o">==</span> <span class="s2">&quot;train&quot;</span><span class="p">:</span>
+        <span class="n">oil</span> <span class="o">=</span> <span class="n">read_excel</span><span class="p">(</span><span class="n">DATASETS_DIR</span><span class="o">/</span><span class="s2">&quot;oliveoil.xlsx&quot;</span><span class="p">,</span><span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Feuil1&quot;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">element</span> <span class="o">==</span> <span class="s2">&quot;test&quot;</span><span class="p">:</span>
+        <span class="n">oil</span> <span class="o">=</span> <span class="n">read_excel</span><span class="p">(</span><span class="n">DATASETS_DIR</span><span class="o">/</span><span class="s2">&quot;oliveoil.xlsx&quot;</span><span class="p">,</span><span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Feuil2&quot;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;element&#39; should be one of &#39;train&#39;, &#39;test&#39;&quot;</span><span class="p">)</span>
+    <span class="c1">#set documentation</span>
+    <span class="n">oil</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    Olive oil dataset</span>
+
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">oil</span></div>
+
+
+<div class="viewcode-block" id="load_vins">
+<a class="viewcode-back" href="../../source/reference/datasets/discrimintools.datasets.load_vins.html#discrimintools.datasets.load_vins">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_vins</span><span class="p">(</span><span class="n">element</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Vins de Bordeaux dataset</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    element : str, default = &#39;train&#39;</span>
+<span class="sd">        The dataset to load. Possible values are:</span>
+
+<span class="sd">        - &#39;train&#39; for training dataset. </span>
+<span class="sd">        - &#39;test&#39; for testing dataset.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    vins : DataFrame of shape (n_samples, n_columns) </span>
+<span class="sd">        The vins de Bordeaux dataset.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    [1] Ricco Rakotomalala (2008), « `Analyse discriminante descriptive - vins de Bordeaux &lt;https://eric.univ-lyon2.fr/ricco/tanagra/fichiers/fr_Tanagra_Canonical_Discriminant_Analysis.pdf&gt;`_ ».</span>
+
+<span class="sd">    [3] Ricco Rakotomalala (2011), « `Analyse factorielle discriminante - Diaporama &lt;https://eric.univ-lyon2.fr/ricco/cours/slides/analyse_discriminante_descriptive.pdf&gt;`_ ».</span>
+
+<span class="sd">    [3] Ricco Rakotomalala (2020), « `Pratique de l&#39;Analyse Discriminante Linéaire &lt;https://hal.science/hal-04868585v1/file/Pratique_Analyse_Discriminante_Lineaire.pdf&gt;`_ », Version 1.0, Université Lumière Lyon 2.</span>
+
+<span class="sd">    [4] Tenenhaus Michel (1996), « Méthodes statistiques en gestion », Dunod.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from discrimintools.datasets import load_vins</span>
+<span class="sd">    &gt;&gt;&gt; from discrimintools import CANDISC</span>
+<span class="sd">    &gt;&gt;&gt; D = load_vins(&quot;train&quot;) # load training data</span>
+<span class="sd">    &gt;&gt;&gt; y, X = D[&quot;Qualite&quot;], D.drop(columns=[&quot;Qualite&quot;]) # split into X et y</span>
+<span class="sd">    &gt;&gt;&gt; clf = CANDISC(classes=(&quot;Mediocre&quot;,&quot;Moyen&quot;,&quot;Bon&quot;))</span>
+<span class="sd">    &gt;&gt;&gt; clf.fit(X,y)</span>
+<span class="sd">    CANDISC(classes=(&quot;Mediocre&quot;,&quot;Moyen&quot;,&quot;Bon&quot;))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">element</span> <span class="o">==</span> <span class="s2">&quot;train&quot;</span><span class="p">:</span>
+        <span class="n">vins</span> <span class="o">=</span> <span class="n">read_excel</span><span class="p">(</span><span class="n">DATASETS_DIR</span><span class="o">/</span><span class="s2">&quot;vins.xlsx&quot;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Feuil1&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">element</span> <span class="o">==</span> <span class="s2">&quot;test&quot;</span><span class="p">:</span>
+        <span class="n">vins</span> <span class="o">=</span> <span class="n">read_excel</span><span class="p">(</span><span class="n">DATASETS_DIR</span><span class="o">/</span><span class="s2">&quot;vins.xlsx&quot;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Feuil2&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;element&#39; should be one of &#39;train&#39;, &#39;test&#39;.&quot;</span><span class="p">)</span>
+    <span class="n">vins</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    Vins bordelais dataset</span>
+
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">vins</span></div>
+
+
+<div class="viewcode-block" id="load_vote">
+<a class="viewcode-back" href="../../source/reference/datasets/discrimintools.datasets.load_vote.html#discrimintools.datasets.load_vote">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_vote</span><span class="p">(</span><span class="n">element</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Congressional Voting Records dataset</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    element : str, default = &#39;train&#39;</span>
+<span class="sd">        The dataset to load. Possible values are:</span>
+
+<span class="sd">        - &#39;subset&#39; for subset of all dataset (with few columns).</span>
+<span class="sd">        - &#39;train&#39; for training dataset. </span>
+<span class="sd">        - &#39;test&#39; for testing dataset.</span>
+<span class="sd">    </span>
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    vote : DataFrame of shape (n_samples, n_columns)</span>
+<span class="sd">        The congressional voting records dataset.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    [1] Ricco Rakotomalala (2020), « `Pratique de l&#39;Analyse Discriminante Linéaire &lt;https://hal.science/hal-04868585v1/file/Pratique_Analyse_Discriminante_Lineaire.pdf&gt;`_ », Version 1.0, Université Lumière Lyon 2.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from discrimintools.datasets import load_vote</span>
+<span class="sd">    &gt;&gt;&gt; from discrimintools import LDAPC</span>
+<span class="sd">    &gt;&gt;&gt; D = load_vote(&quot;subset&quot;) # load subset data</span>
+<span class="sd">    &gt;&gt;&gt; y, X = D[&quot;group&quot;], D.drop(columns=[&quot;group&quot;]) # split into X and y</span>
+<span class="sd">    &gt;&gt;&gt; clf = LDAPC()</span>
+<span class="sd">    &gt;&gt;&gt; clf.fit(X,y)</span>
+<span class="sd">    LDAPC()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">element</span> <span class="o">==</span> <span class="s2">&quot;train&quot;</span><span class="p">:</span>
+        <span class="n">vote</span> <span class="o">=</span> <span class="n">read_excel</span><span class="p">(</span><span class="n">DATASETS_DIR</span><span class="o">/</span><span class="s2">&quot;vote.xlsx&quot;</span><span class="p">,</span><span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Feuil1&quot;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">element</span> <span class="o">==</span> <span class="s2">&quot;test&quot;</span><span class="p">:</span>
+        <span class="n">vote</span> <span class="o">=</span> <span class="n">read_excel</span><span class="p">(</span><span class="n">DATASETS_DIR</span><span class="o">/</span><span class="s2">&quot;vote.xlsx&quot;</span><span class="p">,</span><span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Feuil2&quot;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">element</span> <span class="o">==</span> <span class="s2">&quot;subset&quot;</span><span class="p">:</span>
+        <span class="n">vote</span> <span class="o">=</span> <span class="n">read_excel</span><span class="p">(</span><span class="n">DATASETS_DIR</span><span class="o">/</span><span class="s2">&quot;vote.xlsx&quot;</span><span class="p">,</span><span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Feuil3&quot;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;element&#39; should be one of &#39;train&#39;, &#39;test&#39;, &#39;subset&#39;&quot;</span><span class="p">)</span>
+    <span class="c1">#set documentation</span>
+    <span class="n">vote</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    Congressional Voting Records dataset</span>
+
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">vote</span></div>
+
+
+<div class="viewcode-block" id="load_wine">
+<a class="viewcode-back" href="../../source/reference/datasets/discrimintools.datasets.load_wine.html#discrimintools.datasets.load_wine">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">load_wine</span><span class="p">(</span><span class="n">element</span><span class="o">=</span><span class="s2">&quot;train&quot;</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Bordeaux Wine dataset</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    element : str, default = &#39;train&#39;</span>
+<span class="sd">        The dataset to load. Possible values are:</span>
+<span class="sd">        </span>
+<span class="sd">        - &#39;train&#39; for training dataset. </span>
+<span class="sd">        - &#39;test&#39; for testing dataset.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    wine : DataFrame of shape (n_samples, n_columns) </span>
+<span class="sd">        The Bordeaux wine dataset.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    [1] Ricco Rakotomalala (2008), « `Analyse discriminante descriptive - vins de Bordeaux &lt;https://eric.univ-lyon2.fr/ricco/tanagra/fichiers/fr_Tanagra_Canonical_Discriminant_Analysis.pdf&gt;`_ ».</span>
+
+<span class="sd">    [2] Ricco Rakotomalala (2011), « `Analyse factorielle discriminante - Diaporama &lt;https://eric.univ-lyon2.fr/ricco/cours/slides/analyse_discriminante_descriptive.pdf&gt;`_ ».</span>
+
+<span class="sd">    [3] Ricco Rakotomalala (2020), « `Pratique de l&#39;Analyse Discriminante Linéaire &lt;https://hal.science/hal-04868585v1/file/Pratique_Analyse_Discriminante_Lineaire.pdf&gt;`_ », Version 1.0, Université Lumière Lyon 2..</span>
+
+<span class="sd">    [4] Tenenhaus Michel (1996), « Méthodes statistiques en gestion », Dunod.</span>
+<span class="sd">    </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from discrimintools.datasets import load_wine</span>
+<span class="sd">    &gt;&gt;&gt; from discrimintools import CANDISC</span>
+<span class="sd">    &gt;&gt;&gt; D = load_wine(&quot;train&quot;) # load training data</span>
+<span class="sd">    &gt;&gt;&gt; y, X = D[&quot;Quality&quot;], D.drop(columns=[&quot;Quality&quot;]) # split into X and y</span>
+<span class="sd">    &gt;&gt;&gt; clf = CANDISC(classes=(&quot;bad&quot;,&quot;medium&quot;,&quot;good&quot;))</span>
+<span class="sd">    &gt;&gt;&gt; clf.fit(X,y)</span>
+<span class="sd">    CANDISC(classes=(&quot;bad&quot;,&quot;medium&quot;,&quot;good&quot;))</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">element</span> <span class="o">==</span> <span class="s2">&quot;train&quot;</span><span class="p">:</span>
+        <span class="n">wine</span> <span class="o">=</span> <span class="n">read_excel</span><span class="p">(</span><span class="n">DATASETS_DIR</span><span class="o">/</span><span class="s2">&quot;wine.xlsx&quot;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Feuil1&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">element</span> <span class="o">==</span> <span class="s2">&quot;test&quot;</span><span class="p">:</span>
+        <span class="n">wine</span> <span class="o">=</span> <span class="n">read_excel</span><span class="p">(</span><span class="n">DATASETS_DIR</span><span class="o">/</span><span class="s2">&quot;wine.xlsx&quot;</span><span class="p">,</span><span class="n">header</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">index_col</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">sheet_name</span><span class="o">=</span><span class="s2">&quot;Feuil2&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;element&#39; should be one of &#39;train&#39;, &#39;test&#39;.&quot;</span><span class="p">)</span>
+    <span class="n">wine</span><span class="o">.</span><span class="vm">__doc__</span> <span class="o">=</span> <span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">    Bordeaux Wine dataset</span>
+
+<span class="s2">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">wine</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, Duvérier DJIFACK ZEBAZE.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

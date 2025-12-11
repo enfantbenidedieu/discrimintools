@@ -1,0 +1,4254 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>STEPDISC LDA - wavenois dataset &#8212; discrimintools 0.1.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=01f34227"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'source/examples/09_stepdisc_lda_wavenoise';</script>
+    <link rel="icon" href="../../_static/discrimintools.svg"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/discrimintools.svg" class="logo__image only-light" alt=""/>
+    <img src="../../_static/discrimintools.svg" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">discrimintools</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../install/index.html">
+    Install
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../reference/index.html">
+    API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="index.html">
+    Examples
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/enfantbenidedieu/discrimintools" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../install/index.html">
+    Install
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../reference/index.html">
+    API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="index.html">
+    Examples
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/enfantbenidedieu/discrimintools" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">STEPDISC LDA - wavenois dataset</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="STEPDISC-LDA---wavenois-dataset">
+<h1>STEPDISC LDA - wavenois dataset<a class="headerlink" href="#STEPDISC-LDA---wavenois-dataset" title="Link to this heading">#</a>
+</h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate">
+<div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate">
+<div class="highlight"><pre><span></span><span class="c1">#disable warnings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">warnings</span><span class="w"> </span><span class="kn">import</span> <span class="n">simplefilter</span><span class="p">,</span> <span class="n">filterwarnings</span>
+<span class="n">simplefilter</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">'ignore'</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">FutureWarning</span><span class="p">)</span>
+<span class="n">filterwarnings</span><span class="p">(</span><span class="s2">"ignore"</span><span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">great_tables</span><span class="w"> </span><span class="kn">import</span> <span class="n">GT</span><span class="p">,</span> <span class="n">html</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">print_dt</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">subtitle</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">rowname</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">digits</span><span class="o">=</span><span class="mi">8</span><span class="p">):</span>
+    <span class="n">dt</span> <span class="o">=</span> <span class="p">(</span><span class="n">GT</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">digits</span><span class="p">)</span><span class="o">.</span><span class="n">rename_axis</span><span class="p">(</span><span class="n">rowname</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">())</span>
+          <span class="o">.</span><span class="n">tab_header</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">subtitle</span><span class="o">=</span><span class="n">subtitle</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">dt</span>
+</pre></div>
+</div>
+</div>
+<section id="weveform-dataset">
+<h2>weveform dataset<a class="headerlink" href="#weveform-dataset" title="Link to this heading">#</a>
+</h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate">
+<div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate">
+<div class="highlight"><pre><span></span><span class="c1">#vins dataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">discrimintools.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_dataset</span>
+<span class="n">D</span> <span class="o">=</span> <span class="n">load_dataset</span><span class="p">(</span><span class="s2">"wavenoise"</span><span class="p">)</span>
+<span class="p">(</span>
+    <span class="n">GT</span><span class="p">(</span><span class="n">D</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">rename_axis</span><span class="p">(</span><span class="s2">""</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">())</span>
+    <span class="o">.</span><span class="n">tab_header</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">html</span><span class="p">(</span><span class="s2">"&lt;b&gt;Waeform dataset&lt;/b&gt;"</span><span class="p">))</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate">
+<div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div id="kiqihfuksi" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>
+#kiqihfuksi table {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
+
+#kiqihfuksi thead, tbody, tfoot, tr, td, th { border-style: none !important; }
+ tr { background-color: transparent !important; }
+#kiqihfuksi p { margin: 0 !important; padding: 0 !important; }
+ #kiqihfuksi .gt_table { display: table !important; border-collapse: collapse !important; line-height: normal !important; margin-left: auto !important; margin-right: auto !important; color: #333333 !important; font-size: 16px !important; font-weight: normal !important; font-style: normal !important; background-color: #FFFFFF !important; width: auto !important; border-top-style: solid !important; border-top-width: 2px !important; border-top-color: #A8A8A8 !important; border-right-style: none !important; border-right-width: 2px !important; border-right-color: #D3D3D3 !important; border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #A8A8A8 !important; border-left-style: none !important; border-left-width: 2px !important; border-left-color: #D3D3D3 !important; }
+ #kiqihfuksi .gt_caption { padding-top: 4px !important; padding-bottom: 4px !important; }
+ #kiqihfuksi .gt_title { color: #333333 !important; font-size: 125% !important; font-weight: initial !important; padding-top: 4px !important; padding-bottom: 4px !important; padding-left: 5px !important; padding-right: 5px !important; border-bottom-color: #FFFFFF !important; border-bottom-width: 0 !important; }
+ #kiqihfuksi .gt_subtitle { color: #333333 !important; font-size: 85% !important; font-weight: initial !important; padding-top: 3px !important; padding-bottom: 5px !important; padding-left: 5px !important; padding-right: 5px !important; border-top-color: #FFFFFF !important; border-top-width: 0 !important; }
+ #kiqihfuksi .gt_heading { background-color: #FFFFFF !important; text-align: center !important; border-bottom-color: #FFFFFF !important; border-left-style: none !important; border-left-width: 1px !important; border-left-color: #D3D3D3 !important; border-right-style: none !important; border-right-width: 1px !important; border-right-color: #D3D3D3 !important; }
+ #kiqihfuksi .gt_bottom_border { border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; }
+ #kiqihfuksi .gt_col_headings { border-top-style: solid !important; border-top-width: 2px !important; border-top-color: #D3D3D3 !important; border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; border-left-style: none !important; border-left-width: 1px !important; border-left-color: #D3D3D3 !important; border-right-style: none !important; border-right-width: 1px !important; border-right-color: #D3D3D3 !important; }
+ #kiqihfuksi .gt_col_heading { color: #333333 !important; background-color: #FFFFFF !important; font-size: 100% !important; font-weight: normal !important; text-transform: inherit !important; border-left-style: none !important; border-left-width: 1px !important; border-left-color: #D3D3D3 !important; border-right-style: none !important; border-right-width: 1px !important; border-right-color: #D3D3D3 !important; vertical-align: bottom !important; padding-top: 5px !important; padding-bottom: 5px !important; padding-left: 5px !important; padding-right: 5px !important; overflow-x: hidden !important; }
+ #kiqihfuksi .gt_column_spanner_outer { color: #333333 !important; background-color: #FFFFFF !important; font-size: 100% !important; font-weight: normal !important; text-transform: inherit !important; padding-top: 0 !important; padding-bottom: 0 !important; padding-left: 4px !important; padding-right: 4px !important; }
+ #kiqihfuksi .gt_column_spanner_outer:first-child { padding-left: 0 !important; }
+ #kiqihfuksi .gt_column_spanner_outer:last-child { padding-right: 0 !important; }
+ #kiqihfuksi .gt_column_spanner { border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; vertical-align: bottom !important; padding-top: 5px !important; padding-bottom: 5px !important; overflow-x: hidden !important; display: inline-block !important; width: 100% !important; }
+ #kiqihfuksi .gt_spanner_row { border-bottom-style: hidden !important; }
+ #kiqihfuksi .gt_group_heading { padding-top: 8px !important; padding-bottom: 8px !important; padding-left: 5px !important; padding-right: 5px !important; color: #333333 !important; background-color: #FFFFFF !important; font-size: 100% !important; font-weight: initial !important; text-transform: inherit !important; border-top-style: solid !important; border-top-width: 2px !important; border-top-color: #D3D3D3 !important; border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; border-left-style: none !important; border-left-width: 1px !important; border-left-color: #D3D3D3 !important; border-right-style: none !important; border-right-width: 1px !important; border-right-color: #D3D3D3 !important; vertical-align: middle !important; text-align: left !important; }
+ #kiqihfuksi .gt_empty_group_heading { padding: 0.5px !important; color: #333333 !important; background-color: #FFFFFF !important; font-size: 100% !important; font-weight: initial !important; border-top-style: solid !important; border-top-width: 2px !important; border-top-color: #D3D3D3 !important; border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; vertical-align: middle !important; }
+ #kiqihfuksi .gt_from_md> :first-child { margin-top: 0 !important; }
+ #kiqihfuksi .gt_from_md> :last-child { margin-bottom: 0 !important; }
+ #kiqihfuksi .gt_row { padding-top: 8px !important; padding-bottom: 8px !important; padding-left: 5px !important; padding-right: 5px !important; margin: 10px !important; border-top-style: solid !important; border-top-width: 1px !important; border-top-color: #D3D3D3 !important; border-left-style: none !important; border-left-width: 1px !important; border-left-color: #D3D3D3 !important; border-right-style: none !important; border-right-width: 1px !important; border-right-color: #D3D3D3 !important; vertical-align: middle !important; overflow-x: hidden !important; }
+ #kiqihfuksi .gt_stub { color: #333333 !important; background-color: #FFFFFF !important; font-size: 100% !important; font-weight: initial !important; text-transform: inherit !important; border-right-style: solid !important; border-right-width: 2px !important; border-right-color: #D3D3D3 !important; padding-left: 5px !important; padding-right: 5px !important; }
+ #kiqihfuksi .gt_stub_row_group { color: #333333 !important; background-color: #FFFFFF !important; font-size: 100% !important; font-weight: initial !important; text-transform: inherit !important; border-right-style: solid !important; border-right-width: 2px !important; border-right-color: #D3D3D3 !important; padding-left: 5px !important; padding-right: 5px !important; vertical-align: top !important; }
+ #kiqihfuksi .gt_row_group_first td { border-top-width: 2px !important; }
+ #kiqihfuksi .gt_row_group_first th { border-top-width: 2px !important; }
+ #kiqihfuksi .gt_striped { color: #333333 !important; background-color: #F4F4F4 !important; }
+ #kiqihfuksi .gt_table_body { border-top-style: solid !important; border-top-width: 2px !important; border-top-color: #D3D3D3 !important; border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; }
+ #kiqihfuksi .gt_grand_summary_row { color: #333333 !important; background-color: #FFFFFF !important; text-transform: inherit !important; padding-top: 8px !important; padding-bottom: 8px !important; padding-left: 5px !important; padding-right: 5px !important; }
+ #kiqihfuksi .gt_first_grand_summary_row_bottom { border-top-style: double !important; border-top-width: 6px !important; border-top-color: #D3D3D3 !important; }
+ #kiqihfuksi .gt_last_grand_summary_row_top { border-bottom-style: double !important; border-bottom-width: 6px !important; border-bottom-color: #D3D3D3 !important; }
+ #kiqihfuksi .gt_sourcenotes { color: #333333 !important; background-color: #FFFFFF !important; border-bottom-style: none !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; border-left-style: none !important; border-left-width: 2px !important; border-left-color: #D3D3D3 !important; border-right-style: none !important; border-right-width: 2px !important; border-right-color: #D3D3D3 !important; }
+ #kiqihfuksi .gt_sourcenote { font-size: 90% !important; padding-top: 4px !important; padding-bottom: 4px !important; padding-left: 5px !important; padding-right: 5px !important; text-align: left !important; }
+ #kiqihfuksi .gt_left { text-align: left !important; }
+ #kiqihfuksi .gt_center { text-align: center !important; }
+ #kiqihfuksi .gt_right { text-align: right !important; font-variant-numeric: tabular-nums !important; }
+ #kiqihfuksi .gt_font_normal { font-weight: normal !important; }
+ #kiqihfuksi .gt_font_bold { font-weight: bold !important; }
+ #kiqihfuksi .gt_font_italic { font-style: italic !important; }
+ #kiqihfuksi .gt_super { font-size: 65% !important; }
+ #kiqihfuksi .gt_footnote_marks { font-size: 75% !important; vertical-align: 0.4em !important; position: initial !important; }
+ #kiqihfuksi .gt_asterisk { font-size: 100% !important; vertical-align: 0 !important; }
+
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+
+  <tr class="gt_heading">
+    <td colspan="63" class="gt_heading gt_title gt_font_normal"><b>Waeform dataset</b></td>
+  </tr>
+<tr class="gt_col_headings">
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id=""></th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="V01">V01</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="V02">V02</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="V03">V03</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="V04">V04</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="V05">V05</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="V06">V06</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="V07">V07</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="V08">V08</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="V09">V09</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="V10">V10</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="V11">V11</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="V12">V12</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="V13">V13</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="V14">V14</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="V15">V15</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="V16">V16</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="V17">V17</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="V18">V18</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="V19">V19</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="V20">V20</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="V21">V21</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy1">noisy1</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy2">noisy2</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy3">noisy3</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy4">noisy4</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy5">noisy5</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy6">noisy6</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy7">noisy7</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy8">noisy8</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy9">noisy9</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy10">noisy10</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy11">noisy11</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy12">noisy12</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy13">noisy13</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy14">noisy14</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy15">noisy15</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy16">noisy16</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy17">noisy17</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy18">noisy18</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy19">noisy19</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy20">noisy20</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy21">noisy21</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy22">noisy22</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy23">noisy23</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy24">noisy24</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy25">noisy25</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy26">noisy26</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy27">noisy27</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy28">noisy28</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy29">noisy29</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy30">noisy30</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy31">noisy31</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy32">noisy32</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy33">noisy33</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy34">noisy34</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy35">noisy35</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy36">noisy36</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy37">noisy37</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy38">noisy38</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy39">noisy39</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="noisy40">noisy40</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="classe">classe</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+  <tr>
+    <td class="gt_row gt_right">0</td>
+    <td class="gt_row gt_right">-1.23</td>
+    <td class="gt_row gt_right">-1.56</td>
+    <td class="gt_row gt_right">-1.75</td>
+    <td class="gt_row gt_right">-0.28</td>
+    <td class="gt_row gt_right">0.6</td>
+    <td class="gt_row gt_right">2.22</td>
+    <td class="gt_row gt_right">0.85</td>
+    <td class="gt_row gt_right">0.21</td>
+    <td class="gt_row gt_right">-0.2</td>
+    <td class="gt_row gt_right">0.89</td>
+    <td class="gt_row gt_right">1.08</td>
+    <td class="gt_row gt_right">4.2</td>
+    <td class="gt_row gt_right">2.89</td>
+    <td class="gt_row gt_right">7.75</td>
+    <td class="gt_row gt_right">4.59</td>
+    <td class="gt_row gt_right">3.15</td>
+    <td class="gt_row gt_right">5.12</td>
+    <td class="gt_row gt_right">3.32</td>
+    <td class="gt_row gt_right">1.2</td>
+    <td class="gt_row gt_right">0.24</td>
+    <td class="gt_row gt_right">-0.56</td>
+    <td class="gt_row gt_right">1.61</td>
+    <td class="gt_row gt_right">-1.64</td>
+    <td class="gt_row gt_right">-4.51</td>
+    <td class="gt_row gt_right">2.04</td>
+    <td class="gt_row gt_right">2.51</td>
+    <td class="gt_row gt_right">-1.48</td>
+    <td class="gt_row gt_right">-0.29</td>
+    <td class="gt_row gt_right">-0.74</td>
+    <td class="gt_row gt_right">-1.32</td>
+    <td class="gt_row gt_right">2.44</td>
+    <td class="gt_row gt_right">0.44</td>
+    <td class="gt_row gt_right">0.0</td>
+    <td class="gt_row gt_right">-4.83</td>
+    <td class="gt_row gt_right">0.69</td>
+    <td class="gt_row gt_right">-1.13</td>
+    <td class="gt_row gt_right">1.69</td>
+    <td class="gt_row gt_right">-2.31</td>
+    <td class="gt_row gt_right">0.91</td>
+    <td class="gt_row gt_right">0.51</td>
+    <td class="gt_row gt_right">-3.85</td>
+    <td class="gt_row gt_right">4.72</td>
+    <td class="gt_row gt_right">-3.52</td>
+    <td class="gt_row gt_right">-1.86</td>
+    <td class="gt_row gt_right">-1.49</td>
+    <td class="gt_row gt_right">2.66</td>
+    <td class="gt_row gt_right">1.7</td>
+    <td class="gt_row gt_right">-1.1</td>
+    <td class="gt_row gt_right">-1.83</td>
+    <td class="gt_row gt_right">-0.01</td>
+    <td class="gt_row gt_right">2.43</td>
+    <td class="gt_row gt_right">0.98</td>
+    <td class="gt_row gt_right">1.61</td>
+    <td class="gt_row gt_right">0.2</td>
+    <td class="gt_row gt_right">0.28</td>
+    <td class="gt_row gt_right">2.9</td>
+    <td class="gt_row gt_right">1.85</td>
+    <td class="gt_row gt_right">-0.75</td>
+    <td class="gt_row gt_right">6.06</td>
+    <td class="gt_row gt_right">-1.02</td>
+    <td class="gt_row gt_right">-0.53</td>
+    <td class="gt_row gt_left">C</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">1</td>
+    <td class="gt_row gt_right">-0.69</td>
+    <td class="gt_row gt_right">2.43</td>
+    <td class="gt_row gt_right">0.61</td>
+    <td class="gt_row gt_right">2.08</td>
+    <td class="gt_row gt_right">2.3</td>
+    <td class="gt_row gt_right">3.25</td>
+    <td class="gt_row gt_right">5.52</td>
+    <td class="gt_row gt_right">4.55</td>
+    <td class="gt_row gt_right">2.97</td>
+    <td class="gt_row gt_right">2.22</td>
+    <td class="gt_row gt_right">2.81</td>
+    <td class="gt_row gt_right">1.61</td>
+    <td class="gt_row gt_right">1.24</td>
+    <td class="gt_row gt_right">1.89</td>
+    <td class="gt_row gt_right">1.88</td>
+    <td class="gt_row gt_right">-1.34</td>
+    <td class="gt_row gt_right">0.83</td>
+    <td class="gt_row gt_right">1.41</td>
+    <td class="gt_row gt_right">1.78</td>
+    <td class="gt_row gt_right">0.6</td>
+    <td class="gt_row gt_right">2.42</td>
+    <td class="gt_row gt_right">1.6</td>
+    <td class="gt_row gt_right">2.06</td>
+    <td class="gt_row gt_right">1.72</td>
+    <td class="gt_row gt_right">1.61</td>
+    <td class="gt_row gt_right">4.13</td>
+    <td class="gt_row gt_right">-0.83</td>
+    <td class="gt_row gt_right">0.36</td>
+    <td class="gt_row gt_right">-3.56</td>
+    <td class="gt_row gt_right">-0.55</td>
+    <td class="gt_row gt_right">-0.49</td>
+    <td class="gt_row gt_right">-0.53</td>
+    <td class="gt_row gt_right">3.44</td>
+    <td class="gt_row gt_right">3.93</td>
+    <td class="gt_row gt_right">-4.35</td>
+    <td class="gt_row gt_right">0.32</td>
+    <td class="gt_row gt_right">-0.24</td>
+    <td class="gt_row gt_right">-2.07</td>
+    <td class="gt_row gt_right">-2.02</td>
+    <td class="gt_row gt_right">-1.65</td>
+    <td class="gt_row gt_right">-0.23</td>
+    <td class="gt_row gt_right">0.79</td>
+    <td class="gt_row gt_right">3.28</td>
+    <td class="gt_row gt_right">0.12</td>
+    <td class="gt_row gt_right">-9.02</td>
+    <td class="gt_row gt_right">4.21</td>
+    <td class="gt_row gt_right">4.72</td>
+    <td class="gt_row gt_right">-1.4</td>
+    <td class="gt_row gt_right">0.06</td>
+    <td class="gt_row gt_right">-3.99</td>
+    <td class="gt_row gt_right">-2.86</td>
+    <td class="gt_row gt_right">0.98</td>
+    <td class="gt_row gt_right">3.24</td>
+    <td class="gt_row gt_right">1.92</td>
+    <td class="gt_row gt_right">2.29</td>
+    <td class="gt_row gt_right">2.13</td>
+    <td class="gt_row gt_right">-0.4</td>
+    <td class="gt_row gt_right">-0.93</td>
+    <td class="gt_row gt_right">-0.14</td>
+    <td class="gt_row gt_right">0.5</td>
+    <td class="gt_row gt_right">-0.94</td>
+    <td class="gt_row gt_left">B</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">2</td>
+    <td class="gt_row gt_right">-0.12</td>
+    <td class="gt_row gt_right">-0.94</td>
+    <td class="gt_row gt_right">1.29</td>
+    <td class="gt_row gt_right">2.59</td>
+    <td class="gt_row gt_right">2.42</td>
+    <td class="gt_row gt_right">3.55</td>
+    <td class="gt_row gt_right">4.94</td>
+    <td class="gt_row gt_right">3.25</td>
+    <td class="gt_row gt_right">1.9</td>
+    <td class="gt_row gt_right">2.07</td>
+    <td class="gt_row gt_right">0.51</td>
+    <td class="gt_row gt_right">1.45</td>
+    <td class="gt_row gt_right">2.5</td>
+    <td class="gt_row gt_right">0.12</td>
+    <td class="gt_row gt_right">1.41</td>
+    <td class="gt_row gt_right">2.78</td>
+    <td class="gt_row gt_right">0.64</td>
+    <td class="gt_row gt_right">0.62</td>
+    <td class="gt_row gt_right">-0.01</td>
+    <td class="gt_row gt_right">-0.79</td>
+    <td class="gt_row gt_right">-0.12</td>
+    <td class="gt_row gt_right">0.99</td>
+    <td class="gt_row gt_right">-6.26</td>
+    <td class="gt_row gt_right">1.77</td>
+    <td class="gt_row gt_right">2.0</td>
+    <td class="gt_row gt_right">-0.03</td>
+    <td class="gt_row gt_right">-2.03</td>
+    <td class="gt_row gt_right">-4.12</td>
+    <td class="gt_row gt_right">-0.65</td>
+    <td class="gt_row gt_right">0.45</td>
+    <td class="gt_row gt_right">-2.61</td>
+    <td class="gt_row gt_right">-1.92</td>
+    <td class="gt_row gt_right">-0.93</td>
+    <td class="gt_row gt_right">-0.43</td>
+    <td class="gt_row gt_right">0.22</td>
+    <td class="gt_row gt_right">0.92</td>
+    <td class="gt_row gt_right">-1.98</td>
+    <td class="gt_row gt_right">-1.18</td>
+    <td class="gt_row gt_right">-0.95</td>
+    <td class="gt_row gt_right">1.82</td>
+    <td class="gt_row gt_right">1.11</td>
+    <td class="gt_row gt_right">-3.82</td>
+    <td class="gt_row gt_right">0.3</td>
+    <td class="gt_row gt_right">-0.04</td>
+    <td class="gt_row gt_right">-1.87</td>
+    <td class="gt_row gt_right">-7.55</td>
+    <td class="gt_row gt_right">-3.95</td>
+    <td class="gt_row gt_right">-3.32</td>
+    <td class="gt_row gt_right">-3.97</td>
+    <td class="gt_row gt_right">1.21</td>
+    <td class="gt_row gt_right">6.55</td>
+    <td class="gt_row gt_right">1.38</td>
+    <td class="gt_row gt_right">0.06</td>
+    <td class="gt_row gt_right">-1.47</td>
+    <td class="gt_row gt_right">-0.26</td>
+    <td class="gt_row gt_right">-0.24</td>
+    <td class="gt_row gt_right">3.7</td>
+    <td class="gt_row gt_right">1.89</td>
+    <td class="gt_row gt_right">0.52</td>
+    <td class="gt_row gt_right">-1.61</td>
+    <td class="gt_row gt_right">0.05</td>
+    <td class="gt_row gt_left">A</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">3</td>
+    <td class="gt_row gt_right">0.86</td>
+    <td class="gt_row gt_right">0.29</td>
+    <td class="gt_row gt_right">2.19</td>
+    <td class="gt_row gt_right">-0.02</td>
+    <td class="gt_row gt_right">1.13</td>
+    <td class="gt_row gt_right">2.51</td>
+    <td class="gt_row gt_right">2.37</td>
+    <td class="gt_row gt_right">5.45</td>
+    <td class="gt_row gt_right">5.45</td>
+    <td class="gt_row gt_right">4.84</td>
+    <td class="gt_row gt_right">4.65</td>
+    <td class="gt_row gt_right">4.05</td>
+    <td class="gt_row gt_right">2.58</td>
+    <td class="gt_row gt_right">1.4</td>
+    <td class="gt_row gt_right">1.24</td>
+    <td class="gt_row gt_right">1.41</td>
+    <td class="gt_row gt_right">1.07</td>
+    <td class="gt_row gt_right">-1.43</td>
+    <td class="gt_row gt_right">2.84</td>
+    <td class="gt_row gt_right">-1.18</td>
+    <td class="gt_row gt_right">1.12</td>
+    <td class="gt_row gt_right">-2.17</td>
+    <td class="gt_row gt_right">0.83</td>
+    <td class="gt_row gt_right">0.11</td>
+    <td class="gt_row gt_right">-0.89</td>
+    <td class="gt_row gt_right">4.63</td>
+    <td class="gt_row gt_right">-2.28</td>
+    <td class="gt_row gt_right">2.21</td>
+    <td class="gt_row gt_right">-0.53</td>
+    <td class="gt_row gt_right">1.36</td>
+    <td class="gt_row gt_right">1.17</td>
+    <td class="gt_row gt_right">3.29</td>
+    <td class="gt_row gt_right">5.06</td>
+    <td class="gt_row gt_right">1.81</td>
+    <td class="gt_row gt_right">1.45</td>
+    <td class="gt_row gt_right">-3.0</td>
+    <td class="gt_row gt_right">3.98</td>
+    <td class="gt_row gt_right">3.25</td>
+    <td class="gt_row gt_right">-0.22</td>
+    <td class="gt_row gt_right">0.36</td>
+    <td class="gt_row gt_right">3.23</td>
+    <td class="gt_row gt_right">4.92</td>
+    <td class="gt_row gt_right">0.12</td>
+    <td class="gt_row gt_right">-4.34</td>
+    <td class="gt_row gt_right">0.64</td>
+    <td class="gt_row gt_right">0.88</td>
+    <td class="gt_row gt_right">-0.46</td>
+    <td class="gt_row gt_right">-2.23</td>
+    <td class="gt_row gt_right">2.06</td>
+    <td class="gt_row gt_right">-1.78</td>
+    <td class="gt_row gt_right">-0.11</td>
+    <td class="gt_row gt_right">2.46</td>
+    <td class="gt_row gt_right">-0.54</td>
+    <td class="gt_row gt_right">-2.78</td>
+    <td class="gt_row gt_right">-3.72</td>
+    <td class="gt_row gt_right">-2.76</td>
+    <td class="gt_row gt_right">2.94</td>
+    <td class="gt_row gt_right">-2.71</td>
+    <td class="gt_row gt_right">-3.29</td>
+    <td class="gt_row gt_right">-0.41</td>
+    <td class="gt_row gt_right">-0.45</td>
+    <td class="gt_row gt_left">B</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">4</td>
+    <td class="gt_row gt_right">1.16</td>
+    <td class="gt_row gt_right">0.37</td>
+    <td class="gt_row gt_right">0.4</td>
+    <td class="gt_row gt_right">-0.59</td>
+    <td class="gt_row gt_right">2.66</td>
+    <td class="gt_row gt_right">1.0</td>
+    <td class="gt_row gt_right">2.69</td>
+    <td class="gt_row gt_right">4.06</td>
+    <td class="gt_row gt_right">5.34</td>
+    <td class="gt_row gt_right">3.53</td>
+    <td class="gt_row gt_right">4.82</td>
+    <td class="gt_row gt_right">4.79</td>
+    <td class="gt_row gt_right">4.3</td>
+    <td class="gt_row gt_right">1.84</td>
+    <td class="gt_row gt_right">1.73</td>
+    <td class="gt_row gt_right">0.21</td>
+    <td class="gt_row gt_right">-0.18</td>
+    <td class="gt_row gt_right">0.13</td>
+    <td class="gt_row gt_right">-0.21</td>
+    <td class="gt_row gt_right">-0.8</td>
+    <td class="gt_row gt_right">-0.68</td>
+    <td class="gt_row gt_right">-8.44</td>
+    <td class="gt_row gt_right">1.64</td>
+    <td class="gt_row gt_right">0.6</td>
+    <td class="gt_row gt_right">-0.74</td>
+    <td class="gt_row gt_right">1.54</td>
+    <td class="gt_row gt_right">0.24</td>
+    <td class="gt_row gt_right">2.74</td>
+    <td class="gt_row gt_right">1.27</td>
+    <td class="gt_row gt_right">-1.2</td>
+    <td class="gt_row gt_right">4.63</td>
+    <td class="gt_row gt_right">-0.49</td>
+    <td class="gt_row gt_right">-1.6</td>
+    <td class="gt_row gt_right">2.46</td>
+    <td class="gt_row gt_right">-2.44</td>
+    <td class="gt_row gt_right">0.15</td>
+    <td class="gt_row gt_right">-0.1</td>
+    <td class="gt_row gt_right">-0.96</td>
+    <td class="gt_row gt_right">1.8</td>
+    <td class="gt_row gt_right">-3.77</td>
+    <td class="gt_row gt_right">2.06</td>
+    <td class="gt_row gt_right">-3.47</td>
+    <td class="gt_row gt_right">-0.82</td>
+    <td class="gt_row gt_right">-2.16</td>
+    <td class="gt_row gt_right">-2.47</td>
+    <td class="gt_row gt_right">3.78</td>
+    <td class="gt_row gt_right">-0.23</td>
+    <td class="gt_row gt_right">-3.97</td>
+    <td class="gt_row gt_right">1.32</td>
+    <td class="gt_row gt_right">2.03</td>
+    <td class="gt_row gt_right">0.35</td>
+    <td class="gt_row gt_right">-3.29</td>
+    <td class="gt_row gt_right">2.16</td>
+    <td class="gt_row gt_right">4.17</td>
+    <td class="gt_row gt_right">-0.84</td>
+    <td class="gt_row gt_right">-5.35</td>
+    <td class="gt_row gt_right">-3.63</td>
+    <td class="gt_row gt_right">-4.7</td>
+    <td class="gt_row gt_right">2.71</td>
+    <td class="gt_row gt_right">-2.86</td>
+    <td class="gt_row gt_right">-1.39</td>
+    <td class="gt_row gt_left">B</td>
+  </tr>
+</tbody>
+
+
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="instanciation-&amp;-training">
+<h2>
+<code class="docutils literal notranslate"><span class="pre">instanciation</span> <span class="pre">&amp;</span> <span class="pre">training</span></code><a class="headerlink" href="#instanciation-&amp;-training" title="Link to this heading">#</a>
+</h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate">
+<div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate">
+<div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">discrimintools</span><span class="w"> </span><span class="kn">import</span> <span class="n">DISCRIM</span>
+<span class="c1">#split into X and y</span>
+<span class="n">y</span><span class="p">,</span> <span class="n">X</span> <span class="o">=</span> <span class="n">D</span><span class="p">[</span><span class="s2">"classe"</span><span class="p">],</span> <span class="n">D</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"classe"</span><span class="p">])</span>
+<span class="n">clf</span> <span class="o">=</span> <span class="n">DISCRIM</span><span class="p">()</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate">
+<div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<style>#sk-container-id-1 {
+  /* Definition of color scheme common for light and dark mode */
+  --sklearn-color-text: #000;
+  --sklearn-color-text-muted: #666;
+  --sklearn-color-line: gray;
+  /* Definition of color scheme for unfitted estimators */
+  --sklearn-color-unfitted-level-0: #fff5e6;
+  --sklearn-color-unfitted-level-1: #f6e4d2;
+  --sklearn-color-unfitted-level-2: #ffe0b3;
+  --sklearn-color-unfitted-level-3: chocolate;
+  /* Definition of color scheme for fitted estimators */
+  --sklearn-color-fitted-level-0: #f0f8ff;
+  --sklearn-color-fitted-level-1: #d4ebff;
+  --sklearn-color-fitted-level-2: #b3dbfd;
+  --sklearn-color-fitted-level-3: cornflowerblue;
+
+  /* Specific color for light theme */
+  --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
+  --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-icon: #696969;
+
+  @media (prefers-color-scheme: dark) {
+    /* Redefinition of color scheme for dark theme */
+    --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
+    --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-icon: #878787;
+  }
+}
+
+#sk-container-id-1 {
+  color: var(--sklearn-color-text);
+}
+
+#sk-container-id-1 pre {
+  padding: 0;
+}
+
+#sk-container-id-1 input.sk-hidden--visually {
+  border: 0;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+#sk-container-id-1 div.sk-dashed-wrapped {
+  border: 1px dashed var(--sklearn-color-line);
+  margin: 0 0.4em 0.5em 0.4em;
+  box-sizing: border-box;
+  padding-bottom: 0.4em;
+  background-color: var(--sklearn-color-background);
+}
+
+#sk-container-id-1 div.sk-container {
+  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
+     but bootstrap.min.css set `[hidden] { display: none !important; }`
+     so we also need the `!important` here to be able to override the
+     default hidden behavior on the sphinx rendered scikit-learn.org.
+     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
+  display: inline-block !important;
+  position: relative;
+}
+
+#sk-container-id-1 div.sk-text-repr-fallback {
+  display: none;
+}
+
+div.sk-parallel-item,
+div.sk-serial,
+div.sk-item {
+  /* draw centered vertical line to link estimators */
+  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
+  background-size: 2px 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* Parallel-specific style estimator block */
+
+#sk-container-id-1 div.sk-parallel-item::after {
+  content: "";
+  width: 100%;
+  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
+  flex-grow: 1;
+}
+
+#sk-container-id-1 div.sk-parallel {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background-color: var(--sklearn-color-background);
+  position: relative;
+}
+
+#sk-container-id-1 div.sk-parallel-item {
+  display: flex;
+  flex-direction: column;
+}
+
+#sk-container-id-1 div.sk-parallel-item:first-child::after {
+  align-self: flex-end;
+  width: 50%;
+}
+
+#sk-container-id-1 div.sk-parallel-item:last-child::after {
+  align-self: flex-start;
+  width: 50%;
+}
+
+#sk-container-id-1 div.sk-parallel-item:only-child::after {
+  width: 0;
+}
+
+/* Serial-specific style estimator block */
+
+#sk-container-id-1 div.sk-serial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--sklearn-color-background);
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+
+/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
+clickable and can be expanded/collapsed.
+- Pipeline and ColumnTransformer use this feature and define the default style
+- Estimators will overwrite some part of the style using the `sk-estimator` class
+*/
+
+/* Pipeline and ColumnTransformer style (default) */
+
+#sk-container-id-1 div.sk-toggleable {
+  /* Default theme specific background. It is overwritten whether we have a
+  specific estimator or a Pipeline/ColumnTransformer */
+  background-color: var(--sklearn-color-background);
+}
+
+/* Toggleable label */
+#sk-container-id-1 label.sk-toggleable__label {
+  cursor: pointer;
+  display: flex;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 0.5em;
+  box-sizing: border-box;
+  text-align: center;
+  align-items: start;
+  justify-content: space-between;
+  gap: 0.5em;
+}
+
+#sk-container-id-1 label.sk-toggleable__label .caption {
+  font-size: 0.6rem;
+  font-weight: lighter;
+  color: var(--sklearn-color-text-muted);
+}
+
+#sk-container-id-1 label.sk-toggleable__label-arrow:before {
+  /* Arrow on the left of the label */
+  content: "▸";
+  float: left;
+  margin-right: 0.25em;
+  color: var(--sklearn-color-icon);
+}
+
+#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {
+  color: var(--sklearn-color-text);
+}
+
+/* Toggleable content - dropdown */
+
+#sk-container-id-1 div.sk-toggleable__content {
+  display: none;
+  text-align: left;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content pre {
+  margin: 0.2em;
+  border-radius: 0.25em;
+  color: var(--sklearn-color-text);
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content.fitted pre {
+  /* unfitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+  /* Expand drop-down */
+  display: block;
+  width: 100%;
+  overflow: visible;
+}
+
+#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+  content: "▾";
+}
+
+/* Pipeline/ColumnTransformer-specific style */
+
+#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator-specific style */
+
+/* Colorize estimator box */
+#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+#sk-container-id-1 div.sk-label label.sk-toggleable__label,
+#sk-container-id-1 div.sk-label label {
+  /* The background is the default theme color */
+  color: var(--sklearn-color-text-on-default-background);
+}
+
+/* On hover, darken the color of the background */
+#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+/* Label box, darken color on hover, fitted */
+#sk-container-id-1 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator label */
+
+#sk-container-id-1 div.sk-label label {
+  font-family: monospace;
+  font-weight: bold;
+  display: inline-block;
+  line-height: 1.2em;
+}
+
+#sk-container-id-1 div.sk-label-container {
+  text-align: center;
+}
+
+/* Estimator-specific */
+#sk-container-id-1 div.sk-estimator {
+  font-family: monospace;
+  border: 1px dotted var(--sklearn-color-border-box);
+  border-radius: 0.25em;
+  box-sizing: border-box;
+  margin-bottom: 0.5em;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+/* on hover */
+#sk-container-id-1 div.sk-estimator:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Specification for estimator info (e.g. "i" and "?") */
+
+/* Common style for "i" and "?" */
+
+.sk-estimator-doc-link,
+a:link.sk-estimator-doc-link,
+a:visited.sk-estimator-doc-link {
+  float: right;
+  font-size: smaller;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1em;
+  height: 1em;
+  width: 1em;
+  text-decoration: none !important;
+  margin-left: 0.5em;
+  text-align: center;
+  /* unfitted */
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-1);
+}
+
+.sk-estimator-doc-link.fitted,
+a:link.sk-estimator-doc-link.fitted,
+a:visited.sk-estimator-doc-link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+div.sk-estimator:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover,
+div.sk-label-container:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover,
+div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+/* Span, style for the box shown on hovering the info icon */
+.sk-estimator-doc-link span {
+  display: none;
+  z-index: 9999;
+  position: relative;
+  font-weight: normal;
+  right: .2ex;
+  padding: .5ex;
+  margin: .5ex;
+  width: min-content;
+  min-width: 20ex;
+  max-width: 50ex;
+  color: var(--sklearn-color-text);
+  box-shadow: 2pt 2pt 4pt #999;
+  /* unfitted */
+  background: var(--sklearn-color-unfitted-level-0);
+  border: .5pt solid var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted span {
+  /* fitted */
+  background: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3);
+}
+
+.sk-estimator-doc-link:hover span {
+  display: block;
+}
+
+/* "?"-specific style due to the `<a>` HTML tag */
+
+#sk-container-id-1 a.estimator_doc_link {
+  float: right;
+  font-size: 1rem;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1rem;
+  height: 1rem;
+  width: 1rem;
+  text-decoration: none;
+  /* unfitted */
+  color: var(--sklearn-color-unfitted-level-1);
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+}
+
+#sk-container-id-1 a.estimator_doc_link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+#sk-container-id-1 a.estimator_doc_link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+#sk-container-id-1 a.estimator_doc_link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+}
+
+.estimator-table summary {
+    padding: .5rem;
+    font-family: monospace;
+    cursor: pointer;
+}
+
+.estimator-table details[open] {
+    padding-left: 0.1rem;
+    padding-right: 0.1rem;
+    padding-bottom: 0.3rem;
+}
+
+.estimator-table .parameters-table {
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.estimator-table .parameters-table tr:nth-child(odd) {
+    background-color: #fff;
+}
+
+.estimator-table .parameters-table tr:nth-child(even) {
+    background-color: #f6f6f6;
+}
+
+.estimator-table .parameters-table tr:hover {
+    background-color: #e0e0e0;
+}
+
+.estimator-table table td {
+    border: 1px solid rgba(106, 105, 104, 0.232);
+}
+
+.user-set td {
+    color:rgb(255, 94, 0);
+    text-align: left;
+}
+
+.user-set td.value pre {
+    color:rgb(255, 94, 0) !important;
+    background-color: transparent !important;
+}
+
+.default td {
+    color: black;
+    text-align: left;
+}
+
+.user-set td i,
+.default td i {
+    color: black;
+}
+
+.copy-paste-icon {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NDggNTEyIj48IS0tIUZvbnQgQXdlc29tZSBGcmVlIDYuNy4yIGJ5IEBmb250YXdlc29tZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tIExpY2Vuc2UgLSBodHRwczovL2ZvbnRhd2Vzb21lLmNvbS9saWNlbnNlL2ZyZWUgQ29weXJpZ2h0IDIwMjUgRm9udGljb25zLCBJbmMuLS0+PHBhdGggZD0iTTIwOCAwTDMzMi4xIDBjMTIuNyAwIDI0LjkgNS4xIDMzLjkgMTQuMWw2Ny45IDY3LjljOSA5IDE0LjEgMjEuMiAxNC4xIDMzLjlMNDQ4IDMzNmMwIDI2LjUtMjEuNSA0OC00OCA0OGwtMTkyIDBjLTI2LjUgMC00OC0yMS41LTQ4LTQ4bDAtMjg4YzAtMjYuNSAyMS41LTQ4IDQ4LTQ4ek00OCAxMjhsODAgMCAwIDY0LTY0IDAgMCAyNTYgMTkyIDAgMC0zMiA2NCAwIDAgNDhjMCAyNi41LTIxLjUgNDgtNDggNDhMNDggNTEyYy0yNi41IDAtNDgtMjEuNS00OC00OEwwIDE3NmMwLTI2LjUgMjEuNS00OCA0OC00OHoiLz48L3N2Zz4=);
+    background-repeat: no-repeat;
+    background-size: 14px 14px;
+    background-position: 0;
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+}
+</style>
+<div id="sk-container-id-1" class="sk-top-container">
+<div class="sk-text-repr-fallback">
+<pre>DISCRIM(priors='prop')</pre>
+<b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b>
+</div>
+<div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable">
+<input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>DISCRIM</div></div>
+<div><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
+        <div class="estimator-table">
+            <details>
+                <summary>Parameters</summary>
+                <table class="parameters-table">
+                  <tbody>
+
+        <tr class="default">
+            <td><i class="copy-paste-icon" onclick="copyToClipboard('method',
+                          this.parentElement.nextElementSibling)"></i></td>
+            <td class="param">method </td>
+            <td class="value">'linear'</td>
+        </tr>
+
+
+        <tr class="user-set">
+            <td><i class="copy-paste-icon" onclick="copyToClipboard('priors',
+                          this.parentElement.nextElementSibling)"></i></td>
+            <td class="param">priors </td>
+            <td class="value">'prop'</td>
+        </tr>
+
+
+        <tr class="default">
+            <td><i class="copy-paste-icon" onclick="copyToClipboard('classes',
+                          this.parentElement.nextElementSibling)"></i></td>
+            <td class="param">classes </td>
+            <td class="value">None</td>
+        </tr>
+
+
+        <tr class="default">
+            <td><i class="copy-paste-icon" onclick="copyToClipboard('var_select',
+                          this.parentElement.nextElementSibling)"></i></td>
+            <td class="param">var_select </td>
+            <td class="value">False</td>
+        </tr>
+
+
+        <tr class="default">
+            <td><i class="copy-paste-icon" onclick="copyToClipboard('level',
+                          this.parentElement.nextElementSibling)"></i></td>
+            <td class="param">level </td>
+            <td class="value">None</td>
+        </tr>
+
+
+        <tr class="default">
+            <td><i class="copy-paste-icon" onclick="copyToClipboard('tol',
+                          this.parentElement.nextElementSibling)"></i></td>
+            <td class="param">tol </td>
+            <td class="value">None</td>
+        </tr>
+
+
+        <tr class="default">
+            <td><i class="copy-paste-icon" onclick="copyToClipboard('warn_message',
+                          this.parentElement.nextElementSibling)"></i></td>
+            <td class="param">warn_message </td>
+            <td class="value">True</td>
+        </tr>
+
+                  </tbody>
+                </table>
+            </details>
+        </div>
+    </div>
+</div></div></div>
+</div>
+<script>function copyToClipboard(text, element) {
+    // Get the parameter prefix from the closest toggleable content
+    const toggleableContent = element.closest('.sk-toggleable__content');
+    const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
+    const fullParamName = paramPrefix ? `${paramPrefix}${text}` : text;
+
+    const originalStyle = element.style;
+    const computedStyle = window.getComputedStyle(element);
+    const originalWidth = computedStyle.width;
+    const originalHTML = element.innerHTML.replace('Copied!', '');
+
+    navigator.clipboard.writeText(fullParamName)
+        .then(() => {
+            element.style.width = originalWidth;
+            element.style.color = 'green';
+            element.innerHTML = "Copied!";
+
+            setTimeout(() => {
+                element.innerHTML = originalHTML;
+                element.style = originalStyle;
+            }, 2000);
+        })
+        .catch(err => {
+            console.error('Failed to copy:', err);
+            element.style.color = 'red';
+            element.innerHTML = "Failed!";
+            setTimeout(() => {
+                element.innerHTML = originalHTML;
+                element.style = originalStyle;
+            }, 2000);
+        });
+    return false;
+}
+
+document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
+    const toggleableContent = element.closest('.sk-toggleable__content');
+    const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
+    const paramName = element.parentElement.nextElementSibling.textContent.trim();
+    const fullParamName = paramPrefix ? `${paramPrefix}${paramName}` : paramName;
+
+    element.setAttribute('title', fullParamName);
+});
+</script>
+</div>
+</div>
+</section>
+<section id="forward">
+<h2>
+<code class="docutils literal notranslate"><span class="pre">forward</span></code><a class="headerlink" href="#forward" title="Link to this heading">#</a>
+</h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate">
+<div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate">
+<div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">discrimintools</span><span class="w"> </span><span class="kn">import</span> <span class="n">STEPDISC</span>
+<span class="n">clf2</span> <span class="o">=</span> <span class="n">STEPDISC</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">"forward"</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">clf2</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">clf</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+====================== Step 1 forward selection results =======================
+         Wilks' Lambda  Partial R-Square      F Value  Num DF  Den DF  \
+V01           0.999400          0.000600     1.499319       2    4997
+V02           0.947882          0.052118   137.375321       2    4997
+V03           0.853547          0.146453   428.697599       2    4997
+V04           0.750799          0.249201   829.286754       2    4997
+V05           0.668073          0.331927  1241.358322       2    4997
+...                ...               ...          ...     ...     ...
+noisy36       0.999648          0.000352     0.879410       2    4997
+noisy37       0.999953          0.000047     0.116597       2    4997
+noisy38       0.999103          0.000897     2.243096       2    4997
+noisy39       0.999906          0.000094     0.234189       2    4997
+noisy40       0.999725          0.000275     0.687115       2    4997
+
+                  Pr&gt;F
+V01       2.233827e-01
+V02       8.338596e-59
+V03      1.484031e-172
+V04      9.916918e-312
+V05       0.000000e+00
+...                ...
+noisy36   4.150918e-01
+noisy37   8.899463e-01
+noisy38   1.062363e-01
+noisy39   7.912206e-01
+noisy40   5.030725e-01
+
+[61 rows x 6 columns]
+
+Variable V07 will enter
+
+
+====================== Step 2 forward selection results =======================
+         Wilks' Lambda  Partial R-Square      F Value  Num DF  Den DF  \
+V01           0.619365          0.000554     1.384327       2    4996
+V02           0.612597          0.011475    28.996684       2    4996
+V03           0.597780          0.035385    91.633051       2    4996
+V04           0.574247          0.073360   197.760422       2    4996
+V05           0.549123          0.113900   321.096081       2    4996
+V06           0.563788          0.090236   247.767527       2    4996
+V08           0.546247          0.118541   335.938914       2    4996
+V09           0.486789          0.214486   682.085061       2    4996
+V10           0.449081          0.275334   949.106739       2    4996
+V11           0.427781          0.309706  1120.746845       2    4996
+V12           0.488193          0.212222   672.942236       2    4996
+V13           0.548674          0.114625   323.403876       2    4996
+V14           0.578911          0.065833   176.040399       2    4996
+V15           0.525618          0.151829   447.161973       2    4996
+V16           0.517493          0.164940   493.402981       2    4996
+V17           0.488494          0.211736   670.988372       2    4996
+V18           0.521675          0.158192   469.424258       2    4996
+V19           0.569384          0.081207   220.784397       2    4996
+V20           0.604223          0.024987    64.017907       2    4996
+V21           0.619593          0.000187     0.466257       2    4996
+noisy1        0.619481          0.000367     0.917607       2    4996
+noisy2        0.619461          0.000399     0.996427       2    4996
+noisy3        0.619642          0.000106     0.265768       2    4996
+noisy4        0.619236          0.000762     1.905187       2    4996
+noisy5        0.619502          0.000332     0.830535       2    4996
+noisy6        0.618573          0.001832     4.585712       2    4996
+noisy7        0.619551          0.000254     0.633688       2    4996
+noisy8        0.619688          0.000032     0.080499       2    4996
+noisy9        0.619608          0.000162     0.404177       2    4996
+noisy10       0.619661          0.000077     0.192623       2    4996
+noisy11       0.619677          0.000051     0.128133       2    4996
+noisy12       0.619690          0.000030     0.075222       2    4996
+noisy13       0.619623          0.000137     0.342534       2    4996
+noisy14       0.619607          0.000163     0.408343       2    4996
+noisy15       0.619596          0.000181     0.451833       2    4996
+noisy16       0.619375          0.000539     1.346263       2    4996
+noisy17       0.619628          0.000129     0.322286       2    4996
+noisy18       0.619327          0.000615     1.537296       2    4996
+noisy19       0.619654          0.000088     0.220637       2    4996
+noisy20       0.619389          0.000516     1.288388       2    4996
+noisy21       0.619663          0.000072     0.180626       2    4996
+noisy22       0.619520          0.000303     0.758272       2    4996
+noisy23       0.619481          0.000367     0.917764       2    4996
+noisy24       0.619696          0.000020     0.051060       2    4996
+noisy25       0.619437          0.000438     1.094940       2    4996
+noisy26       0.619040          0.001078     2.695879       2    4996
+noisy27       0.619241          0.000754     1.884764       2    4996
+noisy28       0.619565          0.000231     0.575980       2    4996
+noisy29       0.619209          0.000806     2.014925       2    4996
+noisy30       0.619544          0.000265     0.662126       2    4996
+noisy31       0.619346          0.000584     1.459371       2    4996
+noisy32       0.619666          0.000068     0.171036       2    4996
+noisy33       0.619705          0.000006     0.014292       2    4996
+noisy34       0.619324          0.000620     1.550116       2    4996
+noisy35       0.619579          0.000209     0.521791       2    4996
+noisy36       0.619552          0.000253     0.631739       2    4996
+noisy37       0.619594          0.000184     0.458946       2    4996
+noisy38       0.619317          0.000631     1.577970       2    4996
+noisy39       0.619664          0.000072     0.178695       2    4996
+noisy40       0.619462          0.000398     0.994029       2    4996
+
+                  Pr&gt;F
+V01       2.505883e-01
+V02       3.015988e-13
+V03       8.256642e-40
+V04       2.208161e-83
+V05      6.477769e-132
+V06      2.534059e-103
+V08      1.301576e-137
+V09      1.241469e-262
+V10       0.000000e+00
+V11       0.000000e+00
+V12      1.649871e-259
+V13      8.388496e-133
+V14       1.319245e-74
+V15      2.244696e-179
+V16      2.820622e-196
+V17      7.693564e-259
+V18      1.518983e-187
+V19       1.311377e-92
+V20       3.529088e-28
+V21       6.273733e-01
+noisy1    3.995412e-01
+noisy2    3.692698e-01
+noisy3    7.666277e-01
+noisy4    1.489029e-01
+noisy5    4.358761e-01
+noisy6    1.023945e-02
+noisy7    5.306740e-01
+noisy8    9.226569e-01
+noisy9    6.675475e-01
+noisy10   8.247991e-01
+noisy11   8.797390e-01
+noisy12   9.275387e-01
+noisy13   7.099859e-01
+noisy14   6.647729e-01
+noisy15   6.364866e-01
+noisy16   2.603053e-01
+noisy17   7.245063e-01
+noisy18   2.150632e-01
+noisy19   8.020156e-01
+noisy20   2.758064e-01
+noisy21   8.347532e-01
+noisy22   4.685289e-01
+noisy23   3.994786e-01
+noisy24   9.502223e-01
+noisy25   3.346400e-01
+noisy26   6.758118e-02
+noisy27   1.519729e-01
+noisy28   5.621908e-01
+noisy29   1.334387e-01
+noisy30   5.157990e-01
+noisy31   2.324814e-01
+noisy32   8.427963e-01
+noisy33   9.858096e-01
+noisy34   2.123253e-01
+noisy35   5.934889e-01
+noisy36   5.317087e-01
+noisy37   6.319763e-01
+noisy38   2.064965e-01
+noisy39   8.363664e-01
+noisy40   3.701559e-01
+
+Variable V11 will enter
+
+
+====================== Step 3 forward selection results =======================
+         Wilks' Lambda  Partial R-Square     F Value  Num DF  Den DF  \
+V01           0.427754          0.000063    0.156192       2    4995
+V02           0.425291          0.005820   14.620050       2    4995
+V03           0.420212          0.017693   44.984645       2    4995
+V04           0.411207          0.038744  100.662544       2    4995
+V05           0.400474          0.063835  170.298833       2    4995
+V06           0.395797          0.074766  201.818375       2    4995
+V08           0.391465          0.084893  231.688779       2    4995
+V09           0.388643          0.091490  251.507787       2    4995
+V10           0.387979          0.093042  256.211713       2    4995
+V12           0.399923          0.065121  173.969601       2    4995
+V13           0.400911          0.062813  167.389966       2    4995
+V14           0.399780          0.065457  174.930215       2    4995
+V15           0.388174          0.092586  254.827469       2    4995
+V16           0.392113          0.083379  227.180826       2    4995
+V17           0.387570          0.093999  259.118248       2    4995
+V18           0.397961          0.069709  187.143294       2    4995
+V19           0.416187          0.027104   69.577775       2    4995
+V20           0.423642          0.009675   24.399558       2    4995
+V21           0.427747          0.000080    0.199518       2    4995
+noisy1        0.427606          0.000409    1.022999       2    4995
+noisy2        0.427582          0.000466    1.164285       2    4995
+noisy3        0.427706          0.000175    0.437877       2    4995
+noisy4        0.427676          0.000245    0.611952       2    4995
+noisy5        0.427574          0.000485    1.211535       2    4995
+noisy6        0.426998          0.001831    4.582515       2    4995
+noisy7        0.427630          0.000353    0.880752       2    4995
+noisy8        0.427697          0.000196    0.488885       2    4995
+noisy9        0.427761          0.000046    0.115280       2    4995
+noisy10       0.427756          0.000059    0.148360       2    4995
+noisy11       0.427775          0.000015    0.038229       2    4995
+noisy12       0.427766          0.000035    0.086864       2    4995
+noisy13       0.427716          0.000152    0.380181       2    4995
+noisy14       0.427534          0.000577    1.442777       2    4995
+noisy15       0.427697          0.000196    0.488664       2    4995
+noisy16       0.427614          0.000391    0.977484       2    4995
+noisy17       0.427742          0.000090    0.225782       2    4995
+noisy18       0.427467          0.000735    1.836254       2    4995
+noisy19       0.427740          0.000095    0.237163       2    4995
+noisy20       0.427499          0.000660    1.648980       2    4995
+noisy21       0.427775          0.000014    0.035537       2    4995
+noisy22       0.427679          0.000239    0.595854       2    4995
+noisy23       0.427759          0.000051    0.126337       2    4995
+noisy24       0.427733          0.000113    0.282431       2    4995
+noisy25       0.427649          0.000308    0.768409       2    4995
+noisy26       0.427474          0.000719    1.795987       2    4995
+noisy27       0.427458          0.000755    1.888051       2    4995
+noisy28       0.427586          0.000455    1.136616       2    4995
+noisy29       0.427480          0.000705    1.761312       2    4995
+noisy30       0.427696          0.000199    0.498218       2    4995
+noisy31       0.427531          0.000585    1.462165       2    4995
+noisy32       0.427744          0.000087    0.216627       2    4995
+noisy33       0.427778          0.000007    0.018063       2    4995
+noisy34       0.427473          0.000720    1.800151       2    4995
+noisy35       0.427628          0.000357    0.891138       2    4995
+noisy36       0.427779          0.000004    0.009607       2    4995
+noisy37       0.427670          0.000260    0.650232       2    4995
+noisy38       0.427422          0.000840    2.098824       2    4995
+noisy39       0.427762          0.000044    0.110896       2    4995
+noisy40       0.427654          0.000298    0.744063       2    4995
+
+                  Pr&gt;F
+V01       8.553990e-01
+V02       4.667721e-07
+V03       4.337878e-20
+V04       1.383090e-43
+V05       2.835734e-72
+V06       5.162213e-85
+V08       5.972003e-97
+V09      8.472143e-105
+V10      1.184664e-106
+V12       9.146657e-74
+V13       4.324868e-71
+V14       3.726587e-74
+V15      4.158794e-106
+V16       3.708333e-95
+V17      8.498714e-108
+V18       4.223974e-79
+V19       1.570396e-30
+V20       2.849930e-11
+V21       8.191322e-01
+noisy1    3.595904e-01
+noisy2    3.122305e-01
+noisy3    6.454299e-01
+noisy4    5.423321e-01
+noisy5    2.978275e-01
+noisy6    1.027218e-02
+noisy7    4.145353e-01
+noisy8    6.133394e-01
+noisy9    8.911192e-01
+noisy10   8.621248e-01
+noisy11   9.624929e-01
+noisy12   9.168034e-01
+noisy13   6.837571e-01
+noisy14   2.363693e-01
+noisy15   6.134746e-01
+noisy16   3.763285e-01
+noisy17   7.979003e-01
+noisy18   1.595210e-01
+noisy19   7.888713e-01
+noisy20   1.923506e-01
+noisy21   9.650871e-01
+noisy22   5.511308e-01
+noisy23   8.813203e-01
+noisy24   7.539610e-01
+noisy25   4.638050e-01
+noisy26   1.660707e-01
+noisy27   1.514746e-01
+noisy28   3.209861e-01
+noisy29   1.719260e-01
+noisy30   6.076424e-01
+noisy31   2.318332e-01
+noisy32   8.052379e-01
+noisy33   9.820988e-01
+noisy34   1.653811e-01
+noisy35   4.102538e-01
+noisy36   9.904395e-01
+noisy37   5.219687e-01
+noisy38   1.227087e-01
+noisy39   8.950339e-01
+noisy40   4.752319e-01
+
+Variable V17 will enter
+
+
+====================== Step 4 forward selection results =======================
+         Wilks' Lambda  Partial R-Square     F Value  Num DF  Den DF  \
+V01           0.387504      1.711376e-04    0.427404       2    4994
+V02           0.385389      5.628529e-03   14.133989       2    4994
+V03           0.380927      1.714107e-02   43.547696       2    4994
+V04           0.373370      3.663905e-02   94.967229       2    4994
+V05           0.363948      6.094905e-02  162.067642       2    4994
+V06           0.362018      6.592817e-02  176.241942       2    4994
+V08           0.367907      5.073410e-02  133.453704       2    4994
+V09           0.370067      4.516272e-02  118.105258       2    4994
+V10           0.366487      5.439740e-02  143.644181       2    4994
+V12           0.363478      6.216270e-02  165.508733       2    4994
+V13           0.363876      6.113584e-02  162.596677       2    4994
+V14           0.369900      4.559245e-02  119.282747       2    4994
+V15           0.369633      4.628052e-02  121.170275       2    4994
+V16           0.372711      3.834003e-02   99.551878       2    4994
+V18           0.373828      3.545626e-02   91.788774       2    4994
+V19           0.383111      1.150590e-02   29.064653       2    4994
+V20           0.385789      4.594747e-03   11.526043       2    4994
+V21           0.387539      8.028552e-05    0.200489       2    4994
+noisy1        0.387420      3.883477e-04    0.970081       2    4994
+noisy2        0.387391      4.627725e-04    1.156078       2    4994
+noisy3        0.387534      9.478758e-05    0.236707       2    4994
+noisy4        0.387443      3.294460e-04    0.822898       2    4994
+noisy5        0.387445      3.223367e-04    0.805134       2    4994
+noisy6        0.386860      1.832903e-03    4.585163       2    4994
+noisy7        0.387393      4.571500e-04    1.142026       2    4994
+noisy8        0.387538      8.440269e-05    0.210771       2    4994
+noisy9        0.387570      7.886329e-07    0.001969       2    4994
+noisy10       0.387566      1.200279e-05    0.029971       2    4994
+noisy11       0.387561      2.360774e-05    0.058950       2    4994
+noisy12       0.387564      1.659845e-05    0.041447       2    4994
+noisy13       0.387527      1.110974e-04    0.277441       2    4994
+noisy14       0.387400      4.401333e-04    1.099497       2    4994
+noisy15       0.387492      2.006592e-04    0.501147       2    4994
+noisy16       0.387420      3.882499e-04    0.969837       2    4994
+noisy17       0.387499      1.847543e-04    0.461417       2    4994
+noisy18       0.387302      6.923979e-04    1.730115       2    4994
+noisy19       0.387454      3.011054e-04    0.752087       2    4994
+noisy20       0.387303      6.884434e-04    1.720227       2    4994
+noisy21       0.387557      3.322708e-05    0.082971       2    4994
+noisy22       0.387481      2.300103e-04    0.574468       2    4994
+noisy23       0.387550      5.170950e-05    0.129125       2    4994
+noisy24       0.387515      1.434645e-04    0.358282       2    4994
+noisy25       0.387466      2.693682e-04    0.672794       2    4994
+noisy26       0.387392      4.602935e-04    1.149882       2    4994
+noisy27       0.387324      6.350490e-04    1.586725       2    4994
+noisy28       0.387402      4.334429e-04    1.082776       2    4994
+noisy29       0.387376      5.024096e-04    1.255147       2    4994
+noisy30       0.387511      1.540897e-04    0.384821       2    4994
+noisy31       0.387374      5.052499e-04    1.262247       2    4994
+noisy32       0.387546      6.133157e-05    0.153154       2    4994
+noisy33       0.387557      3.382348e-05    0.084460       2    4994
+noisy34       0.387277      7.553429e-04    1.887517       2    4994
+noisy35       0.387432      3.576234e-04    0.893305       2    4994
+noisy36       0.387567      9.239368e-06    0.023071       2    4994
+noisy37       0.387471      2.565791e-04    0.640842       2    4994
+noisy38       0.387274      7.639881e-04    1.909137       2    4994
+noisy39       0.387550      5.153167e-05    0.128681       2    4994
+noisy40       0.387478      2.383177e-04    0.595221       2    4994
+
+                 Pr&gt;F
+V01      6.522240e-01
+V02      7.568221e-07
+V03      1.780330e-19
+V04      3.320648e-41
+V05      6.380073e-69
+V06      1.095340e-74
+V08      3.447749e-57
+V09      7.649496e-51
+V10      2.210634e-61
+V12      2.525637e-70
+V13      3.882338e-69
+V14      2.485770e-51
+V15      4.105577e-52
+V16      4.025140e-43
+V18      7.109656e-40
+V19      2.820195e-13
+V20      1.013493e-05
+V21      8.183370e-01
+noisy1   3.791238e-01
+noisy2   3.148023e-01
+noisy3   7.892313e-01
+noisy4   4.392167e-01
+noisy5   4.470859e-01
+noisy6   1.024507e-02
+noisy7   3.192552e-01
+noisy8   8.099665e-01
+noisy9   9.980327e-01
+noisy10  9.704735e-01
+noisy11  9.427546e-01
+noisy12  9.594005e-01
+noisy13  7.577320e-01
+noisy14  3.331193e-01
+noisy15  6.058661e-01
+noisy16  3.792164e-01
+noisy17  6.304167e-01
+noisy18  1.773702e-01
+noisy19  4.714353e-01
+noisy20  1.791315e-01
+noisy21  9.203793e-01
+noisy22  5.630416e-01
+noisy23  8.788668e-01
+noisy24  6.988938e-01
+noisy25  5.103273e-01
+noisy26  3.167579e-01
+noisy27  2.046977e-01
+noisy28  3.387335e-01
+noisy29  2.851237e-01
+noisy30  6.805925e-01
+noisy31  2.831077e-01
+noisy32  8.580013e-01
+noisy33  9.190097e-01
+noisy34  1.515554e-01
+noisy35  4.093661e-01
+noisy36  9.771933e-01
+noisy37  5.268917e-01
+noisy38  1.483164e-01
+noisy39  8.792571e-01
+noisy40  5.514797e-01
+
+Variable V06 will enter
+
+
+====================== Step 5 forward selection results =======================
+         Wilks' Lambda  Partial R-Square     F Value  Num DF  Den DF  \
+V01           0.361935      2.301600e-04    0.574727       2    4993
+V02           0.361130      2.452798e-03    6.138466       2    4993
+V03           0.358750      9.028683e-03   22.745468       2    4993
+V04           0.355024      1.931946e-02   49.181188       2    4993
+V05           0.349629      3.422379e-02   88.467370       2    4993
+V08           0.349494      3.459477e-02   89.460710       2    4993
+V09           0.346628      4.251214e-02  110.843776       2    4993
+V10           0.342042      5.517993e-02  145.802029       2    4993
+V12           0.346279      4.347752e-02  113.475243       2    4993
+V13           0.349346      3.500371e-02   90.556590       2    4993
+V14           0.353037      2.480969e-02   63.513130       2    4993
+V15           0.350356      3.221537e-02   83.102868       2    4993
+V16           0.351378      2.939267e-02   75.600920       2    4993
+V18           0.350624      3.147535e-02   81.131854       2    4993
+V19           0.358433      9.904929e-03   24.975030       2    4993
+V20           0.360505      4.179394e-03   10.477647       2    4993
+V21           0.361989      8.068275e-05    0.201441       2    4993
+noisy1        0.361868      4.157077e-04    1.038246       2    4993
+noisy2        0.361858      4.438309e-04    1.108516       2    4993
+noisy3        0.361979      1.093467e-04    0.273014       2    4993
+noisy4        0.361911      2.955536e-04    0.738068       2    4993
+noisy5        0.361900      3.275752e-04    0.818059       2    4993
+noisy6        0.361323      1.919695e-03    4.801737       2    4993
+noisy7        0.361796      6.155738e-04    1.537727       2    4993
+noisy8        0.361989      8.036623e-05    0.200650       2    4993
+noisy9        0.362018      2.777834e-07    0.000693       2    4993
+noisy10       0.362006      3.537316e-05    0.088312       2    4993
+noisy11       0.362003      4.258839e-05    0.106326       2    4993
+noisy12       0.362013      1.456345e-05    0.036358       2    4993
+noisy13       0.361941      2.140175e-04    0.534409       2    4993
+noisy14       0.361859      4.407164e-04    1.100734       2    4993
+noisy15       0.361936      2.287619e-04    0.571235       2    4993
+noisy16       0.361882      3.770300e-04    0.941610       2    4993
+noisy17       0.361955      1.765341e-04    0.440795       2    4993
+noisy18       0.361771      6.841664e-04    1.709191       2    4993
+noisy19       0.361930      2.432620e-04    0.607451       2    4993
+noisy20       0.361762      7.088420e-04    1.770879       2    4993
+noisy21       0.362011      2.171636e-05    0.054216       2    4993
+noisy22       0.361976      1.181146e-04    0.294908       2    4993
+noisy23       0.361997      5.987228e-05    0.149480       2    4993
+noisy24       0.361978      1.114005e-04    0.278142       2    4993
+noisy25       0.361950      1.893659e-04    0.472841       2    4993
+noisy26       0.361831      5.170489e-04    1.291480       2    4993
+noisy27       0.361766      6.966159e-04    1.740314       2    4993
+noisy28       0.361917      2.809628e-04    0.701621       2    4993
+noisy29       0.361865      4.227272e-04    1.055785       2    4993
+noisy30       0.361961      1.581973e-04    0.395002       2    4993
+noisy31       0.361795      6.180078e-04    1.543811       2    4993
+noisy32       0.361989      8.068471e-05    0.201446       2    4993
+noisy33       0.362004      3.907251e-05    0.097548       2    4993
+noisy34       0.361693      8.984748e-04    2.245060       2    4993
+noisy35       0.361927      2.519472e-04    0.629145       2    4993
+noisy36       0.362015      8.267511e-06    0.020640       2    4993
+noisy37       0.361938      2.210491e-04    0.551971       2    4993
+noisy38       0.361713      8.423683e-04    2.104745       2    4993
+noisy39       0.362002      4.472585e-05    0.111663       2    4993
+noisy40       0.361972      1.281333e-04    0.319926       2    4993
+
+                 Pr&gt;F
+V01      5.628959e-01
+V02      2.174553e-03
+V03      1.467227e-10
+V04      7.055802e-22
+V05      1.754667e-38
+V08      6.724145e-39
+V09      7.929010e-48
+V10      2.877784e-62
+V12      6.390328e-49
+V13      2.334879e-39
+V14      5.776054e-28
+V15      3.137419e-36
+V16      4.510884e-33
+V18      2.115016e-35
+V19      1.612046e-11
+V20      2.878311e-05
+V21      8.175587e-01
+noisy1   3.541516e-01
+noisy2   3.301297e-01
+noisy3   7.610936e-01
+noisy4   4.780889e-01
+noisy5   4.413463e-01
+noisy6   8.253443e-03
+noisy7   2.149708e-01
+noisy8   8.182050e-01
+noisy9   9.993068e-01
+noisy10  9.154764e-01
+noisy11  8.991331e-01
+noisy12  9.642951e-01
+noisy13  5.860490e-01
+noisy14  3.327077e-01
+noisy15  5.648645e-01
+noisy16  3.900686e-01
+noisy17  6.435495e-01
+noisy18  1.811181e-01
+noisy19  5.447777e-01
+noisy20  1.702901e-01
+noisy21  9.472280e-01
+noisy22  7.446131e-01
+noisy23  8.611594e-01
+noisy24  7.572007e-01
+noisy25  6.232568e-01
+noisy26  2.749554e-01
+noisy27  1.755717e-01
+noisy28  4.958299e-01
+noisy29  3.479970e-01
+noisy30  6.736997e-01
+noisy31  2.136677e-01
+noisy32  8.175547e-01
+noisy33  9.070602e-01
+noisy34  1.060281e-01
+noisy35  5.330898e-01
+noisy36  9.795716e-01
+noisy37  5.758489e-01
+noisy38  1.219848e-01
+noisy39  8.943478e-01
+noisy40  7.262177e-01
+
+Variable V10 will enter
+
+
+====================== Step 6 forward selection results =======================
+         Wilks' Lambda  Partial R-Square    F Value  Num DF  Den DF  \
+V01           0.341999      1.273618e-04   0.317936       2    4992
+V02           0.341281      2.225135e-03   5.566323       2    4992
+V03           0.339271      8.101130e-03  20.385568       2    4992
+V04           0.335774      1.832506e-02  46.593182       2    4992
+V05           0.330921      3.251370e-02  83.881500       2    4992
+V08           0.331730      3.014889e-02  77.590897       2    4992
+V09           0.332380      2.824897e-02  72.559148       2    4992
+V12           0.330616      3.340731e-02  86.266580       2    4992
+V13           0.330782      3.292169e-02  84.969902       2    4992
+V14           0.333729      2.430351e-02  62.172566       2    4992
+V15           0.333749      2.424772e-02  62.026299       2    4992
+V16           0.335210      1.997627e-02  50.877095       2    4992
+V18           0.334681      2.152170e-02  54.899703       2    4992
+V19           0.339795      6.571029e-03  16.509775       2    4992
+V20           0.340972      3.130098e-03   7.837257       2    4992
+V21           0.342039      9.385104e-06   0.023425       2    4992
+noisy1        0.341897      4.247550e-04   1.060639       2    4992
+noisy2        0.341864      5.220424e-04   1.303698       2    4992
+noisy3        0.341989      1.559770e-04   0.389379       2    4992
+noisy4        0.341940      2.976086e-04   0.743052       2    4992
+noisy5        0.341940      3.003487e-04   0.749896       2    4992
+noisy6        0.341372      1.959882e-03   4.901473       2    4992
+noisy7        0.341825      6.358146e-04   1.588003       2    4992
+noisy8        0.342026      4.720890e-05   0.117839       2    4992
+noisy9        0.342042      1.368661e-07   0.000342       2    4992
+noisy10       0.342028      4.247661e-05   0.106026       2    4992
+noisy11       0.342017      7.372448e-05   0.184030       2    4992
+noisy12       0.342036      1.883501e-05   0.047013       2    4992
+noisy13       0.341968      2.170985e-04   0.541996       2    4992
+noisy14       0.341955      2.563311e-04   0.639966       2    4992
+noisy15       0.341960      2.394618e-04   0.597840       2    4992
+noisy16       0.341898      4.213949e-04   1.052245       2    4992
+noisy17       0.341999      1.253463e-04   0.312904       2    4992
+noisy18       0.341838      5.980637e-04   1.493660       2    4992
+noisy19       0.342016      7.752674e-05   0.193522       2    4992
+noisy20       0.341908      3.913387e-04   0.977164       2    4992
+noisy21       0.342038      1.303940e-05   0.032547       2    4992
+noisy22       0.341995      1.387991e-04   0.346491       2    4992
+noisy23       0.342038      1.345854e-05   0.033593       2    4992
+noisy24       0.342017      7.258455e-05   0.181184       2    4992
+noisy25       0.341978      1.888195e-04   0.471383       2    4992
+noisy26       0.341901      4.132296e-04   1.031848       2    4992
+noisy27       0.341807      6.883048e-04   1.719192       2    4992
+noisy28       0.341991      1.510287e-04   0.377025       2    4992
+noisy29       0.341897      4.260994e-04   1.063998       2    4992
+noisy30       0.341986      1.650753e-04   0.412096       2    4992
+noisy31       0.341820      6.493280e-04   1.621776       2    4992
+noisy32       0.341973      2.024150e-04   0.505330       2    4992
+noisy33       0.342028      4.290138e-05   0.107086       2    4992
+noisy34       0.341742      8.792729e-04   2.196596       2    4992
+noisy35       0.341990      1.529562e-04   0.381837       2    4992
+noisy36       0.342041      2.905079e-06   0.007251       2    4992
+noisy37       0.341973      2.040360e-04   0.509378       2    4992
+noisy38       0.341801      7.068494e-04   1.765544       2    4992
+noisy39       0.342027      4.609859e-05   0.115067       2    4992
+noisy40       0.342015      7.975406e-05   0.199082       2    4992
+
+                 Pr&gt;F
+V01      7.276644e-01
+V02      3.848294e-03
+V03      1.522715e-09
+V04      8.941005e-21
+V05      1.477330e-36
+V08      6.544146e-34
+V09      8.655756e-32
+V12      1.471607e-37
+V13      5.155323e-37
+V14      2.135996e-27
+V15      2.463665e-27
+V16      1.338249e-22
+V18      2.604891e-24
+V19      7.136827e-08
+V20      3.996273e-04
+V21      9.768469e-01
+noisy1   3.463125e-01
+noisy2   2.716182e-01
+noisy3   6.774978e-01
+noisy4   4.757124e-01
+noisy5   4.724691e-01
+noisy6   7.471447e-03
+noisy7   2.044365e-01
+noisy8   8.888416e-01
+noisy9   9.996584e-01
+noisy10  8.994032e-01
+noisy11  8.319166e-01
+noisy12  9.540753e-01
+noisy13  5.816207e-01
+noisy14  5.273534e-01
+noisy15  5.500379e-01
+noisy16  3.492304e-01
+noisy17  7.313347e-01
+noisy18  2.246496e-01
+noisy19  8.240581e-01
+noisy20  3.764491e-01
+noisy21  9.679774e-01
+noisy22  7.071825e-01
+noisy23  9.669652e-01
+noisy24  8.342872e-01
+noisy25  6.241666e-01
+noisy26  3.564240e-01
+noisy27  1.793169e-01
+noisy28  6.859187e-01
+noisy29  3.451518e-01
+noisy30  6.622832e-01
+noisy31  1.976517e-01
+noisy32  6.033373e-01
+noisy33  8.984501e-01
+noisy34  1.112884e-01
+noisy35  6.826261e-01
+noisy36  9.927751e-01
+noisy37  6.009005e-01
+noisy38  1.712005e-01
+noisy39  8.913084e-01
+noisy40  8.194892e-01
+
+Variable V12 will enter
+
+
+====================== Step 7 forward selection results =======================
+         Wilks' Lambda  Partial R-Square    F Value  Num DF  Den DF  \
+V01           0.330558          0.000173   0.431199       2    4991
+V02           0.330077          0.001630   4.074043       2    4991
+V03           0.328809          0.005464  13.709093       2    4991
+V04           0.326082          0.013713  34.695706       2    4991
+V05           0.322588          0.024281  62.100190       2    4991
+V08           0.320897          0.029396  75.578757       2    4991
+V09           0.321587          0.027309  70.062969       2    4991
+V13           0.322300          0.025153  64.387804       2    4991
+V14           0.323640          0.021100  53.790472       2    4991
+V15           0.322624          0.024171  61.811849       2    4991
+V16           0.324009          0.019984  50.886476       2    4991
+V18           0.323643          0.021088  53.759327       2    4991
+V19           0.328460          0.006521  16.380108       2    4991
+V20           0.329664          0.002879   7.206083       2    4991
+V21           0.330613          0.000008   0.020558       2    4991
+noisy1        0.330449          0.000504   1.259345       2    4991
+noisy2        0.330473          0.000431   1.075726       2    4991
+noisy3        0.330566          0.000150   0.373977       2    4991
+noisy4        0.330526          0.000271   0.676531       2    4991
+noisy5        0.330522          0.000283   0.705617       2    4991
+noisy6        0.329989          0.001895   4.738850       2    4991
+noisy7        0.330487          0.000390   0.972454       2    4991
+noisy8        0.330573          0.000128   0.319926       2    4991
+noisy9        0.330614          0.000005   0.011367       2    4991
+noisy10       0.330583          0.000099   0.246525       2    4991
+noisy11       0.330608          0.000024   0.059464       2    4991
+noisy12       0.330603          0.000038   0.093822       2    4991
+noisy13       0.330541          0.000225   0.562008       2    4991
+noisy14       0.330536          0.000242   0.603998       2    4991
+noisy15       0.330542          0.000222   0.554095       2    4991
+noisy16       0.330484          0.000399   0.995349       2    4991
+noisy17       0.330575          0.000122   0.304697       2    4991
+noisy18       0.330460          0.000470   1.172912       2    4991
+noisy19       0.330584          0.000094   0.235801       2    4991
+noisy20       0.330479          0.000414   1.034643       2    4991
+noisy21       0.330609          0.000018   0.046062       2    4991
+noisy22       0.330570          0.000137   0.342890       2    4991
+noisy23       0.330606          0.000030   0.074719       2    4991
+noisy24       0.330577          0.000117   0.292058       2    4991
+noisy25       0.330557          0.000178   0.443421       2    4991
+noisy26       0.330471          0.000439   1.095334       2    4991
+noisy27       0.330389          0.000686   1.712867       2    4991
+noisy28       0.330583          0.000099   0.248294       2    4991
+noisy29       0.330519          0.000292   0.728289       2    4991
+noisy30       0.330558          0.000173   0.432200       2    4991
+noisy31       0.330421          0.000588   1.467836       2    4991
+noisy32       0.330547          0.000208   0.518712       2    4991
+noisy33       0.330599          0.000050   0.125144       2    4991
+noisy34       0.330280          0.001014   2.531880       2    4991
+noisy35       0.330575          0.000121   0.303235       2    4991
+noisy36       0.330610          0.000017   0.042017       2    4991
+noisy37       0.330571          0.000134   0.335025       2    4991
+noisy38       0.330378          0.000720   1.797769       2    4991
+noisy39       0.330598          0.000052   0.130667       2    4991
+noisy40       0.330581          0.000103   0.257582       2    4991
+
+                 Pr&gt;F
+V01      6.497540e-01
+V02      1.706508e-02
+V03      1.154810e-06
+V04      1.085510e-15
+V05      2.292634e-27
+V08      4.611003e-33
+V09      9.802847e-31
+V13      2.462591e-28
+V14      7.714474e-24
+V15      3.037566e-27
+V16      1.326136e-22
+V18      7.953296e-24
+V19      8.118105e-08
+V20      7.498040e-04
+V21      9.796515e-01
+noisy1   2.839300e-01
+noisy2   3.411291e-01
+noisy3   6.880121e-01
+noisy4   5.084242e-01
+noisy5   4.938530e-01
+noisy6   8.788106e-03
+noisy7   3.782257e-01
+noisy8   7.262177e-01
+noisy9   9.886973e-01
+noisy10  7.815213e-01
+noisy11  9.422701e-01
+noisy12  9.104464e-01
+noisy13  5.700996e-01
+noisy14  5.466617e-01
+noisy15  5.746277e-01
+noisy16  3.696678e-01
+noisy17  7.373602e-01
+noisy18  3.095497e-01
+noisy19  7.899464e-01
+noisy20  3.554296e-01
+noisy21  9.549835e-01
+noisy22  7.097330e-01
+noisy23  9.280051e-01
+noisy24  7.467383e-01
+noisy25  6.418621e-01
+noisy26  3.345082e-01
+noisy27  1.804539e-01
+noisy28  7.801399e-01
+noisy29  4.827854e-01
+noisy30  6.491037e-01
+noisy31  2.305231e-01
+noisy32  5.953190e-01
+noisy33  8.823725e-01
+noisy34  7.961150e-02
+noisy35  7.384390e-01
+noisy36  9.588541e-01
+noisy37  7.153364e-01
+noisy38  1.657754e-01
+noisy39  8.775132e-01
+noisy40  7.729287e-01
+
+Variable V08 will enter
+
+
+====================== Step 8 forward selection results =======================
+         Wilks' Lambda  Partial R-Square    F Value  Num DF  Den DF  \
+V01           0.320840          0.000176   0.438631       2    4990
+V02           0.320494          0.001255   3.135853       2    4990
+V03           0.319479          0.004420  11.076385       2    4990
+V04           0.317050          0.011989  30.274482       2    4990
+V05           0.314653          0.019456  49.506124       2    4990
+V09           0.314342          0.020426  52.024306       2    4990
+V13           0.314178          0.020938  53.356470       2    4990
+V14           0.316401          0.014011  35.455293       2    4990
+V15           0.316191          0.014665  37.133574       2    4990
+V16           0.317101          0.011828  29.864681       2    4990
+V18           0.315768          0.015983  40.525951       2    4990
+V19           0.319474          0.004434  11.111847       2    4990
+V20           0.320233          0.002068   5.170261       2    4990
+V21           0.320888          0.000028   0.068686       2    4990
+noisy1        0.320710          0.000583   1.454932       2    4990
+noisy2        0.320772          0.000389   0.972076       2    4990
+noisy3        0.320825          0.000223   0.555779       2    4990
+noisy4        0.320797          0.000312   0.778007       2    4990
+noisy5        0.320805          0.000286   0.713744       2    4990
+noisy6        0.320346          0.001717   4.292339       2    4990
+noisy7        0.320761          0.000423   1.055114       2    4990
+noisy8        0.320856          0.000129   0.321316       2    4990
+noisy9        0.320885          0.000037   0.092735       2    4990
+noisy10       0.320861          0.000112   0.279873       2    4990
+noisy11       0.320888          0.000028   0.069749       2    4990
+noisy12       0.320881          0.000048   0.120959       2    4990
+noisy13       0.320853          0.000135   0.337456       2    4990
+noisy14       0.320821          0.000235   0.586774       2    4990
+noisy15       0.320823          0.000231   0.576685       2    4990
+noisy16       0.320759          0.000430   1.073300       2    4990
+noisy17       0.320861          0.000112   0.278490       2    4990
+noisy18       0.320751          0.000456   1.137572       2    4990
+noisy19       0.320852          0.000138   0.345306       2    4990
+noisy20       0.320781          0.000362   0.903960       2    4990
+noisy21       0.320892          0.000015   0.037318       2    4990
+noisy22       0.320816          0.000252   0.629174       2    4990
+noisy23       0.320886          0.000034   0.084548       2    4990
+noisy24       0.320859          0.000118   0.293512       2    4990
+noisy25       0.320841          0.000175   0.437059       2    4990
+noisy26       0.320780          0.000364   0.909193       2    4990
+noisy27       0.320606          0.000907   2.264457       2    4990
+noisy28       0.320881          0.000051   0.126961       2    4990
+noisy29       0.320803          0.000292   0.729864       2    4990
+noisy30       0.320846          0.000159   0.395750       2    4990
+noisy31       0.320706          0.000595   1.484943       2    4990
+noisy32       0.320843          0.000169   0.420564       2    4990
+noisy33       0.320882          0.000045   0.111972       2    4990
+noisy34       0.320562          0.001043   2.603873       2    4990
+noisy35       0.320843          0.000168   0.419258       2    4990
+noisy36       0.320890          0.000020   0.050895       2    4990
+noisy37       0.320864          0.000104   0.259065       2    4990
+noisy38       0.320667          0.000717   1.791135       2    4990
+noisy39       0.320873          0.000073   0.182855       2    4990
+noisy40       0.320855          0.000131   0.327155       2    4990
+
+                 Pr&gt;F
+V01      6.449433e-01
+V02      4.354834e-02
+V03      1.585745e-05
+V04      8.532761e-14
+V05      5.132023e-22
+V09      4.349748e-23
+V13      1.179989e-23
+V14      5.132671e-16
+V15      9.815812e-17
+V16      1.279218e-13
+V18      3.477065e-18
+V19      1.530737e-05
+V20      5.713569e-03
+V21      9.336211e-01
+noisy1   2.335153e-01
+noisy2   3.783686e-01
+noisy3   5.736609e-01
+noisy4   4.593764e-01
+noisy5   4.898570e-01
+noisy6   1.372342e-02
+noisy7   3.482304e-01
+noisy8   7.252092e-01
+noisy9   9.114368e-01
+noisy10  7.558912e-01
+noisy11  9.326285e-01
+noisy12  8.860727e-01
+noisy13  7.135997e-01
+noisy14  5.561567e-01
+noisy15  5.617952e-01
+noisy16  3.419573e-01
+noisy17  7.569379e-01
+noisy18  3.206796e-01
+noisy19  7.080209e-01
+noisy20  4.050293e-01
+noisy21  9.633704e-01
+noisy22  5.330741e-01
+noisy23  9.189293e-01
+noisy24  7.456530e-01
+noisy25  6.459582e-01
+noisy26  4.029160e-01
+noisy27  1.039932e-01
+noisy28  8.807709e-01
+noisy29  4.820259e-01
+noisy30  6.731962e-01
+noisy31  2.266152e-01
+noisy32  6.566994e-01
+noisy33  8.940713e-01
+noisy34  7.408701e-02
+noisy35  6.575579e-01
+noisy36  9.503793e-01
+noisy37  7.717835e-01
+noisy38  1.668779e-01
+noisy39  8.328945e-01
+noisy40  7.209878e-01
+
+Variable V13 will enter
+
+
+====================== Step 9 forward selection results =======================
+         Wilks' Lambda  Partial R-Square    F Value  Num DF  Den DF  \
+V01           0.314120          0.000186   0.463155       2    4989
+V02           0.313925          0.000806   2.011949       2    4989
+V03           0.313160          0.003241   8.110556       2    4989
+V04           0.311501          0.008522  21.440360       2    4989
+V05           0.309931          0.013519  34.186301       2    4989
+V09           0.307701          0.020616  52.508903       2    4989
+V14           0.310870          0.010529  26.542808       2    4989
+V15           0.309899          0.013619  34.440668       2    4989
+V16           0.310622          0.011318  28.556829       2    4989
+V18           0.309221          0.015778  39.990150       2    4989
+V19           0.312810          0.004355  10.909919       2    4989
+V20           0.313529          0.002067   5.166154       2    4989
+V21           0.314148          0.000095   0.237432       2    4989
+noisy1        0.313975          0.000648   1.616657       2    4989
+noisy2        0.314066          0.000357   0.891076       2    4989
+noisy3        0.314099          0.000253   0.631729       2    4989
+noisy4        0.314056          0.000388   0.969228       2    4989
+noisy5        0.314088          0.000286   0.714381       2    4989
+noisy6        0.313669          0.001621   4.050166       2    4989
+noisy7        0.314057          0.000384   0.957910       2    4989
+noisy8        0.314128          0.000158   0.394916       2    4989
+noisy9        0.314166          0.000037   0.092400       2    4989
+noisy10       0.314125          0.000169   0.422556       2    4989
+noisy11       0.314171          0.000024   0.058852       2    4989
+noisy12       0.314161          0.000056   0.138605       2    4989
+noisy13       0.314128          0.000160   0.400253       2    4989
+noisy14       0.314103          0.000238   0.592932       2    4989
+noisy15       0.314119          0.000189   0.471924       2    4989
+noisy16       0.314034          0.000458   1.142549       2    4989
+noisy17       0.314144          0.000107   0.267330       2    4989
+noisy18       0.314025          0.000486   1.213654       2    4989
+noisy19       0.314134          0.000140   0.349291       2    4989
+noisy20       0.314072          0.000338   0.842680       2    4989
+noisy21       0.314175          0.000010   0.026033       2    4989
+noisy22       0.314086          0.000294   0.733350       2    4989
+noisy23       0.314170          0.000026   0.064850       2    4989
+noisy24       0.314149          0.000091   0.227980       2    4989
+noisy25       0.314141          0.000119   0.296616       2    4989
+noisy26       0.314095          0.000264   0.659171       2    4989
+noisy27       0.313872          0.000973   2.430639       2    4989
+noisy28       0.314158          0.000064   0.160504       2    4989
+noisy29       0.314102          0.000242   0.602664       2    4989
+noisy30       0.314115          0.000200   0.497782       2    4989
+noisy31       0.313972          0.000657   1.640128       2    4989
+noisy32       0.314125          0.000168   0.419324       2    4989
+noisy33       0.314163          0.000047   0.116188       2    4989
+noisy34       0.313837          0.001084   2.707430       2    4989
+noisy35       0.314148          0.000095   0.237225       2    4989
+noisy36       0.314171          0.000024   0.059484       2    4989
+noisy37       0.314137          0.000132   0.328855       2    4989
+noisy38       0.313953          0.000716   1.788385       2    4989
+noisy39       0.314153          0.000081   0.201915       2    4989
+noisy40       0.314129          0.000155   0.387084       2    4989
+
+                 Pr&gt;F
+V01      6.293219e-01
+V02      1.338363e-01
+V03      3.043296e-04
+V04      5.350053e-10
+V05      1.794297e-15
+V09      2.706271e-23
+V14      3.415877e-12
+V15      1.396121e-15
+V16      4.659921e-13
+V18      5.891699e-18
+V19      1.871602e-05
+V20      5.737042e-03
+V21      7.886592e-01
+noisy1   1.986654e-01
+noisy2   4.102794e-01
+noisy3   5.317145e-01
+noisy4   3.794473e-01
+noisy5   4.895453e-01
+noisy6   1.747679e-02
+noisy7   3.837645e-01
+noisy8   6.737579e-01
+noisy9   9.117421e-01
+noisy10  6.553932e-01
+noisy11  9.428469e-01
+noisy12  8.705753e-01
+noisy13  6.701721e-01
+noisy14  5.527432e-01
+noisy15  6.238291e-01
+noisy16  3.190882e-01
+noisy17  7.654317e-01
+noisy18  2.971973e-01
+noisy19  7.052049e-01
+noisy20  4.306163e-01
+noisy21  9.743029e-01
+noisy22  4.803492e-01
+noisy23  9.372088e-01
+noisy24  7.961487e-01
+noisy25  7.433427e-01
+noisy26  5.173252e-01
+noisy27  8.808480e-02
+noisy28  8.517188e-01
+noisy29  5.473912e-01
+noisy30  6.079075e-01
+noisy31  1.940599e-01
+noisy32  6.575143e-01
+noisy33  8.903101e-01
+noisy34  6.680602e-02
+noisy35  7.888227e-01
+noisy36  9.422513e-01
+noisy37  7.197632e-01
+noisy38  1.673372e-01
+noisy39  8.171709e-01
+noisy40  6.790546e-01
+
+Variable V09 will enter
+
+
+====================== Step 10 forward selection results =======================
+         Wilks' Lambda  Partial R-Square    F Value  Num DF  Den DF  \
+V01           0.307653          0.000156   0.390207       2    4988
+V02           0.307442          0.000842   2.100965       2    4988
+V03           0.306687          0.003295   8.243827       2    4988
+V04           0.305112          0.008413  21.160805       2    4988
+V05           0.303547          0.013500  34.129072       2    4988
+V14           0.304858          0.009238  23.254819       2    4988
+V15           0.304936          0.008986  22.614900       2    4988
+V16           0.305592          0.006854  17.212961       2    4988
+V18           0.304013          0.011986  30.255480       2    4988
+V19           0.306710          0.003220   8.057447       2    4988
+V20           0.307299          0.001306   3.262589       2    4988
+V21           0.307674          0.000088   0.218603       2    4988
+noisy1        0.307501          0.000649   1.619491       2    4988
+noisy2        0.307557          0.000468   1.167729       2    4988
+noisy3        0.307641          0.000195   0.485974       2    4988
+noisy4        0.307575          0.000409   1.021680       2    4988
+noisy5        0.307620          0.000264   0.658283       2    4988
+noisy6        0.307219          0.001566   3.910589       2    4988
+noisy7        0.307589          0.000365   0.911072       2    4988
+noisy8        0.307672          0.000095   0.237325       2    4988
+noisy9        0.307683          0.000058   0.145464       2    4988
+noisy10       0.307642          0.000190   0.474910       2    4988
+noisy11       0.307694          0.000022   0.055517       2    4988
+noisy12       0.307664          0.000122   0.303768       2    4988
+noisy13       0.307651          0.000162   0.403944       2    4988
+noisy14       0.307622          0.000255   0.637025       2    4988
+noisy15       0.307639          0.000202   0.502979       2    4988
+noisy16       0.307547          0.000500   1.248113       2    4988
+noisy17       0.307680          0.000067   0.168096       2    4988
+noisy18       0.307557          0.000467   1.165524       2    4988
+noisy19       0.307658          0.000139   0.346854       2    4988
+noisy20       0.307618          0.000269   0.670234       2    4988
+noisy21       0.307699          0.000006   0.013950       2    4988
+noisy22       0.307592          0.000354   0.882879       2    4988
+noisy23       0.307690          0.000035   0.087521       2    4988
+noisy24       0.307679          0.000072   0.179083       2    4988
+noisy25       0.307663          0.000125   0.311029       2    4988
+noisy26       0.307613          0.000285   0.709834       2    4988
+noisy27       0.307373          0.001067   2.662845       2    4988
+noisy28       0.307681          0.000064   0.160284       2    4988
+noisy29       0.307633          0.000221   0.550364       2    4988
+noisy30       0.307635          0.000215   0.535394       2    4988
+noisy31       0.307456          0.000795   1.983500       2    4988
+noisy32       0.307639          0.000201   0.501214       2    4988
+noisy33       0.307673          0.000092   0.228401       2    4988
+noisy34       0.307368          0.001082   2.701154       2    4988
+noisy35       0.307670          0.000102   0.255071       2    4988
+noisy36       0.307693          0.000025   0.061319       2    4988
+noisy37       0.307660          0.000135   0.335914       2    4988
+noisy38       0.307472          0.000745   1.859616       2    4988
+noisy39       0.307656          0.000145   0.361562       2    4988
+noisy40       0.307651          0.000163   0.407426       2    4988
+
+                 Pr&gt;F
+V01      6.769377e-01
+V02      1.224465e-01
+V03      2.664745e-04
+V04      7.059063e-10
+V05      1.898597e-15
+V14      8.858392e-11
+V15      1.670075e-10
+V16      3.549647e-08
+V18      8.695101e-14
+V19      3.208749e-04
+V20      3.837086e-02
+V21      8.036486e-01
+noisy1   1.981035e-01
+noisy2   3.111575e-01
+noisy3   6.151271e-01
+noisy4   3.600650e-01
+noisy5   5.177843e-01
+noisy6   2.009013e-02
+noisy7   4.021599e-01
+noisy8   7.887437e-01
+noisy9   8.646243e-01
+noisy10  6.219690e-01
+noisy11  9.459968e-01
+noisy12  7.380461e-01
+noisy13  6.677030e-01
+noisy14  5.289066e-01
+noisy15  6.047569e-01
+noisy16  2.871355e-01
+noisy17  8.452776e-01
+noisy18  3.118441e-01
+noisy19  7.069258e-01
+noisy20  5.116348e-01
+noisy21  9.861469e-01
+noisy22  4.136551e-01
+noisy23  9.162011e-01
+noisy24  8.360423e-01
+noisy25  7.327069e-01
+noisy26  4.917756e-01
+noisy27  6.984864e-02
+noisy28  8.519063e-01
+noisy29  5.767751e-01
+noisy30  5.854724e-01
+noisy31  1.376954e-01
+noisy32  6.058251e-01
+noisy33  7.958136e-01
+noisy34  6.722619e-02
+noisy35  7.748715e-01
+noisy36  9.405236e-01
+noisy37  7.147006e-01
+noisy38  1.558403e-01
+noisy39  6.966057e-01
+noisy40  6.653829e-01
+
+Variable V05 will enter
+
+
+====================== Step 11 forward selection results =======================
+         Wilks' Lambda  Partial R-Square    F Value  Num DF  Den DF  \
+V01           0.303500          0.000155   0.386613       2    4987
+V02           0.303364          0.000603   1.503709       2    4987
+V03           0.302787          0.002503   6.256544       2    4987
+V04           0.301610          0.006381  16.012392       2    4987
+V14           0.301451          0.006905  17.336992       2    4987
+V15           0.301065          0.008178  20.559541       2    4987
+V16           0.301619          0.006351  15.937724       2    4987
+V18           0.299975          0.011768  29.693829       2    4987
+V19           0.302601          0.003116   7.793267       2    4987
+V20           0.303152          0.001300   3.246492       2    4987
+V21           0.303522          0.000081   0.202669       2    4987
+noisy1        0.303337          0.000692   1.727830       2    4987
+noisy2        0.303388          0.000524   1.308499       2    4987
+noisy3        0.303505          0.000139   0.346297       2    4987
+noisy4        0.303429          0.000390   0.972615       2    4987
+noisy5        0.303465          0.000270   0.672613       2    4987
+noisy6        0.303035          0.001686   4.209989       2    4987
+noisy7        0.303433          0.000376   0.936696       2    4987
+noisy8        0.303523          0.000080   0.199458       2    4987
+noisy9        0.303529          0.000061   0.152378       2    4987
+noisy10       0.303478          0.000227   0.567113       2    4987
+noisy11       0.303534          0.000044   0.110078       2    4987
+noisy12       0.303512          0.000115   0.286291       2    4987
+noisy13       0.303502          0.000150   0.373768       2    4987
+noisy14       0.303470          0.000253   0.631239       2    4987
+noisy15       0.303473          0.000245   0.611490       2    4987
+noisy16       0.303397          0.000494   1.231972       2    4987
+noisy17       0.303529          0.000060   0.149330       2    4987
+noisy18       0.303378          0.000557   1.389900       2    4987
+noisy19       0.303507          0.000133   0.332849       2    4987
+noisy20       0.303458          0.000293   0.731147       2    4987
+noisy21       0.303539          0.000026   0.065900       2    4987
+noisy22       0.303425          0.000402   1.003077       2    4987
+noisy23       0.303532          0.000049   0.122393       2    4987
+noisy24       0.303524          0.000076   0.189175       2    4987
+noisy25       0.303492          0.000182   0.454978       2    4987
+noisy26       0.303456          0.000299   0.745862       2    4987
+noisy27       0.303203          0.001132   2.826742       2    4987
+noisy28       0.303527          0.000066   0.165409       2    4987
+noisy29       0.303479          0.000224   0.558618       2    4987
+noisy30       0.303487          0.000197   0.490714       2    4987
+noisy31       0.303307          0.000790   1.970844       2    4987
+noisy32       0.303486          0.000200   0.498965       2    4987
+noisy33       0.303516          0.000101   0.252561       2    4987
+noisy34       0.303243          0.001002   2.500401       2    4987
+noisy35       0.303516          0.000102   0.254104       2    4987
+noisy36       0.303543          0.000013   0.033534       2    4987
+noisy37       0.303505          0.000138   0.345028       2    4987
+noisy38       0.303294          0.000834   2.081967       2    4987
+noisy39       0.303505          0.000138   0.344294       2    4987
+noisy40       0.303505          0.000138   0.344578       2    4987
+
+                 Pr&gt;F
+V01      6.793741e-01
+V02      2.224048e-01
+V03      1.932951e-03
+V04      1.169876e-07
+V14      3.138302e-08
+V15      1.281487e-09
+V16      1.259973e-07
+V18      1.514660e-13
+V19      4.175469e-04
+V20      3.899270e-02
+V21      8.165549e-01
+noisy1   1.777759e-01
+noisy2   2.703182e-01
+noisy3   7.073192e-01
+noisy4   3.781646e-01
+noisy5   5.104194e-01
+noisy6   1.489933e-02
+noisy7   3.919895e-01
+noisy8   8.191814e-01
+noisy9   8.586679e-01
+noisy10  5.671970e-01
+noisy11  8.957664e-01
+noisy12  7.510561e-01
+noisy13  6.881561e-01
+noisy14  5.319751e-01
+noisy15  5.425823e-01
+noisy16  2.918056e-01
+noisy17  8.612884e-01
+noisy18  2.491968e-01
+noisy19  7.168944e-01
+noisy20  4.814080e-01
+noisy21  9.362255e-01
+noisy22  3.668230e-01
+noisy23  8.848031e-01
+noisy24  8.276473e-01
+noisy25  6.344883e-01
+noisy26  4.743781e-01
+noisy27  5.930028e-02
+noisy28  8.475520e-01
+noisy29  5.720347e-01
+noisy30  6.122186e-01
+noisy31  1.394477e-01
+noisy32  6.071889e-01
+noisy33  7.768186e-01
+noisy34  8.215495e-02
+noisy35  7.756209e-01
+noisy36  9.670224e-01
+noisy37  7.082171e-01
+noisy38  1.247930e-01
+noisy39  7.087373e-01
+noisy40  7.085365e-01
+
+Variable V18 will enter
+
+
+====================== Step 12 forward selection results =======================
+         Wilks' Lambda  Partial R-Square    F Value  Num DF  Den DF  \
+V01           0.299926          0.000164   0.408813       2    4986
+V02           0.299792          0.000608   1.517541       2    4986
+V03           0.299225          0.002500   6.248560       2    4986
+V04           0.298128          0.006157  15.444077       2    4986
+V14           0.298157          0.006060  15.198458       2    4986
+V15           0.298206          0.005896  14.785448       2    4986
+V16           0.298651          0.004414  11.051814       2    4986
+V19           0.299202          0.002578   6.443538       2    4986
+V20           0.299662          0.001042   2.601519       2    4986
+V21           0.299944          0.000102   0.254389       2    4986
+noisy1        0.299761          0.000713   1.778703       2    4986
+noisy2        0.299815          0.000534   1.331422       2    4986
+noisy3        0.299923          0.000172   0.430016       2    4986
+noisy4        0.299865          0.000367   0.916209       2    4986
+noisy5        0.299876          0.000328   0.818683       2    4986
+noisy6        0.299476          0.001664   4.154771       2    4986
+noisy7        0.299861          0.000380   0.946528       2    4986
+noisy8        0.299950          0.000084   0.208630       2    4986
+noisy9        0.299963          0.000041   0.101087       2    4986
+noisy10       0.299906          0.000229   0.571182       2    4986
+noisy11       0.299962          0.000044   0.110802       2    4986
+noisy12       0.299925          0.000165   0.411947       2    4986
+noisy13       0.299926          0.000161   0.402326       2    4986
+noisy14       0.299895          0.000267   0.664958       2    4986
+noisy15       0.299901          0.000248   0.617959       2    4986
+noisy16       0.299857          0.000394   0.981923       2    4986
+noisy17       0.299954          0.000069   0.172362       2    4986
+noisy18       0.299818          0.000522   1.301481       2    4986
+noisy19       0.299930          0.000150   0.373161       2    4986
+noisy20       0.299894          0.000271   0.675452       2    4986
+noisy21       0.299967          0.000026   0.064882       2    4986
+noisy22       0.299844          0.000436   1.087290       2    4986
+noisy23       0.299961          0.000047   0.116463       2    4986
+noisy24       0.299952          0.000077   0.192589       2    4986
+noisy25       0.299927          0.000159   0.397210       2    4986
+noisy26       0.299875          0.000334   0.831945       2    4986
+noisy27       0.299622          0.001176   2.934539       2    4986
+noisy28       0.299956          0.000063   0.156720       2    4986
+noisy29       0.299908          0.000224   0.557949       2    4986
+noisy30       0.299921          0.000180   0.449655       2    4986
+noisy31       0.299728          0.000821   2.049516       2    4986
+noisy32       0.299913          0.000205   0.511329       2    4986
+noisy33       0.299933          0.000139   0.346902       2    4986
+noisy34       0.299693          0.000940   2.345250       2    4986
+noisy35       0.299946          0.000097   0.242086       2    4986
+noisy36       0.299970          0.000015   0.038139       2    4986
+noisy37       0.299933          0.000139   0.347394       2    4986
+noisy38       0.299722          0.000844   2.105963       2    4986
+noisy39       0.299937          0.000126   0.315270       2    4986
+noisy40       0.299937          0.000127   0.315781       2    4986
+
+                 Pr&gt;F
+V01      6.644610e-01
+V02      2.193516e-01
+V03      1.948408e-03
+V04      2.057845e-07
+V14      2.626832e-07
+V15      3.960299e-07
+V16      1.625046e-05
+V19      1.604048e-03
+V20      7.426148e-02
+V21      7.754004e-01
+noisy1   1.689641e-01
+noisy2   2.641953e-01
+noisy3   6.505229e-01
+noisy4   4.001001e-01
+noisy5   4.410714e-01
+noisy6   1.574374e-02
+noisy7   3.881560e-01
+noisy8   8.117028e-01
+noisy9   9.038567e-01
+noisy10  5.648944e-01
+noisy11  8.951186e-01
+noisy12  6.623821e-01
+noisy13  6.687842e-01
+noisy14  5.143408e-01
+noisy15  5.390847e-01
+noisy16  3.746626e-01
+noisy17  8.416795e-01
+noisy18  2.722209e-01
+noisy19  6.885736e-01
+noisy20  5.089726e-01
+noisy21  9.371786e-01
+noisy22  3.372088e-01
+noisy23  8.900653e-01
+noisy24  8.248271e-01
+noisy25  6.722144e-01
+noisy26  4.352624e-01
+noisy27  5.324701e-02
+noisy28  8.549477e-01
+noisy29  5.724177e-01
+noisy30  6.378740e-01
+noisy31  1.289058e-01
+noisy32  5.997296e-01
+noisy33  7.068918e-01
+noisy34  9.592892e-02
+noisy35  7.849977e-01
+noisy36  9.625796e-01
+noisy37  7.065437e-01
+noisy38  1.218366e-01
+noisy39  7.296067e-01
+noisy40  7.292338e-01
+
+Variable V04 will enter
+
+
+====================== Step 13 forward selection results =======================
+         Wilks' Lambda  Partial R-Square    F Value  Num DF  Den DF  \
+V01           0.298079          0.000163   0.407330       2    4985
+V02           0.297958          0.000569   1.418846       2    4985
+V03           0.297477          0.002184   5.455882       2    4985
+V14           0.296556          0.005273  13.211486       2    4985
+V15           0.296466          0.005576  13.974995       2    4985
+V16           0.296854          0.004272  10.693027       2    4985
+V19           0.297361          0.002573   6.429454       2    4985
+V20           0.297819          0.001037   2.587419       2    4985
+V21           0.298096          0.000108   0.268916       2    4985
+noisy1        0.297938          0.000637   1.588878       2    4985
+noisy2        0.297955          0.000579   1.443102       2    4985
+noisy3        0.298078          0.000169   0.420522       2    4985
+noisy4        0.298025          0.000345   0.861045       2    4985
+noisy5        0.298027          0.000340   0.846593       2    4985
+noisy6        0.297633          0.001660   4.144355       2    4985
+noisy7        0.298019          0.000365   0.909901       2    4985
+noisy8        0.298104          0.000081   0.202349       2    4985
+noisy9        0.298116          0.000042   0.103952       2    4985
+noisy10       0.298054          0.000247   0.615720       2    4985
+noisy11       0.298117          0.000037   0.091932       2    4985
+noisy12       0.298078          0.000169   0.421066       2    4985
+noisy13       0.298077          0.000171   0.427210       2    4985
+noisy14       0.298047          0.000272   0.677973       2    4985
+noisy15       0.298044          0.000281   0.700859       2    4985
+noisy16       0.298007          0.000405   1.008706       2    4985
+noisy17       0.298106          0.000074   0.185587       2    4985
+noisy18       0.297976          0.000509   1.270154       2    4985
+noisy19       0.298085          0.000143   0.356026       2    4985
+noisy20       0.298046          0.000276   0.688973       2    4985
+noisy21       0.298120          0.000026   0.063968       2    4985
+noisy22       0.297995          0.000447   1.115131       2    4985
+noisy23       0.298116          0.000039   0.098255       2    4985
+noisy24       0.298098          0.000102   0.254807       2    4985
+noisy25       0.298075          0.000177   0.441998       2    4985
+noisy26       0.298018          0.000370   0.923181       2    4985
+noisy27       0.297773          0.001191   2.970976       2    4985
+noisy28       0.298111          0.000056   0.139056       2    4985
+noisy29       0.298060          0.000228   0.567708       2    4985
+noisy30       0.298068          0.000203   0.505036       2    4985
+noisy31       0.297878          0.000838   2.089566       2    4985
+noisy32       0.298067          0.000204   0.509119       2    4985
+noisy33       0.298087          0.000139   0.345609       2    4985
+noisy34       0.297883          0.000821   2.047879       2    4985
+noisy35       0.298100          0.000094   0.235222       2    4985
+noisy36       0.298123          0.000015   0.038160       2    4985
+noisy37       0.298088          0.000134   0.333963       2    4985
+noisy38       0.297871          0.000863   2.153003       2    4985
+noisy39       0.298092          0.000121   0.300577       2    4985
+noisy40       0.298095          0.000110   0.275190       2    4985
+
+                 Pr&gt;F
+V01      6.654468e-01
+V02      2.420909e-01
+V03      4.296650e-03
+V14      1.894425e-06
+V15      8.865187e-07
+V16      2.322793e-05
+V19      1.626743e-03
+V20      7.531494e-02
+V21      7.642184e-01
+noisy1   2.042580e-01
+noisy2   2.362926e-01
+noisy3   6.567273e-01
+noisy4   4.227828e-01
+noisy5   4.289354e-01
+noisy6   1.590832e-02
+noisy7   4.026309e-01
+noisy8   8.168162e-01
+noisy9   9.012708e-01
+noisy10  5.402926e-01
+noisy11  9.121686e-01
+noisy12  6.563702e-01
+noisy13  6.523502e-01
+noisy14  5.076916e-01
+noisy15  4.962077e-01
+noisy16  3.647650e-01
+noisy17  8.306220e-01
+noisy18  2.808793e-01
+noisy19  7.004720e-01
+noisy20  5.021392e-01
+noisy21  9.380355e-01
+noisy22  3.279542e-01
+noisy23  9.064198e-01
+noisy24  7.750758e-01
+noisy25  6.427758e-01
+noisy26  3.973212e-01
+noisy27  5.134404e-02
+noisy28  8.701830e-01
+noisy29  5.668599e-01
+noisy30  6.035148e-01
+noisy31  1.238492e-01
+noisy32  6.010558e-01
+noisy33  7.078061e-01
+noisy34  1.291168e-01
+noisy35  7.904044e-01
+noisy36  9.625588e-01
+noisy37  7.160966e-01
+noisy38  1.162428e-01
+noisy39  7.404044e-01
+noisy40  7.594393e-01
+
+Variable V15 will enter
+
+
+====================== Step 14 forward selection results =======================
+         Wilks' Lambda  Partial R-Square    F Value  Num DF  Den DF      Pr&gt;F
+V01           0.296418          0.000160   0.399945       2    4984  0.670379
+V02           0.296297          0.000569   1.417796       2    4984  0.242345
+V03           0.295805          0.002229   5.567194       2    4984  0.003845
+V14           0.295106          0.004586  11.479745       2    4984  0.000011
+V16           0.295605          0.002905   7.259753       2    4984  0.000711
+V19           0.295831          0.002140   5.344299       2    4984  0.004803
+V20           0.296211          0.000860   2.144527       2    4984  0.117232
+V21           0.296435          0.000103   0.256174       2    4984  0.774018
+noisy1        0.296275          0.000643   1.603832       2    4984  0.201228
+noisy2        0.296287          0.000603   1.503902       2    4984  0.222362
+noisy3        0.296409          0.000191   0.475956       2    4984  0.621319
+noisy4        0.296375          0.000305   0.759119       2    4984  0.468133
+noisy5        0.296355          0.000374   0.932063       2    4984  0.393809
+noisy6        0.295988          0.001612   4.024113       2    4984  0.017937
+noisy7        0.296356          0.000370   0.922794       2    4984  0.397475
+noisy8        0.296441          0.000084   0.209696       2    4984  0.810838
+noisy9        0.296446          0.000066   0.164069       2    4984  0.848688
+noisy10       0.296392          0.000250   0.624297       2    4984  0.535680
+noisy11       0.296453          0.000042   0.105156       2    4984  0.900186
+noisy12       0.296399          0.000226   0.564172       2    4984  0.568867
+noisy13       0.296418          0.000160   0.397723       2    4984  0.671869
+noisy14       0.296383          0.000280   0.697724       2    4984  0.497766
+noisy15       0.296380          0.000291   0.725055       2    4984  0.484349
+noisy16       0.296337          0.000435   1.085521       2    4984  0.337806
+noisy17       0.296442          0.000080   0.199080       2    4984  0.819490
+noisy18       0.296319          0.000496   1.236028       2    4984  0.290625
+noisy19       0.296417          0.000166   0.412894       2    4984  0.661755
+noisy20       0.296384          0.000277   0.691446       2    4984  0.500899
+noisy21       0.296458          0.000026   0.065252       2    4984  0.936832
+noisy22       0.296336          0.000439   1.094878       2    4984  0.334661
+noisy23       0.296454          0.000041   0.101399       2    4984  0.903575
+noisy24       0.296439          0.000092   0.228509       2    4984  0.795727
+noisy25       0.296414          0.000175   0.436475       2    4984  0.646335
+noisy26       0.296336          0.000439   1.094563       2    4984  0.334766
+noisy27       0.296134          0.001117   2.787758       2    4984  0.061655
+noisy28       0.296449          0.000058   0.143959       2    4984  0.865926
+noisy29       0.296407          0.000198   0.492465       2    4984  0.611148
+noisy30       0.296414          0.000174   0.433551       2    4984  0.648228
+noisy31       0.296221          0.000827   2.061940       2    4984  0.127315
+noisy32       0.296395          0.000240   0.597819       2    4984  0.550049
+noisy33       0.296423          0.000145   0.360803       2    4984  0.697134
+noisy34       0.296219          0.000833   2.078541       2    4984  0.125221
+noisy35       0.296438          0.000095   0.237183       2    4984  0.788856
+noisy36       0.296462          0.000014   0.035173       2    4984  0.965439
+noisy37       0.296426          0.000134   0.333833       2    4984  0.716189
+noisy38       0.296176          0.000979   2.441349       2    4984  0.087147
+noisy39       0.296434          0.000107   0.265897       2    4984  0.766529
+noisy40       0.296431          0.000117   0.291984       2    4984  0.746794
+
+Variable V14 will enter
+
+
+====================== Step 15 forward selection results =======================
+         Wilks' Lambda  Partial R-Square   F Value  Num DF  Den DF      Pr&gt;F
+V01           0.295059          0.000162  0.402966       2    4983  0.668357
+V02           0.294947          0.000539  1.344391       2    4983  0.260793
+V03           0.294509          0.002025  5.055311       2    4983  0.006408
+V16           0.294343          0.002585  6.456903       2    4983  0.001583
+V19           0.294509          0.002023  5.050920       2    4983  0.006436
+V20           0.294859          0.000838  2.089793       2    4983  0.123821
+V21           0.295080          0.000088  0.220310       2    4983  0.802278
+noisy1        0.294935          0.000580  1.446763       2    4983  0.235430
+noisy2        0.294936          0.000578  1.440072       2    4983  0.237009
+noisy3        0.295050          0.000191  0.476383       2    4983  0.621054
+noisy4        0.295021          0.000290  0.723773       2    4983  0.484970
+noisy5        0.294995          0.000377  0.940734       2    4983  0.390411
+noisy6        0.294632          0.001608  4.013267       2    4983  0.018133
+noisy7        0.294993          0.000384  0.957116       2    4983  0.384069
+noisy8        0.295078          0.000097  0.240648       2    4983  0.786128
+noisy9        0.295087          0.000065  0.161701       2    4983  0.850700
+noisy10       0.295041          0.000223  0.554766       2    4983  0.574242
+noisy11       0.295090          0.000056  0.138922       2    4983  0.870300
+noisy12       0.295036          0.000237  0.590462       2    4983  0.554110
+noisy13       0.295069          0.000127  0.316247       2    4983  0.728894
+noisy14       0.295026          0.000272  0.678922       2    4983  0.507210
+noisy15       0.295022          0.000285  0.710689       2    4983  0.491355
+noisy16       0.294978          0.000435  1.085329       2    4983  0.337871
+noisy17       0.295084          0.000074  0.184552       2    4983  0.831482
+noisy18       0.294973          0.000451  1.124669       2    4983  0.324843
+noisy19       0.295051          0.000188  0.469274       2    4983  0.625484
+noisy20       0.295024          0.000279  0.694472       2    4983  0.499386
+noisy21       0.295099          0.000025  0.061862       2    4983  0.940013
+noisy22       0.294973          0.000451  1.123061       2    4983  0.325365
+noisy23       0.295094          0.000042  0.104995       2    4983  0.900331
+noisy24       0.295076          0.000101  0.252789       2    4983  0.776642
+noisy25       0.295063          0.000148  0.367666       2    4983  0.692367
+noisy26       0.294942          0.000557  1.389407       2    4983  0.249320
+noisy27       0.294799          0.001042  2.598215       2    4983  0.074507
+noisy28       0.295088          0.000063  0.157878       2    4983  0.853959
+noisy29       0.295050          0.000191  0.475348       2    4983  0.621697
+noisy30       0.295048          0.000199  0.496095       2    4983  0.608934
+noisy31       0.294826          0.000951  2.372666       2    4983  0.093337
+noisy32       0.295032          0.000252  0.628523       2    4983  0.533421
+noisy33       0.295067          0.000132  0.330013       2    4983  0.718930
+noisy34       0.294907          0.000675  1.682418       2    4983  0.186029
+noisy35       0.295072          0.000115  0.287074       2    4983  0.750469
+noisy36       0.295100          0.000023  0.056790       2    4983  0.944793
+noisy37       0.295066          0.000137  0.340260       2    4983  0.711602
+noisy38       0.294812          0.000998  2.488550       2    4983  0.083133
+noisy39       0.295072          0.000116  0.288360       2    4983  0.749504
+noisy40       0.295065          0.000138  0.344605       2    4983  0.708517
+
+Variable V16 will enter
+
+
+====================== Step 16 forward selection results =======================
+         Wilks' Lambda  Partial R-Square   F Value  Num DF  Den DF      Pr&gt;F
+V01           0.294300          0.000149  0.371077       2    4982  0.690010
+V02           0.294184          0.000543  1.353086       2    4982  0.258536
+V03           0.293744          0.002035  5.079836       2    4982  0.006253
+V19           0.293822          0.001770  4.417624       2    4982  0.012110
+V20           0.294130          0.000724  1.804593       2    4982  0.164649
+V21           0.294316          0.000093  0.231731       2    4982  0.793168
+noisy1        0.294171          0.000585  1.459217       2    4982  0.232517
+noisy2        0.294177          0.000564  1.405823       2    4982  0.245262
+noisy3        0.294284          0.000202  0.503568       2    4982  0.604401
+noisy4        0.294258          0.000292  0.727001       2    4982  0.483408
+noisy5        0.294226          0.000399  0.994265       2    4982  0.370069
+noisy6        0.293867          0.001618  4.037054       2    4982  0.017707
+noisy7        0.294229          0.000388  0.966972       2    4982  0.380304
+noisy8        0.294315          0.000096  0.238168       2    4982  0.788080
+noisy9        0.294329          0.000050  0.124736       2    4982  0.882732
+noisy10       0.294274          0.000236  0.587513       2    4982  0.555746
+noisy11       0.294326          0.000060  0.149940       2    4982  0.860764
+noisy12       0.294283          0.000207  0.515595       2    4982  0.597177
+noisy13       0.294306          0.000129  0.320932       2    4982  0.725488
+noisy14       0.294259          0.000287  0.714215       2    4982  0.489626
+noisy15       0.294259          0.000289  0.719313       2    4982  0.487137
+noisy16       0.294226          0.000398  0.991743       2    4982  0.371003
+noisy17       0.294322          0.000074  0.184149       2    4982  0.831818
+noisy18       0.294211          0.000451  1.124707       2    4982  0.324830
+noisy19       0.294296          0.000161  0.400986       2    4982  0.669681
+noisy20       0.294261          0.000279  0.695103       2    4982  0.499071
+noisy21       0.294333          0.000035  0.086015       2    4982  0.917582
+noisy22       0.294208          0.000462  1.150875       2    4982  0.316444
+noisy23       0.294331          0.000041  0.102190       2    4982  0.902860
+noisy24       0.294311          0.000109  0.272434       2    4982  0.761535
+noisy25       0.294301          0.000145  0.361350       2    4982  0.696753
+noisy26       0.294184          0.000542  1.351615       2    4982  0.258917
+noisy27       0.294051          0.000994  2.479259       2    4982  0.083909
+noisy28       0.294325          0.000061  0.152385       2    4982  0.858662
+noisy29       0.294290          0.000183  0.455272       2    4982  0.634302
+noisy30       0.294284          0.000204  0.507557       2    4982  0.601995
+noisy31       0.294066          0.000944  2.352942       2    4982  0.095195
+noisy32       0.294267          0.000259  0.644238       2    4982  0.525106
+noisy33       0.294306          0.000126  0.315089       2    4982  0.729739
+noisy34       0.294149          0.000661  1.647355       2    4982  0.192663
+noisy35       0.294307          0.000126  0.312703       2    4982  0.731482
+noisy36       0.294335          0.000027  0.067926       2    4982  0.934330
+noisy37       0.294305          0.000131  0.327265       2    4982  0.720908
+noisy38       0.294029          0.001070  2.668234       2    4982  0.069474
+noisy39       0.294307          0.000126  0.313103       2    4982  0.731189
+noisy40       0.294298          0.000155  0.386416       2    4982  0.679508
+
+Variable V03 will enter
+
+
+====================== Step 17 forward selection results =======================
+         Wilks' Lambda  Partial R-Square   F Value  Num DF  Den DF      Pr&gt;F
+V01           0.293703          0.000142  0.353883       2    4981  0.701975
+V02           0.293591          0.000523  1.304448       2    4981  0.271415
+V19           0.293225          0.001768  4.410006       2    4981  0.012203
+V20           0.293532          0.000722  1.799425       2    4981  0.165501
+V21           0.293718          0.000091  0.226420       2    4981  0.797392
+noisy1        0.293560          0.000627  1.561578       2    4981  0.209907
+noisy2        0.293582          0.000552  1.375224       2    4981  0.252879
+noisy3        0.293684          0.000206  0.512435       2    4981  0.599067
+noisy4        0.293660          0.000289  0.719262       2    4981  0.487162
+noisy5        0.293627          0.000400  0.996613       2    4981  0.369201
+noisy6        0.293274          0.001603  3.998500       2    4981  0.018402
+noisy7        0.293633          0.000380  0.947746       2    4981  0.387684
+noisy8        0.293717          0.000093  0.232788       2    4981  0.792330
+noisy9        0.293729          0.000054  0.133939       2    4981  0.874647
+noisy10       0.293672          0.000247  0.615664       2    4981  0.540323
+noisy11       0.293727          0.000061  0.152146       2    4981  0.858867
+noisy12       0.293686          0.000201  0.499941       2    4981  0.606597
+noisy13       0.293706          0.000133  0.330050       2    4981  0.718904
+noisy14       0.293661          0.000284  0.707345       2    4981  0.493001
+noisy15       0.293649          0.000325  0.810715       2    4981  0.444599
+noisy16       0.293623          0.000413  1.029840       2    4981  0.357140
+noisy17       0.293721          0.000079  0.197141       2    4981  0.821082
+noisy18       0.293611          0.000456  1.135079       2    4981  0.321480
+noisy19       0.293698          0.000158  0.393332       2    4981  0.674826
+noisy20       0.293659          0.000291  0.725310       2    4981  0.484226
+noisy21       0.293736          0.000030  0.074800       2    4981  0.927930
+noisy22       0.293611          0.000455  1.132547       2    4981  0.322294
+noisy23       0.293730          0.000049  0.121498       2    4981  0.885595
+noisy24       0.293711          0.000114  0.284743       2    4981  0.752220
+noisy25       0.293704          0.000139  0.346218       2    4981  0.707375
+noisy26       0.293586          0.000539  1.343520       2    4981  0.261020
+noisy27       0.293458          0.000974  2.428366       2    4981  0.088285
+noisy28       0.293727          0.000060  0.149744       2    4981  0.860932
+noisy29       0.293694          0.000172  0.427349       2    4981  0.652260
+noisy30       0.293689          0.000187  0.466151       2    4981  0.627440
+noisy31       0.293465          0.000952  2.373842       2    4981  0.093228
+noisy32       0.293668          0.000261  0.650659       2    4981  0.521746
+noisy33       0.293708          0.000124  0.309294       2    4981  0.733979
+noisy34       0.293534          0.000718  1.788536       2    4981  0.167312
+noisy35       0.293706          0.000130  0.324436       2    4981  0.722950
+noisy36       0.293737          0.000024  0.060470       2    4981  0.941322
+noisy37       0.293708          0.000123  0.306820       2    4981  0.735797
+noisy38       0.293430          0.001070  2.667423       2    4981  0.069530
+noisy39       0.293707          0.000127  0.317541       2    4981  0.727951
+noisy40       0.293700          0.000151  0.376338       2    4981  0.686390
+
+No variable can enter
+
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate">
+<div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<style>#sk-container-id-2 {
+  /* Definition of color scheme common for light and dark mode */
+  --sklearn-color-text: #000;
+  --sklearn-color-text-muted: #666;
+  --sklearn-color-line: gray;
+  /* Definition of color scheme for unfitted estimators */
+  --sklearn-color-unfitted-level-0: #fff5e6;
+  --sklearn-color-unfitted-level-1: #f6e4d2;
+  --sklearn-color-unfitted-level-2: #ffe0b3;
+  --sklearn-color-unfitted-level-3: chocolate;
+  /* Definition of color scheme for fitted estimators */
+  --sklearn-color-fitted-level-0: #f0f8ff;
+  --sklearn-color-fitted-level-1: #d4ebff;
+  --sklearn-color-fitted-level-2: #b3dbfd;
+  --sklearn-color-fitted-level-3: cornflowerblue;
+
+  /* Specific color for light theme */
+  --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, white)));
+  --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, black)));
+  --sklearn-color-icon: #696969;
+
+  @media (prefers-color-scheme: dark) {
+    /* Redefinition of color scheme for dark theme */
+    --sklearn-color-text-on-default-background: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-background: var(--sg-background-color, var(--theme-background, var(--jp-layout-color0, #111)));
+    --sklearn-color-border-box: var(--sg-text-color, var(--theme-code-foreground, var(--jp-content-font-color1, white)));
+    --sklearn-color-icon: #878787;
+  }
+}
+
+#sk-container-id-2 {
+  color: var(--sklearn-color-text);
+}
+
+#sk-container-id-2 pre {
+  padding: 0;
+}
+
+#sk-container-id-2 input.sk-hidden--visually {
+  border: 0;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+#sk-container-id-2 div.sk-dashed-wrapped {
+  border: 1px dashed var(--sklearn-color-line);
+  margin: 0 0.4em 0.5em 0.4em;
+  box-sizing: border-box;
+  padding-bottom: 0.4em;
+  background-color: var(--sklearn-color-background);
+}
+
+#sk-container-id-2 div.sk-container {
+  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
+     but bootstrap.min.css set `[hidden] { display: none !important; }`
+     so we also need the `!important` here to be able to override the
+     default hidden behavior on the sphinx rendered scikit-learn.org.
+     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
+  display: inline-block !important;
+  position: relative;
+}
+
+#sk-container-id-2 div.sk-text-repr-fallback {
+  display: none;
+}
+
+div.sk-parallel-item,
+div.sk-serial,
+div.sk-item {
+  /* draw centered vertical line to link estimators */
+  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
+  background-size: 2px 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* Parallel-specific style estimator block */
+
+#sk-container-id-2 div.sk-parallel-item::after {
+  content: "";
+  width: 100%;
+  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
+  flex-grow: 1;
+}
+
+#sk-container-id-2 div.sk-parallel {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background-color: var(--sklearn-color-background);
+  position: relative;
+}
+
+#sk-container-id-2 div.sk-parallel-item {
+  display: flex;
+  flex-direction: column;
+}
+
+#sk-container-id-2 div.sk-parallel-item:first-child::after {
+  align-self: flex-end;
+  width: 50%;
+}
+
+#sk-container-id-2 div.sk-parallel-item:last-child::after {
+  align-self: flex-start;
+  width: 50%;
+}
+
+#sk-container-id-2 div.sk-parallel-item:only-child::after {
+  width: 0;
+}
+
+/* Serial-specific style estimator block */
+
+#sk-container-id-2 div.sk-serial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--sklearn-color-background);
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+
+/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
+clickable and can be expanded/collapsed.
+- Pipeline and ColumnTransformer use this feature and define the default style
+- Estimators will overwrite some part of the style using the `sk-estimator` class
+*/
+
+/* Pipeline and ColumnTransformer style (default) */
+
+#sk-container-id-2 div.sk-toggleable {
+  /* Default theme specific background. It is overwritten whether we have a
+  specific estimator or a Pipeline/ColumnTransformer */
+  background-color: var(--sklearn-color-background);
+}
+
+/* Toggleable label */
+#sk-container-id-2 label.sk-toggleable__label {
+  cursor: pointer;
+  display: flex;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 0.5em;
+  box-sizing: border-box;
+  text-align: center;
+  align-items: start;
+  justify-content: space-between;
+  gap: 0.5em;
+}
+
+#sk-container-id-2 label.sk-toggleable__label .caption {
+  font-size: 0.6rem;
+  font-weight: lighter;
+  color: var(--sklearn-color-text-muted);
+}
+
+#sk-container-id-2 label.sk-toggleable__label-arrow:before {
+  /* Arrow on the left of the label */
+  content: "▸";
+  float: left;
+  margin-right: 0.25em;
+  color: var(--sklearn-color-icon);
+}
+
+#sk-container-id-2 label.sk-toggleable__label-arrow:hover:before {
+  color: var(--sklearn-color-text);
+}
+
+/* Toggleable content - dropdown */
+
+#sk-container-id-2 div.sk-toggleable__content {
+  display: none;
+  text-align: left;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-2 div.sk-toggleable__content.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-2 div.sk-toggleable__content pre {
+  margin: 0.2em;
+  border-radius: 0.25em;
+  color: var(--sklearn-color-text);
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-2 div.sk-toggleable__content.fitted pre {
+  /* unfitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-2 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+  /* Expand drop-down */
+  display: block;
+  width: 100%;
+  overflow: visible;
+}
+
+#sk-container-id-2 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+  content: "▾";
+}
+
+/* Pipeline/ColumnTransformer-specific style */
+
+#sk-container-id-2 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-2 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator-specific style */
+
+/* Colorize estimator box */
+#sk-container-id-2 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-2 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+#sk-container-id-2 div.sk-label label.sk-toggleable__label,
+#sk-container-id-2 div.sk-label label {
+  /* The background is the default theme color */
+  color: var(--sklearn-color-text-on-default-background);
+}
+
+/* On hover, darken the color of the background */
+#sk-container-id-2 div.sk-label:hover label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+/* Label box, darken color on hover, fitted */
+#sk-container-id-2 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator label */
+
+#sk-container-id-2 div.sk-label label {
+  font-family: monospace;
+  font-weight: bold;
+  display: inline-block;
+  line-height: 1.2em;
+}
+
+#sk-container-id-2 div.sk-label-container {
+  text-align: center;
+}
+
+/* Estimator-specific */
+#sk-container-id-2 div.sk-estimator {
+  font-family: monospace;
+  border: 1px dotted var(--sklearn-color-border-box);
+  border-radius: 0.25em;
+  box-sizing: border-box;
+  margin-bottom: 0.5em;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-2 div.sk-estimator.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+/* on hover */
+#sk-container-id-2 div.sk-estimator:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-2 div.sk-estimator.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Specification for estimator info (e.g. "i" and "?") */
+
+/* Common style for "i" and "?" */
+
+.sk-estimator-doc-link,
+a:link.sk-estimator-doc-link,
+a:visited.sk-estimator-doc-link {
+  float: right;
+  font-size: smaller;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1em;
+  height: 1em;
+  width: 1em;
+  text-decoration: none !important;
+  margin-left: 0.5em;
+  text-align: center;
+  /* unfitted */
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-1);
+}
+
+.sk-estimator-doc-link.fitted,
+a:link.sk-estimator-doc-link.fitted,
+a:visited.sk-estimator-doc-link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+div.sk-estimator:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover,
+div.sk-label-container:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover,
+div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+/* Span, style for the box shown on hovering the info icon */
+.sk-estimator-doc-link span {
+  display: none;
+  z-index: 9999;
+  position: relative;
+  font-weight: normal;
+  right: .2ex;
+  padding: .5ex;
+  margin: .5ex;
+  width: min-content;
+  min-width: 20ex;
+  max-width: 50ex;
+  color: var(--sklearn-color-text);
+  box-shadow: 2pt 2pt 4pt #999;
+  /* unfitted */
+  background: var(--sklearn-color-unfitted-level-0);
+  border: .5pt solid var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted span {
+  /* fitted */
+  background: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3);
+}
+
+.sk-estimator-doc-link:hover span {
+  display: block;
+}
+
+/* "?"-specific style due to the `<a>` HTML tag */
+
+#sk-container-id-2 a.estimator_doc_link {
+  float: right;
+  font-size: 1rem;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-background);
+  border-radius: 1rem;
+  height: 1rem;
+  width: 1rem;
+  text-decoration: none;
+  /* unfitted */
+  color: var(--sklearn-color-unfitted-level-1);
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+}
+
+#sk-container-id-2 a.estimator_doc_link.fitted {
+  /* fitted */
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+#sk-container-id-2 a.estimator_doc_link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+#sk-container-id-2 a.estimator_doc_link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+}
+
+.estimator-table summary {
+    padding: .5rem;
+    font-family: monospace;
+    cursor: pointer;
+}
+
+.estimator-table details[open] {
+    padding-left: 0.1rem;
+    padding-right: 0.1rem;
+    padding-bottom: 0.3rem;
+}
+
+.estimator-table .parameters-table {
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.estimator-table .parameters-table tr:nth-child(odd) {
+    background-color: #fff;
+}
+
+.estimator-table .parameters-table tr:nth-child(even) {
+    background-color: #f6f6f6;
+}
+
+.estimator-table .parameters-table tr:hover {
+    background-color: #e0e0e0;
+}
+
+.estimator-table table td {
+    border: 1px solid rgba(106, 105, 104, 0.232);
+}
+
+.user-set td {
+    color:rgb(255, 94, 0);
+    text-align: left;
+}
+
+.user-set td.value pre {
+    color:rgb(255, 94, 0) !important;
+    background-color: transparent !important;
+}
+
+.default td {
+    color: black;
+    text-align: left;
+}
+
+.user-set td i,
+.default td i {
+    color: black;
+}
+
+.copy-paste-icon {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NDggNTEyIj48IS0tIUZvbnQgQXdlc29tZSBGcmVlIDYuNy4yIGJ5IEBmb250YXdlc29tZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tIExpY2Vuc2UgLSBodHRwczovL2ZvbnRhd2Vzb21lLmNvbS9saWNlbnNlL2ZyZWUgQ29weXJpZ2h0IDIwMjUgRm9udGljb25zLCBJbmMuLS0+PHBhdGggZD0iTTIwOCAwTDMzMi4xIDBjMTIuNyAwIDI0LjkgNS4xIDMzLjkgMTQuMWw2Ny45IDY3LjljOSA5IDE0LjEgMjEuMiAxNC4xIDMzLjlMNDQ4IDMzNmMwIDI2LjUtMjEuNSA0OC00OCA0OGwtMTkyIDBjLTI2LjUgMC00OC0yMS41LTQ4LTQ4bDAtMjg4YzAtMjYuNSAyMS41LTQ4IDQ4LTQ4ek00OCAxMjhsODAgMCAwIDY0LTY0IDAgMCAyNTYgMTkyIDAgMC0zMiA2NCAwIDAgNDhjMCAyNi41LTIxLjUgNDgtNDggNDhMNDggNTEyYy0yNi41IDAtNDgtMjEuNS00OC00OEwwIDE3NmMwLTI2LjUgMjEuNS00OCA0OC00OHoiLz48L3N2Zz4=);
+    background-repeat: no-repeat;
+    background-size: 14px 14px;
+    background-position: 0;
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+}
+</style>
+<div id="sk-container-id-2" class="sk-top-container">
+<div class="sk-text-repr-fallback">
+<pre>STEPDISC()</pre>
+<b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b>
+</div>
+<div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable">
+<input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" checked><label for="sk-estimator-id-2" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>STEPDISC</div></div>
+<div><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
+        <div class="estimator-table">
+            <details>
+                <summary>Parameters</summary>
+                <table class="parameters-table">
+                  <tbody>
+
+        <tr class="default">
+            <td><i class="copy-paste-icon" onclick="copyToClipboard('method',
+                          this.parentElement.nextElementSibling)"></i></td>
+            <td class="param">method </td>
+            <td class="value">'forward'</td>
+        </tr>
+
+
+        <tr class="default">
+            <td><i class="copy-paste-icon" onclick="copyToClipboard('alpha',
+                          this.parentElement.nextElementSibling)"></i></td>
+            <td class="param">alpha </td>
+            <td class="value">0.01</td>
+        </tr>
+
+
+        <tr class="default">
+            <td><i class="copy-paste-icon" onclick="copyToClipboard('lambda_init',
+                          this.parentElement.nextElementSibling)"></i></td>
+            <td class="param">lambda_init </td>
+            <td class="value">None</td>
+        </tr>
+
+
+        <tr class="default">
+            <td><i class="copy-paste-icon" onclick="copyToClipboard('verbose',
+                          this.parentElement.nextElementSibling)"></i></td>
+            <td class="param">verbose </td>
+            <td class="value">True</td>
+        </tr>
+
+                  </tbody>
+                </table>
+            </details>
+        </div>
+    </div>
+</div></div></div>
+</div>
+<script>function copyToClipboard(text, element) {
+    // Get the parameter prefix from the closest toggleable content
+    const toggleableContent = element.closest('.sk-toggleable__content');
+    const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
+    const fullParamName = paramPrefix ? `${paramPrefix}${text}` : text;
+
+    const originalStyle = element.style;
+    const computedStyle = window.getComputedStyle(element);
+    const originalWidth = computedStyle.width;
+    const originalHTML = element.innerHTML.replace('Copied!', '');
+
+    navigator.clipboard.writeText(fullParamName)
+        .then(() => {
+            element.style.width = originalWidth;
+            element.style.color = 'green';
+            element.innerHTML = "Copied!";
+
+            setTimeout(() => {
+                element.innerHTML = originalHTML;
+                element.style = originalStyle;
+            }, 2000);
+        })
+        .catch(err => {
+            console.error('Failed to copy:', err);
+            element.style.color = 'red';
+            element.innerHTML = "Failed!";
+            setTimeout(() => {
+                element.innerHTML = originalHTML;
+                element.style = originalStyle;
+            }, 2000);
+        });
+    return false;
+}
+
+document.querySelectorAll('.fa-regular.fa-copy').forEach(function(element) {
+    const toggleableContent = element.closest('.sk-toggleable__content');
+    const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
+    const paramName = element.parentElement.nextElementSibling.textContent.trim();
+    const fullParamName = paramPrefix ? `${paramPrefix}${paramName}` : paramName;
+
+    element.setAttribute('title', fullParamName);
+});
+</script>
+</div>
+</div>
+<section id="Selected-variables">
+<h3>Selected variables<a class="headerlink" href="#Selected-variables" title="Link to this heading">#</a>
+</h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate">
+<div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate">
+<div class="highlight"><pre><span></span><span class="c1">#selected variables</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">clf2</span><span class="o">.</span><span class="n">summary_</span><span class="o">.</span><span class="n">selected</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+['V07', 'V11', 'V17', 'V06', 'V10', 'V12', 'V08', 'V13', 'V09', 'V05', 'V18', 'V04', 'V15', 'V14', 'V16', 'V03']
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="summary">
+<h2>
+<code class="docutils literal notranslate"><span class="pre">summary</span></code><a class="headerlink" href="#summary" title="Link to this heading">#</a>
+</h2>
+<section id="Before-forward">
+<h3>Before forward<a class="headerlink" href="#Before-forward" title="Link to this heading">#</a>
+</h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate">
+<div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate">
+<div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">discrimintools</span><span class="w"> </span><span class="kn">import</span> <span class="n">summaryDISCRIM</span>
+<span class="n">summaryDISCRIM</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span><span class="n">detailed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+                     Discriminant Analysis - Results
+
+Summary Information:
+               Infos  Value                  DF  DF value
+0  Total Sample Size   5000            DF Total      4999
+1          Variables     61   DF Within Classes      4997
+2            Classes      3  DF Between Classes         2
+
+Class Level Information:
+   Frequency  Proportion  Prior Probability
+A       1657      0.3314             0.3314
+B       1647      0.3294             0.3294
+C       1696      0.3392             0.3392
+
+Pooled Covariance Matrix Information:
+        Rank  Natural Log of the Determinant
+Pooled    61                         81.6149
+
+Linear Discriminant Function for classe:
+                A        B        C
+Constant -40.5465 -43.7591 -42.8812
+V01       -0.1055  -0.0692  -0.0621
+V02        0.3424   0.3123   0.2641
+V03        1.0893   1.0046   0.9394
+V04        1.7200   1.6800   1.5051
+...           ...      ...      ...
+noisy36   -0.0600  -0.0569  -0.0638
+noisy37    0.0332   0.0371   0.0470
+noisy38    0.0279  -0.0042   0.0330
+noisy39    0.0146   0.0016   0.0136
+noisy40    0.0354   0.0333   0.0476
+
+[62 rows x 3 columns]
+
+Classification Summary for Calibration Data:
+
+Observation Profile:
+                        Read  Used
+Number of Observations  5000  5000
+
+Number of Observations Classified into classe:
+prediction     A     B     C  Total
+classe
+A           1321   155   181   1657
+B            113  1443    91   1647
+C             80    61  1555   1696
+Total       1514  1659  1827   5000
+
+Percent Classified into classe:
+prediction        A        B        C  Total
+classe
+A           79.7224   9.3543  10.9234  100.0
+B            6.8610  87.6138   5.5252  100.0
+C            4.7170   3.5967  91.6863  100.0
+Total       30.2800  33.1800  36.5400  100.0
+Priors       0.3314   0.3294   0.3392    NaN
+
+Error Count Estimates for classe:
+             A       B       C   Total
+Rate    0.2028  0.1239  0.0831  0.1362
+Priors  0.3314  0.3294  0.3392     NaN
+
+Classification Report for classe:
+              precision  recall  f1-score    support
+A                0.8725  0.7972    0.8332  1657.0000
+B                0.8698  0.8761    0.8730  1647.0000
+C                0.8511  0.9169    0.8828  1696.0000
+accuracy         0.8638  0.8638    0.8638     0.8638
+macro avg        0.8645  0.8634    0.8630  5000.0000
+weighted avg     0.8644  0.8638    0.8631  5000.0000
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Stepwise-summary">
+<h3>Stepwise summary<a class="headerlink" href="#Stepwise-summary" title="Link to this heading">#</a>
+</h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate">
+<div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate">
+<div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">discrimintools</span><span class="w"> </span><span class="kn">import</span> <span class="n">summarySTEPDISC</span>
+<span class="n">summarySTEPDISC</span><span class="p">(</span><span class="n">clf2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+                     Stepwise Discriminant Analysis - Results
+
+====================== Before forward selection  =======================
+
+                     Discriminant Analysis - Results
+
+Summary Information:
+               Infos  Value                  DF  DF value
+0  Total Sample Size   5000            DF Total      4999
+1          Variables     61   DF Within Classes      4997
+2            Classes      3  DF Between Classes         2
+
+Class Level Information:
+   Frequency  Proportion  Prior Probability
+A       1657      0.3314             0.3314
+B       1647      0.3294             0.3294
+C       1696      0.3392             0.3392
+
+Linear Discriminant Function for classe:
+                A        B        C
+Constant -40.5465 -43.7591 -42.8812
+V01       -0.1055  -0.0692  -0.0621
+V02        0.3424   0.3123   0.2641
+V03        1.0893   1.0046   0.9394
+V04        1.7200   1.6800   1.5051
+...           ...      ...      ...
+noisy36   -0.0600  -0.0569  -0.0638
+noisy37    0.0332   0.0371   0.0470
+noisy38    0.0279  -0.0042   0.0330
+noisy39    0.0146   0.0016   0.0136
+noisy40    0.0354   0.0333   0.0476
+
+[62 rows x 3 columns]
+
+====================== After forward selection  =======================
+
+                     Discriminant Analysis - Results
+
+Summary Information:
+               Infos  Value                  DF  DF value
+0  Total Sample Size   5000            DF Total      4999
+1          Variables     16   DF Within Classes      4997
+2            Classes      3  DF Between Classes         2
+
+Class Level Information:
+   Frequency  Proportion  Prior Probability
+A       1657      0.3314             0.3314
+B       1647      0.3294             0.3294
+C       1696      0.3392             0.3392
+
+Linear Discriminant Function for classe:
+                A        B        C
+Constant -39.2103 -42.6346 -41.6719
+V07        2.8722   2.8429   2.5941
+V11        1.5733   2.0246   1.9723
+V17        1.9708   1.6452   1.7809
+V06        2.5088   2.4344   2.1924
+V10        1.9386   2.3487   2.2748
+V12        2.1196   2.3906   2.4917
+V08        2.4463   2.6514   2.3619
+V13        2.0175   2.1804   2.3570
+V09        1.8901   2.2207   2.0347
+V05        2.2610   2.1779   1.9677
+V18        1.5890   1.3263   1.5595
+V04        1.7237   1.6831   1.5105
+V15        3.1612   2.9791   3.1202
+V14        2.4949   2.4335   2.6315
+V16        2.4502   2.2995   2.4164
+V03        1.0908   1.0070   0.9440
+</pre></div>
+</div>
+</div>
+</section>
+<section id="After-forward">
+<h3>After forward<a class="headerlink" href="#After-forward" title="Link to this heading">#</a>
+</h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate">
+<div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate">
+<div class="highlight"><pre><span></span><span class="c1">#model updated</span>
+<span class="n">summaryDISCRIM</span><span class="p">(</span><span class="n">clf2</span><span class="o">.</span><span class="n">disc_</span><span class="p">,</span><span class="n">detailed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+                     Discriminant Analysis - Results
+
+Summary Information:
+               Infos  Value                  DF  DF value
+0  Total Sample Size   5000            DF Total      4999
+1          Variables     16   DF Within Classes      4997
+2            Classes      3  DF Between Classes         2
+
+Class Level Information:
+   Frequency  Proportion  Prior Probability
+A       1657      0.3314             0.3314
+B       1647      0.3294             0.3294
+C       1696      0.3392             0.3392
+
+Pooled Covariance Matrix Information:
+        Rank  Natural Log of the Determinant
+Pooled    16                           4.014
+
+Linear Discriminant Function for classe:
+                A        B        C
+Constant -39.2103 -42.6346 -41.6719
+V07        2.8722   2.8429   2.5941
+V11        1.5733   2.0246   1.9723
+V17        1.9708   1.6452   1.7809
+V06        2.5088   2.4344   2.1924
+V10        1.9386   2.3487   2.2748
+V12        2.1196   2.3906   2.4917
+V08        2.4463   2.6514   2.3619
+V13        2.0175   2.1804   2.3570
+V09        1.8901   2.2207   2.0347
+V05        2.2610   2.1779   1.9677
+V18        1.5890   1.3263   1.5595
+V04        1.7237   1.6831   1.5105
+V15        3.1612   2.9791   3.1202
+V14        2.4949   2.4335   2.6315
+V16        2.4502   2.2995   2.4164
+V03        1.0908   1.0070   0.9440
+
+Classification Summary for Calibration Data:
+
+Observation Profile:
+                        Read  Used
+Number of Observations  5000  5000
+
+Number of Observations Classified into classe:
+prediction     A     B     C  Total
+classe
+A           1317   160   180   1657
+B            109  1436   102   1647
+C             80    71  1545   1696
+Total       1506  1667  1827   5000
+
+Percent Classified into classe:
+prediction        A        B        C  Total
+classe
+A           79.4810   9.6560  10.8630  100.0
+B            6.6181  87.1888   6.1931  100.0
+C            4.7170   4.1863  91.0967  100.0
+Total       30.1200  33.3400  36.5400  100.0
+Priors       0.3314   0.3294   0.3392    NaN
+
+Error Count Estimates for classe:
+             A       B       C   Total
+Rate    0.2052  0.1281  0.0890  0.1404
+Priors  0.3314  0.3294  0.3392     NaN
+
+Classification Report for classe:
+              precision  recall  f1-score    support
+A                0.8745  0.7948    0.8328  1657.0000
+B                0.8614  0.8719    0.8666  1647.0000
+C                0.8456  0.9110    0.8771  1696.0000
+accuracy         0.8596  0.8596    0.8596     0.8596
+macro avg        0.8605  0.8592    0.8588  5000.0000
+weighted avg     0.8604  0.8596    0.8590  5000.0000
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="Evaluation-on-training-data">
+<h2>Evaluation on training data<a class="headerlink" href="#Evaluation-on-training-data" title="Link to this heading">#</a>
+</h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate">
+<div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate">
+<div class="highlight"><pre><span></span><span class="c1">#eval_predict function</span>
+<span class="n">eval_test</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">eval_predict</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Observation Profile:
+                        Read  Used
+Number of Observations  5000  5000
+
+Number of Observations Classified into classe:
+prediction     A     B     C  Total
+classe
+A           1321   155   181   1657
+B            113  1443    91   1647
+C             80    61  1555   1696
+Total       1514  1659  1827   5000
+
+Percent Classified into classe:
+prediction          A          B          C  Total
+classe
+A           79.722390   9.354255  10.923355  100.0
+B            6.860959  87.613843   5.525197  100.0
+C            4.716981   3.596698  91.686321  100.0
+Total       30.280000  33.180000  36.540000  100.0
+Priors       0.331400   0.329400   0.339200    NaN
+
+Error Count Estimates for classe:
+               A         B         C   Total
+Rate    0.202776  0.123862  0.083137  0.1362
+Priors  0.331400  0.329400  0.339200     NaN
+
+Classification Report for classe:
+              precision    recall  f1-score    support
+A              0.872523  0.797224  0.833176  1657.0000
+B              0.869801  0.876138  0.872958  1647.0000
+C              0.851122  0.916863  0.882770  1696.0000
+accuracy       0.863800  0.863800  0.863800     0.8638
+macro avg      0.864482  0.863409  0.862968  5000.0000
+weighted avg   0.864367  0.863800  0.863103  5000.0000
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weveform-dataset">weveform dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instanciation-&amp;-training"><code class="docutils literal notranslate"><span class="pre">instanciation</span> <span class="pre">&amp;</span> <span class="pre">training</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#forward"><code class="docutils literal notranslate"><span class="pre">forward</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Selected-variables">Selected variables</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary"><code class="docutils literal notranslate"><span class="pre">summary</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Before-forward">Before forward</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Stepwise-summary">Stepwise summary</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#After-forward">After forward</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Evaluation-on-training-data">Evaluation on training data</a></li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/source/examples/09_stepdisc_lda_wavenoise.ipynb.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, Duvérier DJIFACK ZEBAZE.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

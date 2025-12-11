@@ -1,0 +1,2976 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>STEPDISC LDA - alcool dataset &#8212; discrimintools 0.1.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=01f34227"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'source/examples/07_stepdisc_lda_alcool';</script>
+    <link rel="icon" href="../../_static/discrimintools.svg"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/discrimintools.svg" class="logo__image only-light" alt=""/>
+    <img src="../../_static/discrimintools.svg" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">discrimintools</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../install/index.html">
+    Install
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../reference/index.html">
+    API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="index.html">
+    Examples
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/enfantbenidedieu/discrimintools" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../install/index.html">
+    Install
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../reference/index.html">
+    API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="index.html">
+    Examples
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/enfantbenidedieu/discrimintools" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">STEPDISC LDA - alcool dataset</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="STEPDISC-LDA---alcool-dataset">
+<h1>STEPDISC LDA - alcool dataset<a class="headerlink" href="#STEPDISC-LDA---alcool-dataset" title="Link to this heading">#</a>
+</h1>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate">
+<div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate">
+<div class="highlight"><pre><span></span><span class="c1">#disable warnings</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">warnings</span><span class="w"> </span><span class="kn">import</span> <span class="n">simplefilter</span><span class="p">,</span> <span class="n">filterwarnings</span>
+<span class="n">simplefilter</span><span class="p">(</span><span class="n">action</span><span class="o">=</span><span class="s1">'ignore'</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="ne">FutureWarning</span><span class="p">)</span>
+<span class="n">filterwarnings</span><span class="p">(</span><span class="s2">"ignore"</span><span class="p">)</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">great_tables</span><span class="w"> </span><span class="kn">import</span> <span class="n">GT</span><span class="p">,</span> <span class="n">html</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">print_dt</span><span class="p">(</span><span class="n">data</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">subtitle</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">rowname</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span><span class="n">digits</span><span class="o">=</span><span class="mi">8</span><span class="p">):</span>
+    <span class="n">dt</span> <span class="o">=</span> <span class="p">(</span><span class="n">GT</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="n">digits</span><span class="p">)</span><span class="o">.</span><span class="n">rename_axis</span><span class="p">(</span><span class="n">rowname</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">())</span>
+          <span class="o">.</span><span class="n">tab_header</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">title</span><span class="p">,</span> <span class="n">subtitle</span><span class="o">=</span><span class="n">subtitle</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">dt</span>
+</pre></div>
+</div>
+</div>
+<section id="alcools-dataset">
+<h2>alcools dataset<a class="headerlink" href="#alcools-dataset" title="Link to this heading">#</a>
+</h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate">
+<div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate">
+<div class="highlight"><pre><span></span><span class="c1">#vins dataset</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">discrimintools.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_alcools</span>
+<span class="n">D</span> <span class="o">=</span> <span class="n">load_alcools</span><span class="p">(</span><span class="s2">"train"</span><span class="p">)</span>
+<span class="p">(</span>
+    <span class="n">GT</span><span class="p">(</span><span class="n">D</span><span class="o">.</span><span class="n">head</span><span class="p">()</span><span class="o">.</span><span class="n">rename_axis</span><span class="p">(</span><span class="s2">""</span><span class="p">)</span><span class="o">.</span><span class="n">reset_index</span><span class="p">())</span>
+    <span class="o">.</span><span class="n">tab_header</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">html</span><span class="p">(</span><span class="s2">"&lt;b&gt;Alcools dataset - training data&lt;/b&gt;"</span><span class="p">))</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate">
+<div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div id="ybgemmihfu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>
+#ybgemmihfu table {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
+
+#ybgemmihfu thead, tbody, tfoot, tr, td, th { border-style: none !important; }
+ tr { background-color: transparent !important; }
+#ybgemmihfu p { margin: 0 !important; padding: 0 !important; }
+ #ybgemmihfu .gt_table { display: table !important; border-collapse: collapse !important; line-height: normal !important; margin-left: auto !important; margin-right: auto !important; color: #333333 !important; font-size: 16px !important; font-weight: normal !important; font-style: normal !important; background-color: #FFFFFF !important; width: auto !important; border-top-style: solid !important; border-top-width: 2px !important; border-top-color: #A8A8A8 !important; border-right-style: none !important; border-right-width: 2px !important; border-right-color: #D3D3D3 !important; border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #A8A8A8 !important; border-left-style: none !important; border-left-width: 2px !important; border-left-color: #D3D3D3 !important; }
+ #ybgemmihfu .gt_caption { padding-top: 4px !important; padding-bottom: 4px !important; }
+ #ybgemmihfu .gt_title { color: #333333 !important; font-size: 125% !important; font-weight: initial !important; padding-top: 4px !important; padding-bottom: 4px !important; padding-left: 5px !important; padding-right: 5px !important; border-bottom-color: #FFFFFF !important; border-bottom-width: 0 !important; }
+ #ybgemmihfu .gt_subtitle { color: #333333 !important; font-size: 85% !important; font-weight: initial !important; padding-top: 3px !important; padding-bottom: 5px !important; padding-left: 5px !important; padding-right: 5px !important; border-top-color: #FFFFFF !important; border-top-width: 0 !important; }
+ #ybgemmihfu .gt_heading { background-color: #FFFFFF !important; text-align: center !important; border-bottom-color: #FFFFFF !important; border-left-style: none !important; border-left-width: 1px !important; border-left-color: #D3D3D3 !important; border-right-style: none !important; border-right-width: 1px !important; border-right-color: #D3D3D3 !important; }
+ #ybgemmihfu .gt_bottom_border { border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; }
+ #ybgemmihfu .gt_col_headings { border-top-style: solid !important; border-top-width: 2px !important; border-top-color: #D3D3D3 !important; border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; border-left-style: none !important; border-left-width: 1px !important; border-left-color: #D3D3D3 !important; border-right-style: none !important; border-right-width: 1px !important; border-right-color: #D3D3D3 !important; }
+ #ybgemmihfu .gt_col_heading { color: #333333 !important; background-color: #FFFFFF !important; font-size: 100% !important; font-weight: normal !important; text-transform: inherit !important; border-left-style: none !important; border-left-width: 1px !important; border-left-color: #D3D3D3 !important; border-right-style: none !important; border-right-width: 1px !important; border-right-color: #D3D3D3 !important; vertical-align: bottom !important; padding-top: 5px !important; padding-bottom: 5px !important; padding-left: 5px !important; padding-right: 5px !important; overflow-x: hidden !important; }
+ #ybgemmihfu .gt_column_spanner_outer { color: #333333 !important; background-color: #FFFFFF !important; font-size: 100% !important; font-weight: normal !important; text-transform: inherit !important; padding-top: 0 !important; padding-bottom: 0 !important; padding-left: 4px !important; padding-right: 4px !important; }
+ #ybgemmihfu .gt_column_spanner_outer:first-child { padding-left: 0 !important; }
+ #ybgemmihfu .gt_column_spanner_outer:last-child { padding-right: 0 !important; }
+ #ybgemmihfu .gt_column_spanner { border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; vertical-align: bottom !important; padding-top: 5px !important; padding-bottom: 5px !important; overflow-x: hidden !important; display: inline-block !important; width: 100% !important; }
+ #ybgemmihfu .gt_spanner_row { border-bottom-style: hidden !important; }
+ #ybgemmihfu .gt_group_heading { padding-top: 8px !important; padding-bottom: 8px !important; padding-left: 5px !important; padding-right: 5px !important; color: #333333 !important; background-color: #FFFFFF !important; font-size: 100% !important; font-weight: initial !important; text-transform: inherit !important; border-top-style: solid !important; border-top-width: 2px !important; border-top-color: #D3D3D3 !important; border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; border-left-style: none !important; border-left-width: 1px !important; border-left-color: #D3D3D3 !important; border-right-style: none !important; border-right-width: 1px !important; border-right-color: #D3D3D3 !important; vertical-align: middle !important; text-align: left !important; }
+ #ybgemmihfu .gt_empty_group_heading { padding: 0.5px !important; color: #333333 !important; background-color: #FFFFFF !important; font-size: 100% !important; font-weight: initial !important; border-top-style: solid !important; border-top-width: 2px !important; border-top-color: #D3D3D3 !important; border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; vertical-align: middle !important; }
+ #ybgemmihfu .gt_from_md> :first-child { margin-top: 0 !important; }
+ #ybgemmihfu .gt_from_md> :last-child { margin-bottom: 0 !important; }
+ #ybgemmihfu .gt_row { padding-top: 8px !important; padding-bottom: 8px !important; padding-left: 5px !important; padding-right: 5px !important; margin: 10px !important; border-top-style: solid !important; border-top-width: 1px !important; border-top-color: #D3D3D3 !important; border-left-style: none !important; border-left-width: 1px !important; border-left-color: #D3D3D3 !important; border-right-style: none !important; border-right-width: 1px !important; border-right-color: #D3D3D3 !important; vertical-align: middle !important; overflow-x: hidden !important; }
+ #ybgemmihfu .gt_stub { color: #333333 !important; background-color: #FFFFFF !important; font-size: 100% !important; font-weight: initial !important; text-transform: inherit !important; border-right-style: solid !important; border-right-width: 2px !important; border-right-color: #D3D3D3 !important; padding-left: 5px !important; padding-right: 5px !important; }
+ #ybgemmihfu .gt_stub_row_group { color: #333333 !important; background-color: #FFFFFF !important; font-size: 100% !important; font-weight: initial !important; text-transform: inherit !important; border-right-style: solid !important; border-right-width: 2px !important; border-right-color: #D3D3D3 !important; padding-left: 5px !important; padding-right: 5px !important; vertical-align: top !important; }
+ #ybgemmihfu .gt_row_group_first td { border-top-width: 2px !important; }
+ #ybgemmihfu .gt_row_group_first th { border-top-width: 2px !important; }
+ #ybgemmihfu .gt_striped { color: #333333 !important; background-color: #F4F4F4 !important; }
+ #ybgemmihfu .gt_table_body { border-top-style: solid !important; border-top-width: 2px !important; border-top-color: #D3D3D3 !important; border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; }
+ #ybgemmihfu .gt_grand_summary_row { color: #333333 !important; background-color: #FFFFFF !important; text-transform: inherit !important; padding-top: 8px !important; padding-bottom: 8px !important; padding-left: 5px !important; padding-right: 5px !important; }
+ #ybgemmihfu .gt_first_grand_summary_row_bottom { border-top-style: double !important; border-top-width: 6px !important; border-top-color: #D3D3D3 !important; }
+ #ybgemmihfu .gt_last_grand_summary_row_top { border-bottom-style: double !important; border-bottom-width: 6px !important; border-bottom-color: #D3D3D3 !important; }
+ #ybgemmihfu .gt_sourcenotes { color: #333333 !important; background-color: #FFFFFF !important; border-bottom-style: none !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; border-left-style: none !important; border-left-width: 2px !important; border-left-color: #D3D3D3 !important; border-right-style: none !important; border-right-width: 2px !important; border-right-color: #D3D3D3 !important; }
+ #ybgemmihfu .gt_sourcenote { font-size: 90% !important; padding-top: 4px !important; padding-bottom: 4px !important; padding-left: 5px !important; padding-right: 5px !important; text-align: left !important; }
+ #ybgemmihfu .gt_left { text-align: left !important; }
+ #ybgemmihfu .gt_center { text-align: center !important; }
+ #ybgemmihfu .gt_right { text-align: right !important; font-variant-numeric: tabular-nums !important; }
+ #ybgemmihfu .gt_font_normal { font-weight: normal !important; }
+ #ybgemmihfu .gt_font_bold { font-weight: bold !important; }
+ #ybgemmihfu .gt_font_italic { font-style: italic !important; }
+ #ybgemmihfu .gt_super { font-size: 65% !important; }
+ #ybgemmihfu .gt_footnote_marks { font-size: 75% !important; vertical-align: 0.4em !important; position: initial !important; }
+ #ybgemmihfu .gt_asterisk { font-size: 100% !important; vertical-align: 0 !important; }
+
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+
+  <tr class="gt_heading">
+    <td colspan="10" class="gt_heading gt_title gt_font_normal"><b>Alcools dataset - training data</b></td>
+  </tr>
+<tr class="gt_col_headings">
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id=""></th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="TYPE">TYPE</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="MEOH">MEOH</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="ACET">ACET</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="BU1">BU1</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="BU2">BU2</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="ISOP">ISOP</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="MEPR">MEPR</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="PRO1">PRO1</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="ACAL">ACAL</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+  <tr>
+    <td class="gt_row gt_right">0</td>
+    <td class="gt_row gt_left">KIRSCH</td>
+    <td class="gt_row gt_right">336.0</td>
+    <td class="gt_row gt_right">225.0</td>
+    <td class="gt_row gt_right">1.0</td>
+    <td class="gt_row gt_right">1.0</td>
+    <td class="gt_row gt_right">92</td>
+    <td class="gt_row gt_right">37.0</td>
+    <td class="gt_row gt_right">177.0</td>
+    <td class="gt_row gt_right">0.0</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">1</td>
+    <td class="gt_row gt_left">KIRSCH</td>
+    <td class="gt_row gt_right">442.0</td>
+    <td class="gt_row gt_right">338.0</td>
+    <td class="gt_row gt_right">1.9</td>
+    <td class="gt_row gt_right">10.0</td>
+    <td class="gt_row gt_right">91</td>
+    <td class="gt_row gt_right">30.0</td>
+    <td class="gt_row gt_right">552.0</td>
+    <td class="gt_row gt_right">31.0</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">2</td>
+    <td class="gt_row gt_left">KIRSCH</td>
+    <td class="gt_row gt_right">373.0</td>
+    <td class="gt_row gt_right">356.0</td>
+    <td class="gt_row gt_right">0.0</td>
+    <td class="gt_row gt_right">29.0</td>
+    <td class="gt_row gt_right">83</td>
+    <td class="gt_row gt_right">27.0</td>
+    <td class="gt_row gt_right">814.0</td>
+    <td class="gt_row gt_right">11.0</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">3</td>
+    <td class="gt_row gt_left">KIRSCH</td>
+    <td class="gt_row gt_right">418.0</td>
+    <td class="gt_row gt_right">62.0</td>
+    <td class="gt_row gt_right">0.8</td>
+    <td class="gt_row gt_right">0.0</td>
+    <td class="gt_row gt_right">89</td>
+    <td class="gt_row gt_right">24.0</td>
+    <td class="gt_row gt_right">342.0</td>
+    <td class="gt_row gt_right">7.0</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">4</td>
+    <td class="gt_row gt_left">KIRSCH</td>
+    <td class="gt_row gt_right">84.0</td>
+    <td class="gt_row gt_right">65.0</td>
+    <td class="gt_row gt_right">2.0</td>
+    <td class="gt_row gt_right">2.0</td>
+    <td class="gt_row gt_right">2</td>
+    <td class="gt_row gt_right">0.0</td>
+    <td class="gt_row gt_right">288.0</td>
+    <td class="gt_row gt_right">6.0</td>
+  </tr>
+</tbody>
+
+
+</table>
+
+</div>
+</div>
+</div>
+</section>
+<section id="instanciation-&amp;-training">
+<h2>
+<code class="docutils literal notranslate"><span class="pre">instanciation</span> <span class="pre">&amp;</span> <span class="pre">training</span></code><a class="headerlink" href="#instanciation-&amp;-training" title="Link to this heading">#</a>
+</h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate">
+<div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate">
+<div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">discrimintools</span><span class="w"> </span><span class="kn">import</span> <span class="n">DISCRIM</span>
+<span class="c1">#split into X and y</span>
+<span class="n">y</span><span class="p">,</span> <span class="n">X</span> <span class="o">=</span> <span class="n">D</span><span class="p">[</span><span class="s2">"TYPE"</span><span class="p">],</span> <span class="n">D</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"TYPE"</span><span class="p">])</span>
+<span class="n">clf</span> <span class="o">=</span> <span class="n">DISCRIM</span><span class="p">()</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate">
+<div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<style>#sk-container-id-1 {
+  /* Definition of color scheme common for light and dark mode */
+  --sklearn-color-text: #000;
+  --sklearn-color-text-muted: #666;
+  --sklearn-color-line: gray;
+  /* Definition of color scheme for unfitted estimators */
+  --sklearn-color-unfitted-level-0: #fff5e6;
+  --sklearn-color-unfitted-level-1: #f6e4d2;
+  --sklearn-color-unfitted-level-2: #ffe0b3;
+  --sklearn-color-unfitted-level-3: chocolate;
+  /* Definition of color scheme for fitted estimators */
+  --sklearn-color-fitted-level-0: #f0f8ff;
+  --sklearn-color-fitted-level-1: #d4ebff;
+  --sklearn-color-fitted-level-2: #b3dbfd;
+  --sklearn-color-fitted-level-3: cornflowerblue;
+}
+
+#sk-container-id-1.light {
+  /* Specific color for light theme */
+  --sklearn-color-text-on-default-background: black;
+  --sklearn-color-background: white;
+  --sklearn-color-border-box: black;
+  --sklearn-color-icon: #696969;
+}
+
+#sk-container-id-1.dark {
+  --sklearn-color-text-on-default-background: white;
+  --sklearn-color-background: #111;
+  --sklearn-color-border-box: white;
+  --sklearn-color-icon: #878787;
+}
+
+#sk-container-id-1 {
+  color: var(--sklearn-color-text);
+}
+
+#sk-container-id-1 pre {
+  padding: 0;
+}
+
+#sk-container-id-1 input.sk-hidden--visually {
+  border: 0;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+#sk-container-id-1 div.sk-dashed-wrapped {
+  border: 1px dashed var(--sklearn-color-line);
+  margin: 0 0.4em 0.5em 0.4em;
+  box-sizing: border-box;
+  padding-bottom: 0.4em;
+  background-color: var(--sklearn-color-background);
+}
+
+#sk-container-id-1 div.sk-container {
+  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
+     but bootstrap.min.css set `[hidden] { display: none !important; }`
+     so we also need the `!important` here to be able to override the
+     default hidden behavior on the sphinx rendered scikit-learn.org.
+     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
+  display: inline-block !important;
+  position: relative;
+}
+
+#sk-container-id-1 div.sk-text-repr-fallback {
+  display: none;
+}
+
+div.sk-parallel-item,
+div.sk-serial,
+div.sk-item {
+  /* draw centered vertical line to link estimators */
+  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
+  background-size: 2px 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* Parallel-specific style estimator block */
+
+#sk-container-id-1 div.sk-parallel-item::after {
+  content: "";
+  width: 100%;
+  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
+  flex-grow: 1;
+}
+
+#sk-container-id-1 div.sk-parallel {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background-color: var(--sklearn-color-background);
+  position: relative;
+}
+
+#sk-container-id-1 div.sk-parallel-item {
+  display: flex;
+  flex-direction: column;
+}
+
+#sk-container-id-1 div.sk-parallel-item:first-child::after {
+  align-self: flex-end;
+  width: 50%;
+}
+
+#sk-container-id-1 div.sk-parallel-item:last-child::after {
+  align-self: flex-start;
+  width: 50%;
+}
+
+#sk-container-id-1 div.sk-parallel-item:only-child::after {
+  width: 0;
+}
+
+/* Serial-specific style estimator block */
+
+#sk-container-id-1 div.sk-serial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--sklearn-color-background);
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+
+/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
+clickable and can be expanded/collapsed.
+- Pipeline and ColumnTransformer use this feature and define the default style
+- Estimators will overwrite some part of the style using the `sk-estimator` class
+*/
+
+/* Pipeline and ColumnTransformer style (default) */
+
+#sk-container-id-1 div.sk-toggleable {
+  /* Default theme specific background. It is overwritten whether we have a
+  specific estimator or a Pipeline/ColumnTransformer */
+  background-color: var(--sklearn-color-background);
+}
+
+/* Toggleable label */
+#sk-container-id-1 label.sk-toggleable__label {
+  cursor: pointer;
+  display: flex;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 0.5em;
+  box-sizing: border-box;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+}
+
+#sk-container-id-1 label.sk-toggleable__label .caption {
+  font-size: 0.6rem;
+  font-weight: lighter;
+  color: var(--sklearn-color-text-muted);
+}
+
+#sk-container-id-1 label.sk-toggleable__label-arrow:before {
+  /* Arrow on the left of the label */
+  content: "▸";
+  float: left;
+  margin-right: 0.25em;
+  color: var(--sklearn-color-icon);
+}
+
+#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {
+  color: var(--sklearn-color-text);
+}
+
+/* Toggleable content - dropdown */
+
+#sk-container-id-1 div.sk-toggleable__content {
+  display: none;
+  text-align: left;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content pre {
+  margin: 0.2em;
+  border-radius: 0.25em;
+  color: var(--sklearn-color-text);
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-toggleable__content.fitted pre {
+  /* unfitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+  /* Expand drop-down */
+  display: block;
+  width: 100%;
+  overflow: visible;
+}
+
+#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+  content: "▾";
+}
+
+/* Pipeline/ColumnTransformer-specific style */
+
+#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator-specific style */
+
+/* Colorize estimator box */
+#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+#sk-container-id-1 div.sk-label label.sk-toggleable__label,
+#sk-container-id-1 div.sk-label label {
+  /* The background is the default theme color */
+  color: var(--sklearn-color-text-on-default-background);
+}
+
+/* On hover, darken the color of the background */
+#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+/* Label box, darken color on hover, fitted */
+#sk-container-id-1 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator label */
+
+#sk-container-id-1 div.sk-label label {
+  font-family: monospace;
+  font-weight: bold;
+  line-height: 1.2em;
+}
+
+#sk-container-id-1 div.sk-label-container {
+  text-align: center;
+}
+
+/* Estimator-specific */
+#sk-container-id-1 div.sk-estimator {
+  font-family: monospace;
+  border: 1px dotted var(--sklearn-color-border-box);
+  border-radius: 0.25em;
+  box-sizing: border-box;
+  margin-bottom: 0.5em;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+/* on hover */
+#sk-container-id-1 div.sk-estimator:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-1 div.sk-estimator.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Specification for estimator info (e.g. "i" and "?") */
+
+/* Common style for "i" and "?" */
+
+.sk-estimator-doc-link,
+a:link.sk-estimator-doc-link,
+a:visited.sk-estimator-doc-link {
+  float: right;
+  font-size: smaller;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-unfitted-level-0);
+  border-radius: 1em;
+  height: 1em;
+  width: 1em;
+  text-decoration: none !important;
+  margin-left: 0.5em;
+  text-align: center;
+  /* unfitted */
+  border: var(--sklearn-color-unfitted-level-3) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted,
+a:link.sk-estimator-doc-link.fitted,
+a:visited.sk-estimator-doc-link.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3) 1pt solid;
+  color: var(--sklearn-color-fitted-level-3);
+}
+
+/* On hover */
+div.sk-estimator:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover,
+div.sk-label-container:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  border: var(--sklearn-color-fitted-level-0) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-0);
+  text-decoration: none;
+}
+
+div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover,
+div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+  border: var(--sklearn-color-fitted-level-0) 1pt solid;
+  color: var(--sklearn-color-fitted-level-0);
+  text-decoration: none;
+}
+
+/* Span, style for the box shown on hovering the info icon */
+.sk-estimator-doc-link span {
+  display: none;
+  z-index: 9999;
+  position: relative;
+  font-weight: normal;
+  right: .2ex;
+  padding: .5ex;
+  margin: .5ex;
+  width: min-content;
+  min-width: 20ex;
+  max-width: 50ex;
+  color: var(--sklearn-color-text);
+  box-shadow: 2pt 2pt 4pt #999;
+  /* unfitted */
+  background: var(--sklearn-color-unfitted-level-0);
+  border: .5pt solid var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted span {
+  /* fitted */
+  background: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3);
+}
+
+.sk-estimator-doc-link:hover span {
+  display: block;
+}
+
+/* "?"-specific style due to the `<a>` HTML tag */
+
+#sk-container-id-1 a.estimator_doc_link {
+  float: right;
+  font-size: 1rem;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-unfitted-level-0);
+  border-radius: 1rem;
+  height: 1rem;
+  width: 1rem;
+  text-decoration: none;
+  /* unfitted */
+  color: var(--sklearn-color-unfitted-level-1);
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+}
+
+#sk-container-id-1 a.estimator_doc_link.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+#sk-container-id-1 a.estimator_doc_link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+#sk-container-id-1 a.estimator_doc_link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+}
+
+.estimator-table {
+    font-family: monospace;
+}
+
+.estimator-table summary {
+    padding: .5rem;
+    cursor: pointer;
+}
+
+.estimator-table summary::marker {
+    font-size: 0.7rem;
+}
+
+.estimator-table details[open] {
+    padding-left: 0.1rem;
+    padding-right: 0.1rem;
+    padding-bottom: 0.3rem;
+}
+
+.estimator-table .parameters-table {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-top: 0;
+}
+
+.estimator-table .parameters-table tr:nth-child(odd) {
+    background-color: #fff;
+}
+
+.estimator-table .parameters-table tr:nth-child(even) {
+    background-color: #f6f6f6;
+}
+
+.estimator-table .parameters-table tr:hover {
+    background-color: #e0e0e0;
+}
+
+.estimator-table table td {
+    border: 1px solid rgba(106, 105, 104, 0.232);
+}
+
+/*
+    `table td`is set in notebook with right text-align.
+    We need to overwrite it.
+*/
+.estimator-table table td.param {
+    text-align: left;
+    position: relative;
+    padding: 0;
+}
+
+.user-set td {
+    color:rgb(255, 94, 0);
+    text-align: left !important;
+}
+
+.user-set td.value {
+    color:rgb(255, 94, 0);
+    background-color: transparent;
+}
+
+.default td {
+    color: black;
+    text-align: left !important;
+}
+
+.user-set td i,
+.default td i {
+    color: black;
+}
+
+/*
+    Styles for parameter documentation links
+    We need styling for visited so jupyter doesn't overwrite it
+*/
+a.param-doc-link,
+a.param-doc-link:link,
+a.param-doc-link:visited {
+    text-decoration: underline dashed;
+    text-underline-offset: .3em;
+    color: inherit;
+    display: block;
+    padding: .5em;
+}
+
+/* "hack" to make the entire area of the cell containing the link clickable */
+a.param-doc-link::before {
+    position: absolute;
+    content: "";
+    inset: 0;
+}
+
+.param-doc-description {
+    display: none;
+    position: absolute;
+    z-index: 9999;
+    left: 0;
+    padding: .5ex;
+    margin-left: 1.5em;
+    color: var(--sklearn-color-text);
+    box-shadow: .3em .3em .4em #999;
+    width: max-content;
+    text-align: left;
+    max-height: 10em;
+    overflow-y: auto;
+
+    /* unfitted */
+    background: var(--sklearn-color-unfitted-level-0);
+    border: thin solid var(--sklearn-color-unfitted-level-3);
+}
+
+/* Fitted state for parameter tooltips */
+.fitted .param-doc-description {
+    /* fitted */
+    background: var(--sklearn-color-fitted-level-0);
+    border: thin solid var(--sklearn-color-fitted-level-3);
+}
+
+.param-doc-link:hover .param-doc-description {
+    display: block;
+}
+
+.copy-paste-icon {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NDggNTEyIj48IS0tIUZvbnQgQXdlc29tZSBGcmVlIDYuNy4yIGJ5IEBmb250YXdlc29tZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tIExpY2Vuc2UgLSBodHRwczovL2ZvbnRhd2Vzb21lLmNvbS9saWNlbnNlL2ZyZWUgQ29weXJpZ2h0IDIwMjUgRm9udGljb25zLCBJbmMuLS0+PHBhdGggZD0iTTIwOCAwTDMzMi4xIDBjMTIuNyAwIDI0LjkgNS4xIDMzLjkgMTQuMWw2Ny45IDY3LjljOSA5IDE0LjEgMjEuMiAxNC4xIDMzLjlMNDQ4IDMzNmMwIDI2LjUtMjEuNSA0OC00OCA0OGwtMTkyIDBjLTI2LjUgMC00OC0yMS41LTQ4LTQ4bDAtMjg4YzAtMjYuNSAyMS41LTQ4IDQ4LTQ4ek00OCAxMjhsODAgMCAwIDY0LTY0IDAgMCAyNTYgMTkyIDAgMC0zMiA2NCAwIDAgNDhjMCAyNi41LTIxLjUgNDgtNDggNDhMNDggNTEyYy0yNi41IDAtNDgtMjEuNS00OC00OEwwIDE3NmMwLTI2LjUgMjEuNS00OCA0OC00OHoiLz48L3N2Zz4=);
+    background-repeat: no-repeat;
+    background-size: 14px 14px;
+    background-position: 0;
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+}
+</style>
+<div id="sk-container-id-1" class="sk-top-container">
+<div class="sk-text-repr-fallback">
+<pre>DISCRIM(priors='prop')</pre>
+<b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b>
+</div>
+<div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable">
+<input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>DISCRIM</div></div>
+<div><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
+        <div class="estimator-table">
+            <details>
+                <summary>Parameters</summary>
+                <table class="parameters-table">
+                  <tbody>
+
+        <tr class="default">
+            <td><i class="copy-paste-icon" onclick="copyToClipboard('method',
+                          this.parentElement.nextElementSibling)"></i></td>
+            <td class="param">method</td>
+            <td class="value">'linear'</td>
+        </tr>
+
+
+        <tr class="user-set">
+            <td><i class="copy-paste-icon" onclick="copyToClipboard('priors',
+                          this.parentElement.nextElementSibling)"></i></td>
+            <td class="param">priors</td>
+            <td class="value">'prop'</td>
+        </tr>
+
+
+        <tr class="default">
+            <td><i class="copy-paste-icon" onclick="copyToClipboard('classes',
+                          this.parentElement.nextElementSibling)"></i></td>
+            <td class="param">classes</td>
+            <td class="value">None</td>
+        </tr>
+
+
+        <tr class="default">
+            <td><i class="copy-paste-icon" onclick="copyToClipboard('var_select',
+                          this.parentElement.nextElementSibling)"></i></td>
+            <td class="param">var_select</td>
+            <td class="value">False</td>
+        </tr>
+
+
+        <tr class="default">
+            <td><i class="copy-paste-icon" onclick="copyToClipboard('level',
+                          this.parentElement.nextElementSibling)"></i></td>
+            <td class="param">level</td>
+            <td class="value">None</td>
+        </tr>
+
+
+        <tr class="default">
+            <td><i class="copy-paste-icon" onclick="copyToClipboard('tol',
+                          this.parentElement.nextElementSibling)"></i></td>
+            <td class="param">tol</td>
+            <td class="value">None</td>
+        </tr>
+
+
+        <tr class="default">
+            <td><i class="copy-paste-icon" onclick="copyToClipboard('warn_message',
+                          this.parentElement.nextElementSibling)"></i></td>
+            <td class="param">warn_message</td>
+            <td class="value">True</td>
+        </tr>
+
+                  </tbody>
+                </table>
+            </details>
+        </div>
+    </div>
+</div></div></div>
+</div>
+<script>function copyToClipboard(text, element) {
+    // Get the parameter prefix from the closest toggleable content
+    const toggleableContent = element.closest('.sk-toggleable__content');
+    const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
+    const fullParamName = paramPrefix ? `${paramPrefix}${text}` : text;
+
+    const originalStyle = element.style;
+    const computedStyle = window.getComputedStyle(element);
+    const originalWidth = computedStyle.width;
+    const originalHTML = element.innerHTML.replace('Copied!', '');
+
+    navigator.clipboard.writeText(fullParamName)
+        .then(() => {
+            element.style.width = originalWidth;
+            element.style.color = 'green';
+            element.innerHTML = "Copied!";
+
+            setTimeout(() => {
+                element.innerHTML = originalHTML;
+                element.style = originalStyle;
+            }, 2000);
+        })
+        .catch(err => {
+            console.error('Failed to copy:', err);
+            element.style.color = 'red';
+            element.innerHTML = "Failed!";
+            setTimeout(() => {
+                element.innerHTML = originalHTML;
+                element.style = originalStyle;
+            }, 2000);
+        });
+    return false;
+}
+
+document.querySelectorAll('.copy-paste-icon').forEach(function(element) {
+    const toggleableContent = element.closest('.sk-toggleable__content');
+    const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
+    const paramName = element.parentElement.nextElementSibling
+        .textContent.trim().split(' ')[0];
+    const fullParamName = paramPrefix ? `${paramPrefix}${paramName}` : paramName;
+
+    element.setAttribute('title', fullParamName);
+});
+
+
+/**
+ * Adapted from Skrub
+ * https://github.com/skrub-data/skrub/blob/403466d1d5d4dc76a7ef569b3f8228db59a31dc3/skrub/_reporting/_data/templates/report.js#L789
+ * @returns "light" or "dark"
+ */
+function detectTheme(element) {
+    const body = document.querySelector('body');
+
+    // Check VSCode theme
+    const themeKindAttr = body.getAttribute('data-vscode-theme-kind');
+    const themeNameAttr = body.getAttribute('data-vscode-theme-name');
+
+    if (themeKindAttr && themeNameAttr) {
+        const themeKind = themeKindAttr.toLowerCase();
+        const themeName = themeNameAttr.toLowerCase();
+
+        if (themeKind.includes("dark") || themeName.includes("dark")) {
+            return "dark";
+        }
+        if (themeKind.includes("light") || themeName.includes("light")) {
+            return "light";
+        }
+    }
+
+    // Check Jupyter theme
+    if (body.getAttribute('data-jp-theme-light') === 'false') {
+        return 'dark';
+    } else if (body.getAttribute('data-jp-theme-light') === 'true') {
+        return 'light';
+    }
+
+    // Guess based on a parent element's color
+    const color = window.getComputedStyle(element.parentNode, null).getPropertyValue('color');
+    const match = color.match(/^rgb\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)\s*$/i);
+    if (match) {
+        const [r, g, b] = [
+            parseFloat(match[1]),
+            parseFloat(match[2]),
+            parseFloat(match[3])
+        ];
+
+        // https://en.wikipedia.org/wiki/HSL_and_HSV#Lightness
+        const luma = 0.299 * r + 0.587 * g + 0.114 * b;
+
+        if (luma > 180) {
+            // If the text is very bright we have a dark theme
+            return 'dark';
+        }
+        if (luma < 75) {
+            // If the text is very dark we have a light theme
+            return 'light';
+        }
+        // Otherwise fall back to the next heuristic.
+    }
+
+    // Fallback to system preference
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
+
+function forceTheme(elementId) {
+    const estimatorElement = document.querySelector(`#${elementId}`);
+    if (estimatorElement === null) {
+        console.error(`Element with id ${elementId} not found.`);
+    } else {
+        const theme = detectTheme(estimatorElement);
+        estimatorElement.classList.add(theme);
+    }
+}
+
+forceTheme('sk-container-id-1');</script>
+</div>
+</div>
+</section>
+<section id="stepdisc">
+<h2>
+<code class="docutils literal notranslate"><span class="pre">stepdisc</span></code><a class="headerlink" href="#stepdisc" title="Link to this heading">#</a>
+</h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate">
+<div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate">
+<div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">discrimintools</span><span class="w"> </span><span class="kn">import</span> <span class="n">STEPDISC</span>
+<span class="n">clf2</span> <span class="o">=</span> <span class="n">STEPDISC</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">"forward"</span><span class="p">,</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">clf2</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">clf</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+
+====================== Step 1 forward selection results =======================
+      Wilks' Lambda  Partial R-Square    F Value  Num DF  Den DF          Pr&gt;F
+MEOH       0.282629          0.717371  62.186129       2      49  3.587597e-14
+ACET       0.971855          0.028145   0.709531       2      49  4.968583e-01
+BU1        0.286173          0.713827  61.112585       2      49  4.868527e-14
+BU2        0.914588          0.085412   2.288014       2      49  1.122087e-01
+ISOP       0.887731          0.112269   3.098457       2      49  5.406192e-02
+MEPR       0.691854          0.308146  10.912106       2      49  1.203236e-04
+PRO1       0.835465          0.164535   4.824978       2      49  1.222491e-02
+ACAL       0.979642          0.020358   0.509127       2      49  6.041644e-01
+
+Variable MEOH will enter
+
+
+====================== Step 2 forward selection results =======================
+      Wilks' Lambda  Partial R-Square    F Value  Num DF  Den DF      Pr&gt;F
+ACET       0.253614          0.102660   2.745708       2      48  0.074297
+BU1        0.192547          0.318729  11.228252       2      48  0.000100
+BU2        0.244101          0.136320   3.788072       2      48  0.029680
+ISOP       0.264061          0.065697   1.687604       2      48  0.195751
+MEPR       0.221217          0.217287   6.662572       2      48  0.002796
+PRO1       0.255676          0.095365   2.530037       2      48  0.090232
+ACAL       0.235697          0.166054   4.778852       2      48  0.012803
+
+Variable BU1 will enter
+
+
+====================== Step 3 forward selection results =======================
+      Wilks' Lambda  Partial R-Square   F Value  Num DF  Den DF      Pr&gt;F
+ACET       0.178725          0.071786  1.817445       2      47  0.173671
+BU2        0.170291          0.115585  3.071236       2      47  0.055772
+ISOP       0.174351          0.094502  2.452583       2      47  0.097018
+MEPR       0.147786          0.232468  7.117602       2      47  0.001994
+PRO1       0.176100          0.085419  2.194821       2      47  0.122666
+ACAL       0.173496          0.098943  2.580493       2      47  0.086432
+
+Variable MEPR will enter
+
+
+====================== Step 4 forward selection results =======================
+      Wilks' Lambda  Partial R-Square   F Value  Num DF  Den DF      Pr&gt;F
+ACET       0.138022          0.066069  1.627088       2      46  0.207606
+BU2        0.131479          0.110340  2.852582       2      46  0.067944
+ISOP       0.129820          0.121570  3.183082       2      46  0.050730
+PRO1       0.136572          0.075879  1.888507       2      46  0.162842
+ACAL       0.127365          0.138180  3.687719       2      46  0.032702
+
+No variable can enter
+
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate">
+<div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<style>#sk-container-id-2 {
+  /* Definition of color scheme common for light and dark mode */
+  --sklearn-color-text: #000;
+  --sklearn-color-text-muted: #666;
+  --sklearn-color-line: gray;
+  /* Definition of color scheme for unfitted estimators */
+  --sklearn-color-unfitted-level-0: #fff5e6;
+  --sklearn-color-unfitted-level-1: #f6e4d2;
+  --sklearn-color-unfitted-level-2: #ffe0b3;
+  --sklearn-color-unfitted-level-3: chocolate;
+  /* Definition of color scheme for fitted estimators */
+  --sklearn-color-fitted-level-0: #f0f8ff;
+  --sklearn-color-fitted-level-1: #d4ebff;
+  --sklearn-color-fitted-level-2: #b3dbfd;
+  --sklearn-color-fitted-level-3: cornflowerblue;
+}
+
+#sk-container-id-2.light {
+  /* Specific color for light theme */
+  --sklearn-color-text-on-default-background: black;
+  --sklearn-color-background: white;
+  --sklearn-color-border-box: black;
+  --sklearn-color-icon: #696969;
+}
+
+#sk-container-id-2.dark {
+  --sklearn-color-text-on-default-background: white;
+  --sklearn-color-background: #111;
+  --sklearn-color-border-box: white;
+  --sklearn-color-icon: #878787;
+}
+
+#sk-container-id-2 {
+  color: var(--sklearn-color-text);
+}
+
+#sk-container-id-2 pre {
+  padding: 0;
+}
+
+#sk-container-id-2 input.sk-hidden--visually {
+  border: 0;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+}
+
+#sk-container-id-2 div.sk-dashed-wrapped {
+  border: 1px dashed var(--sklearn-color-line);
+  margin: 0 0.4em 0.5em 0.4em;
+  box-sizing: border-box;
+  padding-bottom: 0.4em;
+  background-color: var(--sklearn-color-background);
+}
+
+#sk-container-id-2 div.sk-container {
+  /* jupyter's `normalize.less` sets `[hidden] { display: none; }`
+     but bootstrap.min.css set `[hidden] { display: none !important; }`
+     so we also need the `!important` here to be able to override the
+     default hidden behavior on the sphinx rendered scikit-learn.org.
+     See: https://github.com/scikit-learn/scikit-learn/issues/21755 */
+  display: inline-block !important;
+  position: relative;
+}
+
+#sk-container-id-2 div.sk-text-repr-fallback {
+  display: none;
+}
+
+div.sk-parallel-item,
+div.sk-serial,
+div.sk-item {
+  /* draw centered vertical line to link estimators */
+  background-image: linear-gradient(var(--sklearn-color-text-on-default-background), var(--sklearn-color-text-on-default-background));
+  background-size: 2px 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+/* Parallel-specific style estimator block */
+
+#sk-container-id-2 div.sk-parallel-item::after {
+  content: "";
+  width: 100%;
+  border-bottom: 2px solid var(--sklearn-color-text-on-default-background);
+  flex-grow: 1;
+}
+
+#sk-container-id-2 div.sk-parallel {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  background-color: var(--sklearn-color-background);
+  position: relative;
+}
+
+#sk-container-id-2 div.sk-parallel-item {
+  display: flex;
+  flex-direction: column;
+}
+
+#sk-container-id-2 div.sk-parallel-item:first-child::after {
+  align-self: flex-end;
+  width: 50%;
+}
+
+#sk-container-id-2 div.sk-parallel-item:last-child::after {
+  align-self: flex-start;
+  width: 50%;
+}
+
+#sk-container-id-2 div.sk-parallel-item:only-child::after {
+  width: 0;
+}
+
+/* Serial-specific style estimator block */
+
+#sk-container-id-2 div.sk-serial {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: var(--sklearn-color-background);
+  padding-right: 1em;
+  padding-left: 1em;
+}
+
+
+/* Toggleable style: style used for estimator/Pipeline/ColumnTransformer box that is
+clickable and can be expanded/collapsed.
+- Pipeline and ColumnTransformer use this feature and define the default style
+- Estimators will overwrite some part of the style using the `sk-estimator` class
+*/
+
+/* Pipeline and ColumnTransformer style (default) */
+
+#sk-container-id-2 div.sk-toggleable {
+  /* Default theme specific background. It is overwritten whether we have a
+  specific estimator or a Pipeline/ColumnTransformer */
+  background-color: var(--sklearn-color-background);
+}
+
+/* Toggleable label */
+#sk-container-id-2 label.sk-toggleable__label {
+  cursor: pointer;
+  display: flex;
+  width: 100%;
+  margin-bottom: 0;
+  padding: 0.5em;
+  box-sizing: border-box;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+}
+
+#sk-container-id-2 label.sk-toggleable__label .caption {
+  font-size: 0.6rem;
+  font-weight: lighter;
+  color: var(--sklearn-color-text-muted);
+}
+
+#sk-container-id-2 label.sk-toggleable__label-arrow:before {
+  /* Arrow on the left of the label */
+  content: "▸";
+  float: left;
+  margin-right: 0.25em;
+  color: var(--sklearn-color-icon);
+}
+
+#sk-container-id-2 label.sk-toggleable__label-arrow:hover:before {
+  color: var(--sklearn-color-text);
+}
+
+/* Toggleable content - dropdown */
+
+#sk-container-id-2 div.sk-toggleable__content {
+  display: none;
+  text-align: left;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-2 div.sk-toggleable__content.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-2 div.sk-toggleable__content pre {
+  margin: 0.2em;
+  border-radius: 0.25em;
+  color: var(--sklearn-color-text);
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-2 div.sk-toggleable__content.fitted pre {
+  /* unfitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+#sk-container-id-2 input.sk-toggleable__control:checked~div.sk-toggleable__content {
+  /* Expand drop-down */
+  display: block;
+  width: 100%;
+  overflow: visible;
+}
+
+#sk-container-id-2 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {
+  content: "▾";
+}
+
+/* Pipeline/ColumnTransformer-specific style */
+
+#sk-container-id-2 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-2 div.sk-label.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator-specific style */
+
+/* Colorize estimator box */
+#sk-container-id-2 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-2 div.sk-estimator.fitted input.sk-toggleable__control:checked~label.sk-toggleable__label {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+#sk-container-id-2 div.sk-label label.sk-toggleable__label,
+#sk-container-id-2 div.sk-label label {
+  /* The background is the default theme color */
+  color: var(--sklearn-color-text-on-default-background);
+}
+
+/* On hover, darken the color of the background */
+#sk-container-id-2 div.sk-label:hover label.sk-toggleable__label {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+/* Label box, darken color on hover, fitted */
+#sk-container-id-2 div.sk-label.fitted:hover label.sk-toggleable__label.fitted {
+  color: var(--sklearn-color-text);
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Estimator label */
+
+#sk-container-id-2 div.sk-label label {
+  font-family: monospace;
+  font-weight: bold;
+  line-height: 1.2em;
+}
+
+#sk-container-id-2 div.sk-label-container {
+  text-align: center;
+}
+
+/* Estimator-specific */
+#sk-container-id-2 div.sk-estimator {
+  font-family: monospace;
+  border: 1px dotted var(--sklearn-color-border-box);
+  border-radius: 0.25em;
+  box-sizing: border-box;
+  margin-bottom: 0.5em;
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-0);
+}
+
+#sk-container-id-2 div.sk-estimator.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+}
+
+/* on hover */
+#sk-container-id-2 div.sk-estimator:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-2);
+}
+
+#sk-container-id-2 div.sk-estimator.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-2);
+}
+
+/* Specification for estimator info (e.g. "i" and "?") */
+
+/* Common style for "i" and "?" */
+
+.sk-estimator-doc-link,
+a:link.sk-estimator-doc-link,
+a:visited.sk-estimator-doc-link {
+  float: right;
+  font-size: smaller;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-unfitted-level-0);
+  border-radius: 1em;
+  height: 1em;
+  width: 1em;
+  text-decoration: none !important;
+  margin-left: 0.5em;
+  text-align: center;
+  /* unfitted */
+  border: var(--sklearn-color-unfitted-level-3) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted,
+a:link.sk-estimator-doc-link.fitted,
+a:visited.sk-estimator-doc-link.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3) 1pt solid;
+  color: var(--sklearn-color-fitted-level-3);
+}
+
+/* On hover */
+div.sk-estimator:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover,
+div.sk-label-container:hover .sk-estimator-doc-link:hover,
+.sk-estimator-doc-link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  border: var(--sklearn-color-fitted-level-0) 1pt solid;
+  color: var(--sklearn-color-unfitted-level-0);
+  text-decoration: none;
+}
+
+div.sk-estimator.fitted:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover,
+div.sk-label-container:hover .sk-estimator-doc-link.fitted:hover,
+.sk-estimator-doc-link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+  border: var(--sklearn-color-fitted-level-0) 1pt solid;
+  color: var(--sklearn-color-fitted-level-0);
+  text-decoration: none;
+}
+
+/* Span, style for the box shown on hovering the info icon */
+.sk-estimator-doc-link span {
+  display: none;
+  z-index: 9999;
+  position: relative;
+  font-weight: normal;
+  right: .2ex;
+  padding: .5ex;
+  margin: .5ex;
+  width: min-content;
+  min-width: 20ex;
+  max-width: 50ex;
+  color: var(--sklearn-color-text);
+  box-shadow: 2pt 2pt 4pt #999;
+  /* unfitted */
+  background: var(--sklearn-color-unfitted-level-0);
+  border: .5pt solid var(--sklearn-color-unfitted-level-3);
+}
+
+.sk-estimator-doc-link.fitted span {
+  /* fitted */
+  background: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-3);
+}
+
+.sk-estimator-doc-link:hover span {
+  display: block;
+}
+
+/* "?"-specific style due to the `<a>` HTML tag */
+
+#sk-container-id-2 a.estimator_doc_link {
+  float: right;
+  font-size: 1rem;
+  line-height: 1em;
+  font-family: monospace;
+  background-color: var(--sklearn-color-unfitted-level-0);
+  border-radius: 1rem;
+  height: 1rem;
+  width: 1rem;
+  text-decoration: none;
+  /* unfitted */
+  color: var(--sklearn-color-unfitted-level-1);
+  border: var(--sklearn-color-unfitted-level-1) 1pt solid;
+}
+
+#sk-container-id-2 a.estimator_doc_link.fitted {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-0);
+  border: var(--sklearn-color-fitted-level-1) 1pt solid;
+  color: var(--sklearn-color-fitted-level-1);
+}
+
+/* On hover */
+#sk-container-id-2 a.estimator_doc_link:hover {
+  /* unfitted */
+  background-color: var(--sklearn-color-unfitted-level-3);
+  color: var(--sklearn-color-background);
+  text-decoration: none;
+}
+
+#sk-container-id-2 a.estimator_doc_link.fitted:hover {
+  /* fitted */
+  background-color: var(--sklearn-color-fitted-level-3);
+}
+
+.estimator-table {
+    font-family: monospace;
+}
+
+.estimator-table summary {
+    padding: .5rem;
+    cursor: pointer;
+}
+
+.estimator-table summary::marker {
+    font-size: 0.7rem;
+}
+
+.estimator-table details[open] {
+    padding-left: 0.1rem;
+    padding-right: 0.1rem;
+    padding-bottom: 0.3rem;
+}
+
+.estimator-table .parameters-table {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    margin-top: 0;
+}
+
+.estimator-table .parameters-table tr:nth-child(odd) {
+    background-color: #fff;
+}
+
+.estimator-table .parameters-table tr:nth-child(even) {
+    background-color: #f6f6f6;
+}
+
+.estimator-table .parameters-table tr:hover {
+    background-color: #e0e0e0;
+}
+
+.estimator-table table td {
+    border: 1px solid rgba(106, 105, 104, 0.232);
+}
+
+/*
+    `table td`is set in notebook with right text-align.
+    We need to overwrite it.
+*/
+.estimator-table table td.param {
+    text-align: left;
+    position: relative;
+    padding: 0;
+}
+
+.user-set td {
+    color:rgb(255, 94, 0);
+    text-align: left !important;
+}
+
+.user-set td.value {
+    color:rgb(255, 94, 0);
+    background-color: transparent;
+}
+
+.default td {
+    color: black;
+    text-align: left !important;
+}
+
+.user-set td i,
+.default td i {
+    color: black;
+}
+
+/*
+    Styles for parameter documentation links
+    We need styling for visited so jupyter doesn't overwrite it
+*/
+a.param-doc-link,
+a.param-doc-link:link,
+a.param-doc-link:visited {
+    text-decoration: underline dashed;
+    text-underline-offset: .3em;
+    color: inherit;
+    display: block;
+    padding: .5em;
+}
+
+/* "hack" to make the entire area of the cell containing the link clickable */
+a.param-doc-link::before {
+    position: absolute;
+    content: "";
+    inset: 0;
+}
+
+.param-doc-description {
+    display: none;
+    position: absolute;
+    z-index: 9999;
+    left: 0;
+    padding: .5ex;
+    margin-left: 1.5em;
+    color: var(--sklearn-color-text);
+    box-shadow: .3em .3em .4em #999;
+    width: max-content;
+    text-align: left;
+    max-height: 10em;
+    overflow-y: auto;
+
+    /* unfitted */
+    background: var(--sklearn-color-unfitted-level-0);
+    border: thin solid var(--sklearn-color-unfitted-level-3);
+}
+
+/* Fitted state for parameter tooltips */
+.fitted .param-doc-description {
+    /* fitted */
+    background: var(--sklearn-color-fitted-level-0);
+    border: thin solid var(--sklearn-color-fitted-level-3);
+}
+
+.param-doc-link:hover .param-doc-description {
+    display: block;
+}
+
+.copy-paste-icon {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NDggNTEyIj48IS0tIUZvbnQgQXdlc29tZSBGcmVlIDYuNy4yIGJ5IEBmb250YXdlc29tZSAtIGh0dHBzOi8vZm9udGF3ZXNvbWUuY29tIExpY2Vuc2UgLSBodHRwczovL2ZvbnRhd2Vzb21lLmNvbS9saWNlbnNlL2ZyZWUgQ29weXJpZ2h0IDIwMjUgRm9udGljb25zLCBJbmMuLS0+PHBhdGggZD0iTTIwOCAwTDMzMi4xIDBjMTIuNyAwIDI0LjkgNS4xIDMzLjkgMTQuMWw2Ny45IDY3LjljOSA5IDE0LjEgMjEuMiAxNC4xIDMzLjlMNDQ4IDMzNmMwIDI2LjUtMjEuNSA0OC00OCA0OGwtMTkyIDBjLTI2LjUgMC00OC0yMS41LTQ4LTQ4bDAtMjg4YzAtMjYuNSAyMS41LTQ4IDQ4LTQ4ek00OCAxMjhsODAgMCAwIDY0LTY0IDAgMCAyNTYgMTkyIDAgMC0zMiA2NCAwIDAgNDhjMCAyNi41LTIxLjUgNDgtNDggNDhMNDggNTEyYy0yNi41IDAtNDgtMjEuNS00OC00OEwwIDE3NmMwLTI2LjUgMjEuNS00OCA0OC00OHoiLz48L3N2Zz4=);
+    background-repeat: no-repeat;
+    background-size: 14px 14px;
+    background-position: 0;
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    cursor: pointer;
+}
+</style>
+<div id="sk-container-id-2" class="sk-top-container">
+<div class="sk-text-repr-fallback">
+<pre>STEPDISC()</pre>
+<b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br>On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b>
+</div>
+<div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator fitted sk-toggleable">
+<input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-2" type="checkbox" checked><label for="sk-estimator-id-2" class="sk-toggleable__label fitted sk-toggleable__label-arrow"><div><div>STEPDISC</div></div>
+<div><span class="sk-estimator-doc-link fitted">i<span>Fitted</span></span></div></label><div class="sk-toggleable__content fitted" data-param-prefix="">
+        <div class="estimator-table">
+            <details>
+                <summary>Parameters</summary>
+                <table class="parameters-table">
+                  <tbody>
+
+        <tr class="default">
+            <td><i class="copy-paste-icon" onclick="copyToClipboard('method',
+                          this.parentElement.nextElementSibling)"></i></td>
+            <td class="param">method</td>
+            <td class="value">'forward'</td>
+        </tr>
+
+
+        <tr class="default">
+            <td><i class="copy-paste-icon" onclick="copyToClipboard('alpha',
+                          this.parentElement.nextElementSibling)"></i></td>
+            <td class="param">alpha</td>
+            <td class="value">0.01</td>
+        </tr>
+
+
+        <tr class="default">
+            <td><i class="copy-paste-icon" onclick="copyToClipboard('lambda_init',
+                          this.parentElement.nextElementSibling)"></i></td>
+            <td class="param">lambda_init</td>
+            <td class="value">None</td>
+        </tr>
+
+
+        <tr class="default">
+            <td><i class="copy-paste-icon" onclick="copyToClipboard('verbose',
+                          this.parentElement.nextElementSibling)"></i></td>
+            <td class="param">verbose</td>
+            <td class="value">True</td>
+        </tr>
+
+                  </tbody>
+                </table>
+            </details>
+        </div>
+    </div>
+</div></div></div>
+</div>
+<script>function copyToClipboard(text, element) {
+    // Get the parameter prefix from the closest toggleable content
+    const toggleableContent = element.closest('.sk-toggleable__content');
+    const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
+    const fullParamName = paramPrefix ? `${paramPrefix}${text}` : text;
+
+    const originalStyle = element.style;
+    const computedStyle = window.getComputedStyle(element);
+    const originalWidth = computedStyle.width;
+    const originalHTML = element.innerHTML.replace('Copied!', '');
+
+    navigator.clipboard.writeText(fullParamName)
+        .then(() => {
+            element.style.width = originalWidth;
+            element.style.color = 'green';
+            element.innerHTML = "Copied!";
+
+            setTimeout(() => {
+                element.innerHTML = originalHTML;
+                element.style = originalStyle;
+            }, 2000);
+        })
+        .catch(err => {
+            console.error('Failed to copy:', err);
+            element.style.color = 'red';
+            element.innerHTML = "Failed!";
+            setTimeout(() => {
+                element.innerHTML = originalHTML;
+                element.style = originalStyle;
+            }, 2000);
+        });
+    return false;
+}
+
+document.querySelectorAll('.copy-paste-icon').forEach(function(element) {
+    const toggleableContent = element.closest('.sk-toggleable__content');
+    const paramPrefix = toggleableContent ? toggleableContent.dataset.paramPrefix : '';
+    const paramName = element.parentElement.nextElementSibling
+        .textContent.trim().split(' ')[0];
+    const fullParamName = paramPrefix ? `${paramPrefix}${paramName}` : paramName;
+
+    element.setAttribute('title', fullParamName);
+});
+
+
+/**
+ * Adapted from Skrub
+ * https://github.com/skrub-data/skrub/blob/403466d1d5d4dc76a7ef569b3f8228db59a31dc3/skrub/_reporting/_data/templates/report.js#L789
+ * @returns "light" or "dark"
+ */
+function detectTheme(element) {
+    const body = document.querySelector('body');
+
+    // Check VSCode theme
+    const themeKindAttr = body.getAttribute('data-vscode-theme-kind');
+    const themeNameAttr = body.getAttribute('data-vscode-theme-name');
+
+    if (themeKindAttr && themeNameAttr) {
+        const themeKind = themeKindAttr.toLowerCase();
+        const themeName = themeNameAttr.toLowerCase();
+
+        if (themeKind.includes("dark") || themeName.includes("dark")) {
+            return "dark";
+        }
+        if (themeKind.includes("light") || themeName.includes("light")) {
+            return "light";
+        }
+    }
+
+    // Check Jupyter theme
+    if (body.getAttribute('data-jp-theme-light') === 'false') {
+        return 'dark';
+    } else if (body.getAttribute('data-jp-theme-light') === 'true') {
+        return 'light';
+    }
+
+    // Guess based on a parent element's color
+    const color = window.getComputedStyle(element.parentNode, null).getPropertyValue('color');
+    const match = color.match(/^rgb\s*\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)\s*\)\s*$/i);
+    if (match) {
+        const [r, g, b] = [
+            parseFloat(match[1]),
+            parseFloat(match[2]),
+            parseFloat(match[3])
+        ];
+
+        // https://en.wikipedia.org/wiki/HSL_and_HSV#Lightness
+        const luma = 0.299 * r + 0.587 * g + 0.114 * b;
+
+        if (luma > 180) {
+            // If the text is very bright we have a dark theme
+            return 'dark';
+        }
+        if (luma < 75) {
+            // If the text is very dark we have a light theme
+            return 'light';
+        }
+        // Otherwise fall back to the next heuristic.
+    }
+
+    // Fallback to system preference
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+}
+
+
+function forceTheme(elementId) {
+    const estimatorElement = document.querySelector(`#${elementId}`);
+    if (estimatorElement === null) {
+        console.error(`Element with id ${elementId} not found.`);
+    } else {
+        const theme = detectTheme(estimatorElement);
+        estimatorElement.classList.add(theme);
+    }
+}
+
+forceTheme('sk-container-id-2');</script>
+</div>
+</div>
+<section id="Selected-variables">
+<h3>Selected variables<a class="headerlink" href="#Selected-variables" title="Link to this heading">#</a>
+</h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate">
+<div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate">
+<div class="highlight"><pre><span></span><span class="c1">#selected variables</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">clf2</span><span class="o">.</span><span class="n">summary_</span><span class="o">.</span><span class="n">selected</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+['MEOH', 'BU1', 'MEPR']
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="summary">
+<h2>
+<code class="docutils literal notranslate"><span class="pre">summary</span></code><a class="headerlink" href="#summary" title="Link to this heading">#</a>
+</h2>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate">
+<div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate">
+<div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">discrimintools</span><span class="w"> </span><span class="kn">import</span> <span class="n">summarySTEPDISC</span>
+</pre></div>
+</div>
+</div>
+<section id="Simple-summary">
+<h3>Simple summary<a class="headerlink" href="#Simple-summary" title="Link to this heading">#</a>
+</h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate">
+<div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate">
+<div class="highlight"><pre><span></span><span class="n">summarySTEPDISC</span><span class="p">(</span><span class="n">clf2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+                     Stepwise Discriminant Analysis - Results
+
+====================== Before forward selection  =======================
+
+                     Discriminant Analysis - Results
+
+Summary Information:
+               Infos  Value                  DF  DF value
+0  Total Sample Size     52            DF Total        51
+1          Variables      8   DF Within Classes        49
+2            Classes      3  DF Between Classes         2
+
+Class Level Information:
+        Frequency  Proportion  Prior Probability
+KIRSCH         17      0.3269             0.3269
+MIRAB          15      0.2885             0.2885
+POIRE          20      0.3846             0.3846
+
+Linear Discriminant Function for TYPE:
+          KIRSCH    MIRAB    POIRE
+Constant -5.0165 -18.8407 -24.7649
+MEOH      0.0034   0.0290   0.0334
+ACET      0.0064   0.0164   0.0075
+BU1      -0.0637   0.4054   0.3180
+BU2      -0.0009   0.0714   0.1150
+ISOP      0.0231   0.0298  -0.0085
+MEPR      0.0375  -0.1289   0.0618
+PRO1      0.0020  -0.0054  -0.0083
+ACAL      0.0662  -0.2264  -0.1303
+
+====================== After forward selection  =======================
+
+                     Discriminant Analysis - Results
+
+Summary Information:
+               Infos  Value                  DF  DF value
+0  Total Sample Size     52            DF Total        51
+1          Variables      3   DF Within Classes        49
+2            Classes      3  DF Between Classes         2
+
+Class Level Information:
+        Frequency  Proportion  Prior Probability
+KIRSCH         17      0.3269             0.3269
+MIRAB          15      0.2885             0.2885
+POIRE          20      0.3846             0.3846
+
+Linear Discriminant Function for TYPE:
+          KIRSCH    MIRAB    POIRE
+Constant -3.6107 -14.7754 -18.3711
+MEOH      0.0069   0.0213   0.0226
+BU1      -0.0766   0.4010   0.3735
+MEPR      0.0867  -0.0325   0.0467
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Detailed-summary">
+<h3>Detailed summary<a class="headerlink" href="#Detailed-summary" title="Link to this heading">#</a>
+</h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate">
+<div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate">
+<div class="highlight"><pre><span></span><span class="n">summarySTEPDISC</span><span class="p">(</span><span class="n">clf2</span><span class="p">,</span><span class="n">detailed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+                     Stepwise Discriminant Analysis - Results
+
+====================== Before forward selection  =======================
+
+                     Discriminant Analysis - Results
+
+Summary Information:
+               Infos  Value                  DF  DF value
+0  Total Sample Size     52            DF Total        51
+1          Variables      8   DF Within Classes        49
+2            Classes      3  DF Between Classes         2
+
+Class Level Information:
+        Frequency  Proportion  Prior Probability
+KIRSCH         17      0.3269             0.3269
+MIRAB          15      0.2885             0.2885
+POIRE          20      0.3846             0.3846
+
+Pooled Covariance Matrix Information:
+        Rank  Natural Log of the Determinant
+Pooled     8                         58.3267
+
+Linear Discriminant Function for TYPE:
+          KIRSCH    MIRAB    POIRE
+Constant -5.0165 -18.8407 -24.7649
+MEOH      0.0034   0.0290   0.0334
+ACET      0.0064   0.0164   0.0075
+BU1      -0.0637   0.4054   0.3180
+BU2      -0.0009   0.0714   0.1150
+ISOP      0.0231   0.0298  -0.0085
+MEPR      0.0375  -0.1289   0.0618
+PRO1      0.0020  -0.0054  -0.0083
+ACAL      0.0662  -0.2264  -0.1303
+
+Classification Summary for Calibration Data:
+
+Observation Profile:
+                        Read  Used
+Number of Observations    52    52
+
+Number of Observations Classified into TYPE:
+prediction  KIRSCH  MIRAB  POIRE  Total
+TYPE
+KIRSCH          17      0      0     17
+MIRAB            0     14      1     15
+POIRE            0      2     18     20
+Total           17     16     19     52
+
+Percent Classified into TYPE:
+prediction    KIRSCH    MIRAB    POIRE  Total
+TYPE
+KIRSCH      100.0000   0.0000   0.0000  100.0
+MIRAB         0.0000  93.3333   6.6667  100.0
+POIRE         0.0000  10.0000  90.0000  100.0
+Total        32.6923  30.7692  36.5385  100.0
+Priors        0.3269   0.2885   0.3846    NaN
+
+Error Count Estimates for TYPE:
+        KIRSCH   MIRAB   POIRE   Total
+Rate    0.0000  0.0667  0.1000  0.0577
+Priors  0.3269  0.2885  0.3846     NaN
+
+Classification Report for TYPE:
+              precision  recall  f1-score  support
+KIRSCH           1.0000  1.0000    1.0000  17.0000
+MIRAB            0.8750  0.9333    0.9032  15.0000
+POIRE            0.9474  0.9000    0.9231  20.0000
+accuracy         0.9423  0.9423    0.9423   0.9423
+macro avg        0.9408  0.9444    0.9421  52.0000
+weighted avg     0.9437  0.9423    0.9425  52.0000
+
+====================== After forward selection  =======================
+
+                     Discriminant Analysis - Results
+
+Summary Information:
+               Infos  Value                  DF  DF value
+0  Total Sample Size     52            DF Total        51
+1          Variables      3   DF Within Classes        49
+2            Classes      3  DF Between Classes         2
+
+Class Level Information:
+        Frequency  Proportion  Prior Probability
+KIRSCH         17      0.3269             0.3269
+MIRAB          15      0.2885             0.2885
+POIRE          20      0.3846             0.3846
+
+Pooled Covariance Matrix Information:
+        Rank  Natural Log of the Determinant
+Pooled     3                         19.4106
+
+Linear Discriminant Function for TYPE:
+          KIRSCH    MIRAB    POIRE
+Constant -3.6107 -14.7754 -18.3711
+MEOH      0.0069   0.0213   0.0226
+BU1      -0.0766   0.4010   0.3735
+MEPR      0.0867  -0.0325   0.0467
+
+Classification Summary for Calibration Data:
+
+Observation Profile:
+                        Read  Used
+Number of Observations    52    52
+
+Number of Observations Classified into TYPE:
+prediction  KIRSCH  MIRAB  POIRE  Total
+TYPE
+KIRSCH          17      0      0     17
+MIRAB            0     12      3     15
+POIRE            0      4     16     20
+Total           17     16     19     52
+
+Percent Classified into TYPE:
+prediction    KIRSCH    MIRAB    POIRE  Total
+TYPE
+KIRSCH      100.0000   0.0000   0.0000  100.0
+MIRAB         0.0000  80.0000  20.0000  100.0
+POIRE         0.0000  20.0000  80.0000  100.0
+Total        32.6923  30.7692  36.5385  100.0
+Priors        0.3269   0.2885   0.3846    NaN
+
+Error Count Estimates for TYPE:
+        KIRSCH   MIRAB   POIRE   Total
+Rate    0.0000  0.2000  0.2000  0.1346
+Priors  0.3269  0.2885  0.3846     NaN
+
+Classification Report for TYPE:
+              precision  recall  f1-score  support
+KIRSCH           1.0000  1.0000    1.0000  17.0000
+MIRAB            0.7500  0.8000    0.7742  15.0000
+POIRE            0.8421  0.8000    0.8205  20.0000
+accuracy         0.8654  0.8654    0.8654   0.8654
+macro avg        0.8640  0.8667    0.8649  52.0000
+weighted avg     0.8672  0.8654    0.8658  52.0000
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Markdown-format">
+<h3>Markdown format<a class="headerlink" href="#Markdown-format" title="Link to this heading">#</a>
+</h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate">
+<div class="highlight"><pre><span></span>[9]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate">
+<div class="highlight"><pre><span></span><span class="n">summarySTEPDISC</span><span class="p">(</span><span class="n">clf2</span><span class="p">,</span><span class="n">detailed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">to_markdown</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+                     Stepwise Discriminant Analysis - Results
+
+====================== Before forward selection  =======================
+
+                     Discriminant Analysis - Results
+
+Summary Information:
+|    | Infos             |   Value | DF                 |   DF value |
+|----|-------------------|---------|--------------------|------------|
+|  0 | Total Sample Size |      52 | DF Total           |         51 |
+|  1 | Variables         |       8 | DF Within Classes  |         49 |
+|  2 | Classes           |       3 | DF Between Classes |          2 |
+
+Class Level Information:
+|        |   Frequency |   Proportion |   Prior Probability |
+|--------|-------------|--------------|---------------------|
+| KIRSCH |          17 |       0.3269 |              0.3269 |
+| MIRAB  |          15 |       0.2885 |              0.2885 |
+| POIRE  |          20 |       0.3846 |              0.3846 |
+
+Pooled Covariance Matrix Information:
+|        |   Rank |   Natural Log of the Determinant |
+|--------|--------|----------------------------------|
+| Pooled |      8 |                          58.3267 |
+
+Linear Discriminant Function for TYPE:
+|          |   KIRSCH |    MIRAB |    POIRE |
+|----------|----------|----------|----------|
+| Constant |  -5.0165 | -18.8407 | -24.7649 |
+| MEOH     |   0.0034 |   0.029  |   0.0334 |
+| ACET     |   0.0064 |   0.0164 |   0.0075 |
+| BU1      |  -0.0637 |   0.4054 |   0.318  |
+| BU2      |  -0.0009 |   0.0714 |   0.115  |
+| ISOP     |   0.0231 |   0.0298 |  -0.0085 |
+| MEPR     |   0.0375 |  -0.1289 |   0.0618 |
+| PRO1     |   0.002  |  -0.0054 |  -0.0083 |
+| ACAL     |   0.0662 |  -0.2264 |  -0.1303 |
+
+Classification Summary for Calibration Data:
+
+Observation Profile:
+|                        |   Read |   Used |
+|------------------------|--------|--------|
+| Number of Observations |     52 |     52 |
+
+Number of Observations Classified into TYPE:
+| TYPE   |   KIRSCH |   MIRAB |   POIRE |   Total |
+|--------|----------|---------|---------|---------|
+| KIRSCH |       17 |       0 |       0 |      17 |
+| MIRAB  |        0 |      14 |       1 |      15 |
+| POIRE  |        0 |       2 |      18 |      20 |
+| Total  |       17 |      16 |      19 |      52 |
+
+Percent Classified into TYPE:
+| TYPE   |   KIRSCH |   MIRAB |   POIRE |   Total |
+|--------|----------|---------|---------|---------|
+| KIRSCH | 100      |  0      |  0      |     100 |
+| MIRAB  |   0      | 93.3333 |  6.6667 |     100 |
+| POIRE  |   0      | 10      | 90      |     100 |
+| Total  |  32.6923 | 30.7692 | 36.5385 |     100 |
+| Priors |   0.3269 |  0.2885 |  0.3846 |     nan |
+
+Error Count Estimates for TYPE:
+|        |   KIRSCH |   MIRAB |   POIRE |    Total |
+|--------|----------|---------|---------|----------|
+| Rate   |   0      |  0.0667 |  0.1    |   0.0577 |
+| Priors |   0.3269 |  0.2885 |  0.3846 | nan      |
+
+Classification Report for TYPE:
+|              |   precision |   recall |   f1-score |   support |
+|--------------|-------------|----------|------------|-----------|
+| KIRSCH       |      1      |   1      |     1      |   17      |
+| MIRAB        |      0.875  |   0.9333 |     0.9032 |   15      |
+| POIRE        |      0.9474 |   0.9    |     0.9231 |   20      |
+| accuracy     |      0.9423 |   0.9423 |     0.9423 |    0.9423 |
+| macro avg    |      0.9408 |   0.9444 |     0.9421 |   52      |
+| weighted avg |      0.9437 |   0.9423 |     0.9425 |   52      |
+
+====================== After forward selection  =======================
+
+                     Discriminant Analysis - Results
+
+Summary Information:
+|    | Infos             |   Value | DF                 |   DF value |
+|----|-------------------|---------|--------------------|------------|
+|  0 | Total Sample Size |      52 | DF Total           |         51 |
+|  1 | Variables         |       3 | DF Within Classes  |         49 |
+|  2 | Classes           |       3 | DF Between Classes |          2 |
+
+Class Level Information:
+|        |   Frequency |   Proportion |   Prior Probability |
+|--------|-------------|--------------|---------------------|
+| KIRSCH |          17 |       0.3269 |              0.3269 |
+| MIRAB  |          15 |       0.2885 |              0.2885 |
+| POIRE  |          20 |       0.3846 |              0.3846 |
+
+Pooled Covariance Matrix Information:
+|        |   Rank |   Natural Log of the Determinant |
+|--------|--------|----------------------------------|
+| Pooled |      3 |                          19.4106 |
+
+Linear Discriminant Function for TYPE:
+|          |   KIRSCH |    MIRAB |    POIRE |
+|----------|----------|----------|----------|
+| Constant |  -3.6107 | -14.7754 | -18.3711 |
+| MEOH     |   0.0069 |   0.0213 |   0.0226 |
+| BU1      |  -0.0766 |   0.401  |   0.3735 |
+| MEPR     |   0.0867 |  -0.0325 |   0.0467 |
+
+Classification Summary for Calibration Data:
+
+Observation Profile:
+|                        |   Read |   Used |
+|------------------------|--------|--------|
+| Number of Observations |     52 |     52 |
+
+Number of Observations Classified into TYPE:
+| TYPE   |   KIRSCH |   MIRAB |   POIRE |   Total |
+|--------|----------|---------|---------|---------|
+| KIRSCH |       17 |       0 |       0 |      17 |
+| MIRAB  |        0 |      12 |       3 |      15 |
+| POIRE  |        0 |       4 |      16 |      20 |
+| Total  |       17 |      16 |      19 |      52 |
+
+Percent Classified into TYPE:
+| TYPE   |   KIRSCH |   MIRAB |   POIRE |   Total |
+|--------|----------|---------|---------|---------|
+| KIRSCH | 100      |  0      |  0      |     100 |
+| MIRAB  |   0      | 80      | 20      |     100 |
+| POIRE  |   0      | 20      | 80      |     100 |
+| Total  |  32.6923 | 30.7692 | 36.5385 |     100 |
+| Priors |   0.3269 |  0.2885 |  0.3846 |     nan |
+
+Error Count Estimates for TYPE:
+|        |   KIRSCH |   MIRAB |   POIRE |    Total |
+|--------|----------|---------|---------|----------|
+| Rate   |   0      |  0.2    |  0.2    |   0.1346 |
+| Priors |   0.3269 |  0.2885 |  0.3846 | nan      |
+
+Classification Report for TYPE:
+|              |   precision |   recall |   f1-score |   support |
+|--------------|-------------|----------|------------|-----------|
+| KIRSCH       |      1      |   1      |     1      |   17      |
+| MIRAB        |      0.75   |   0.8    |     0.7742 |   15      |
+| POIRE        |      0.8421 |   0.8    |     0.8205 |   20      |
+| accuracy     |      0.8654 |   0.8654 |     0.8654 |    0.8654 |
+| macro avg    |      0.864  |   0.8667 |     0.8649 |   52      |
+| weighted avg |      0.8672 |   0.8654 |     0.8658 |   52      |
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+<section id="Evaluation-of-prediction-on-testing-dataset">
+<h2>Evaluation of prediction on testing dataset<a class="headerlink" href="#Evaluation-of-prediction-on-testing-dataset" title="Link to this heading">#</a>
+</h2>
+<section id="Testing-data">
+<h3>Testing data<a class="headerlink" href="#Testing-data" title="Link to this heading">#</a>
+</h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate">
+<div class="highlight"><pre><span></span>[10]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate">
+<div class="highlight"><pre><span></span><span class="c1">#testining data</span>
+<span class="n">DTest</span> <span class="o">=</span> <span class="n">load_alcools</span><span class="p">(</span><span class="s2">"test"</span><span class="p">)</span>
+<span class="n">DTest</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+&lt;class 'pandas.core.frame.DataFrame'&gt;
+RangeIndex: 50 entries, 0 to 49
+Data columns (total 9 columns):
+ #   Column  Non-Null Count  Dtype
+---  ------  --------------  -----
+ 0   TYPE    50 non-null     object
+ 1   MEOH    50 non-null     int64
+ 2   ACET    50 non-null     int64
+ 3   BU1     50 non-null     float64
+ 4   BU2     50 non-null     float64
+ 5   ISOP    50 non-null     int64
+ 6   MEPR    50 non-null     int64
+ 7   PRO1    50 non-null     int64
+ 8   ACAL    50 non-null     float64
+dtypes: float64(3), int64(5), object(1)
+memory usage: 3.6+ KB
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate">
+<div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate">
+<div class="highlight"><pre><span></span><span class="c1">#display testing data</span>
+<span class="n">print_dt</span><span class="p">(</span><span class="n">DTest</span><span class="o">.</span><span class="n">head</span><span class="p">(),</span><span class="n">rowname</span><span class="o">=</span><span class="s2">""</span><span class="p">,</span><span class="n">title</span><span class="o">=</span><span class="n">html</span><span class="p">(</span><span class="s2">"&lt;b&gt;Alcools dataset - testing data&lt;/b&gt;"</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate">
+<div class="highlight"><pre><span></span>[11]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div id="issmyvvsey" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>
+#issmyvvsey table {
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', 'Fira Sans', 'Droid Sans', Arial, sans-serif;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
+        }
+
+#issmyvvsey thead, tbody, tfoot, tr, td, th { border-style: none !important; }
+ tr { background-color: transparent !important; }
+#issmyvvsey p { margin: 0 !important; padding: 0 !important; }
+ #issmyvvsey .gt_table { display: table !important; border-collapse: collapse !important; line-height: normal !important; margin-left: auto !important; margin-right: auto !important; color: #333333 !important; font-size: 16px !important; font-weight: normal !important; font-style: normal !important; background-color: #FFFFFF !important; width: auto !important; border-top-style: solid !important; border-top-width: 2px !important; border-top-color: #A8A8A8 !important; border-right-style: none !important; border-right-width: 2px !important; border-right-color: #D3D3D3 !important; border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #A8A8A8 !important; border-left-style: none !important; border-left-width: 2px !important; border-left-color: #D3D3D3 !important; }
+ #issmyvvsey .gt_caption { padding-top: 4px !important; padding-bottom: 4px !important; }
+ #issmyvvsey .gt_title { color: #333333 !important; font-size: 125% !important; font-weight: initial !important; padding-top: 4px !important; padding-bottom: 4px !important; padding-left: 5px !important; padding-right: 5px !important; border-bottom-color: #FFFFFF !important; border-bottom-width: 0 !important; }
+ #issmyvvsey .gt_subtitle { color: #333333 !important; font-size: 85% !important; font-weight: initial !important; padding-top: 3px !important; padding-bottom: 5px !important; padding-left: 5px !important; padding-right: 5px !important; border-top-color: #FFFFFF !important; border-top-width: 0 !important; }
+ #issmyvvsey .gt_heading { background-color: #FFFFFF !important; text-align: center !important; border-bottom-color: #FFFFFF !important; border-left-style: none !important; border-left-width: 1px !important; border-left-color: #D3D3D3 !important; border-right-style: none !important; border-right-width: 1px !important; border-right-color: #D3D3D3 !important; }
+ #issmyvvsey .gt_bottom_border { border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; }
+ #issmyvvsey .gt_col_headings { border-top-style: solid !important; border-top-width: 2px !important; border-top-color: #D3D3D3 !important; border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; border-left-style: none !important; border-left-width: 1px !important; border-left-color: #D3D3D3 !important; border-right-style: none !important; border-right-width: 1px !important; border-right-color: #D3D3D3 !important; }
+ #issmyvvsey .gt_col_heading { color: #333333 !important; background-color: #FFFFFF !important; font-size: 100% !important; font-weight: normal !important; text-transform: inherit !important; border-left-style: none !important; border-left-width: 1px !important; border-left-color: #D3D3D3 !important; border-right-style: none !important; border-right-width: 1px !important; border-right-color: #D3D3D3 !important; vertical-align: bottom !important; padding-top: 5px !important; padding-bottom: 5px !important; padding-left: 5px !important; padding-right: 5px !important; overflow-x: hidden !important; }
+ #issmyvvsey .gt_column_spanner_outer { color: #333333 !important; background-color: #FFFFFF !important; font-size: 100% !important; font-weight: normal !important; text-transform: inherit !important; padding-top: 0 !important; padding-bottom: 0 !important; padding-left: 4px !important; padding-right: 4px !important; }
+ #issmyvvsey .gt_column_spanner_outer:first-child { padding-left: 0 !important; }
+ #issmyvvsey .gt_column_spanner_outer:last-child { padding-right: 0 !important; }
+ #issmyvvsey .gt_column_spanner { border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; vertical-align: bottom !important; padding-top: 5px !important; padding-bottom: 5px !important; overflow-x: hidden !important; display: inline-block !important; width: 100% !important; }
+ #issmyvvsey .gt_spanner_row { border-bottom-style: hidden !important; }
+ #issmyvvsey .gt_group_heading { padding-top: 8px !important; padding-bottom: 8px !important; padding-left: 5px !important; padding-right: 5px !important; color: #333333 !important; background-color: #FFFFFF !important; font-size: 100% !important; font-weight: initial !important; text-transform: inherit !important; border-top-style: solid !important; border-top-width: 2px !important; border-top-color: #D3D3D3 !important; border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; border-left-style: none !important; border-left-width: 1px !important; border-left-color: #D3D3D3 !important; border-right-style: none !important; border-right-width: 1px !important; border-right-color: #D3D3D3 !important; vertical-align: middle !important; text-align: left !important; }
+ #issmyvvsey .gt_empty_group_heading { padding: 0.5px !important; color: #333333 !important; background-color: #FFFFFF !important; font-size: 100% !important; font-weight: initial !important; border-top-style: solid !important; border-top-width: 2px !important; border-top-color: #D3D3D3 !important; border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; vertical-align: middle !important; }
+ #issmyvvsey .gt_from_md> :first-child { margin-top: 0 !important; }
+ #issmyvvsey .gt_from_md> :last-child { margin-bottom: 0 !important; }
+ #issmyvvsey .gt_row { padding-top: 8px !important; padding-bottom: 8px !important; padding-left: 5px !important; padding-right: 5px !important; margin: 10px !important; border-top-style: solid !important; border-top-width: 1px !important; border-top-color: #D3D3D3 !important; border-left-style: none !important; border-left-width: 1px !important; border-left-color: #D3D3D3 !important; border-right-style: none !important; border-right-width: 1px !important; border-right-color: #D3D3D3 !important; vertical-align: middle !important; overflow-x: hidden !important; }
+ #issmyvvsey .gt_stub { color: #333333 !important; background-color: #FFFFFF !important; font-size: 100% !important; font-weight: initial !important; text-transform: inherit !important; border-right-style: solid !important; border-right-width: 2px !important; border-right-color: #D3D3D3 !important; padding-left: 5px !important; padding-right: 5px !important; }
+ #issmyvvsey .gt_stub_row_group { color: #333333 !important; background-color: #FFFFFF !important; font-size: 100% !important; font-weight: initial !important; text-transform: inherit !important; border-right-style: solid !important; border-right-width: 2px !important; border-right-color: #D3D3D3 !important; padding-left: 5px !important; padding-right: 5px !important; vertical-align: top !important; }
+ #issmyvvsey .gt_row_group_first td { border-top-width: 2px !important; }
+ #issmyvvsey .gt_row_group_first th { border-top-width: 2px !important; }
+ #issmyvvsey .gt_striped { color: #333333 !important; background-color: #F4F4F4 !important; }
+ #issmyvvsey .gt_table_body { border-top-style: solid !important; border-top-width: 2px !important; border-top-color: #D3D3D3 !important; border-bottom-style: solid !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; }
+ #issmyvvsey .gt_grand_summary_row { color: #333333 !important; background-color: #FFFFFF !important; text-transform: inherit !important; padding-top: 8px !important; padding-bottom: 8px !important; padding-left: 5px !important; padding-right: 5px !important; }
+ #issmyvvsey .gt_first_grand_summary_row_bottom { border-top-style: double !important; border-top-width: 6px !important; border-top-color: #D3D3D3 !important; }
+ #issmyvvsey .gt_last_grand_summary_row_top { border-bottom-style: double !important; border-bottom-width: 6px !important; border-bottom-color: #D3D3D3 !important; }
+ #issmyvvsey .gt_sourcenotes { color: #333333 !important; background-color: #FFFFFF !important; border-bottom-style: none !important; border-bottom-width: 2px !important; border-bottom-color: #D3D3D3 !important; border-left-style: none !important; border-left-width: 2px !important; border-left-color: #D3D3D3 !important; border-right-style: none !important; border-right-width: 2px !important; border-right-color: #D3D3D3 !important; }
+ #issmyvvsey .gt_sourcenote { font-size: 90% !important; padding-top: 4px !important; padding-bottom: 4px !important; padding-left: 5px !important; padding-right: 5px !important; text-align: left !important; }
+ #issmyvvsey .gt_left { text-align: left !important; }
+ #issmyvvsey .gt_center { text-align: center !important; }
+ #issmyvvsey .gt_right { text-align: right !important; font-variant-numeric: tabular-nums !important; }
+ #issmyvvsey .gt_font_normal { font-weight: normal !important; }
+ #issmyvvsey .gt_font_bold { font-weight: bold !important; }
+ #issmyvvsey .gt_font_italic { font-style: italic !important; }
+ #issmyvvsey .gt_super { font-size: 65% !important; }
+ #issmyvvsey .gt_footnote_marks { font-size: 75% !important; vertical-align: 0.4em !important; position: initial !important; }
+ #issmyvvsey .gt_asterisk { font-size: 100% !important; vertical-align: 0 !important; }
+
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+<thead>
+
+  <tr class="gt_heading">
+    <td colspan="10" class="gt_heading gt_title gt_font_normal"><b>Alcools dataset - testing data</b></td>
+  </tr>
+<tr class="gt_col_headings">
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id=""></th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="TYPE">TYPE</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="MEOH">MEOH</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="ACET">ACET</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="BU1">BU1</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="BU2">BU2</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="ISOP">ISOP</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="MEPR">MEPR</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="PRO1">PRO1</th>
+  <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="ACAL">ACAL</th>
+</tr>
+</thead>
+<tbody class="gt_table_body">
+  <tr>
+    <td class="gt_row gt_right">0</td>
+    <td class="gt_row gt_left">KIRSCH</td>
+    <td class="gt_row gt_right">3</td>
+    <td class="gt_row gt_right">15</td>
+    <td class="gt_row gt_right">0.2</td>
+    <td class="gt_row gt_right">30.0</td>
+    <td class="gt_row gt_right">9</td>
+    <td class="gt_row gt_right">9</td>
+    <td class="gt_row gt_right">350</td>
+    <td class="gt_row gt_right">9.0</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">1</td>
+    <td class="gt_row gt_left">KIRSCH</td>
+    <td class="gt_row gt_right">475</td>
+    <td class="gt_row gt_right">172</td>
+    <td class="gt_row gt_right">1.9</td>
+    <td class="gt_row gt_right">7.0</td>
+    <td class="gt_row gt_right">113</td>
+    <td class="gt_row gt_right">33</td>
+    <td class="gt_row gt_right">546</td>
+    <td class="gt_row gt_right">14.0</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">2</td>
+    <td class="gt_row gt_left">KIRSCH</td>
+    <td class="gt_row gt_right">186</td>
+    <td class="gt_row gt_right">101</td>
+    <td class="gt_row gt_right">0.0</td>
+    <td class="gt_row gt_right">1.6</td>
+    <td class="gt_row gt_right">36</td>
+    <td class="gt_row gt_right">11</td>
+    <td class="gt_row gt_right">128</td>
+    <td class="gt_row gt_right">8.0</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">3</td>
+    <td class="gt_row gt_left">KIRSCH</td>
+    <td class="gt_row gt_right">371</td>
+    <td class="gt_row gt_right">414</td>
+    <td class="gt_row gt_right">1.2</td>
+    <td class="gt_row gt_right">0.0</td>
+    <td class="gt_row gt_right">97</td>
+    <td class="gt_row gt_right">39</td>
+    <td class="gt_row gt_right">502</td>
+    <td class="gt_row gt_right">9.0</td>
+  </tr>
+  <tr>
+    <td class="gt_row gt_right">4</td>
+    <td class="gt_row gt_left">KIRSCH</td>
+    <td class="gt_row gt_right">583</td>
+    <td class="gt_row gt_right">226</td>
+    <td class="gt_row gt_right">2.3</td>
+    <td class="gt_row gt_right">19.0</td>
+    <td class="gt_row gt_right">120</td>
+    <td class="gt_row gt_right">46</td>
+    <td class="gt_row gt_right">656</td>
+    <td class="gt_row gt_right">11.0</td>
+  </tr>
+</tbody>
+
+
+</table>
+
+</div>
+</div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate">
+<div class="highlight"><pre><span></span>[12]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate">
+<div class="highlight"><pre><span></span><span class="c1">#split into X and y</span>
+<span class="n">yTest</span><span class="p">,</span> <span class="n">XTest</span> <span class="o">=</span> <span class="n">DTest</span><span class="p">[</span><span class="s2">"TYPE"</span><span class="p">],</span> <span class="n">DTest</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"TYPE"</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="eval_predict-function">
+<h3>
+<code class="docutils literal notranslate"><span class="pre">eval_predict</span></code> function<a class="headerlink" href="#eval_predict-function" title="Link to this heading">#</a>
+</h3>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate">
+<div class="highlight"><pre><span></span>[13]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate">
+<div class="highlight"><pre><span></span><span class="c1">#eval_predict function</span>
+<span class="n">eval_test</span> <span class="o">=</span> <span class="n">clf2</span><span class="o">.</span><span class="n">eval_predict</span><span class="p">(</span><span class="n">XTest</span><span class="p">,</span><span class="n">yTest</span><span class="p">,</span><span class="n">verbose</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Observation Profile:
+                        Read  Used
+Number of Observations    50    50
+
+Number of Observations Classified into TYPE:
+prediction  KIRSCH  MIRAB  POIRE  Total
+TYPE
+KIRSCH          14      0      0     14
+MIRAB            0     12      5     17
+POIRE            2      8      9     19
+Total           16     20     14     50
+
+Percent Classified into TYPE:
+prediction      KIRSCH      MIRAB      POIRE  Total
+TYPE
+KIRSCH      100.000000   0.000000   0.000000  100.0
+MIRAB         0.000000  70.588235  29.411765  100.0
+POIRE        10.526316  42.105263  47.368421  100.0
+Total        32.000000  40.000000  28.000000  100.0
+Priors        0.326923   0.288462   0.384615    NaN
+
+Error Count Estimates for TYPE:
+          KIRSCH     MIRAB     POIRE     Total
+Rate    0.000000  0.294118  0.526316  0.287271
+Priors  0.326923  0.288462  0.384615       NaN
+
+Classification Report for TYPE:
+              precision    recall  f1-score  support
+KIRSCH         0.875000  1.000000  0.933333     14.0
+MIRAB          0.600000  0.705882  0.648649     17.0
+POIRE          0.642857  0.473684  0.545455     19.0
+accuracy       0.700000  0.700000  0.700000      0.7
+macro avg      0.705952  0.726522  0.709146     50.0
+weighted avg   0.693286  0.700000  0.689147     50.0
+</pre></div>
+</div>
+</div>
+</section>
+</section>
+</section>
+
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#alcools-dataset">alcools dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#instanciation-&amp;-training"><code class="docutils literal notranslate"><span class="pre">instanciation</span> <span class="pre">&amp;</span> <span class="pre">training</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stepdisc"><code class="docutils literal notranslate"><span class="pre">stepdisc</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Selected-variables">Selected variables</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary"><code class="docutils literal notranslate"><span class="pre">summary</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Simple-summary">Simple summary</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Detailed-summary">Detailed summary</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Markdown-format">Markdown format</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#Evaluation-of-prediction-on-testing-dataset">Evaluation of prediction on testing dataset</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#Testing-data">Testing data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eval_predict-function"><code class="docutils literal notranslate"><span class="pre">eval_predict</span></code> function</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/source/examples/07_stepdisc_lda_alcool.ipynb.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, Duvérier DJIFACK ZEBAZE.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

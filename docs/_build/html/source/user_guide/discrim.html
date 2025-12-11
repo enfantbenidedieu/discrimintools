@@ -1,0 +1,683 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>DISCRIM &#8212; discrimintools 0.1.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=01f34227"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'source/user_guide/discrim';</script>
+    <link rel="icon" href="../../_static/discrimintools.svg"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="GFA" href="gfa.html" />
+    <link rel="prev" title="DiCA" href="dica.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/discrimintools.svg" class="logo__image only-light" alt=""/>
+    <img src="../../_static/discrimintools.svg" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">discrimintools</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../install/index.html">
+    Install
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../reference/index.html">
+    API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../examples/index.html">
+    Examples
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/enfantbenidedieu/discrimintools" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../install/index.html">
+    Install
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../reference/index.html">
+    API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../examples/index.html">
+    Examples
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/enfantbenidedieu/discrimintools" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="candisc.html">CANDISC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cpls.html">CPLS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dica.html">DiCA</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">DISCRIM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gfa.html">GFA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gfalda.html">GFALDA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mda.html">MDA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mpca.html">MPCA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plsda.html">PLSDA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plslda.html">PLSLDA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plslogit.html">PLSLOGIT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stepdisc.html">STEPDISC</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">User Guide</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">DISCRIM</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="discrim">
+<h1>DISCRIM<a class="headerlink" href="#discrim" title="Link to this heading">#</a>
+</h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a>
+</h2>
+<p>Linear Discriminant Analysis (LDA) and Quadratic Discriminant Analysis (QDA) are two classifiers, with, as their names suggest, a linear and a quadratic decision surface, respectively.</p>
+<p>For a set of observations containing one or more quantitative variables and a classification variable defining
+groups of observations, the DISCRIM class develops a discriminant criterion to classify each observation
+into one of the groups.</p>
+<p>The DISCRIMN assume that the distribution within each group is multivariate normal. The discriminant function, also known as a classification criterion,
+is determined by a measure of generalized squared distance (Rao 1973). The classification criterion can be
+based on either the individual within-group covariance matrices (yielding a quadratic function) or the pooled
+covariance matrix (yielding a linear function); it also takes into account the prior probabilities of the groups.</p>
+</section>
+<section id="mathematical-formula-of-the-lda-and-qda">
+<h2>Mathematical formula of the LDA and QDA<a class="headerlink" href="#mathematical-formula-of-the-lda-and-qda" title="Link to this heading">#</a>
+</h2>
+<p>Both LDA and QDA cen be derived from simple probabilistic models which model the class conditional distribution of the <span class="math notranslate nohighlight">\(\mathbb{P}\left(X|Y=y_{k}\right)\)</span> for each class <span class="math notranslate nohighlight">\(k\)</span>.
+Predictions can be obtained by using Bayes’ rule, for each training sample <span class="math notranslate nohighlight">\(x \in \mathcal{R}^{p}\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{P}\left(y=k|x\right) = \dfrac{\mathbb{P}\left(x|y=k\right)\mathbb{P}(y=k)}{\mathbb{P}\left(x\right)} =  \dfrac{\mathbb{P}\left(x|y=k\right)\mathbb{P}(y=k)}{\displaystyle \sum_{l}\mathbb{P}\left(x|y=l\right)\mathbb{P}(y=l)}\]</div>
+<p>and we select the class <span class="math notranslate nohighlight">\(k\)</span> which maximizes this posterior probability.</p>
+<p>More specifically, for linear and quadratic discriminant analysis, <span class="math notranslate nohighlight">\(\mathbb{P}\left(x|y\right)\)</span> is modeled as a multivariate gaussian distribution with density:</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{P}\left(x|y=k\right) = \dfrac{1}{\left(2\pi\right)^{p/2}\lvert \Sigma_{k}\rvert^{1/2}}\text{exp}\left(-\dfrac{1}{2}\left(x-\mu_{k}\right)^{T} \Sigma_{k}^{-1}\left(x-\mu_{k}\right)\right)\]</div>
+<section id="quadratic-discriminant-analysis">
+<h3>Quadratic Discriminant Analysis<a class="headerlink" href="#quadratic-discriminant-analysis" title="Link to this heading">#</a>
+</h3>
+<p>According to the model above, the log of the posterior probability is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{eqnarray}
+\log \mathbb{P}\left(y=k|x\right) &amp; = &amp; \log \mathbb{P}\left(x|y=k\right)+\log \mathbb{P}\left(y=k\right) - \log \mathbb{P}(x)\\
+ &amp; = &amp; - \dfrac{p}{2}\log\left(2\pi\right)-\dfrac{1}{2}\log \lvert \Sigma_{k} \rvert -\dfrac{1}{2}\left(x-\mu_{k}\right)^{T} \Sigma_{k}^{-1}\left(x-\mu_{k}\right) +\log \mathbb{P}\left(y=k\right) - \log \mathbb{P}(x) \\
+ &amp; = &amp; -\dfrac{1}{2}\log \lvert \Sigma_{k} \rvert -\dfrac{1}{2}\left(x-\mu_{k}\right)^{T} \Sigma_{k}^{-1}\left(x-\mu_{k}\right) +\log \mathbb{P}\left(y=k\right) + Cst
+\end{eqnarray}\end{split}\]</div>
+<p>The predicted class is the one that maximises this log-posterior probability.</p>
+</section>
+<section id="linear-discriminant-analysis">
+<h3>Linear Discriminant Analysis<a class="headerlink" href="#linear-discriminant-analysis" title="Link to this heading">#</a>
+</h3>
+<p>LDA is a special case of QDA, where the Gaussian for each class are assumed to share the same covariance matrix: <span class="math notranslate nohighlight">\(\Sigma_{k}=\Sigma\)</span> for all <span class="math notranslate nohighlight">\(k\)</span>. This reduces the log posterior probability to:</p>
+<div class="math notranslate nohighlight">
+\[\log \mathbb{P}\left(y=k|x\right) = -\dfrac{1}{2}\left(x-\mu_{k}\right)^{T} \Sigma^{-1}\left(x-\mu_{k}\right) +\log \mathbb{P}\left(y=k\right) + Cst\]</div>
+<p>The term <span class="math notranslate nohighlight">\(\left(x-\mu_{k}\right)^{T} \Sigma^{-1}\left(x-\mu_{k}\right)\)</span> corresponds to the <a class="reference external" href="https://en.wikipedia.org/wiki/Mahalanobis_distance">Mahalanobis</a> between the sample <span class="math notranslate nohighlight">\(x\)</span> and the mean <span class="math notranslate nohighlight">\(\mu_{k}\)</span>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The Mahalanobis distance tells how close <span class="math notranslate nohighlight">\(x\)</span> is from <span class="math notranslate nohighlight">\(\mu_{k}\)</span>, while also accounting for the variance of each feature. WE can thus interpret LDA as assigning
+<span class="math notranslate nohighlight">\(x\)</span> to the class whose mean is the closest in terms of Mahalanobis distance, while also accounting for the class prior probabilities.</p>
+</div>
+<p>The log posterior probability of LDA can also be written <a class="footnote-reference brackets" href="#id5" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> as:</p>
+<div class="math notranslate nohighlight">
+\[\log \mathbb{P}\left(y=k|x\right) = \beta_{k0} + \beta_{k}^{T}x\]</div>
+<p>where <span class="math notranslate nohighlight">\(\beta_{k} = \Sigma^{-1}\mu_{k}\)</span> and <span class="math notranslate nohighlight">\(\beta_{k0} = \log \mathbb{P}\left(y=k\right) - \dfrac{1}{2}\mu_{k}^{T}\Sigma^{-1}\mu_{k}\)</span>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>From the above formula, it is clear that linear discriminant analysis has a linear decision surface. In this case of quadratic discriminant analysis, the are no assumptions on the covariance matrices <span class="math notranslate nohighlight">\(\Sigma_{k}\)</span> of the
+Gaussians, leading to quadratic decision surface. See <a class="footnote-reference brackets" href="#id6" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> for more details.</p>
+</div>
+</section>
+</section>
+<section id="estimating-parameters-of-normal-distributions">
+<h2>Estimating Parameters of Normal Distributions<a class="headerlink" href="#estimating-parameters-of-normal-distributions" title="Link to this heading">#</a>
+</h2>
+<p>In any practical use, we need to estmate some of these quantities:</p>
+<ul class="simple">
+<li><p>Priors probabilities: <span class="math notranslate nohighlight">\(\widehat{\pi}_{k}\)</span></p></li>
+<li><p>Mean-vectors: <span class="math notranslate nohighlight">\(\widehat{\mu}_{k}\)</span></p></li>
+<li><p>Variance-covariance matrices : <span class="math notranslate nohighlight">\(\widehat{\Sigma}_{k}\)</span></p></li>
+</ul>
+<section id="priors">
+<h3>Priors<a class="headerlink" href="#priors" title="Link to this heading">#</a>
+</h3>
+<p>Estimating <span class="math notranslate nohighlight">\(\pi_{k}\)</span> is relatively intuitive:</p>
+<div class="math notranslate nohighlight">
+\[\widehat{\pi}_{k} = \dfrac{n_{k}}{n}\]</div>
+<p>where <span class="math notranslate nohighlight">\(n_{k} = lvert \mathcal{C}_{k}\rvert\)</span> denotes the size of class <span class="math notranslate nohighlight">\(k\)</span> and <span class="math notranslate nohighlight">\(n\)</span> denotes the total number of data points.</p>
+</section>
+<section id="mean-vectors">
+<h3>Mean vectors<a class="headerlink" href="#mean-vectors" title="Link to this heading">#</a>
+</h3>
+<p>For <span class="math notranslate nohighlight">\(\widehat{\mu}_{k}\)</span>, we can use the centroid of <span class="math notranslate nohighlight">\(\mathcal{C}_{k}\)</span>; i.e. the average individual of class <span class="math notranslate nohighlight">\(k\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\widehat{\mu}_{k} = g_{k}\]</div>
+</section>
+<section id="variance-covariance-matrices">
+<h3>Variance-Covariance matrices<a class="headerlink" href="#variance-covariance-matrices" title="Link to this heading">#</a>
+</h3>
+<p>For <span class="math notranslate nohighlight">\(\widehat{\Sigma}_{k}\)</span>, we can use the within-variance matrix:</p>
+<div class="math notranslate nohighlight">
+\[\widehat{\Sigma}_{k} = \dfrac{1}{n_{k}-1} X_{k}^{T}X_{k}\]</div>
+<p>where <span class="math notranslate nohighlight">\(X_{k}\)</span> is the mean-centered data matrix for objects of class <span class="math notranslate nohighlight">\(\mathcal{C}_{k}\)</span>.</p>
+<p>Given all of above estimations, we can estimate the posterior probability.</p>
+<section id="id3">
+<h4>Quadratic Discriminant Analysis<a class="headerlink" href="#id3" title="Link to this heading">#</a>
+</h4>
+<p>For quadratic discriminant analysis, we have :</p>
+<div class="math notranslate nohighlight">
+\[\widehat{\delta}_{k}\left(x\right) = \underbrace{-\dfrac{1}{2}x^{T}\widehat{\Sigma}_{k}^{-1}x}_{\text{quadratic}} - \underbrace{x^{T}\widehat{\Sigma}_{k}^{-1}\widehat{\mu}_{k}}_{\text{linear}} + \underbrace{\log \left(\widehat{\pi}_{k}\right) - \dfrac{1}{2}\log \lvert \widehat{\Sigma}_{k} \rvert - \dfrac{1}{2}\widehat{\mu}_{k}^{T}\widehat{\Sigma}_{k}^{-1}\widehat{\mu}_{k}}_{\text{constant}}\]</div>
+<p>Having a quadratic discriminant function causes the decision boundaries in quadratic discriminant analysis to be quadratic surfaces.</p>
+</section>
+<section id="id4">
+<h4>Linear Discriminant Analysis<a class="headerlink" href="#id4" title="Link to this heading">#</a>
+</h4>
+<p>For linear discriminant analysis, since all covariances matrices are the same, the pooled within-class matrix is defined as :</p>
+<div class="math notranslate nohighlight">
+\[\widehat{\Sigma} = \dfrac{1}{n-K} \displaystyle \sum_{k} \left(n_{k}-1\right)\widehat{\Sigma}_{k}\]</div>
+<p>Our expression for <span class="math notranslate nohighlight">\(\widehat{\delta}_{k}\left(x\right)\)</span>, becomes (after ignoring termes that do not depend on <span class="math notranslate nohighlight">\(k\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[\widehat{\delta}_{k}\left(x\right) =  - \underbrace{x^{T}\widehat{\Sigma}^{-1}\widehat{\mu}_{k}}_{\text{linear}} + \underbrace{\log \left(\widehat{\pi}_{k}\right) - \dfrac{1}{2}\widehat{\mu}_{k}^{T}\widehat{\Sigma}^{-1}\widehat{\mu}_{k}}_{\text{constant}}\]</div>
+<p>For more details about linear and quadratic discriminant analysis, see SAS <a class="reference external" href="https://support.sas.com/documentation/onlinedoc/stat/132/discrim.pdf">DISCRIM Procedure</a>.</p>
+<p class="rubric">References</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="id5" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<ol class="upperalpha simple" start="18">
+<li>
+<ol class="upperalpha simple" start="15">
+<li><p>Duda, P. E. Hart, D. G. Stork. Pattern Classification (Second Edition), section 2.6.2.</p></li>
+</ol>
+</li>
+</ol>
+</aside>
+<aside class="footnote brackets" id="id6" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>“The Elements of Statistical Learning”, Hastie T., Tibshirani R., Friedman J., Section 4.3, p.106-119, 2008.</p>
+</aside>
+</aside>
+</section>
+</section>
+</section>
+</section>
+
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="dica.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">DiCA</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="gfa.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">GFA</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-formula-of-the-lda-and-qda">Mathematical formula of the LDA and QDA</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quadratic-discriminant-analysis">Quadratic Discriminant Analysis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#linear-discriminant-analysis">Linear Discriminant Analysis</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#estimating-parameters-of-normal-distributions">Estimating Parameters of Normal Distributions</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#priors">Priors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-vectors">Mean vectors</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#variance-covariance-matrices">Variance-Covariance matrices</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Quadratic Discriminant Analysis</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Linear Discriminant Analysis</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/source/user_guide/discrim.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, Duvérier DJIFACK ZEBAZE.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
