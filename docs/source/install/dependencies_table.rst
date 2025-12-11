@@ -1,0 +1,12 @@
+==============  =========
+Dependency      Version
+==============  =========
+statsmodels     0.14.5
+scikit-learn    1.7.2
+pyreadr         0.5.3
+openpyxl        3.1.5
+tabulate        0.9.0
+plotnine        0.15.1
+adjustText      1.3.0
+mapply          0.1.31
+==============  =========
