@@ -41,7 +41,7 @@ setuptools.setup(
     project_urls={
         "Bug Reports": "https://github.com/enfantbenidedieu/discrimintools/issues",
         "Source": "https://github.com/enfantbenidedieu/discrimintools",
-        "Documentation": "",
+        "Documentation": "https://discrimintools.readthedocs.io",
     },
     
 )
