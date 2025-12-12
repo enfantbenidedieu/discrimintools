@@ -17,7 +17,7 @@ Because these factors are orthogonal, the :class:`~discrimintools.discriminant_a
 kind of data transformation is very useful when the original input variables are highly correlated.
 
 .. note::
-    1. If all features are numerics, then GFALFDA corresponds to principal component analysis discriminant analysis (PCADA)
+    1. If all features are numerics, then GFALDA corresponds to principal component analysis discriminant analysis (PCADA)
     2. If all features are categorics, then GFALDA corresponds to discriminant analysis on qualitative predictors (`DISQUAL <https://eric.univ-lyon2.fr/ricco/tanagra/fichiers/fr_Tanagra_Pipeline_Python.pdf>`_)
     3. If mixed features, then GFALDA corresponds to discriminant analysis on mixed predictors (DISMIX)
 

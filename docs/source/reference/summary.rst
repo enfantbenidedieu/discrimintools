@@ -9,17 +9,17 @@ This page gives an overview of all public ``discrimintools`` summary functions.
 .. autosummary::
    :toctree: 
 
-   summary.eval_predict
-   summary.summaryCANDISC
-   summary.summaryCPLS
-   summary.summaryDA
-   summary.summaryDiCA
-   summary.summaryDISCRIM
-   summary.summaryGFA
-   summary.summaryGFALDA
-   summary.summaryMDA
-   summary.summaryMPCA
-   summary.summaryPLSDA
-   summary.summaryPLSLDA
-   summary.summaryPLSLOGIT
-   summary.summarySTEPDISC
+   eval_predict
+   summaryCANDISC
+   summaryCPLS
+   summaryDA
+   summaryDiCA
+   summaryDISCRIM
+   summaryGFA
+   summaryGFALDA
+   summaryMDA
+   summaryMPCA
+   summaryPLSDA
+   summaryPLSLDA
+   summaryPLSLOGIT
+   summarySTEPDISC

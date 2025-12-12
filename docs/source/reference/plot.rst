@@ -12,10 +12,10 @@ CANDISC
 .. autosummary::
    :toctree: 
 
-   plot.fviz_candisc
-   plot.fviz_candisc_biplot
-   plot.fviz_candisc_ind
-   plot.fviz_candisc_var
+   fviz_candisc
+   fviz_candisc_biplot
+   fviz_candisc_ind
+   fviz_candisc_var
 
 DiCA
 ~~~~
@@ -23,11 +23,11 @@ DiCA
 .. autosummary::
    :toctree: 
 
-   plot.fviz_dica
-   plot.fviz_dica_biplot
-   plot.fviz_dica_ind
-   plot.fviz_dica_quali_var
-   plot.fviz_dica_var
+   fviz_dica
+   fviz_dica_biplot
+   fviz_dica_ind
+   fviz_dica_quali_var
+   fviz_dica_var
 
 Distance
 ~~~~~~~~
@@ -35,7 +35,7 @@ Distance
 .. autosummary::
    :toctree: 
 
-   plot.fviz_dist
+   fviz_dist
 
 PLSR
 ~~~~
@@ -43,9 +43,9 @@ PLSR
 .. autosummary::
    :toctree: 
 
-   plot.fviz_plsr
-   plot.fviz_plsr_ind
-   plot.fviz_plsr_var
+   fviz_plsr
+   fviz_plsr_ind
+   fviz_plsr_var
 
 Others
 ~~~~~~
@@ -53,7 +53,7 @@ Others
 .. autosummary::
    :toctree: 
 
-   plot.add_scatter
-   plot.fviz_circle
-   plot.overlap_coord
-   plot.set_axis
+   add_scatter
+   fviz_circle
+   overlap_coord
+   set_axis

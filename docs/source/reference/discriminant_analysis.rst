@@ -9,4 +9,4 @@ This page gives an overview of all public ``discrimintools`` discriminant analys
 .. autosummary::
    :toctree: 
    
-   discriminant_analysis.CANDISC
+   CANDISC
