@@ -33,9 +33,7 @@ setuptools.setup(
         "openpyxl>=3.1.5",
         "tabulate>=0.9.0",
         "plotnine>=0.15.1",
-        "adjustText>=1.3.0",
-        "ipython>=9.8.0",
-        "great_tables>=0.20.0"
+        "adjustText>=1.3.0"
     ],
     include_package_data=True,
     package_data={
