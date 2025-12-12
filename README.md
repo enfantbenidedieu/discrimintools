@@ -111,16 +111,15 @@ discrimintools is compatible with python version which supports both dependencie
 | tabulate          |  0.9.0   |
 | plotnine          |  0.15.1  |
 | adjustText        |  1.3.0   |
-| great_tables      |  0.20.0  |
 
 ## Example <a name="example"></a>
 
 We performs a linear discriminant analysis with ``alcools`` dataset.
 
 ```python
-from discrimintools.datasets import load_alcools()
-D = load_alcools() # load training data
+from discrimintools.datasets import load_alcools
 from discrimintools import DISCRIM
+D = load_alcools() # load training data
 y, X = D['TYPE'], D.drop(columns=['TYPE']) # split into X and y
 clf = DISCRIM()
 clf.fit(X,y)
