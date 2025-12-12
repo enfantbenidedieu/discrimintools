@@ -8,9 +8,9 @@ CANDISC
 ~~~~~~~
 
 .. nbgallery::
-   01_candisc_vins
-   02_candisc_oliveoil
-   03_candisc_heart
+      01_candisc_vins
+      02_candisc_oliveoil
+      03_candisc_heart
    
 DISCRIM
 ~~~~~~~
