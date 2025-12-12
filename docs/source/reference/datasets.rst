@@ -9,15 +9,15 @@ This page gives an overview of all public ``discrimintools`` datasets.
 .. autosummary::
    :toctree:
    
-   load_alcools
-   load_autos
-   load_canines
-   load_dataset
-   load_divay
-   load_heart
-   load_infidelity
-   load_mushroom
-   load_oliveoil
-   load_vins
-   load_vote
-   load_wine
+   datasets.load_alcools
+   datasets.load_autos
+   datasets.load_canines
+   datasets.load_dataset
+   datasets.load_divay
+   datasets.load_heart
+   datasets.load_infidelity
+   datasets.load_mushroom
+   datasets.load_oliveoil
+   datasets.load_vins
+   datasets.load_vote
+   datasets.load_wine
