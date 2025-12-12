@@ -5,7 +5,7 @@ GFALDA
 Overview
 --------
 
-:class:`~discrimintools.discriminant_analysis.GFALDA` combines General factor analysis :class:`~discrimintools.discriminant_analysis.GFA` and Linear Discriminant Analysis. It can handle multiclass
+:class:`~discrimintools.GFALDA` combines General factor analysis :class:`~discrimintools.GFA` and Linear Discriminant Analysis. It can handle multiclass
 problem i.e. the target variable can have :math:`K \left(K \geq 2\right)` classes.
 
 Description of the method
@@ -13,7 +13,7 @@ Description of the method
 
 There are two main steps in the learning process. Firstly, we launch the general factor analysis algorithm on :math:`X`. 
 Secondly, we launch the linear discriminant analysis on the X component scores (factors). 
-Because these factors are orthogonal, the :class:`~discrimintools.discriminant_analysis.DISCRIM` is more reliable. This
+Because these factors are orthogonal, the :class:`~discrimintools.DISCRIM` is more reliable. This
 kind of data transformation is very useful when the original input variables are highly correlated.
 
 .. note::
@@ -24,7 +24,7 @@ kind of data transformation is very useful when the original input variables are
 Predictive idea
 ---------------
 
-The classification rule is the same as the :class:`~discrimintools.discriminant_analysis.DISCRIM` component.
+The classification rule is the same as the :class:`~discrimintools.DISCRIM` component.
 
 .. note::
     Because we combine two approaches, it is very difficult to evaluate the influence of the 
@@ -33,4 +33,4 @@ The classification rule is the same as the :class:`~discrimintools.discriminant_
 Number of components
 --------------------
 
-In :class:`~discrimintools.discriminant_analysis.GFALDA` procedure, we can explicitly specify the number of components, with the parameter ``n_components``.
+In :class:`~discrimintools.GFALDA` procedure, we can explicitly specify the number of components, with the parameter ``n_components``.

@@ -13,7 +13,7 @@ Fitting and predicting: estimator basics
 
 As `scikit-learn <https://scikit-learn.org/stable/index.html#>`_, `discrimintools <https://github.com/enfantbenidedieu/discrimintools>`_ provides models called `estimators <https://scikit-learn.org/stable/glossary.html#term-estimators>`_. Each estimator can be fitted to some data using its `fit <https://scikit-learn.org/stable/glossary.html#term-fit>`_ method.
 
-Here is a simple example where we fit a :class:`~discrimintools.discriminant_analysis.DISCRIM` to :class:`~discrimintools.datasets.load_alcools` data:
+Here is a simple example where we fit a :class:`~discrimintools.DISCRIM` to :class:`~discrimintools.datasets.load_alcools` data:
 
     >>> from discrimintools.datasets import load_alcools
     >>> from discrimintools import DISCRIM
@@ -29,7 +29,7 @@ The ``fit`` method generally accepts 2 inputs:
   is typically ``(n_samples, n_features)``, which means that samples are
   represented as rows and features are represented as columns.
 - The target values ``y`` which are true lables for ``X``. ``y`` is a pandas Series with categorical terms. For
-  unsupervised learning tasks, ``y`` does not need to be specified, such as :class:`~discrimintools.discriminant_analysis.GFA` and :class:`~discrimintools.discriminant_analysis.MPCA`.
+  unsupervised learning tasks, ``y`` does not need to be specified, such as :class:`~discrimintools.GFA` and :class:`~discrimintools.MPCA`.
 
 Both ``X`` and ``y`` are expected to be pandas objects : `DataFrame <https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.html>`_ for ``X`` and `Categorical Series <https://pandas.pydata.org/docs/reference/api/pandas.Series.html>`_ for ``y``.
 

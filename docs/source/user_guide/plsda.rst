@@ -13,7 +13,7 @@ Description of the method
 -------------------------
 
 Partial least squares discriminant analysis (PLSDA) can handle multiclass problem i.. the target variable can have :math:`K` (:math:`K \geq 2`) classes.
-It is relies on the same principle as :class:`~discrimintools.discriminant_analysis.CPLS` about the dectection of the number of components. 
+It is relies on the same principle as :class:`~discrimintools.CPLS` about the dectection of the number of components. 
 
 In this approach, we create :math:`K` indicator variable (as much as the number of classes) using the following coding scheme:
 
@@ -28,7 +28,7 @@ The PLS algorithm handles the :math:`Z` target variables and the :math:`X` featu
 Predictive idea
 ---------------
 
-The classification rule used in :class:`~discrimintools.discriminant_analysis.PLSDA` consists of assigning each individual :math:`i` to the class :math:`\mathcal{C}_{k}` using the following rule :
+The classification rule used in :class:`~discrimintools.PLSDA` consists of assigning each individual :math:`i` to the class :math:`\mathcal{C}_{k}` using the following rule :
 
 .. math::
     \widehat{y}_{k} = \text{arg}\underbrace{\max}_{l}\left\{d\left(y_{l},X\right)\right\}
@@ -36,7 +36,7 @@ The classification rule used in :class:`~discrimintools.discriminant_analysis.PL
 Number of components
 --------------------
 
-In :class:`~discrimintools.discriminant_analysis.PLSDA` procedure, we can explicitly specify the number of components, with the parameter ``n_components``, for NIPALS [1]_ algorithms.
+In :class:`~discrimintools.PLSDA` procedure, we can explicitly specify the number of components, with the parameter ``n_components``, for NIPALS [1]_ algorithms.
 
 VIP
 ---
@@ -54,7 +54,7 @@ The VIP for a feature :math:`j` in PLSDA model with :math:`H` components is give
 
 where :math:`R^{2}\left(y,t_{h}\right)` is the square correlation coefficient between :math:`y` and :math:`t_{h}`; :math:`w_{j,h}` is the :math:`x`-weight coefficient.
 
-Variables with a VIP score greater than :math:`1` (default ``threshold`` in :class:`~discrimintools.discriminant_analysis.PLSDA` procedure) are considered important for the projection of the PLS regression.
+Variables with a VIP score greater than :math:`1` (default ``threshold`` in :class:`~discrimintools.PLSDA` procedure) are considered important for the projection of the PLS regression.
 
 .. note::
     These selections rules must be use with caution because the VIP reflects only the relative importance (each others) of the input variables. 

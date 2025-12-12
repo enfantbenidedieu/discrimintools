@@ -7,5 +7,4 @@ openpyxl        3.1.5
 tabulate        0.9.0
 plotnine        0.15.1
 adjustText      1.3.0
-great_tables    0.20.0
 ==============  =========

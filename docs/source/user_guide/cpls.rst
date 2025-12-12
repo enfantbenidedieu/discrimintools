@@ -33,7 +33,7 @@ The classification rule used in CPLS consists of assigning each individual :math
 Number of components
 --------------------
 
-In :class:`~discrimintools.discriminant_analysis.CPLS` procedure, we can explicitly specify the number of components, with the parameter ``n_components``, for NIPALS [2]_ algorithms.
+In :class:`~discrimintools.CPLS` procedure, we can explicitly specify the number of components, with the parameter ``n_components``, for NIPALS [2]_ algorithms.
 
 VIP
 ---
@@ -51,7 +51,7 @@ The VIP for a feature :math:`j` in CPLS model with :math:`H` components is given
 
 where :math:`R^{2}\left(y,t_{h}\right)` is the square correlation coefficient between :math:`y` and :math:`t_{h}`; :math:`w_{j,h}` is the :math:`x`-weight coefficient.
 
-Variables with a VIP score greater than :math:`1` (default ``threshold`` in :class:`~discrimintools.discriminant_analysis.CPLS` procedure) are considered important for the projection of the PLS regression.
+Variables with a VIP score greater than :math:`1` (default ``threshold`` in :class:`~discrimintools.CPLS` procedure) are considered important for the projection of the PLS regression.
 
 .. note::
     These selections rules must be use with caution because the VIP reflects only the relative importance (each others) of the input variables. 
