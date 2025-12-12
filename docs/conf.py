@@ -3,8 +3,6 @@ import sys
 
 sys.path.insert(0, os.path.abspath("../../discrimintools"))
 
-import discrimintools
-
 project = "discrimintools"
 author = "Duvérier DJIFACK ZEBAZE"
 release = "0.1.0"
