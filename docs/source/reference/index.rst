@@ -10,4 +10,3 @@ API reference
    discriminant_analysis
    summary
    plot
-   datasets
