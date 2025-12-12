@@ -4,23 +4,22 @@ from numpy import average, sqrt
 def wcorrcoef(x,y,w):
     """
     Weighted Pearson correlation
-    ----------------------------
 
     Parameters
     ----------
-    `x`: a numpy 1-D array or a pandas Series
+    x : 1-D array or Series
+        x values.
 
-    `y`: a numpy 1-D array or a pandas Series
+    y : 1-D array or a pandas Series
+        y values.
 
-    `y`: a numpy 1-D array or a pandas Series
+    w : a numpy 1-D array or a pandas Series
+        Weights values.
 
     Returns
     -------
-    `value`: weighted pearson correlation coefficient
-    
-    Authors
-    -------
-    Duvérier DJIFACK ZEBAZE djifacklab@gmail.com
+    value : float
+        Weighted pearson correlation coefficient
     """
     def wcov(x, y, w):
         return average((x - average(x, weights=w)) * (y - average(y, weights=w)), weights=w)

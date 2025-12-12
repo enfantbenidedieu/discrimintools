@@ -5,27 +5,21 @@ from pandas.api.types import is_numeric_dtype, is_string_dtype
 #intern function
 from .utils import check_is_dataframe
 
-def model_matrix(X:DataFrame) -> DataFrame:
+def model_matrix(X:DataFrame):
     """
     Model Matrix - Construct Design Matrices
 
-    Description
-    -----------
     Create a design (model) matrix. If variable is categoric, it create a disjuntive table without the first category.
 
     Parameters
     ----------
-    X : pandas DataFrame of shape (n_samples, n_columns)
-        Input data
+    X : DataFrame of shape (n_samples, n_columns)
+        Input data.
 
     Return
     ------
-    data : pandas DataFrame of shape (n_samples, n_new_columns)
-        Output data
-    
-    Authors
-    -------
-    Duvérier DJIFACK ZEBAZE djifacklab@gmail.com
+    data : DataFrame of shape (n_samples, n_new_columns)
+        Output data.
     """
     #check if X is an instance of class pd.DataFrame
     check_is_dataframe(X=X)

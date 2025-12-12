@@ -1,30 +1,22 @@
 # -*- coding: utf-8 -*-
-from pandas import DataFrame
-
 #intern function
 from .utils import check_is_dataframe
 
-def sscp(X) -> DataFrame:
+def sscp(X):
     """
     Sum of Square Cross Product
 
-    Description
-    -----------
     Performs sum of square cross product
 
     Parameters
     ----------
-    X : pandas DataFrame of shape (n_samples, n_features)
-        Training data, where `n_samples` is the number of features and `n_features` is the number of features.
+    X : DataFrame of shape (n_samples, n_features)
+        Training data, where ``n_samples`` is the number of features and ``n_features`` is the number of features.
 
     Returns
     -------
-    sscp : pandas DataFrame of shape (n_features, n_features)
-        Sum of Square Cross Product
-
-    Authors
-    -------
-    Duvérier DJIFACK ZEBAZE djifacklab@gmail.com
+    sscp : DataFrame of shape (n_features, n_features)
+        Sum of Square Cross Product.
     """
     #check if X is an instance of class pd.DataFrame
     check_is_dataframe(X=X)

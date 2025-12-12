@@ -9,7 +9,6 @@ from .eta_sq import eta_sq
 def univ_test(X,y):
     """
     Univariate Test Statistics
-    --------------------------
 
     Performns univariate test statistics
 

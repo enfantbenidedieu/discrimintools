@@ -1,45 +1,33 @@
 # -*- coding: utf-8 -*-
 from pandas import Series, DataFrame, concat, get_dummies
 from collections import namedtuple
-from typing import NamedTuple
 
 #intern function
 from .revalue import revalue
 
-def recodecat(X,dummy_na=False) -> NamedTuple:
+def recodecat(X,dummy_na=False):
     """
     Recoding of the categoricals variables
-    --------------------------------------
 
-    Description
-    -----------
     Recoding of the categoricals variables
-
-    Usage
-    -----
-    ```python
-    >>> from discrimintools import recodecat
-    >>> rec = recodecat(X)
-    ```
 
     Parameters
     ----------
-    `X`: a pandas DataFrame of shape (n_samples, n_columns)
+    X : DataFrame of shape (n_samples, n_columns)
         X contains categoricals variables
 
-    `dummy_na`: add a column to indicate NaNs, if False NaNs are ignored.
+    dummy_na : bool.
+        add a column to indicate NaNs, if False NaNs are ignored.
 
     Returns
-    ------
-    a namedtuple of pandas DataFrames containing:
+    -------
+    NamedTuple:
 
-    `X`: a pandas DataFrame of categorical data.
+        - X : DataFrame of shape (n_samples, n_columns)
+            Categorical data.
 
-    `dummies`: a pandas DataFrame of disjunctive table.
-
-    Author(s)
-    ---------
-    Duvérier DJIFACK ZEBAZE djifacklab@gmail.com
+        - dummies : DataFrame of shape (n_samples, n_categories)
+            Disjunctive table.
     """
     if isinstance(X,Series): #if pandas Series, convert to pandas DataFrame
         X = X.to_frame()

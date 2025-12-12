@@ -8,31 +8,18 @@ from .utils import check_is_squared
 def cov_infos(X):
     """
     Covariance Matrix Informations
-    ------------------------------
 
-    Description
-    -----------
     Performs rank and natural logarithm of the covariance matrix.
-
-    Usage
-    -----
-    ```python
-    >>> cov_infos(X)
-    ```
 
     Parameters
     ----------
-    `X`: a numpy 2-D array and a pandas DataFrame of shape (n_columns, n_columns)
-        covariance matrix
+    X : 2-D array or DataFrame of shape (n_columns, n_columns)
+        covariance matrix.
 
     Returns
     -------
-    `infos`: a pandas Series of shape (2,)
-        Covariance matrix information: rank and natural log of the determinant
-
-    Authors
-    -------
-    Duvérier DJIFACK ZEBAZE djifacklab@gmail.com
+    infos : Series of shape (2,)
+        Covariance matrix information: rank and natural log of the determinant.
     """
     #check if X is squared
     check_is_squared(X=X)

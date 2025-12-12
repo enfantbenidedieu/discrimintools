@@ -2,53 +2,36 @@
 from numpy import number
 from pandas import DataFrame, Series, Categorical, concat
 from collections import namedtuple
-from typing import NamedTuple
 
-def splitmix(X) -> NamedTuple:
+def splitmix(X):
     """
     Split Mixed Data
-    ----------------
 
-    Description
-    -----------
     Splits a mixed data matrix in two data sets: one with the quantitative variables and one with the qualitative variables.
 
-    Usage
-    -----
-    ```python
-    >>> splitmix(X)
-    ```
-    
     Parameters
     ----------
-    `X`: a pandas dataframe of shape (n_samples, n_columns)
+    X : Dataframe of shape (n_samples, n_columns)
+        Input data.
 
     Return
     ------
-    nametuple containing: 
+    NamedTuple:
 
-    `quanti`: None or a pandas DataFrame containing only the quantitative variables
+        - quanti : None or a DataFrame of shape (n_samples, n_quanti)
+            Quantitative variables.
 
-    `quali`: None or a pandas DataFrame containing only the qualitative variables
+        - quali : None or a DataFrame of shape (n_samples, n_quali)
+            Qualitative variables.
 
-    `n`: a numeric value indicating the number of rows.
+        - n : int
+            The number of rows.
 
-    `k1`: a numeric value indicating the number of quantitative variables
+        - k1 : int
+            Number of quantitative variables.
 
-    `k2`: a numeric value indicating the number of qualitative variables
-
-    Author(s)
-    ---------
-    Duvérier DJIFACK ZEBAZE djifacklab@gmail.com
-
-    Examples
-    --------
-    ```python
-    >>> from discrimintools.datasets import wine
-    >>> from discrimintools import splitmix
-    >>> split_x = splitmix(wine)
-    >>> X_quanti, X_quali, n_quanti, n_quali = split_x.quanti, split_x.quali, split_x.k1, split_x.k2
-    ```
+        - k2 : int
+            Number of qualitative variables.
     """
     #---------------------------------------------------------------------------------------------------------------------------------------------------------------------
     #check if X is an instance of pd.DataFrame class

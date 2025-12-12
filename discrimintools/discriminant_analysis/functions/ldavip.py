@@ -16,16 +16,14 @@ def ldavip(X,y,level=0.5,all_vars=True):
 
     Parameters
     ----------
-    X : pandas DataFrame of shape (n_samples, n_features)
-        Input data, where `n_samples` is the number of samples and 
-        `n_features` is the number of features.
+    X : DataFrame of shape (n_samples, n_features)
+        Input data, where ``n_samples`` is the number of samples and ``n_features`` is the number of features.
 
-    y : a pandas Series of shape (n_samples,)
-        Target values. True labels for `X`.
+    y : Series of shape (n_samples,)
+        Target values. True labels for ``X``.
 
     level : float, default=None
-        Significance level for the variable importance critical probability.
-        If None 5e-2 is used as the significance level for the variabe importance.
+        Significance level for the variable importance critical probability. If None 5e-2 is used as the significance level for the variabe importance.
 
     all_vars : bool, default=True
         If to test all subset of variables.
@@ -34,20 +32,16 @@ def ldavip(X,y,level=0.5,all_vars=True):
     -------
     NamedTuple :
     
-    vip : pandas DataFrame of shape (n_features, 6) including:
-        - "Wilks' Lambda" : Wilks' lambda
-        - "Partial R-Square" : Partial R square
-        - "F Value" : Fisher approximations
-        - "Num DF" : numerator degree of freedom
-        - "Den DF" : denominator degree of freedom
-        - "Pr>F" : probability values
+        - vip : DataFrame of shape (n_features, 6) including:
+            - "Wilks' Lambda" : Wilks' lambda
+            - "Partial R-Square" : Partial R square
+            - "F Value" : Fisher approximations
+            - "Num DF" : numerator degree of freedom
+            - "Den DF" : denominator degree of freedom
+            - "Pr>F" : probability values
 
-    selected : list
-        Selected variables
-
-    Authors
-    -------
-    Duvérier DJIFACK ZEBAZE djifacklab@gmail.com
+        - selected : list
+            Selected variables
     """
     #check if X is an instance of class pd.DataFrame
     check_is_dataframe(X)

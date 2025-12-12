@@ -3,17 +3,17 @@ from scipy import stats
 from numpy import linalg, log, sqrt, nan
 from pandas import DataFrame
 
-def diagnostics(Vb,Wb,n_samples,n_classes) -> DataFrame:
+def diagnostics(Vb,Wb,n_samples,n_classes):
     """
     Compute Global statistic - Wilks' Lambda - Bartlett statistic and Rao
 
     Parameters
     ----------
-    V : pandas DataFrame of shape (n_features, n_features).
-        Biased total-sample covariance matrix
+    V : DataFrame of shape (n_features, n_features).
+        Biased total-sample covariance matrix.
 
-    W : pandas DataFrame of shape (n_features, n_features).
-        Biased pooled within-class covariance matrix
+    W : DataFrame of shape (n_features, n_features).
+        Biased pooled within-class covariance matrix.
 
     n_samples : int
         Number of samples.
@@ -23,12 +23,8 @@ def diagnostics(Vb,Wb,n_samples,n_classes) -> DataFrame:
     
     Returns
     -------
-    manova : pandas DataFrame of shape (3, 3)
-        Multivariate Analysis of Variance
-
-    Authors
-    -------
-    Duvérier DJIFACK ZEBAZE djifacklab@gmail.com
+    manova : DataFrame of shape (3, 3)
+        Multivariate Analysis of Variance.
     """
     #set number of features
     n_features = Vb.shape[0]

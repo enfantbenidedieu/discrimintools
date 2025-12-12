@@ -10,28 +10,17 @@ def preprocessing(X):
     """
     Preprocessing
 
-    Description
-    -----------
     Performs preprocessing (drop levels, fill NA with mean, convert to ordinal factor) on a pandas DataFrame
-
-    Usage
-    -----
-    ```python
-    >>> preprocessing(X)
-    ```
 
     Parameters
     ----------
-    X : pandas DataFrame of shape (n_samples, n_columns)
-        Training data, where `n_samples` in the number of samples and `n_columns` is the number of columns.
+    X : DataFrame of shape (n_samples, n_columns)
+        Training data, where ``n_samples`` in the number of samples and ``n_columns`` is the number of columns.
 
     Returns
     -------
-    X : pandas DataFrame of shape (n_samples, n_columns)
-
-    Authors
-    -------
-    Duvérier DJIFACK ZEBAZE djifacklab@gmail.com    
+    X : DataFrame of shape (n_samples, n_columns)
+        Preprocessing data  
     """
     #---------------------------------------------------------------------------------------------------------------------------------------------------------------------
     #check if X is an instance of class pd.DataFrame

@@ -8,40 +8,27 @@ from scipy.spatial.distance import mahalanobis
 #intern function
 from .utils import check_is_dataframe, check_is_series
 
-def sqmahalanobis(X,VI,mu=None) -> DataFrame:
+def sqmahalanobis(X,VI,mu=None):
     """
     Squared Mahalanobis Distance
-    ----------------------------
 
-    Description
-    -----------
     Performs the squared mahalanobis distance
-
-    Usage
-    -----
-    ```python
-    >>> sqmahalanobis(X,VI,mu)
-    ```
 
     Parameters
     ----------
-    `X`: a pandas DataFrame of shape (n_samples, n_features)
-        Inout data, where `n_samples` is the number of samples and `n_features` is the number of features.
+    X : DataFrame of shape (n_samples, n_features)
+        Inout data, where ``n_samples`` is the number of samples and ``n_features`` is the number of features.
 
-    `VI`: a numpy 2-D array or a pandas DataFrame of shape (n_features, n_features)
+    VI : 2-D array or DataFrame of shape (n_features, n_features)
         The inverse of the covariance matrix.
 
-    `mu`: None or a numpy 1-D array or a pandas Series of shape (n_features,):
-        average
+    mu : None or 1-D array or Series of shape (n_features,), default = None
+        average.
 
     Returns
     -------
-    `dist2`: a pandas DataFrame of shape (n_samples, n_samples) or (n_samples, ).
+    dist2 : DataFrame of shape (n_samples, n_samples) or (n_samples, ).
         Squared Mahalanobis distance
-
-    Authors
-    -------
-    Duvérier DJIFACK ZEBAZE djifacklab@gmail.com
     """
     #check if X is an instance of class pd.DataFrame
     check_is_dataframe(X=X)
@@ -74,37 +61,24 @@ def sqmahalanobis(X,VI,mu=None) -> DataFrame:
 def sqmahalanobistest(X,n_features,n_k):
     """
     Mahalanobis Distance Test
-    -------------------------
 
-    Description
-    -----------
     Performs the mahalanobis distance test
-
-    Usage
-    -----
-    ```python
-    >>> distmahalanobistest(X,n_features,n_k)
-    ```
 
     Parameters
     ----------
-    `X`: a pandas DataFrame of shape (n_classes, n_classes)
-        Inout data, where `n_samples` is the number of samples and `n_features` is the number of features.
+    X : DataFrame of shape (n_classes, n_classes)
+        Inout data, where ``n_samples`` is the number of samples and ``n_features`` is the number of features.
 
-    `n_features`: int
+    n_features : int
         Number of features.
 
-    `n_k`: pandas Series
+    n_k : pandas Series
         Number of elements per class.
 
     Returns
     -------
-    `test`: float
-        Mahalanobis distance test
-
-    Authors
-    -------
-    Duvérier DJIFACK ZEBAZE
+    test : float
+        Mahalanobis distance test.
     """
     f_stat = X.copy()
     n_samples= n_k.sum()

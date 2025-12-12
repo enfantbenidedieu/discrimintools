@@ -1,49 +1,38 @@
 # -*- coding: utf-8 -*-
 from numpy import array, ndarray, ones, average, cov, sqrt
-from pandas import DataFrame,Series,concat
-from typing import NamedTuple
+from pandas import Series,concat
 from collections import namedtuple
 
 #interns functions
 from .utils import check_is_dataframe
 
-def recodecont(X,weights=None) -> NamedTuple:
+def recodecont(X,weights=None):
     """
     Recoding of the continuous data
-    -------------------------------
-
-    Description
-    -----------
-    Recoding of the continuous data
-
-    Usage
-    -----
-    ```python
-    >>> from discrimintools import recodecont
-    >>> recodcont = recodecont(X)
-    ```
 
     Parameters
     ----------
-    `X`: a pandas DataFrame/Series of continuous variables
+    X : DataFrame of shape (n_samples, n_columns) or Series of shape (n_samples,)
+        Continuous variables
 
-    `weights`: an optional individuals weights (by default, 1/(number of active individuals) for uniform individuals weights); the weights are given only for the active individuals
+    weights : Series of shape (n_samples,), default=None?
+        Individuals weights (by default, 1/(number of active individuals) for uniform individuals weights); the weights are given only for the active individuals
 
-    Return
-    ------
-    namedtuple of pandas DataFrame/Series containing:
+    Returns
+    -------
+    NamedTuple:
 
-    `X`: the continuous DataFrame X with missing values replaced with the column mean values,
-    
-    `Z`: the standardizd continuous DataFrame,
-    
-    `center`: the mean value for each columns in X,
-    
-    `scale`: the standard deviation for each columns of X.
- 
-    Author(s)
-    ---------
-    Duvérier DJIFACK ZEBAZE djifacklab@gmail.com
+        - X : DataFrame of shape (n_samples, n_columnss) 
+            Continuous DataFrame X with missing values replaced with the column mean values,
+        
+        - Z : DataFrame of shape (n_samples, n_columns)
+            Standardizd continuous DataFrame,
+        
+        - center : Series of shape (n_columns,)
+            mean value for each columns in X,
+        
+        - scale : Series of shape (n_columns,)
+            Standard deviation for each columns of X.
     """
     if isinstance(X,Series): #convert to pandas DataFrame if pandas Series
         X = X.to_frame()

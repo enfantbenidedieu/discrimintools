@@ -8,23 +8,18 @@ from .utils import check_is_squared
 def cov_to_corr(X):
     """
     Covariance to Correlation
-    -------------------------
 
-    Description
-    -----------
     Convert covariance matrix to pearson correlation matrix
 
     Parameters:
     -----------
-    `X`: a numpy 2-D array or a pandas DataFrame with (n_columns, n_columns)
+    X : 2-D array or DataFrame with (n_columns, n_columns)
+        Covariance matrix.
 
     Returns:
     --------
-    a numpy 2-D array or a pandas DataFrame of shape (n_columns, n_columns)
-    
-    Authors:
-    -------
-    Duvérier DJIFACK ZEBAZE djifacklab@gmail.com
+    Y : 2-D array or DataFrame of shape (n_columns, n_columns)
+        Correlation matrix.
     """
     #check if X is squared
     check_is_squared(X=X)

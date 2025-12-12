@@ -4,42 +4,42 @@ from pandas import DataFrame
 from collections import namedtuple
 from typing import NamedTuple
 
-def gsvd(X:DataFrame,row_weights=None,col_weights=None,n_components=None|int) -> NamedTuple:
+def gsvd(X:DataFrame,row_weights=None,col_weights=None,n_components=None|int):
     """
     Generalized Singular Value Decomposition (GSVD) of a Matrix
-    -----------------------------------------------------------
 
-    Description
-    -----------
     Compute the generalized singular value decomposition (gsvd) of a rectangular matrix with weights for rows and columns
 
     Parameters
     ----------
-    `X`: pandas DataFrame of float, shape (n_rows, n_columns)
+    X : DataFrame of shape (n_samples, n_columns)
+        Input data.
 
-    `row_weights`: a pandas Series or a 1D array with the weights of each row (None by default and the weights are uniform)
+    row_weights : Series, 1-D array of shape (n_samples,)
+        The weights of each row (None by default and the weights are uniform).
 
-    `col_weights`: a pandas Series or a 1D array with the weights of each colum (None by default and the weights are uniform)
+    col_weights : Series, 1-D array of shape (n_columns,)
+        The weights of each colum (None by default and the weights are uniform).
 
-    `n_components`: an integer indicating the number of dimensions kept in the results
+    n_components : int
+        The number of dimensions kept in the results
 
     Return
     ------
-    a namedtuple of numpy array containing:
+    NamedTuple:
     
-    `vs`: a vector containing the singular values of 'X'
+        vs : 1-D array of shape (max_components,)
+            the singular values of ``X``.
 
-    `U`: a matrix whose columns contain the left singular vectors of 'X'
+        U : 2-D array of shape (n_samples, n_components)
+            The left singular vectors of ``X``.
 
-    `V`: a matrix whose columns contain the right singular vectors of 'X'.
+        V : 2-D array of shape (n_columns, n_components)
+            The right singular vectors of ``X``.
     
     See also
     --------
     See also https://numpy.org/doc/stable/reference/generated/numpy.linalg.svd.html or https://docs.scipy.org/doc/scipy/reference/generated/scipy.linalg.svd.html
-
-    Author(s)
-    ---------
-    Duvérier DJIFACK ZEBAZE djifacklab@gmail.com
     """
     #set dimensions
     n_rows, n_cols = X.shape

@@ -7,38 +7,26 @@ def lrtest(n_samples,n_features,n_classes,eigen):
     """
     Likelihood ratio test
 
-    Description
-    -----------
-    Performs likelihood ratio test
+    Performs likelihood ratio test.
 
-    Usage
-    -----
-    ```python
-    >>> lrtest(n_samples,n_features_n_classes,eigen)
-    ```
-    
     Parameters
     ----------
     n_samples : int
-        Number of samples
+        Number of samples.
 
     n_features : int
-        Number of features
+        Number of features.
 
     n_classes : int
-        Number of classes
+        Number of classes.
 
-    eigen : int or list
-        Eigen values
+    eigen : int, list
+        Eigen values.
     
     Returns
     -------
-    res : pandas DataFrame of shape (1, 8)
-        Likelihood ratio test
-    
-    Authors
-    -------
-    Duvérier DJIFACK ZEBAZE djifacklab@gmail.com
+    res : DataFrame of shape (1, 8)
+        Likelihood ratio test.
     """
     #statistique de test
     q = 1 if isinstance(eigen,(float,int)) else len(eigen)

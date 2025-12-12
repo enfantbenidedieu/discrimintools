@@ -2,57 +2,38 @@
 from pandas import DataFrame
 from statsmodels.stats.multivariate import test_cov_oneway
 
-def box_m_test(W,n_k) -> DataFrame:
-    r"""
+def box_m_test(W,n_k):
+    """
     Box-M test
-    ----------
 
-    Description
-    ------------
-    Performs multiple sample hypothesis test that covariance matrices are equal
-
-    Notes
-    -----
-    The Null and alternative hypotheses are
+    Performs multiple sample hypothesis test that covariance matrices are equal. The Null and alternative hypotheses are
 
     .. math::
-
        H0 &: \Sigma_i = \Sigma_j  \text{ for all i and j} \\
        H1 &: \Sigma_i \neq \Sigma_j \text{ for at least one i and j}
 
     where :math:`\Sigma_i` is the covariance of sample `i`.
 
-    Usage
-    -----
-    ```python
-    >>> box_m_test(X,y)
-    ```
-
     Parameters
     ----------
-    `W`: list of array_like
+    W : list
         Within-class covariance matrices, estimated with denominator `N-1`, i.e. `ddof=1`.
 
-    `n_k`: list
+    n_k : list
         List of the number of observations used in the estimation of the covariance for each sample.
 
     Returns
     -------
-    `res`: Box's M tests for homogeneity of variance-covariance matrices
-
-    Authors
-    -------
-    Duvérier DJIFACK ZEBAZE djifacklab@gmail.com
+    res : DataFrame
+        Box's M tests for homogeneity of variance-covariance matrices
 
     References
     ----------
-    Rencher, Alvin C., and William F. Christensen. 2012. Methods of
-    Multivariate Analysis: Rencher/Methods. Wiley Series in Probability and
-    Statistics. Hoboken, NJ, USA: John Wiley & Sons, Inc.
-    https://doi.org/10.1002/9781118391686.
+    [1] Rencher, Alvin C., and William F. Christensen. 2012. Methods of Multivariate Analysis: Rencher/Methods. Wiley Series in Probability and Statistics. Hoboken, NJ, USA: John Wiley & Sons, Inc. https://doi.org/10.1002/9781118391686.
 
-    StataCorp, L. P. Stata Multivariate Statistics: Reference Manual.
-    Stata Press Publication.
+    [2] StataCorp, L. P. Stata Multivariate Statistics: Reference Manual.
+
+    [3] Stata Press Publication.
     ```
     """
     #box's m test

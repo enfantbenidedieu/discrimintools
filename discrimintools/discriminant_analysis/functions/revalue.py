@@ -1,36 +1,24 @@
 # -*- coding: utf-8 -*-
-from pandas import Series, DataFrame, Categorical
+from pandas import Series, Categorical
 
 #intern function
 from .utils import check_is_dataframe
 
-def revalue(X) -> DataFrame:
+def revalue(X):
     """
     Revalue Categoricals Variables
-    ------------------------------
 
-    Description
-    -----------
     Check if two categoricals variables have same levels and replace with new values
-
-    Usage
-    -----
-    ```python
-    >>> revalue(X)
-    ```
 
     Parameters
     ----------
-    `X`: a pandas DataFrame of shape (n_samples, n_columns) or a pandas Series of shape (n_samples,)
+    X : DataFrame of shape (n_samples, n_columns) or Series of shape (n_samples,)
         X contains categoricals variables.
 
     Return(s)
     ---------
-    `Y`: a pandas DataFrame of shape (n_samples, n_columns)
-
-    Authors
-    -------
-    Duvérier DJIFACK ZEBAZE djifacklab@gmail.com
+     Y : DataFrame of shape (n_samples, n_columns)
+        Revaluate columns
     """
     if isinstance(X,Series): #convert to DataFrame if X is a pandas Series
         X = X.to_frame()

@@ -3,11 +3,10 @@ from numpy import zeros,diag, array, sqrt
 from pandas import Series
 from collections import OrderedDict, namedtuple
 from scipy import linalg
-from typing import NamedTuple
 
 def plsrvip(
         obj, threshold=1.0
-) -> NamedTuple:
+):
     """
     Variable Importance in Projection for Partial Least-Squares Regression
 
@@ -24,17 +23,14 @@ def plsrvip(
 
     Returns
     -------
-    NamedTuple
+    NamedTuple:
 
-    vip : Series of shape (n_features,)
-        Variable importance in projection for partial least-squares regression
+        - vip : Series of shape (n_features,)
+            Variable importance in projection for partial least-squares regression
 
-    selected : list
-        Selected variables
-    
-    Authors
-    -------
-    Duvérier DJIFACK ZEBAZE djifacklab@gmail.com
+        - selected : list
+            Selected variables
+        
     """
     #---------------------------------------------------------------------------------------------------------------------------------------------------------------------
     #check if obj is an object from 'PLSRegression' function

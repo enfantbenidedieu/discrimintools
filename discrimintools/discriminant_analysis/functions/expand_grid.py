@@ -5,35 +5,24 @@ from pandas import DataFrame, CategoricalDtype
 def expand_grid(itrs, strings_as_category=True):
     """
     expand_grid
-    -----------
 
-    Description
-    -----------
     Create a DataFrame from all combinations of the supplied vectors or factors
-
-    Usage
-    -----
-    ```python
-    >>> expand_grid(itrs, strings_as_category)
-    ```
 
     Parameters
     ----------
-    `itrs`: a list or a tuple or a dictionary containing these.
+    itrs : list, tuple or a dict
+        These
 
-    `string_as_category`: a boolean indicating if string columns are converted to category.
+    string_as_category : bool
+        if string columns are converted to category.
 
     Returns
     -------
-    `X`: a pandas DataFrame containing one row for each combination of the supplied category
+    X : DataFrame
+        One row for each combination of the supplied category
 
-    Authors
-    -------
-    Duvérier DJIFACK ZEBAZE djifacklab@gmail.com
-    
     Examples
     --------
-    ```python
     >>> from discrimintools import expand_grid
     >>> itrs = dict(color=['red','green','blue'],cylinders=[6, 8],vehicle=['car','van','truck'])
     >>> expand_grid(itrs)
@@ -56,7 +45,6 @@ def expand_grid(itrs, strings_as_category=True):
             15   blue          8     car
             16   blue          8     van
             17   blue          8   truck
-    ```
     """
     if isinstance(itrs,dict):
         X = DataFrame([x for x in product(*itrs.values())], columns=itrs.keys())

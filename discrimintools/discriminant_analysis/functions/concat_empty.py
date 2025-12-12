@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
-from pandas import concat, DataFrame, Series
+from pandas import concat
 
 def concat_empty(
         initial,actual,axis=0
-) -> DataFrame|Series:
+):
     """
     Concatenate DataFrame or Series
 
-    Description
-    -----------
     Concatenate pandas objects along a particular axis.
 
     Parameters
@@ -25,11 +23,7 @@ def concat_empty(
     Returns
     -------
     obj : DataFrame or Series
-        Concatenate object
-
-    Authors
-    -------
-    Duvérier DJIFACK ZEBAZE djifacklab@gmail.com
+        Concatenate object.
     """
     obj = actual if initial is None else concat((initial,actual),axis=axis)
     return obj                                      

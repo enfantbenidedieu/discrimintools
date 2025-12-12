@@ -7,24 +7,12 @@ def check_is_dataframe(
     """
     Performs is_dataframe validation
 
-    Description
-    -----------
     Check if X is an instance of class pd.DataFrame
-
-    Usage
-    -----
-    ```python
-    >>> check_if_dataframe(X)
-    ```
 
     Parameters
     ----------
-    X : pandas DataFrame of shape (n_samples, n_columns)
+    X : DataFrame of shape (n_samples, n_columns)
         Input data for which check should be done
-
-    Authors
-    -------
-    Duvérier DJIFACK ZEBAZE djifacklab@gmail.com
     """
     #---------------------------------------------------------------------------------------------------------------------------------------------------------------------
     #check if X is an instance of class pd.DataFrame
@@ -40,23 +28,11 @@ def check_is_series(
     """
     Performs is_series validation
 
-    Description
-    -----------
     Check if X is an instance of class pd.Series
-
-    Usage
-    -----
-    ```python
-    >>> check_if_series(X)
-    ```
 
     Parameters
     ----------
     X : pandas Series of shape (n_samples,)
-
-    Authors
-    -------
-    Duvérier DJIFACK ZEBAZE djifacklab@gmail.com
     """
     #---------------------------------------------------------------------------------------------------------------------------------------------------------------------
     #check if X is an instance of class pd.Series
@@ -72,19 +48,9 @@ def check_is_bool(
     """
     Performs is_bool validation
 
-    Usage
-    -----
-    ```python
-    >>> check_if_bool(x)
-    ```
-
     Parameters
     ----------
     x : bool
-
-    Authors
-    -------
-    Duvérier DJIFACK ZEBAZE djifacklab@gmail.com
     """
     #---------------------------------------------------------------------------------------------------------------------------------------------------------------------
     #check if an argument is a bool
@@ -100,23 +66,11 @@ def check_is_squared(
     """
     Performs is_squared validation
 
-    Description
-    -----------
     Checks if X is fitted by verifying the equality of its dimensions
     
-    Usage
-    -----
-    ```python
-    >>> check_is_squared(X)
-    ```
-
     Parameters
     ----------
     X : 2-D array-like or pandas DataFrame of shape (n_samples, n_columns)
-
-    Authors
-    -------
-    Duvérier DJIFACK ZEBAZE djifacklab@gmail.com
     """
     #---------------------------------------------------------------------------------------------------------------------------------------------------------------------
     #check if X is squared

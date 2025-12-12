@@ -6,37 +6,20 @@ from pandas import Series
 def eta_sq(x,y):
     """
     Eta Squared
-    -----------
 
     Performs eta squared which represent an estimate of how much variance in the response variables (x) is accounted for by the explanatory variable (y)
 
     Parameters
     ----------
-    x : 1-D array-like or Series of shape (n_samples,).
+    x : 1-D array or Series of shape (n_samples,).
         x contains quantitative variable.
 
-    y : 1-D array-like or Series of shape (n_samples,).
+    y : 1-D array or Series of shape (n_samples,).
         y contains qualitative variables.
 
     Returns
     -------
-    Series containing:
-    - `Within SS': float
-        Within class sum of squared
-    - 'Between SS': float
-        Between class sum of squared
-    - 'R-Square': flota
-        Eta squared
-    - 'R-Square/(1-RSq)' : float
-        
-    - 'F Value' : float
-        F statistic
-    - 'Num DF' : int
-        Degree of freedom for numerator
-    - 'Den DF' : int
-        Degree of freedom for denominator
-    - 'Pr>F' : float
-        P-value for significance 
+    Series
     """
     #convert to array
     x, y = array(x), array(y)
