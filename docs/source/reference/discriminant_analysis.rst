@@ -8,7 +8,6 @@ This page gives an overview of all public ``discrimintools`` discriminant analys
 
 .. autosummary::
    
-   
    discriminant_analysis.CANDISC
    discriminant_analysis.CPLS
    discriminant_analysis.DiCA
