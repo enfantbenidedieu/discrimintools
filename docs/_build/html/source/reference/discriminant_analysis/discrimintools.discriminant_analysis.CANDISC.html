@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>discrimintools.GFALDA &#8212; discrimintools 0.1.0 documentation</title>
+    <title>discrimintools.discriminant_analysis.CANDISC &#8212; discrimintools 0.1.0 documentation</title>
   
   
   
@@ -47,12 +47,12 @@
     <script src="../../../_static/copybutton.js?v=f281be69"></script>
     <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
     <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'source/reference/discriminant_analysis/discrimintools.GFALDA';</script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'source/reference/discriminant_analysis/discrimintools.discriminant_analysis.CANDISC';</script>
     <link rel="icon" href="../../../_static/discrimintools.svg"/>
     <link rel="index" title="Index" href="../../../genindex.html" />
     <link rel="search" title="Search" href="../../../search.html" />
-    <link rel="next" title="discrimintools.MDA" href="discrimintools.MDA.html" />
-    <link rel="prev" title="discrimintools.GFA" href="discrimintools.GFA.html" />
+    <link rel="next" title="Examples" href="../../examples/index.html" />
+    <link rel="prev" title="discriminant_analysis" href="../discriminant_analysis.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   <meta name="docsearch:version" content="" />
@@ -341,18 +341,7 @@
   <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
   <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="../discriminant_analysis.html">discriminant_analysis</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="discrimintools.CANDISC.html">discrimintools.CANDISC</a></li>
-<li class="toctree-l2"><a class="reference internal" href="discrimintools.CPLS.html">discrimintools.CPLS</a></li>
-<li class="toctree-l2"><a class="reference internal" href="discrimintools.DiCA.html">discrimintools.DiCA</a></li>
-<li class="toctree-l2"><a class="reference internal" href="discrimintools.DISCRIM.html">discrimintools.DISCRIM</a></li>
-<li class="toctree-l2"><a class="reference internal" href="discrimintools.GFA.html">discrimintools.GFA</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">discrimintools.GFALDA</a></li>
-<li class="toctree-l2"><a class="reference internal" href="discrimintools.MDA.html">discrimintools.MDA</a></li>
-<li class="toctree-l2"><a class="reference internal" href="discrimintools.MPCA.html">discrimintools.MPCA</a></li>
-<li class="toctree-l2"><a class="reference internal" href="discrimintools.PLSDA.html">discrimintools.PLSDA</a></li>
-<li class="toctree-l2"><a class="reference internal" href="discrimintools.PLSLDA.html">discrimintools.PLSLDA</a></li>
-<li class="toctree-l2"><a class="reference internal" href="discrimintools.PLSLOGIT.html">discrimintools.PLSLOGIT</a></li>
-<li class="toctree-l2"><a class="reference internal" href="discrimintools.STEPDISC.html">discrimintools.STEPDISC</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">discrimintools.discriminant_analysis.CANDISC</a></li>
 </ul>
 </details></li>
 </ul>
@@ -401,7 +390,7 @@
     
     <li class="breadcrumb-item"><a href="../discriminant_analysis.html" class="nav-link">discriminant_analysis</a></li>
     
-    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">discrimintools.GFALDA</span></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">discrimintools.discriminant_analysis.CANDISC</span></li>
   </ul>
 </nav>
 </div>
@@ -418,57 +407,45 @@
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="discrimintools-gfalda">
-<h1>discrimintools.GFALDA<a class="headerlink" href="#discrimintools-gfalda" title="Link to this heading">#</a>
+  <section id="discrimintools-discriminant-analysis-candisc">
+<h1>discrimintools.discriminant_analysis.CANDISC<a class="headerlink" href="#discrimintools-discriminant-analysis-candisc" title="Link to this heading">#</a>
 </h1>
 <dl class="py class">
-<dt class="sig sig-object py" id="discrimintools.GFALDA">
-<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">discrimintools.</span></span><span class="sig-name descname"><span class="pre">GFALDA</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_components</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/discrimintools/discriminant_analysis/_gfalda.html#GFALDA"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.GFALDA" title="Link to this definition">#</a>
+<dt class="sig sig-object py" id="discrimintools.discriminant_analysis.CANDISC">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">discrimintools.discriminant_analysis.</span></span><span class="sig-name descname"><span class="pre">CANDISC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_components</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">warn_message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/discrimintools/discriminant_analysis/_candisc.html#CANDISC"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.discriminant_analysis.CANDISC" title="Link to this definition">#</a>
 </dt>
 <dd>
-<p>General Factor Analysis Linear Discriminant Analysis (GFALDA)</p>
-<p>Performs a linear discrimination analysis on principal components. It’s a classical linear discriminant analysis (LDA) carried out on the principal components of a general factor analysis (GFA) of explanatory variables.
-General factor analysis linear discriminant analysis (GFALDA) consists in two steps:</p>
-<ol class="arabic simple">
-<li>
-<dl class="simple">
-<dt>Computation of general factor analysis (GFA) of explanatory variables:</dt>
-<dd>
-<ul class="simple">
-<li><p>If all features are numerics, general factor analysis (GFA) is a principal component analysis (PCA),</p></li>
-<li><p>if all features are categorics, general factor analysis (GFA) is a multiple correspondence analysis (MCA),</p></li>
-<li><p>if mixed features, general factor analysis (GFA) is a factor analysis of mixed data (FAMD).</p></li>
-</ul>
-</dd>
-</dl>
-</li>
-<li><p>Computation of linear discriminant analysis (LDA) on principal components extract in step 1.</p></li>
-</ol>
-<dl class="field-list simple">
+<p>Canonical Discriminant Analysis (CANDISC)</p>
+<p>Canonical discriminant analysis is a dimension-reduction technique related to principal component analysis and canonical correlation.
+The methodology that is used in deriving the canonical coefficients parallels that of a one-way multivariate analysis of variance (MANOVA).
+MANOVA tests for equality of the mean vector across class levels. Canonical discriminant analysis finds linear combinations of the quantitative variables
+that provide maximal separation between classes or groups. Given a classification variable and several
+quantitative variables, the CANDISC procedure derives <cite>canonical variables</cite>, which are linear combinations
+of the quantitative variables that summarize between-class variation in much the same way that principal
+components summarize total variation.</p>
+<p>The <a class="reference internal" href="#discrimintools.discriminant_analysis.CANDISC" title="discrimintools.discriminant_analysis.CANDISC"><code class="xref py py-class docutils literal notranslate"><span class="pre">CANDISC</span></code></a> procedure performs a canonical discriminant analysis, computes squared Mahalanobis
+distances between class means, and performs both univariate and multivariate one-way analyses of variance.</p>
+<dl class="field-list">
 <dt class="field-odd">Parameters<span class="colon">:</span>
 </dt>
 <dd class="field-odd">
-<ul class="simple">
-<li><p><strong>n_components</strong> (<em>int or None, default = 2</em>) – Number of components to keep. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, keep all the components.</p></li>
-<li>
-<p><strong>priors</strong> (<em>str, 1-D array or Series of shape (n_classes,), default = None</em>) – The priors statement specifies the class prior probabilities of group membership, possibles values:</p>
 <ul>
-<li><p>‘equal’ to set the prior probabilities equal.</p></li>
-<li><p>‘prop’ to set the prior probabilities proportional to the sample sizes.</p></li>
-<li><p>1-D array or Series which specify the prior probability for each level of the classification variable.</p></li>
-</ul>
+<li>
+<p><strong>n_components</strong> (int or <a class="reference external" href="https://docs.python.org/3/library/constants.html#None">None</a>, default = 2) –</p>
+<p>Number of components to keep. If <a class="reference external" href="https://docs.python.org/3/library/constants.html#None">None</a> set all components are kept:</p>
 </li>
-<li><p><strong>classes</strong> (<em>None, tuple or list, default = None</em>) – Name of level in order to return. If <code class="docutils literal notranslate"><span class="pre">None</span></code>, classes are sorted in unique values in y.</p></li>
+<li><p><strong>classes</strong> (<a class="reference external" href="https://docs.python.org/3/library/constants.html#None">None</a>, tuple or list, default = <a class="reference external" href="https://docs.python.org/3/library/constants.html#None">None</a>) – Name of level in order to return. If <a class="reference external" href="https://docs.python.org/3/library/constants.html#None">None</a>, classes are sorted in unique values in y.</p></li>
+<li><p><strong>warn_message</strong> (<em>bool, default = True</em>) – Show warning messages. Raise a warning without making the program crash.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span>
 </dt>
 <dd class="field-even">
 <p></p>
-<ul class="simple">
+<ul>
 <li>
 <p><strong>call_</strong> (<em>NamedTuple</em>) – Call informations:</p>
-<ul>
+<ul class="simple">
 <li>
 <dl class="simple">
 <dt>Xtot<span class="classifier">DataFrame of shape (n_samples, n_columns)</span>
@@ -581,39 +558,85 @@ General factor analysis linear discriminant analysis (GFALDA) consists in two st
 </li>
 <li>
 <p><strong>cancoef_</strong> (<em>NamedTuple</em>) – Canonical coefficients:</p>
-<ul>
+<ul class="simple">
 <li>
 <dl class="simple">
-<dt>standardized<span class="classifier">DataFrame of shape (n_variables, n_components)</span>
+<dt>raw<span class="classifier">DataFrame of shape (n_features + 1, n_components)</span>
 </dt>
 <dd>
-<p>The standardized canonical coefficients.</p>
+<p>Raw canonical coefficients.</p>
 </dd>
 </dl>
 </li>
 <li>
 <dl class="simple">
-<dt>raw<span class="classifier">DataFrame of shape (n_variables+1, n_componets)</span>
+<dt>total<span class="classifier">DataFrame of shape (n_features, n_components)</span>
 </dt>
 <dd>
-<p>The raw canonical coefficients.</p>
+<p>Total canonical coefficients.</p>
 </dd>
 </dl>
 </li>
 <li>
 <dl class="simple">
-<dt>projection<span class="classifier">DataFrame of shape (n_variables+1, n_components)</span>
+<dt>pooled<span class="classifier">DataFrame of shape (n_features, n_components)</span>
 </dt>
 <dd>
-<p>The projection canonical coefficients.</p>
+<p>Pooled canonical coefficients.</p>
 </dd>
 </dl>
 </li>
 </ul>
 </li>
+<li><p><strong>cancorr_</strong> (<em>DataFrame of shape (n_components, 10)</em>) – The canonical correlations test.</p></li>
 <li>
 <p><strong>classes_</strong> (<em>NamedTuple</em>) – Classes informations:</p>
-<ul>
+<ul class="simple">
+<li>
+<dl class="simple">
+<dt>infos<span class="classifier">DataFrame of shape (n_classes, 3)</span>
+</dt>
+<dd>
+<p>class level information (frequency, proportion, prior probability).</p>
+</dd>
+</dl>
+</li>
+<li>
+<dl class="simple">
+<dt>center<span class="classifier">DataFrame of shape (n_classes, n_features)</span>
+</dt>
+<dd>
+<p>Class means.</p>
+</dd>
+</dl>
+</li>
+<li>
+<dl class="simple">
+<dt>total<span class="classifier">DataFrame of shape (n_features, n_classes)</span>
+</dt>
+<dd>
+<p>Total-sample standardized class means.</p>
+</dd>
+</dl>
+</li>
+<li>
+<dl class="simple">
+<dt>pooled<span class="classifier">DataFrame of shape (n_features, n_classes)</span>
+</dt>
+<dd>
+<p>Pooled-within class standardized class means.</p>
+</dd>
+</dl>
+</li>
+<li>
+<dl class="simple">
+<dt>mahal<span class="classifier">DataFrame of shape (n_classes, n_classes)</span>
+</dt>
+<dd>
+<p>Squared Mahalanobis distances between classes.</p>
+</dd>
+</dl>
+</li>
 <li>
 <dl class="simple">
 <dt>coord<span class="classifier">DataFrame of shape (n_classes, n_components)</span>
@@ -643,65 +666,144 @@ General factor analysis linear discriminant analysis (GFALDA) consists in two st
 </li>
 </ul>
 </li>
+<li><p><strong>coef_</strong> (<em>DataFrame of shape (n_features + 1, n_classes)</em>) – Linear classification functions coefficients.</p></li>
 <li>
-<p><strong>coef_</strong> (<em>NamedTuple</em>) – Linear discriminant coefficients:</p>
-<ul>
+<p><strong>corr_</strong> (<em>NamedTuple</em>) – Correlation coefficients test:</p>
+<ul class="simple">
 <li>
 <dl class="simple">
-<dt>standardized<span class="classifier">DataFrame of shape (n_variables, n_classes)</span>
+<dt>total<span class="classifier">DataFrame of shape (C^{2}_{n_features}, 7)</span>
 </dt>
 <dd>
-<p>The standardized coefficients.</p>
+<p>Total-sample correlation coefficients test.</p>
 </dd>
 </dl>
 </li>
 <li>
 <dl class="simple">
-<dt>raw<span class="classifier">DataFrame of shape (n_variables+1, n_classes)</span>
+<dt>within<span class="classifier">dict</span>
 </dt>
 <dd>
-<p>The raw coefficients.</p>
+<p>Within-class correlation coefficients test.</p>
 </dd>
 </dl>
 </li>
 <li>
 <dl class="simple">
-<dt>projection<span class="classifier">DataFrame of shape (n_variables+1, n_classes)</span>
+<dt>pooled<span class="classifier">DataFrame of shape (C^{2}_{n_features}, 7)</span>
 </dt>
 <dd>
-<p>The projection coefficients.</p>
+<p>Pooled within-class correlation coefficients test.</p>
+</dd>
+</dl>
+</li>
+<li>
+<dl class="simple">
+<dt>between<span class="classifier">DataFrame of shape (C^{2}_{n_features}, 7)</span>
+</dt>
+<dd>
+<p>Between-class correlation coefficients test.</p>
 </dd>
 </dl>
 </li>
 </ul>
 </li>
 <li>
+<p><strong>cov_</strong> (<em>NamedTuple</em>) – Covariance matrices:</p>
+<ul class="simple">
+<li>
+<dl class="simple">
+<dt>total<span class="classifier">DataFrame of shape (n_features, n_features)</span>
+</dt>
+<dd>
+<p>Total-sample covariance matrix.</p>
+</dd>
+</dl>
+</li>
+<li>
+<dl class="simple">
+<dt>btotal<span class="classifier">DataFrame of shape (n_features, n_features)</span>
+</dt>
+<dd>
+<p>Biased total-sample covariance matrix.</p>
+</dd>
+</dl>
+</li>
+<li>
+<dl class="simple">
+<dt>within<span class="classifier">dict</span>
+</dt>
+<dd>
+<p>Within-class covariance matrices.</p>
+</dd>
+</dl>
+</li>
+<li>
+<dl class="simple">
+<dt>bwithin<span class="classifier">dict</span>
+</dt>
+<dd>
+<p>Biased within-class covariance matrices.</p>
+</dd>
+</dl>
+</li>
+<li>
+<dl class="simple">
+<dt>pooled<span class="classifier">DataFrame of shape (n_features, n_features)</span>
+</dt>
+<dd>
+<p>Pooled within-class covariance matrix.</p>
+</dd>
+</dl>
+</li>
+<li>
+<dl class="simple">
+<dt>bpooled<span class="classifier">DataFrame of shape (n_features, n_features)</span>
+</dt>
+<dd>
+<p>Biased pooled within-class covariance matrix.</p>
+</dd>
+</dl>
+</li>
+<li>
+<dl class="simple">
+<dt>between<span class="classifier">DataFrame of shape (n_features, n_features)</span>
+</dt>
+<dd>
+<p>Between-class covariance matrix</p>
+</dd>
+</dl>
+</li>
+<li>
+<dl class="simple">
+<dt>bbetween<span class="classifier">DataFrame of shape (n_features, n_features)</span>
+</dt>
+<dd>
+<p>biased between-class covariance matrix.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</li>
+<li><p><strong>eig_</strong> (<em>DataFrame of shape (n_components, 4)</em>) – The eigenvalues, the difference between each eigenvalue, the percentage of variance and the cumulative percentage of variance</p></li>
+<li>
 <p><strong>ind_</strong> (<em>NamedTuple</em>) – Individuals informations:</p>
-<ul>
+<ul class="simple">
 <li>
 <dl class="simple">
 <dt>coord<span class="classifier">DataFrame of shape (n_samples, n_components)</span>
 </dt>
 <dd>
-<p>Individuals coordinates.</p>
+<p>The coordinates of individuals.</p>
 </dd>
 </dl>
 </li>
 <li>
 <dl class="simple">
-<dt>scores<span class="classifier">DataFrame of shape (n_samples, n_classes)</span>
+<dt>mahal<span class="classifier">DataFrame of shape (n_samples, n_classes)</span>
 </dt>
 <dd>
-<p>The scores of individuals.</p>
-</dd>
-</dl>
-</li>
-<li>
-<dl class="simple">
-<dt>projection<span class="classifier">DataFrame of shape (n_samples, n_classes)</span>
-</dt>
-<dd>
-<p>The projection of individuals.</p>
+<p>The squared Mahalanobis distance to origin.</p>
 </dd>
 </dl>
 </li>
@@ -723,14 +825,187 @@ General factor analysis linear discriminant analysis (GFALDA) consists in two st
 </dd>
 </dl>
 </li>
+<li>
+<dl class="simple">
+<dt>scores<span class="classifier">DataFrame of shape (n_samples, n_classes)</span>
+</dt>
+<dd>
+<p>The total scores of individuals.</p>
+</dd>
+</dl>
+</li>
 </ul>
 </li>
-<li><p><strong>model_</strong> (<em>str, default = ‘gfalda’</em>) – The model fitted.</p></li>
+<li><p><strong>model_</strong> (<em>str, default = “candisc”</em>) – Name of model fitted.</p></li>
 <li>
-<p><strong>pipe_</strong> (<em>a sequence of data transformers with two named_steps :</em>) –</p>
-<ul>
-<li><p>gfa : generalized factor analysis (GFA)</p></li>
-<li><p>lda : linear discriminant analysis (LDA)</p></li>
+<p><strong>sscp_</strong> (<em>NamedTuple</em>) – Sum of square cross product (SSCP) matrices:</p>
+<ul class="simple">
+<li>
+<dl class="simple">
+<dt>total<span class="classifier">DataFrame of shape (n_features, n_features)</span>
+</dt>
+<dd>
+<p>Total-sample SSCP matrix.</p>
+</dd>
+</dl>
+</li>
+<li>
+<dl class="simple">
+<dt>within<span class="classifier">dict</span>
+</dt>
+<dd>
+<p>Within-class SSCP matrices</p>
+</dd>
+</dl>
+</li>
+<li>
+<dl class="simple">
+<dt>pooled: DataFrame of shape (n_features, n_features)</dt>
+<dd>
+<p>Pooled within-class SSCP matrix.</p>
+</dd>
+</dl>
+</li>
+<li>
+<dl class="simple">
+<dt>between<span class="classifier">DataFrame of shape (n_features, n_features)</span>
+</dt>
+<dd>
+<p>Between-class SSCP matrix.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>statistics_</strong> (<em>NamedTuple</em>) – Statistics results:</p>
+<ul class="simple">
+<li>
+<dl class="simple">
+<dt>anova<span class="classifier">DataFrame of shape (n_features, 11)</span>
+</dt>
+<dd>
+<p>Analysis of variance test.</p>
+</dd>
+</dl>
+</li>
+<li>
+<dl class="simple">
+<dt>manova<span class="classifier">DataFrame of shape (4, 5)</span>
+</dt>
+<dd>
+<p>Multivariate analysis of variance test.</p>
+</dd>
+</dl>
+</li>
+<li>
+<dl class="simple">
+<dt>average_rsq<span class="classifier">DataFrame of shape (1, 2)</span>
+</dt>
+<dd>
+<p>Average R-square.</p>
+</dd>
+</dl>
+</li>
+<li>
+<dl class="simple">
+<dt>performance<span class="classifier">DataFrame of shape (3, 3)</span>
+</dt>
+<dd>
+<p>The model global performance.</p>
+</dd>
+</dl>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>summary_</strong> (<em>NamedTuple</em>) – Summary informations:</p>
+<ul class="simple">
+<li>
+<dl class="simple">
+<dt>infos<span class="classifier">DataFrame of shape (3, 4)</span>
+</dt>
+<dd>
+<p>Summary informations (total sample size, number of features, number of classes,
+total degree of freedom, within-class degree of freedom, between-class degree of freedom).</p>
+</dd>
+</dl>
+</li>
+<li>
+<dl class="simple">
+<dt>total<span class="classifier">DataFrame of shape (n_features, 8)</span>
+</dt>
+<dd>
+<p>Total-sample statistics, see <a class="reference external" href="https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.describe.html">pandas.Describe</a>.</p>
+</dd>
+</dl>
+</li>
+<li>
+<dl class="simple">
+<dt>within<span class="classifier">dict</span>
+</dt>
+<dd>
+<p>Within-class statistics</p>
+</dd>
+</dl>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>svd_</strong> (<em>Namedtuple</em>) – Singular value decomposition:</p>
+<ul class="simple">
+<li>
+<dl class="simple">
+<dt>value<span class="classifier">1D array of shape (n_components,)</span>
+</dt>
+<dd>
+<p>The eigenvalues</p>
+</dd>
+</dl>
+</li>
+<li>
+<dl class="simple">
+<dt>vectors<span class="classifier">2D array of shape (n_features, n_components)</span>
+</dt>
+<dd>
+<p>The eigenvectors</p>
+</dd>
+</dl>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>var_</strong> (<em>NamedTuple</em>) – Variables informations (correlation):</p>
+<ul class="simple">
+<li>
+<dl class="simple">
+<dt>total<span class="classifier">DataFrame of shape (n_features, n_components)</span>
+</dt>
+<dd>
+<p>The total-sample correlation of variables with canonical dimensions.</p>
+</dd>
+</dl>
+</li>
+<li>
+<dl class="simple">
+<dt>pooled<span class="classifier">DataFrame of shape (n_features, n_components)</span>
+</dt>
+<dd>
+<p>The pooled-within class correlation of variables with canonical dimensions.</p>
+</dd>
+</dl>
+</li>
+</ul>
+<ul class="simple">
+<li>
+<dl class="simple">
+<dt>between<span class="classifier">DataFrame of shape (n_features, n_components)</span>
+</dt>
+<dd>
+<p>The between-class correlation of variables with canonical dimensions.</p>
+</dd>
+</dl>
+</li>
 </ul>
 </li>
 </ul>
@@ -740,65 +1015,63 @@ General factor analysis linear discriminant analysis (GFALDA) consists in two st
 <div class="admonition seealso">
 <p class="admonition-title">See also</p>
 <dl class="simple">
-<dt><code class="xref py py-class docutils literal notranslate"><span class="pre">GFA</span></code></dt>
+<dt><code class="xref py py-class docutils literal notranslate"><span class="pre">fviz_candisc</span></code></dt>
 <dd>
-<p>General Factor Analysis (GFA)</p>
+<p>Visualize Canonical Discriminant Analysis.</p>
 </dd>
-<dt><code class="xref py py-class docutils literal notranslate"><span class="pre">MDA</span></code></dt>
+<dt><code class="xref py py-class docutils literal notranslate"><span class="pre">fviz_candisc_biplot</span></code></dt>
 <dd>
-<p>Mixed Discriminant Analysis (MDA)</p>
+<p>Visualize Canonical Discriminant Analysis (CANDISC) - Biplot of individuals and variables.</p>
 </dd>
-<dt><code class="xref py py-class docutils literal notranslate"><span class="pre">MPCA</span></code></dt>
+<dt><code class="xref py py-class docutils literal notranslate"><span class="pre">fviz_candisc_ind</span></code></dt>
 <dd>
-<p>Mixed Principal Component Analysis (MPCA)</p>
+<p>Visualize Canonical Discriminant Analysis (CANDISC) - Graph of individuals.</p>
 </dd>
-<dt><code class="xref py py-class docutils literal notranslate"><span class="pre">summaryGFA</span></code></dt>
+<dt><code class="xref py py-class docutils literal notranslate"><span class="pre">fviz_candisc_var</span></code></dt>
 <dd>
-<p>Printing summaries of General Factor Analysis model.</p>
+<p>Visualize Canonical Discriminant Analysis (CANDISC) - Graph of variables.</p>
 </dd>
-<dt><code class="xref py py-class docutils literal notranslate"><span class="pre">summaryGFA</span></code></dt>
+<dt><code class="xref py py-class docutils literal notranslate"><span class="pre">fviz_dist</span></code></dt>
 <dd>
-<p>Printing summaries of General Factor Analysis model.</p>
+<p>Visualize distance between barycenter.</p>
 </dd>
-<dt><code class="xref py py-class docutils literal notranslate"><span class="pre">summaryMDA</span></code></dt>
+<dt><code class="xref py py-class docutils literal notranslate"><span class="pre">summaryCANDISC</span></code></dt>
 <dd>
-<p>Printing summaries of Mixed Discriminant Analysis model.</p>
+<p>Printing summaries of Canonical Discriminant Analysis model.</p>
 </dd>
-<dt><code class="xref py py-class docutils literal notranslate"><span class="pre">summaryMPCA</span></code></dt>
+<dt><code class="xref py py-class docutils literal notranslate"><span class="pre">summaryDA</span></code></dt>
 <dd>
-<p>Printing summaries of Mixed Principal Component Analysis model.</p>
+<p>Printing summaries of Discriminant Analysis model.</p>
 </dd>
 </dl>
 </div>
 <p class="rubric">References</p>
-<p>[1] Ricco Rakotomalala (2020), « <a class="reference external" href="https://hal.science/hal-04868585v1/file/Pratique_Analyse_Discriminante_Lineaire.pdf">Pratique de l’Analyse Discriminante Linéaire</a> », Université Lumière Lyon 2, Version 1.0.</p>
+<p>[1] Lebart Ludovic, Piron Marie, &amp; Morineau Alain (2006), « <a class="reference external" href="https://horizon.documentation.ird.fr/exl-doc/pleins_textes/2023-12/010038111.pdf">Statistique Exploratoire Multidimensionnelle</a> », Dunod, Paris 4ed.</p>
+<p>[2] Ricco Rakotomalala (2020), « <a class="reference external" href="https://hal.science/hal-04868585v1/file/Pratique_Analyse_Discriminante_Lineaire.pdf">Pratique de l’Analyse Discriminante Linéaire</a> », Version 1.0, Université Lumière Lyon 2.</p>
+<p>[3] Saporta Gilbert (2011), « <a class="reference external" href="https://en.pdfdrive.to/dl/probabilites-analyses-des-donnees-et-statistiques">Probabilités, Analyse de données et Statistiques</a> »,  Editions TECHNIP, 3ed.</p>
+<p>[4] Tenenhaus Michel (2007), « Statistique - Méthodes pour décrire, expliquer et prévoir », Dunod.</p>
+<p>[5] Tenenhaus Michel (1996), « Méthodes statistiques en gestion », Dunod.</p>
+<p>[6] Tuffery Stephane (2017), « Data Mining et Statistique décisionelle », Editions TECHNIP, 5ed.</p>
+<p>[7] Tuffery Stephane (2025), « Data Science, Statistique et Machine learning », Editions TECHNIP, 6ed.</p>
+<p>[8] SAS/STAT User’s Guide (2013), « <a class="reference external" href="https://support.sas.com/documentation/onlinedoc/stat/131/candisc.pdf">The CANDISC Procedure</a> », Chapter 31.</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate">
-<div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">discrimintools.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_alcools</span><span class="p">,</span> <span class="n">load_vote</span><span class="p">,</span> <span class="n">load_heart</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">discrimintools</span><span class="w"> </span><span class="kn">import</span> <span class="n">GFALDA</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1">#PCA + LDA = PCALDA</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">D</span> <span class="o">=</span> <span class="n">load_alcools</span><span class="p">(</span><span class="s2">"train"</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span><span class="p">,</span> <span class="n">X</span> <span class="o">=</span> <span class="n">D</span><span class="p">[</span><span class="s2">"TYPE"</span><span class="p">],</span> <span class="n">D</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"TYPE"</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">clf</span> <span class="o">=</span> <span class="n">GFALDA</span><span class="p">()</span>
+<div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">discrimintools.datasets</span><span class="w"> </span><span class="kn">import</span> <span class="n">load_wine</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">discrimintools</span><span class="w"> </span><span class="kn">import</span> <span class="n">CANDISC</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">D</span> <span class="o">=</span> <span class="n">load_wine</span><span class="p">()</span> <span class="c1"># load training data</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span><span class="p">,</span> <span class="n">X</span> <span class="o">=</span> <span class="n">D</span><span class="p">[</span><span class="s2">"Quality"</span><span class="p">],</span> <span class="n">D</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"Quality"</span><span class="p">])</span> <span class="c1"># split into X and y</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">clf</span> <span class="o">=</span> <span class="n">CANDISC</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
-<span class="go">GFALDA()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1">#MCA + LDA = DISQUAL</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">D</span> <span class="o">=</span> <span class="n">load_vote</span><span class="p">(</span><span class="s2">"train"</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span><span class="p">,</span> <span class="n">X</span> <span class="o">=</span> <span class="n">D</span><span class="p">[</span><span class="s2">"group"</span><span class="p">],</span> <span class="n">D</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"group"</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">clf</span> <span class="o">=</span> <span class="n">GFALDA</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
-<span class="go">GFALDA()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="c1">#FAMD + LDA = DISMIX</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">D</span> <span class="o">=</span> <span class="n">load_heart</span><span class="p">(</span><span class="s2">"subset"</span><span class="p">)</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">y</span><span class="p">,</span> <span class="n">X</span> <span class="o">=</span> <span class="n">D</span><span class="p">[</span><span class="s2">"disease"</span><span class="p">],</span> <span class="n">D</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">"disease"</span><span class="p">])</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">clf</span> <span class="o">=</span> <span class="n">GFALDA</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
-<span class="go">GFALDA()</span>
+<span class="go">CANDISC()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">XTest</span> <span class="o">=</span> <span class="n">load_wine</span><span class="p">(</span><span class="s2">"test"</span><span class="p">)</span> <span class="c1"># load test data</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">XTest</span><span class="p">))</span>
+<span class="go">1958    bad</span>
+<span class="go">Name: prediction, dtype: object</span>
 </pre></div>
 </div>
 <dl class="py method">
-<dt class="sig sig-object py" id="discrimintools.GFALDA.__init__">
-<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_components</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">priors</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/discrimintools/discriminant_analysis/_gfalda.html#GFALDA.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.GFALDA.__init__" title="Link to this definition">#</a>
+<dt class="sig sig-object py" id="discrimintools.discriminant_analysis.CANDISC.__init__">
+<span class="sig-name descname"><span class="pre">__init__</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">n_components</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">classes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">warn_message</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="../../../_modules/discrimintools/discriminant_analysis/_candisc.html#CANDISC.__init__"><span class="viewcode-link"><span class="pre">[source]</span></span></a><a class="headerlink" href="#discrimintools.discriminant_analysis.CANDISC.__init__" title="Link to this definition">#</a>
 </dt>
 <dd></dd>
 </dl>
@@ -808,7 +1081,7 @@ General factor analysis linear discriminant analysis (GFALDA) consists in two st
 <table class="autosummary longtable table">
 <tbody>
 <tr class="row-odd">
-<td><p><a class="reference internal" href="#discrimintools.GFALDA.__init__" title="discrimintools.GFALDA.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>([n_components, priors, classes])</p></td>
+<td><p><a class="reference internal" href="#discrimintools.discriminant_analysis.CANDISC.__init__" title="discrimintools.discriminant_analysis.CANDISC.__init__"><code class="xref py py-obj docutils literal notranslate"><span class="pre">__init__</span></code></a>([n_components, classes, warn_message])</p></td>
 <td><p></p></td>
 </tr>
 <tr class="row-even">
@@ -821,7 +1094,7 @@ General factor analysis linear discriminant analysis (GFALDA) consists in two st
 </tr>
 <tr class="row-even">
 <td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit</span></code>(X, y)</p></td>
-<td><p>Fit the General Factor Analysis Linear Discriminant Analysis Model</p></td>
+<td><p>Fit the Canonical Discriminant Analysis model</p></td>
 </tr>
 <tr class="row-odd">
 <td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">fit_transform</span></code>(X, y)</p></td>
@@ -865,7 +1138,7 @@ General factor analysis linear discriminant analysis (GFALDA) consists in two st
 </tr>
 <tr class="row-odd">
 <td><p><code class="xref py py-obj docutils literal notranslate"><span class="pre">transform</span></code>(X)</p></td>
-<td><p>Project data to maximize class separation</p></td>
+<td><p>Apply the dimensionality reduction on X</p></td>
 </tr>
 </tbody>
 </table>
@@ -887,20 +1160,20 @@ General factor analysis linear discriminant analysis (GFALDA) consists in two st
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="discrimintools.GFA.html"
+       href="../discriminant_analysis.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">discrimintools.GFA</p>
+        <p class="prev-next-title">discriminant_analysis</p>
       </div>
     </a>
     <a class="right-next"
-       href="discrimintools.MDA.html"
+       href="../../examples/index.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">discrimintools.MDA</p>
+        <p class="prev-next-title">Examples</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -923,8 +1196,8 @@ General factor analysis linear discriminant analysis (GFALDA) consists in two st
   </div>
   <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#discrimintools.GFALDA"><code class="docutils literal notranslate"><span class="pre">GFALDA</span></code></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#discrimintools.GFALDA.__init__"><code class="docutils literal notranslate"><span class="pre">GFALDA.__init__()</span></code></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#discrimintools.discriminant_analysis.CANDISC"><code class="docutils literal notranslate"><span class="pre">CANDISC</span></code></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#discrimintools.discriminant_analysis.CANDISC.__init__"><code class="docutils literal notranslate"><span class="pre">CANDISC.__init__()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -934,7 +1207,7 @@ General factor analysis linear discriminant analysis (GFALDA) consists in two st
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
-      <li><a href="../../../_sources/source/reference/discriminant_analysis/discrimintools.GFALDA.rst.txt"
+      <li><a href="../../../_sources/source/reference/discriminant_analysis/discrimintools.discriminant_analysis.CANDISC.rst.txt"
             rel="nofollow">Show Source</a></li>
     </ul>
    </div></div>

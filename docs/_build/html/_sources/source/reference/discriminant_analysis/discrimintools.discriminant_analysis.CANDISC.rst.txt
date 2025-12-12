@@ -1,7 +1,7 @@
-﻿discrimintools.CANDISC
-======================
+﻿discrimintools.discriminant\_analysis.CANDISC
+=============================================
 
-.. currentmodule:: discrimintools
+.. currentmodule:: discrimintools.discriminant_analysis
 
 .. autoclass:: CANDISC
 
