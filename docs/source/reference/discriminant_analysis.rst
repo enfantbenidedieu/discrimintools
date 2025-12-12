@@ -7,6 +7,4 @@ This page gives an overview of all public ``discrimintools`` discriminant analys
 .. currentmodule:: discrimintools
 
 .. autosummary::
-   :toctree: discriminant_analysis/
-   
    discriminant_analysis.CANDISC
