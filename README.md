@@ -47,7 +47,7 @@ discrimintools provides functions for:
 1. **Discriminant Analysis (DA)**:
     * Canonical Discriminant Analysis - [CANDISC](https://support.sas.com/documentation/onlinedoc/stat/131/candisc.pdf)
     * Discriminant Correspondence Analysis - [DiCA](https://personal.utdallas.edu/~herve/Abdi-DCA2007-pretty.pdf)
-    * Discriminant Analysis (linear & quadractic) - [DISCRIM](https://support.sas.com/documentation/onlinedoc/stat/132/discrim.pdf)
+    * Discriminant Analysis (linear & quadratic) - [DISCRIM](https://support.sas.com/documentation/onlinedoc/stat/132/discrim.pdf)
     * Stepwise Discriminant Analysis (backward & forward) - [STEPDISC](https://support.sas.com/documentation/onlinedoc/stat/131/stepdisc.pdf)
 
 2. **Factor Analysis (FA)**:
@@ -59,8 +59,8 @@ discrimintools provides functions for:
     * General Factor Analysis Linear Discriminant Analysis ([PCADA](https://eric.univ-lyon2.fr/ricco/tanagra/fichiers/fr_Tanagra_Deploying_Predictive_Models_with_R.pdf), [DISQUAL](https://eric.univ-lyon2.fr/ricco/tanagra/fichiers/fr_Tanagra_Pipeline_Python.pdf[) & [DISMIX](https://tutoriels-data-science.blogspot.com/p/tutoriels-en-francais.html#S6wTBImDN7Q)) - [GFALDA](https://eric.univ-lyon2.fr/ricco/tanagra/fichiers/en_dr_utiliser_axes_factoriels_descripteurs.pdf)
     * Discriminant Analysis on Mixed Predictors - [MDA](https://www.researchgate.net/publication/265751966_Discriminant_Analysis_on_Mixed_Predictors)
     * Partial Least Squares Discriminant Analysis - [PLSDA](https://eric.univ-lyon2.fr/ricco/tanagra/fichiers/en_Tanagra_PLS_DA.pdf)
+    * Partial Least Squares Linear Discriminant Analysis - [PLSLDA](https://eric.univ-lyon2.fr/ricco/tanagra/fichiers/en_Tanagra_PLS_DA.pdf)
     * Partial Least Squares Logistic Regression - [PLSLOGIT](https://inria.hal.science/inria-00494857v1/document)
-    * Partial Least Squares Linear Discriminant Analysis - [PLSDA](https://eric.univ-lyon2.fr/ricco/tanagra/fichiers/en_Tanagra_PLS_DA.pdf)
 
 ## Installation <a name="installation"></a>
 
