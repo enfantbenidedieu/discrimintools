@@ -1,0 +1,745 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>CANDISC &#8212; discrimintools 0.1.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../_static/documentation_options.js?v=01f34227"></script>
+    <script src="../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'source/user_guide/candisc';</script>
+    <link rel="icon" href="../../_static/discrimintools.svg"/>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="CPLS" href="cpls.html" />
+    <link rel="prev" title="User Guide" href="index.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/discrimintools.svg" class="logo__image only-light" alt=""/>
+    <img src="../../_static/discrimintools.svg" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">discrimintools</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../install/index.html">
+    Install
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../reference/index.html">
+    API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../examples/index.html">
+    Examples
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/enfantbenidedieu/discrimintools" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../install/index.html">
+    Install
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item current active">
+  <a class="nav-link nav-internal" href="index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../reference/index.html">
+    API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../examples/index.html">
+    Examples
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/enfantbenidedieu/discrimintools" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+<nav class="bd-docs-nav bd-links"
+     aria-label="Section Navigation">
+  <p class="bd-links__title" role="heading" aria-level="1">Section Navigation</p>
+  <div class="bd-toc-item navbar-nav"><ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">CANDISC</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cpls.html">CPLS</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dica.html">DiCA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="discrim.html">DISCRIM</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gfa.html">GFA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="gfalda.html">GFALDA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mda.html">MDA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="mpca.html">MPCA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plsda.html">PLSDA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plslda.html">PLSLDA</a></li>
+<li class="toctree-l1"><a class="reference internal" href="plslogit.html">PLSLOGIT</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stepdisc.html">STEPDISC</a></li>
+</ul>
+</div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="index.html" class="nav-link">User Guide</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">CANDISC</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="candisc">
+<h1>CANDISC<a class="headerlink" href="#candisc" title="Link to this heading">#</a>
+</h1>
+<section id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a>
+</h2>
+<p>Canonical discriminant analysis is a dimension-reduction technique related to principal component analysis and canonical correlation.
+The methodology that is used in deriving the canonical coefficients parallels that of a one-way multivariate analysis of variance (MANOVA).
+MANOVA tests for equality of the mean vector across class levels.
+Canonical discriminant analysis finds linear combinations of the quantitative variables that provide maximal separation between classes or groups.</p>
+<p>CANDISC is a somewhat hybrid learning nature with two setps:</p>
+<ol class="arabic simple">
+<li><p><strong>Semi-supervised</strong>: On one hand, CANDISC has an unsupervised or descriptive aspect that aims to tackle the following question. How to find a representation of the objects which provides the best separation between classes?</p></li>
+<li><p><strong>Supervised</strong>: On the other hand, CANDISC also has a decisively supervised aspect that tackles the question: How to find the rules for assigning a class to a given object?</p></li>
+</ol>
+</section>
+<section id="semi-supervised-aspect">
+<h2>Semi-supervised Aspect<a class="headerlink" href="#semi-supervised-aspect" title="Link to this heading">#</a>
+</h2>
+<section id="mathematical-formula-of-the-candisc-classifier">
+<h3>Mathematical formula of the CANDISC classifier<a class="headerlink" href="#mathematical-formula-of-the-candisc-classifier" title="Link to this heading">#</a>
+</h3>
+<p>In Semi-supervised aspect, the gold is to find a low dimensional representation of the objects which provides the best separation between classes.
+We can look for an axis <span class="math notranslate nohighlight">\(\Delta_{a}\)</span>, spanned by some columns vector <span class="math notranslate nohighlight">\(a=(a_{1},a_{2},\dots,a_{p})\)</span>, such that the linear combinations <a class="footnote-reference brackets" href="#f1" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a>:</p>
+<div class="math notranslate nohighlight">
+\[z = a_{1}(x_{1} - \overline{x}_{1})+a_{2}(x_{2} - \overline{x}_{2})+\cdots+a_{p}(x_{p} - \overline{x}_{p})\]</div>
+<p>that separates all <span class="math notranslate nohighlight">\(K\)</span> groups in an adequate way.</p>
+<p>Algebraically, the idea is to look for a linear combination of the predictors :</p>
+<div class="math notranslate nohighlight">
+\[Z= (X - \mathbb{1}g^{T})a\]</div>
+<p>that <em>ideally</em> could achieve the following two goals <a class="footnote-reference brackets" href="#f2" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a>:</p>
+<ul class="simple">
+<li><p>Minimize (pooled) within-class dispersion (wss): <span class="math notranslate nohighlight">\(\underbrace{\min}_{a}\left\{a^{T}W_{b}a\right\}\)</span></p></li>
+<li><p>Maximize between-class dispersion (bss): <span class="math notranslate nohighlight">\(\underbrace{\max}_{a}\left\{a^{T}B_{b}a\right\}\)</span></p></li>
+</ul>
+<p>On one hand, it would be nice to have <span class="math notranslate nohighlight">\(a\)</span>, such that the between-class dispersion is maximized. This corresponds to a situation in which the class centroids are well separated.
+On the other hand, it would also make sense to have <span class="math notranslate nohighlight">\(a\)</span>, such that the within-class dispersion is minimized. This implies having classes in which, on average, the “inner” variation is small (i.e. concentrated local dispersion).</p>
+<p>Can we find such a mythical vector <span class="math notranslate nohighlight">\(a\)</span>?</p>
+</section>
+<section id="looking-for-a-compromise-criterion">
+<h3>Looking for a Compromise Criterion<a class="headerlink" href="#looking-for-a-compromise-criterion" title="Link to this heading">#</a>
+</h3>
+<p>So far we have an impossible simultaneity involving a minimization criterion, as well as a maximization criterion:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{eqnarray}
+ \underbrace{\min}_{a}\left\{a^{T}W_{b}a\right\} &amp; \Longrightarrow &amp; W_{b}a = \lambda a \\
+ &amp; \text{and} &amp; \\
+\underbrace{\max}_{a}\left\{a^{T}B_{b}a\right\} &amp; \Longrightarrow &amp; B_{b}a = \rho a
+\end{eqnarray}\end{split}\]</div>
+<p>What can we do to look for a compromise. Using the Huygens theoreom, the variance can be deomposed as:</p>
+<div class="math notranslate nohighlight">
+\[V_{b} = W_{b} + B_{b}\]</div>
+<p>Doing some algebra, it can be shown that the quadratic form <span class="math notranslate nohighlight">\(a^{T}V_{b}a\)</span> can be decomposed as:</p>
+<div class="math notranslate nohighlight">
+\[a^{T}V_{b}a = a^{T}W_{b}a + a^{T}B_{b}a\]</div>
+<p>Again, we are pursuing a dual goal that is, in general, hard to accomplish:</p>
+<div class="math notranslate nohighlight">
+\[a^{T}V_{b}a = \underbrace{a^{T}W_{b}a}_{\text{minimize}} + \underbrace{a^{T}B_{b}a}_{\text{maximize}}\]</div>
+<p>We have two options for the compromise:</p>
+<div class="math notranslate nohighlight">
+\[\underbrace{\max}_{a}\left\{\dfrac{a^{T}B_{b}a}{a^{T}V_{b}a}\right\} \quad \text{or} \quad \underbrace{\max}_{a}\left\{\dfrac{a^{T}B_{b}a}{a^{T}W_{b}a}\right\}\]</div>
+<p>which are actually associated to the following ratios:</p>
+<div class="math notranslate nohighlight">
+\[\eta^{2} = \dfrac{a^{T}B_{b}a}{a^{T}V_{b}a} \quad \text{and} \quad F = \dfrac{a^{T}B_{b}a}{a^{T}W_{b}a}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\eta^{2}\)</span> is the correlation ratio and <span class="math notranslate nohighlight">\(F\)</span> the <span class="math notranslate nohighlight">\(F\)</span>-ratio.</p>
+<section id="correlation-ratio">
+<h4>Correlation Ratio<a class="headerlink" href="#correlation-ratio" title="Link to this heading">#</a>
+</h4>
+<p>If we decide to work with the first criterion, we look for <span class="math notranslate nohighlight">\(a\)</span> such that:</p>
+<div class="math notranslate nohighlight">
+\[\underbrace{\max}_{a}\left\{\dfrac{a^{T}B_{b}a}{a^{T}V_{b}a}\right\}\]</div>
+<p>This criterion is scale invariant, meaning that we use any scale variation of <span class="math notranslate nohighlight">\(a\)</span>: i.e. <span class="math notranslate nohighlight">\(\alpha a\)</span>. For convenience, we can impose a normalizing restriction: <span class="math notranslate nohighlight">\(a^{T}V_{b}a=1\)</span>. Consequently.</p>
+<div class="math notranslate nohighlight">
+\[\underbrace{\max}_{a}\left\{\dfrac{a^{T}B_{b}a}{a^{T}V_{b}a}\right\}  \quad \Longleftrightarrow \quad \underbrace{\max}_{a}\left\{a^{T}B_{b}a\right\}\quad \text{s.t.}\quad a^{T}V_{b}a=1\]</div>
+<p>Using the method of Lagrangien multiplier:</p>
+<div class="math notranslate nohighlight">
+\[\mathcal{l}(a,\lambda) = a^{T}B_{b}a - \lambda(a^{T}V_{b}a - 1)\]</div>
+<p>Deriving w.r.t <span class="math notranslate nohighlight">\(a\)</span> and equating to zero:</p>
+<div class="math notranslate nohighlight">
+\[\dfrac{\partial \mathcal{l}}{a} = 2B_{b}a - 2\lambda V_{b}a= 0\]</div>
+<p>The optimal vector <span class="math notranslate nohighlight">\(a\)</span> is such that:</p>
+<div class="math notranslate nohighlight">
+\[B_{b}a = \lambda V_{b}a\]</div>
+<p>If the matrix <span class="math notranslate nohighlight">\(V_{b}\)</span> is inversible, which it is in general, then :</p>
+<div class="math notranslate nohighlight">
+\[V_{b}^{-1}B_{b}a = \lambda a\]</div>
+<p>that is, the optimal vector <span class="math notranslate nohighlight">\(a\)</span> is eigenvector of <span class="math notranslate nohighlight">\(V_{b}^{-1}B_{b}\)</span>. Keep in mind that, in general, <span class="math notranslate nohighlight">\(V_{b}^{-1}B_{b}\)</span> is not symmetric.</p>
+</section>
+<section id="f-ratio-criterion">
+<h4>
+<span class="math notranslate nohighlight">\(F\)</span>-ratio Criterion<a class="headerlink" href="#f-ratio-criterion" title="Link to this heading">#</a>
+</h4>
+<p>Now, if we decide to work with the criterion associated to the <cite>F</cite> ratio, then the criterion to be maximized is:</p>
+<div class="math notranslate nohighlight">
+\[\underbrace{\max}_{a}\left\{\dfrac{a^{T}B_{b}a}{a^{T}W_{b}a}\right\}  \quad \Longleftrightarrow \quad \underbrace{\max}_{a}\left\{a^{T}B_{b}a\right\} \quad \text{s.t.}\quad a^{T}W_{b}a=1\]</div>
+<p>Applying the same Lagrangien procedure, with a multiplier <span class="math notranslate nohighlight">\(\rho\)</span>, we have that <span class="math notranslate nohighlight">\(a\)</span> is such a vector that:</p>
+<div class="math notranslate nohighlight">
+\[B_{b}a = \rho W_{b}a\]</div>
+<p>and if <span class="math notranslate nohighlight">\(W_{b}\)</span> is inversible, which it is in most cases, then it can be shown that <span class="math notranslate nohighlight">\(a\)</span> is also eigenvector of <span class="math notranslate nohighlight">\(W_{b}^{-1}B_{b}\)</span>, associated to eigenvalue <span class="math notranslate nohighlight">\(\rho\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[W_{b}^{-1}B_{b}a = \rho a\]</div>
+</section>
+<section id="relationshop-between-eigenvalues">
+<h4>Relationshop between eigenvalues<a class="headerlink" href="#relationshop-between-eigenvalues" title="Link to this heading">#</a>
+</h4>
+<p>The relationship between the eigenvalues <span class="math notranslate nohighlight">\(\lambda\)</span> and <span class="math notranslate nohighlight">\(\rho\)</span> is :</p>
+<div class="math notranslate nohighlight">
+\[\rho = \dfrac{\lambda}{1 - \lambda}\]</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(\lambda = \eta^{2}\)</span> correspond to the correlation ratio and is range between <span class="math notranslate nohighlight">\(0\)</span> and <span class="math notranslate nohighlight">\(1\)</span> (<span class="math notranslate nohighlight">\(0 \leq \lambda \leq 1\)</span>).</p></li>
+<li><p><span class="math notranslate nohighlight">\(\sqrt{\lambda} = \eta\)</span> correspond to the canonical correlation.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\lambda\)</span> are not additive from one factor to another.</p></li>
+<li><p>Eiganvalues <span class="math notranslate nohighlight">\(\rho\)</span> are added together from one factor to another.</p></li>
+</ol>
+</div>
+</section>
+</section>
+<section id="raw-canonical-coefficients">
+<h3>Raw Canonical coefficients<a class="headerlink" href="#raw-canonical-coefficients" title="Link to this heading">#</a>
+</h3>
+<p>Coefficients <span class="math notranslate nohighlight">\(a_{h} (h=1,\dots,H)\)</span> are obtained using the following formula:</p>
+<div class="math notranslate nohighlight">
+\[a_{h} = \left(V_{b}^{-1}C\right)b_{h}\sqrt{\dfrac{n-K}{n\times \lambda_{h} \times \left( 1 - \lambda_{h}\right)}}\]</div>
+<p>where <span class="math notranslate nohighlight">\(b_{h}\)</span> is the eigenvector of <span class="math notranslate nohighlight">\(C^{T}V_{b}^{-1}C\)</span> and <span class="math notranslate nohighlight">\(C\)</span>, a matrix of shape <span class="math notranslate nohighlight">\((p,K)\)</span> such as <span class="math notranslate nohighlight">\(V_{b}=CC^{T}\)</span> and</p>
+<div class="math notranslate nohighlight">
+\[c_{pk} = \sqrt{\dfrac{n_{k}}{n}}\left(\overline{x}_{kj} - \overline{x}_{j}\right)\]</div>
+<p>The intercept, <span class="math notranslate nohighlight">\(a_{h0}\)</span>, correspond to:</p>
+<div class="math notranslate nohighlight">
+\[a_{h0} = - \displaystyle \sum_{j=1}^{j=p}a_{hj}\overline{x}_{j}\]</div>
+</section>
+</section>
+<section id="supervised-aspect">
+<h2>Supervised Aspect<a class="headerlink" href="#supervised-aspect" title="Link to this heading">#</a>
+</h2>
+<p>The supervised learning aspect of CANDISC has to do with the question: how do we use it for classification purposes? This involves establishing a decision rule that let us predict the class of an object. CANDISC proposes a geometric rule of classification.</p>
+<section id="distance-behind-candisc">
+<h3>Distance behind CANDISC<a class="headerlink" href="#distance-behind-candisc" title="Link to this heading">#</a>
+</h3>
+<p>The squared Euclidean distance between two vectors <span class="math notranslate nohighlight">\(x_{i}\)</span> and <span class="math notranslate nohighlight">\(x_{i^{'}}\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[d_{E}^{2}\left(i,i^{'}\right) = \left(x_{i}-x_{i^{'}}\right)^{T}\left(x_{i}-x_{i^{'}}\right)\]</div>
+<p>The squared Euclidean distance between the vector <span class="math notranslate nohighlight">\(x_{i}\)</span> and the coordinates of the centroids <span class="math notranslate nohighlight">\(g_{k}\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[d_{E}^{2}\left(i,\mathcal{C}_{k}\right) = \left(x_{i} - g_{k}\right)^{T}\left(x_{i} - g_{k}\right)\]</div>
+<p>The generalized squared distance between the vector <span class="math notranslate nohighlight">\(x_{i}\)</span> and the coordinates of the centroids <span class="math notranslate nohighlight">\(g_{k}\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[d_{M}^{2}\left(i,\mathcal{C}_{k}\right) = d_{E}^{2}\left(i,\mathcal{C}_{k}\right) - 2 \times \log \left(\widehat{\pi}_{k}\right)\]</div>
+<p>where <span class="math notranslate nohighlight">\(\widehat{\pi}_{k}\)</span> is the prior probability of class <span class="math notranslate nohighlight">\(\mathcal{C}_{k}\)</span>.</p>
+</section>
+<section id="predictive-idea">
+<h3>Predictive idea<a class="headerlink" href="#predictive-idea" title="Link to this heading">#</a>
+</h3>
+<p>The classification rule used in CANDISC consists of assigning each individual <span class="math notranslate nohighlight">\(x_{i}\)</span> to the class <span class="math notranslate nohighlight">\(\mathcal{C}_{k}\)</span> for which the distance to the centroid is minimal. For that, we use a variant of softmax transformation
+for estimated probabilities:</p>
+<div class="math notranslate nohighlight">
+\[\mathbb{P}\left(Y=y_{k}/X = x_{i}\right) = \dfrac{e^{-0.5\times d_{M}^{2}\left(i,\mathcal{C}_{k}\right)}}{\displaystyle \sum_{c=1}^{c=K}e^{-0.5\times d_{M}^{2}\left(i,\mathcal{C}_{c}\right)}}\]</div>
+</section>
+<section id="classification-functions-coefficients">
+<h3>Classification Functions Coefficients<a class="headerlink" href="#classification-functions-coefficients" title="Link to this heading">#</a>
+</h3>
+<p>From the generalized square distance, it is possible to deduct the classification function coefficients.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split} \begin{eqnarray}
+   -\dfrac{1}{2}d_{M}^{2}\left(i,\mathcal{C}_{k}\right) &amp; = &amp; - \dfrac{1}{2}\displaystyle \sum_{h=1}^{h=H}\left(z_{h}(i) - \overline{z}_{kh}\right)^{2}+\log \left(\widehat{\pi}_{k}\right)\\
+   &amp; = &amp; -\dfrac{1}{2}\displaystyle \sum_{h=1}^{h=H}z_{h}(i)^{2} -\dfrac{1}{2}\displaystyle \sum_{h=1}^{h=H}\overline{z}_{kh}^{2} + \displaystyle \sum_{h=1}^{h=H}z_{h}(i)\overline{z}_{kh} + \log \left(\widehat{\pi}_{k}\right)
+\end{eqnarray}\end{split}\]</div>
+<p>Since the canonical discriminant function is a linear function of original variables :</p>
+<div class="math notranslate nohighlight">
+\[z_{h}(x) = a_{h0}+a_{h1}x_{1}+a_{h2}x_{2}+\cdots+a_{hp}x_{p}\]</div>
+<p>we can deduct the linear expression of the classification function for the CANDISC:</p>
+<div class="math notranslate nohighlight">
+\[S\left(y_{k},i\right)  =  \beta_{k0} + \beta_{k1}x_{1} + \beta_{k2}x_{2} + \cdots + \beta_{kp}x_{p}\]</div>
+<p>where <span class="math notranslate nohighlight">\(\beta_{k0} = \log \left(\widehat{\pi}_{k}\right) + \displaystyle \sum_{h}^{h=H}a_{h0}\overline{z}_{kh} -\dfrac{1}{2}\displaystyle \sum_{h=1}^{h=H}\overline{z}_{kh}^{2}\)</span> and
+<span class="math notranslate nohighlight">\(\beta_{kj} = \displaystyle \sum_{h=1}^{h=H}a_{hj}\overline{z}_{kh}\)</span>.</p>
+<p>For more details about canonical discriminant analysis, see SAS <a class="reference external" href="https://support.sas.com/documentation/onlinedoc/stat/131/candisc.pdf">CANDISC Procedure</a>.</p>
+<p class="rubric">Footnotes</p>
+<aside class="footnote-list brackets">
+<aside class="footnote brackets" id="f1" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">1</a><span class="fn-bracket">]</span></span>
+<p>Intercept is not need since variables are centered.</p>
+</aside>
+<aside class="footnote brackets" id="f2" role="doc-footnote">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">2</a><span class="fn-bracket">]</span></span>
+<p>The index <span class="math notranslate nohighlight">\(b\)</span> mean that it is weighted by <span class="math notranslate nohighlight">\(1/n\)</span> and not its degree of freedom.</p>
+</aside>
+</aside>
+<p class="rubric">References</p>
+</section>
+</section>
+</section>
+
+
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="index.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">User Guide</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="cpls.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">CPLS</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+<div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> On this page
+  </div>
+  <nav class="bd-toc-nav page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview">Overview</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#semi-supervised-aspect">Semi-supervised Aspect</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-formula-of-the-candisc-classifier">Mathematical formula of the CANDISC classifier</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#looking-for-a-compromise-criterion">Looking for a Compromise Criterion</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation-ratio">Correlation Ratio</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#f-ratio-criterion"><span class="math notranslate nohighlight">\(F\)</span>-ratio Criterion</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#relationshop-between-eigenvalues">Relationshop between eigenvalues</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#raw-canonical-coefficients">Raw Canonical coefficients</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#supervised-aspect">Supervised Aspect</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#distance-behind-candisc">Distance behind CANDISC</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#predictive-idea">Predictive idea</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#classification-functions-coefficients">Classification Functions Coefficients</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+  <div class="sidebar-secondary-item">
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../../_sources/source/user_guide/candisc.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, Duvérier DJIFACK ZEBAZE.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

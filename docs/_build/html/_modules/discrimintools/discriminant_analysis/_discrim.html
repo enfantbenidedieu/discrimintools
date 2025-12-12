@@ -1,0 +1,1298 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>discrimintools.discriminant_analysis._discrim &#8212; discrimintools 0.1.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/discrimintools/discriminant_analysis/_discrim';</script>
+    <link rel="icon" href="../../../_static/discrimintools.svg"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/discrimintools.svg" class="logo__image only-light" alt=""/>
+    <img src="../../../_static/discrimintools.svg" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">discrimintools</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../source/install/index.html">
+    Install
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../source/getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../source/user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../source/reference/index.html">
+    API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../source/examples/index.html">
+    Examples
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/enfantbenidedieu/discrimintools" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../source/install/index.html">
+    Install
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../source/getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../source/user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../source/reference/index.html">
+    API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../source/examples/index.html">
+    Examples
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/enfantbenidedieu/discrimintools" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">discrimintools.discriminant_analysis._discrim</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for discrimintools.discriminant_analysis._discrim</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">ndarray</span><span class="p">,</span> <span class="n">array</span><span class="p">,</span> <span class="n">c_</span><span class="p">,</span> <span class="n">diag</span><span class="p">,</span> <span class="n">dot</span><span class="p">,</span> <span class="n">linalg</span><span class="p">,</span> <span class="n">log</span><span class="p">,</span> <span class="n">sqrt</span><span class="p">,</span> <span class="n">average</span><span class="p">,</span> <span class="n">ones</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">concat</span><span class="p">,</span> <span class="n">CategoricalDtype</span><span class="p">,</span> <span class="n">Series</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pandas.api.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_string_dtype</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">functools</span><span class="w"> </span><span class="kn">import</span> <span class="n">reduce</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">OrderedDict</span><span class="p">,</span> <span class="n">namedtuple</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">statsmodels.multivariate.manova</span><span class="w"> </span><span class="kn">import</span> <span class="n">MANOVA</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.utils.validation</span><span class="w"> </span><span class="kn">import</span> <span class="n">check_is_fitted</span>
+
+<span class="c1">#intern function</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">._base</span><span class="w"> </span><span class="kn">import</span> <span class="n">_BaseDA</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.functions.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">check_is_dataframe</span><span class="p">,</span> <span class="n">check_is_series</span><span class="p">,</span> <span class="n">check_is_bool</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.functions.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">preprocessing</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.functions.model_matrix</span><span class="w"> </span><span class="kn">import</span> <span class="n">model_matrix</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.functions.ldavip</span><span class="w"> </span><span class="kn">import</span> <span class="n">ldavip</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.functions.describe</span><span class="w"> </span><span class="kn">import</span> <span class="n">describe</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.functions.sscp</span><span class="w"> </span><span class="kn">import</span> <span class="n">sscp</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.functions.box_m_test</span><span class="w"> </span><span class="kn">import</span> <span class="n">box_m_test</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.functions.cov_to_cor_test</span><span class="w"> </span><span class="kn">import</span> <span class="n">cov_to_cor_test</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.functions.distance</span><span class="w"> </span><span class="kn">import</span> <span class="n">sqmahalanobis</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.functions.cov_infos</span><span class="w"> </span><span class="kn">import</span> <span class="n">cov_infos</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.functions.univ_test</span><span class="w"> </span><span class="kn">import</span> <span class="n">univ_test</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.functions.diagnostics</span><span class="w"> </span><span class="kn">import</span> <span class="n">diagnostics</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.functions.splitmix</span><span class="w"> </span><span class="kn">import</span> <span class="n">splitmix</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.functions.tab_disjunctive</span><span class="w"> </span><span class="kn">import</span> <span class="n">tab_disjunctive</span>
+
+<div class="viewcode-block" id="DISCRIM">
+<a class="viewcode-back" href="../../../source/reference/discriminant_analysis/discrimintools.discriminant_analysis.DISCRIM.html#discrimintools.discriminant_analysis.DISCRIM">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">DISCRIM</span><span class="p">(</span><span class="n">_BaseDA</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Discriminant Analysis (DISCRIM)</span>
+<span class="sd">    </span>
+<span class="sd">    Performs a discriminant analysis (linear and quadratic) on a set of observations (training data) containing one or more numerics variables and a classification variables defining groups of observations.</span>
+<span class="sd">    The derived discriminant criterion from the training data can be applied to a testing dataset.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    method : {&#39;linear&#39;, &#39;quad&#39;}, default = &#39;linear&#39;</span>
+<span class="sd">        The discriminant analysis method to performs, possible values: </span>
+
+<span class="sd">        - &#39;linear&#39; for linear discriminant analysis (LDA).</span>
+<span class="sd">        - &#39;quad&#39; for quadratic discriminant analysis (QDA)</span>
+<span class="sd">    </span>
+<span class="sd">    priors : str or array-like or Series of shape (n_classes,), default = None</span>
+<span class="sd">        The priors statement specifies the class prior probabilities of group membership, possibles values: </span>
+
+<span class="sd">        - &#39;equal&#39; to set the prior probabilities equal.</span>
+<span class="sd">        - &#39;prop&#39; to set the prior probabilities proportional to the sample sizes.</span>
+<span class="sd">        - numpy 1-D array or Series which specify the prior probability for each level of the classification variable.</span>
+<span class="sd">    </span>
+<span class="sd">    classes : None, tuple or list, default = None</span>
+<span class="sd">        Name of level in order to return. If None, classes are sorted in unique values in y.</span>
+<span class="sd">    </span>
+<span class="sd">    var_select : bool, default = False</span>
+<span class="sd">        Whether to applied feature selection based on variable importance (contribution) in prediction for linear discriminant analysis</span>
+
+<span class="sd">    level : float, default = None</span>
+<span class="sd">        Significance level for the variable importance critical probability. You can specify the `level` option only when both method = &#39;linear&#39; and var_select=True are also specified.</span>
+<span class="sd">        If you specify both method = &#39;linear&#39; and var_select=True but omit the `level` option, DISCRIM uses :math:`5e-2` as the significance level for the variabe importance.</span>
+<span class="sd">    </span>
+<span class="sd">    tol : float, default = None</span>
+<span class="sd">        Significance level for the test of homogeneity. You can specify the `tol` option only when method = &#39;quad&#39; is also specified.</span>
+<span class="sd">        If you specify method = &#39;quad&#39; but omit the `tol` option, DISCRIM uses :math:`1e-1` as the significance level for the test.</span>
+<span class="sd">    </span>
+<span class="sd">    warn_message : bool, default = True</span>
+<span class="sd">        Show warning messages. Raise a warning without making the program crash.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    call_ :  NamedTuple</span>
+<span class="sd">        Call informations:</span>
+
+<span class="sd">        - Xtot : DataFrame of shape (n_samples, n_columns)</span>
+<span class="sd">            Input data.</span>
+<span class="sd">        - X : DataFrame of shape (n_samples, n_features)</span>
+<span class="sd">            Training data.</span>
+<span class="sd">        - y : Series of shape (n_samples,)</span>
+<span class="sd">            Target values. True values for ``X``.</span>
+<span class="sd">        - target : str</span>
+<span class="sd">            Name of target.</span>
+<span class="sd">        - features : list</span>
+<span class="sd">            Names of features seen during ``fit``.</span>
+<span class="sd">        - classes : list</span>
+<span class="sd">            Names of classes.</span>
+<span class="sd">        - priors : Series of shape (n_classes,)</span>
+<span class="sd">            Priors probabilities.</span>
+<span class="sd">        - n_samples : int</span>
+<span class="sd">            Number of samples.</span>
+<span class="sd">        - n_features : int</span>
+<span class="sd">            Number of features.</span>
+<span class="sd">        - n_classes : int</span>
+<span class="sd">            Number of target values.</span>
+
+<span class="sd">    classes_ : Namedtuple </span>
+<span class="sd">        Classes informations:</span>
+
+<span class="sd">        - infos : DataFrame of shape (n_classes, 3)</span>
+<span class="sd">            class level information (frequency, proportion, prior probability).</span>
+<span class="sd">        - center : DataFrame of shape (n_classes, n_features) </span>
+<span class="sd">            Class means.</span>
+<span class="sd">        - total : DataFrame of shape (n_features, n_classes)</span>
+<span class="sd">            Total-sample standardized class means.</span>
+<span class="sd">        - pooled : DataFrame of shape (n_features, n_classes)</span>
+<span class="sd">            Pooled-within class standardized class means.</span>
+<span class="sd">        - mahal : DataFrame of shape (n_classes, n_classes)</span>
+<span class="sd">            Squared Mahalanobis distances between classes.</span>
+<span class="sd">        - gen : DataFrame of shape (n_classes, n_classes)</span>
+<span class="sd">            Generalized Squared distances between classes.</span>
+
+<span class="sd">    coef_ : DataFrame of shape (n_features, n_classes)</span>
+<span class="sd">        Linear classification functions coefficients.</span>
+
+<span class="sd">    corr_ : NamedTuple </span>
+<span class="sd">        Correlation coefficients test:</span>
+
+<span class="sd">        - total : DataFrame of shape (C^{2}_{n_features}, 7)</span>
+<span class="sd">            Total-sample correlation coefficients test.</span>
+<span class="sd">        - within : dict </span>
+<span class="sd">            Within-class correlation coefficients test.</span>
+<span class="sd">        - pooled : DataFrame of shape (C^{2}_{n_features}, 7)</span>
+<span class="sd">            Pooled within-class correlation coefficients test.</span>
+<span class="sd">        - between : DataFrame of shape (C^{2}_{n_features}, 7)</span>
+<span class="sd">            Between-class correlation coefficients test.</span>
+
+<span class="sd">    cov_ : NamedTuple</span>
+<span class="sd">        Covariance matrices:</span>
+
+<span class="sd">        - total : DataFrame of shape (n_features, n_features)</span>
+<span class="sd">            Total-sample covariance matrix.</span>
+<span class="sd">        * btotal : DataFrame of shape (n_features, n_features)</span>
+<span class="sd">            Biased total-sample covariance matrix.</span>
+<span class="sd">        - within : dict </span>
+<span class="sd">            Within-class covariance matrices.</span>
+<span class="sd">        - bwithin : dict</span>
+<span class="sd">            Biased within-class covariance matrices.</span>
+<span class="sd">        - pooled : DataFrame of shape (n_features, n_features)</span>
+<span class="sd">            pooled within-class covariance matrix.</span>
+<span class="sd">        - bpooled : DataFrame of shape (n_features, n_features)</span>
+<span class="sd">            biased pooled within-class covariance matrix.</span>
+<span class="sd">        - between : DataFrame of shape (n_features, n_features)</span>
+<span class="sd">            Between-class covariance matrix</span>
+<span class="sd">        - bbetween : DataFrale of shape (n_features, n_features)</span>
+<span class="sd">            biased between-class covariance matrix.</span>
+<span class="sd">        - test : DataFrame of shape (1, 7)</span>
+<span class="sd">            Box&#39;s M test.</span>
+
+<span class="sd">    ind_ : NamedTuple</span>
+<span class="sd">        Individuals informations:</span>
+
+<span class="sd">        - scores : DataFrame of shape (n_samples, n_classes) </span>
+<span class="sd">            The total scores of individuals.</span>
+<span class="sd">        - mahal : DataFrame of shape (n_samples, n_classes) </span>
+<span class="sd">            Squared Mahalanobis distance to origin.</span>
+<span class="sd">        * gen : DataFrame shape (n_samples, n_classes) </span>
+<span class="sd">            Generalized squared distance to origin.</span>
+
+<span class="sd">    model_ : str, default = &quot;discrim&quot;</span>
+<span class="sd">        Name of model fitted.</span>
+
+<span class="sd">    sscp_ : NamedTuple </span>
+<span class="sd">        Sum of square cross product (SSCP) matrices:</span>
+
+<span class="sd">        - total : DataFrame of shape (n_features, n_features)</span>
+<span class="sd">            Total-sample SSCP matrix</span>
+<span class="sd">        - within : dict</span>
+<span class="sd">            Within-class SSCP matrices</span>
+<span class="sd">        - pooled: DataFrame of shape (n_features, n_features)</span>
+<span class="sd">            Pooled within-class SSCP matrix</span>
+<span class="sd">        - between : DataFrame of shape (n_features, n_features)</span>
+<span class="sd">            Between-class SSCP matrix.</span>
+
+<span class="sd">    statistics_ : NamedTuple</span>
+<span class="sd">        Statistics results:</span>
+
+<span class="sd">        - anova : DataFrame of shape (n_features, 11)</span>
+<span class="sd">            Analysis of variance test.</span>
+<span class="sd">        - manova : DataFrame of shape (4, 5)</span>
+<span class="sd">            Multivariate analysis of variance test.</span>
+<span class="sd">        - average_rsq : DataFrame of shape (1, 2)</span>
+<span class="sd">            Average R-square.</span>
+<span class="sd">        - performance : DataFrame of shape (3, 3)</span>
+<span class="sd">            The model global performance. Only if linear discriminant analysis.</span>
+
+<span class="sd">    summary_ : NamedTuple</span>
+<span class="sd">        Summary informations:</span>
+
+<span class="sd">        - infos : DataFrame of shape (3, 4)</span>
+<span class="sd">            Summary informations (total sample size, number of features, number of classes, </span>
+<span class="sd">            total degree of freedom, within-class degree of freedom, between-class degree of freedom).</span>
+<span class="sd">        - total : DataFrame of shape (n_features, 8)</span>
+<span class="sd">            Total-sample statistics, see https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.describe.html</span>
+<span class="sd">        - within : dict</span>
+<span class="sd">            Within-class statistics.</span>
+<span class="sd">    </span>
+<span class="sd">    vip_ : NamedTuple</span>
+<span class="sd">        Variable importance for prediction:</span>
+
+<span class="sd">        - vip : DataFrame of shape (n_features, 6)</span>
+<span class="sd">            Variable importance for prediction.</span>
+<span class="sd">        - selected : list</span>
+<span class="sd">            Selected variables.</span>
+<span class="sd">    </span>
+<span class="sd">    See also</span>
+<span class="sd">    --------</span>
+<span class="sd">    :class:`~discrimintools.discriminant_analysis.GFALDA`</span>
+<span class="sd">        General Factor Analysis Linear Discriminant Analysis</span>
+<span class="sd">    :class:`~discrimintools.discriminant_analysis.CPLS`</span>
+<span class="sd">        Partial Least Squares for Classification</span>
+<span class="sd">    :class:`~discrimintools.discriminant_analysis.PLSDA`</span>
+<span class="sd">        Partial Least Squares Discriminant Analysis</span>
+<span class="sd">    :class:`~discrimintools.discriminant_analysis.PLSLDA`</span>
+<span class="sd">        Partial Least Squares Linear Discriminant Analysis</span>
+<span class="sd">    :class:`~discrimintools.summary.summaryDISCRIM`</span>
+<span class="sd">        Printing summaries of Discriminant Analysis (linear &amp; quadratic) model.</span>
+<span class="sd">    :class:`~discrimintools.summary.summaryDA`</span>
+<span class="sd">        Printing summaries of Discriminant Analysis model.</span>
+<span class="sd">        </span>
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    [1] Bardos M. (2001), « Analyse discriminante - Application au risque et scoring financier », Dunod.</span>
+<span class="sd">    </span>
+<span class="sd">    [2] Lebart Ludovic, Piron Marie, &amp; Morineau Alain (2006), « `Statistique Exploratoire Multidimensionnelle &lt;https://horizon.documentation.ird.fr/exl-doc/pleins_textes/2023-12/010038111.pdf&gt;`_ », Dunod, Paris 4ed.</span>
+<span class="sd">    </span>
+<span class="sd">    [3] Ricco Rakotomalala (2020), « `Pratique de l&#39;Analyse Discriminante Linéaire &lt;https://hal.science/hal-04868585v1/file/Pratique_Analyse_Discriminante_Lineaire.pdf&gt;`_ », Université Lumière Lyon 2, Version 1.0.</span>
+<span class="sd">    </span>
+<span class="sd">    [4] Saporta Gilbert (2011), « `Probabilités, Analyse des données et Statistiques &lt;https://en.pdfdrive.to/dl/probabilites-analyses-des-donnees-et-statistiques&gt;`_ », Editions TECHNIP, 3ed.</span>
+<span class="sd">    </span>
+<span class="sd">    [5] Tenenhaus Michel (1996), « Méthodes statistiques en gestion », Dunod.</span>
+<span class="sd">    </span>
+<span class="sd">    [6] Tuffery Stephane (2017), « Data Mining et Statistique décisionelle », Editions TECHNIP, 5ed.</span>
+<span class="sd">    </span>
+<span class="sd">    [7] Tuffery Stephane (2025), « Data Science, Statistique et Machine learning », Editions TECHNIP, 6ed.</span>
+
+<span class="sd">    [8] SAS/STAT 13.2 User&#39;s Guide (2014), « `The DISCRIM Procedure &lt;https://support.sas.com/documentation/onlinedoc/stat/132/discrim.pdf&gt;`_ », Chapter 35.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from discrimintools.datasets import load_alcools</span>
+<span class="sd">    &gt;&gt;&gt; from discrimintools import DISCRIM</span>
+<span class="sd">    &gt;&gt;&gt; D = load_alcools() # load training data</span>
+<span class="sd">    &gt;&gt;&gt; y, X = D[&quot;TYPE&quot;], D.drop(columns[&quot;TYPE&quot;]) # split into X and y</span>
+<span class="sd">    &gt;&gt;&gt; #linear discriminant analysis (LDA)</span>
+<span class="sd">    &gt;&gt;&gt; clf = DISCRIM()</span>
+<span class="sd">    &gt;&gt;&gt; clf.fit(X,y)</span>
+<span class="sd">    DISCRIM(priors=&#39;prop&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; #quadratic discriminant analysis</span>
+<span class="sd">    &gt;&gt;&gt; clf2 = DISCRIM(method=&#39;quad&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; clf2.fit(X,y)</span>
+<span class="sd">    DISCRIM(method=&#39;quad&#39;,priors=&#39;prop&#39;)</span>
+<span class="sd">    ```</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="DISCRIM.__init__">
+<a class="viewcode-back" href="../../../source/reference/discriminant_analysis/discrimintools.discriminant_analysis.DISCRIM.html#discrimintools.discriminant_analysis.DISCRIM.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">method</span> <span class="o">=</span> <span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">priors</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">classes</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">var_select</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">level</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">tol</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">warn_message</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">=</span> <span class="n">method</span> 
+        <span class="bp">self</span><span class="o">.</span><span class="n">priors</span> <span class="o">=</span> <span class="n">priors</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classes</span> <span class="o">=</span> <span class="n">classes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">var_select</span> <span class="o">=</span> <span class="n">var_select</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">level</span> <span class="o">=</span> <span class="n">level</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tol</span> <span class="o">=</span> <span class="n">tol</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">warn_message</span> <span class="o">=</span> <span class="n">warn_message</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">decision_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Apply decision function to an input data</span>
+
+<span class="sd">        The decision function is equal to the `log-posterior`_ of the model.</span>
+
+<span class="sd">        .. log-posterior: https://online.stat.psu.edu/stat857/node/80/</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : DataFrame of shape (n_samples, n_features)</span>
+<span class="sd">            Input data, where ``n_samples`` is the number of samples and ``n_features`` is the number of features.</span>
+<span class="sd">            </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        C : DataFrame of shape (n_samples, n_classes)</span>
+<span class="sd">            Decision function values related to each class, per sample.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#check if the estimator is fitted by verifying the presence of fitted attributes</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#check if X is an instance of class pd.DataFrame</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="n">check_is_dataframe</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="c1">#set index name as None</span>
+        <span class="n">X</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1">#check if X contains original features</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="o">.</span><span class="n">Xtot</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The names of the features is not the same as the ones in the active features of the DISCRIM result&quot;</span><span class="p">)</span>
+        <span class="c1">#select original features</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="o">.</span><span class="n">Xtot</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+
+        <span class="c1">#split X</span>
+        <span class="n">split_X</span> <span class="o">=</span> <span class="n">splitmix</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="c1">#extract elements</span>
+        <span class="n">X_quanti</span><span class="p">,</span> <span class="n">X_quali</span><span class="p">,</span> <span class="n">n_samples</span><span class="p">,</span> <span class="n">n_quanti</span><span class="p">,</span> <span class="n">n_quali</span> <span class="o">=</span> <span class="n">split_X</span><span class="o">.</span><span class="n">quanti</span><span class="p">,</span> <span class="n">split_X</span><span class="o">.</span><span class="n">quali</span><span class="p">,</span> <span class="n">split_X</span><span class="o">.</span><span class="n">n</span><span class="p">,</span> <span class="n">split_X</span><span class="o">.</span><span class="n">k1</span><span class="p">,</span> <span class="n">split_X</span><span class="o">.</span><span class="n">k2</span>
+
+        <span class="c1">#initialize DataFrame</span>
+        <span class="n">Xcod</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">index</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+
+        <span class="c1">#check if numerics variables</span>
+        <span class="k">if</span> <span class="n">n_quanti</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1">#replace with numerics columns</span>
+            <span class="n">Xcod</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">X_quanti</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span> <span class="o">=</span> <span class="n">X_quanti</span>
+        
+        <span class="c1">#check if categorical variables      </span>
+        <span class="k">if</span> <span class="n">n_quali</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1">#active categorics</span>
+            <span class="n">categorics</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="o">.</span><span class="n">Xtot</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+            <span class="c1">#replace with dummies</span>
+            <span class="n">Xcod</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">categorics</span><span class="p">]</span> <span class="o">=</span> <span class="n">tab_disjunctive</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X_quali</span><span class="p">,</span><span class="n">dummies_cols</span><span class="o">=</span><span class="n">categorics</span><span class="p">,</span><span class="n">prefix</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">sep</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+        <span class="c1">#remove non selected variables</span>
+        <span class="n">Xcod</span> <span class="o">=</span> <span class="n">Xcod</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cov_</span><span class="o">.</span><span class="n">total</span><span class="o">.</span><span class="n">index</span><span class="p">)]</span> 
+
+        <span class="c1">#chi-square pvalue and tolerance threshold</span>
+        <span class="n">p_value</span><span class="p">,</span> <span class="n">tol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cov_</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">6</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="o">.</span><span class="n">tol</span>
+        <span class="c1">#quadratic discriminant analysis</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;quad&quot;</span> <span class="ow">and</span>  <span class="n">p_value</span> <span class="o">&lt;=</span> <span class="n">tol</span><span class="p">:</span>
+            <span class="c1">#inverse of within-class covariance matrix</span>
+            <span class="n">invwcov</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span> <span class="p">:</span> <span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cov_</span><span class="o">.</span><span class="n">within</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="o">.</span><span class="n">classes</span><span class="p">}</span>
+            <span class="c1">#squared distance of individuals to origin</span>
+            <span class="n">mahal</span> <span class="o">=</span> <span class="n">concat</span><span class="p">((</span><span class="n">sqmahalanobis</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">Xcod</span><span class="p">,</span><span class="n">VI</span><span class="o">=</span><span class="n">invwcov</span><span class="p">[</span><span class="n">k</span><span class="p">],</span><span class="n">mu</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="o">.</span><span class="n">center</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">k</span><span class="p">,:])</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="o">.</span><span class="n">classes</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="c1">#generalized squared distance of individuals to origin</span>
+            <span class="n">gsqdist</span> <span class="o">=</span> <span class="n">mahal</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cov_</span><span class="o">.</span><span class="n">infos</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="o">.</span><span class="n">classes</span><span class="p">,</span><span class="s2">&quot;Natural Log of the Determinant&quot;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> 
+        <span class="c1">#linear discriminant analysis</span>
+        <span class="k">elif</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;linear&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;quad&quot;</span> <span class="ow">and</span>  <span class="n">p_value</span> <span class="o">&gt;</span> <span class="n">tol</span><span class="p">):</span>
+            <span class="c1">#inverse of pooled within-class covariance matrix</span>
+            <span class="n">invpwcov</span> <span class="o">=</span> <span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cov_</span><span class="o">.</span><span class="n">pooled</span><span class="p">)</span>
+            <span class="c1">#generalized squared to distance of individuals to origin</span>
+            <span class="n">gsqdist</span> <span class="o">=</span> <span class="n">concat</span><span class="p">((</span><span class="n">sqmahalanobis</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">Xcod</span><span class="p">,</span><span class="n">VI</span><span class="o">=</span><span class="n">invpwcov</span><span class="p">,</span><span class="n">mu</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="o">.</span><span class="n">center</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">k</span><span class="p">,:])</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="o">.</span><span class="n">classes</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        
+        <span class="c1">#remove priors log-probabilities</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">priors</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">priors</span> <span class="o">==</span> <span class="s2">&quot;equal&quot;</span><span class="p">):</span>
+            <span class="n">gsqdist</span> <span class="o">=</span> <span class="n">gsqdist</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">log</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="o">.</span><span class="n">priors</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="k">return</span> <span class="o">-</span><span class="mf">0.5</span><span class="o">*</span><span class="n">gsqdist</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">feature_importance</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">level</span><span class="o">=</span><span class="mf">5e-2</span><span class="p">,</span><span class="n">all_vars</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Variables Importance for Prediction in Linear Discriminant Analysis (LDAVIP)</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        level : float, default=5e-2</span>
+<span class="sd">            Significance level for the variable importance critical probability.</span>
+<span class="sd">            If None :math:`5e-2` is used as the significance level for the variabe importance.</span>
+
+<span class="sd">        all_vars : bool, default=True</span>
+<span class="sd">            If to test all subset of variables.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        ------- </span>
+<span class="sd">        vip : DataFrame of shape (n_features, 6)</span>
+<span class="sd">            Variable importance for prediction.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#check if the estimator is fitted by verifying the presence of fitted attributes</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#check if linear discriminant analysis model</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">!=</span> <span class="s2">&quot;linear&quot;</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;&#39;feature_importance&#39; method cannot be used for QDA method.&quot;</span><span class="p">)</span>
+        
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#check if var_select is False</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_select</span><span class="p">:</span>
+            <span class="k">raise</span>  <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;&#39;feature_importance&#39; method cannot be used if var_select=True.&quot;</span><span class="p">)</span>
+        
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#check if level is not None</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="k">if</span> <span class="n">level</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">level</span> <span class="o">=</span> <span class="mf">5e-2</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">level</span><span class="p">,</span><span class="nb">float</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> is not supported&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="n">level</span><span class="p">)))</span>
+        <span class="k">elif</span> <span class="n">level</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">level</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;the &#39;level&#39; value </span><span class="si">{}</span><span class="s2"> is not within the required range of 0 and 1.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">level</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">level</span> <span class="o">=</span> <span class="n">level</span>
+        
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#check if boolean</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="n">check_is_bool</span><span class="p">(</span><span class="n">all_vars</span><span class="p">)</span>
+        
+        <span class="k">return</span> <span class="n">ldavip</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="o">.</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="o">.</span><span class="n">y</span><span class="p">,</span><span class="n">level</span><span class="o">=</span><span class="n">level</span><span class="p">,</span><span class="n">all_vars</span><span class="o">=</span><span class="n">all_vars</span><span class="p">)</span><span class="o">.</span><span class="n">vip</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fit the Discriminant Analysis model.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : DataFrame of shape (n_samples, n_features)</span>
+<span class="sd">            Training Data, where ``n_samples`` is the number of samples and ``n_features`` is the number of features.</span>
+<span class="sd">        </span>
+<span class="sd">        y : Series of shape (n_samples,)</span>
+<span class="sd">            Target values. True labels for ``X``.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        self : object</span>
+<span class="sd">            Fitted estimator.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#check if X is an instance of class pd.DataFrame</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="n">check_is_dataframe</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#check if y is an instance of class pd.Series</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="n">check_is_series</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+        <span class="c1">#check if len are equal</span>
+        <span class="k">if</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The number of samples in X must be equal to the number of samples in y&quot;</span><span class="p">)</span>
+
+        <span class="c1">#check if all elements in y are string</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">kq</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">for</span> <span class="n">kq</span> <span class="ow">in</span> <span class="n">y</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;All elements in y must be a string&quot;</span><span class="p">)</span>
+        
+        <span class="c1">#set y name if None</span>
+        <span class="k">if</span> <span class="n">y</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="n">y</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;group&quot;</span>
+        
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#check if method is &#39;linear&#39; or &#39;quad&#39;</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span><span class="s1">&#39;quad&#39;</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;method must be one of &#39;linear&#39;, &#39;quad&#39;, got </span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">method</span><span class="p">))</span>
+        
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#check if priors is not None</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">priors</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">priors</span> <span class="o">=</span> <span class="s2">&quot;prop&quot;</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">priors</span><span class="p">,(</span><span class="nb">str</span><span class="p">,</span><span class="nb">list</span><span class="p">,</span><span class="nb">tuple</span><span class="p">,</span><span class="n">ndarray</span><span class="p">,</span><span class="n">Series</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> is not supported&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">priors</span><span class="p">)))</span>
+        
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#check if var_select is a bool</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="n">check_is_bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">var_select</span><span class="p">)</span>
+
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#check if level is not None</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;linear&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">level</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">level</span> <span class="o">=</span> <span class="mf">5e-2</span>
+            <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">level</span><span class="p">,</span><span class="nb">float</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> is not supported&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">level</span><span class="p">)))</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">level</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">level</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;the &#39;level&#39; value </span><span class="si">{}</span><span class="s2"> is not within the required range of 0 and 1.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">level</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">level</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">level</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">level</span> <span class="o">=</span> <span class="kc">None</span>
+        
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#check if tol is not None (for quadratic discriminant analysis)</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;quad&#39;</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tol</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+                <span class="n">tol</span> <span class="o">=</span> <span class="mf">1e-1</span>
+            <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tol</span><span class="p">,</span><span class="nb">float</span><span class="p">):</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> is not supported&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tol</span><span class="p">)))</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">tol</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">tol</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;the &#39;tol&#39; value </span><span class="si">{}</span><span class="s2"> is not within the required range of 0 and 1.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tol</span><span class="p">))</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">tol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tol</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tol</span> <span class="o">=</span> <span class="kc">None</span>
+        
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#check if warn_message is a bool</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="n">check_is_bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">warn_message</span><span class="p">)</span>
+
+        <span class="c1">#make a copy of original data</span>
+        <span class="n">Xtot</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#preprocessing</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">preprocessing</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+         
+        <span class="c1">#warning message to inform</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">warn_message</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">is_string_dtype</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Categorical features have been encoded into binary variables.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1">#encode categorical variables into binary without first level.</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">model_matrix</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#set classes</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#unique element in y</span>
+        <span class="n">uq_y</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">unique</span><span class="p">()))</span>
+        <span class="c1">#number of classes</span>
+        <span class="n">n_classes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">uq_y</span><span class="p">)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span><span class="nb">tuple</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">)</span> <span class="o">&amp;</span> <span class="nb">set</span><span class="p">(</span><span class="n">uq_y</span><span class="p">)))</span> <span class="o">!=</span> <span class="n">n_classes</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Insert good classes&quot;</span><span class="p">)</span>
+            <span class="n">classes</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">classes</span> <span class="o">=</span> <span class="n">uq_y</span>
+
+        <span class="c1">#convert y to categorical data type</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">CategoricalDtype</span><span class="p">(</span><span class="n">categories</span><span class="o">=</span><span class="n">classes</span><span class="p">,</span><span class="n">ordered</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+        
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#variables importance for prediction in linear discriminant analysis</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s1">&#39;linear&#39;</span><span class="p">:</span>
+            <span class="n">vip</span> <span class="o">=</span> <span class="n">ldavip</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">level</span><span class="p">,</span><span class="n">all_vars</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="c1">#check if at least one variable selected</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_select</span> <span class="ow">and</span> <span class="nb">len</span><span class="p">(</span><span class="n">vip</span><span class="o">.</span><span class="n">selected</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="c1">#update X with selected variables</span>
+                <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">vip</span><span class="o">.</span><span class="n">selected</span><span class="p">]</span>
+                <span class="c1">#update variable importance</span>
+                <span class="n">vip</span> <span class="o">=</span> <span class="n">ldavip</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">,</span><span class="n">level</span><span class="p">,</span><span class="n">all_vars</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="c1">#set to attribute</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">vip_</span> <span class="o">=</span> <span class="n">vip</span>
+
+        <span class="c1">#number of samples and number of features</span>
+        <span class="n">n_samples</span><span class="p">,</span> <span class="n">n_features</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span>
+        <span class="c1">#set target and features names</span>
+        <span class="n">target</span><span class="p">,</span> <span class="n">features</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+        <span class="c1">#define subset of X</span>
+        <span class="n">X_k</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span> <span class="p">:</span> <span class="n">X</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">y</span><span class="p">[</span><span class="n">y</span><span class="o">==</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">,:]</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">classes</span><span class="p">}</span>
+        <span class="c1">#count and proportion</span>
+        <span class="n">n_k</span><span class="p">,</span> <span class="n">p_k</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">classes</span><span class="p">],</span>  <span class="n">y</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">classes</span><span class="p">]</span>
+
+        <span class="c1">#set piors probabilities</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">priors</span><span class="p">,</span><span class="nb">str</span><span class="p">):</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">priors</span> <span class="o">==</span> <span class="s2">&quot;prop&quot;</span><span class="p">:</span>
+                <span class="n">priors</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="n">p_k</span><span class="p">)</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">priors</span> <span class="o">==</span> <span class="s2">&quot;equal&quot;</span><span class="p">:</span>
+                <span class="n">priors</span> <span class="o">=</span> <span class="n">ones</span><span class="p">(</span><span class="n">n_classes</span><span class="p">)</span><span class="o">/</span><span class="n">n_classes</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;Specify a right value for piors&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">priors</span><span class="p">,(</span><span class="nb">list</span><span class="p">,</span><span class="nb">tuple</span><span class="p">,</span><span class="n">ndarray</span><span class="p">,</span><span class="n">Series</span><span class="p">)):</span>
+            <span class="n">priors</span> <span class="o">=</span> <span class="n">array</span><span class="p">([</span><span class="n">x</span><span class="o">/</span><span class="nb">sum</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">priors</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">priors</span><span class="p">])</span>
+
+        <span class="c1">#check if any value in priors is negative</span>
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">priors</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;priors must be non-negative&quot;</span><span class="p">)</span>
+
+        <span class="c1">#convert to pandas Series</span>
+        <span class="n">priors</span> <span class="o">=</span> <span class="n">Series</span><span class="p">(</span><span class="n">priors</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="n">classes</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;priors&quot;</span><span class="p">)</span>
+
+        <span class="c1">#convert to ordered dictionary</span>
+        <span class="n">call_</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">(</span><span class="n">Xtot</span><span class="o">=</span><span class="n">Xtot</span><span class="p">,</span><span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span><span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">,</span><span class="n">features</span><span class="o">=</span><span class="n">features</span><span class="p">,</span><span class="n">classes</span><span class="o">=</span><span class="n">classes</span><span class="p">,</span><span class="n">priors</span><span class="o">=</span><span class="n">priors</span><span class="p">,</span><span class="n">n_samples</span><span class="o">=</span><span class="n">n_samples</span><span class="p">,</span><span class="n">n_features</span><span class="o">=</span><span class="n">n_features</span><span class="p">,</span><span class="n">n_classes</span><span class="o">=</span><span class="n">n_classes</span><span class="p">,</span><span class="n">level</span><span class="o">=</span><span class="n">level</span><span class="p">,</span><span class="n">tol</span><span class="o">=</span><span class="n">tol</span><span class="p">)</span>
+        <span class="c1">#convert to namedtuple</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call_</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;call&quot;</span><span class="p">,</span><span class="n">call_</span><span class="o">.</span><span class="n">keys</span><span class="p">())(</span><span class="o">*</span><span class="n">call_</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#sample statistics</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#summary information</span>
+        <span class="n">summary_infos</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">({</span><span class="s2">&quot;Infos&quot;</span> <span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Total Sample Size&quot;</span><span class="p">,</span><span class="s2">&quot;Variables&quot;</span><span class="p">,</span><span class="s2">&quot;Classes&quot;</span><span class="p">],</span>
+                                   <span class="s2">&quot;Value&quot;</span> <span class="p">:</span> <span class="p">[</span><span class="n">n_samples</span><span class="p">,</span><span class="n">n_features</span><span class="p">,</span><span class="n">n_classes</span><span class="p">],</span>
+                                   <span class="s2">&quot;DF&quot;</span> <span class="p">:</span> <span class="p">[</span><span class="s2">&quot;DF Total&quot;</span><span class="p">,</span> <span class="s2">&quot;DF Within Classes&quot;</span><span class="p">,</span> <span class="s2">&quot;DF Between Classes&quot;</span><span class="p">],</span>
+                                   <span class="s2">&quot;DF value&quot;</span> <span class="p">:</span> <span class="p">[</span><span class="n">n_samples</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_samples</span> <span class="o">-</span> <span class="n">n_classes</span><span class="p">,</span> <span class="n">n_classes</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]})</span>
+        <span class="c1">#total-sample and within-class summaries</span>
+        <span class="n">tsummary</span><span class="p">,</span> <span class="n">wsummary</span> <span class="o">=</span> <span class="n">describe</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="p">{</span><span class="n">k</span> <span class="p">:</span> <span class="n">describe</span><span class="p">(</span><span class="n">X_k</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">classes</span><span class="p">}</span>
+        <span class="c1">#convert to dictionary</span>
+        <span class="n">summary_</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">(</span><span class="n">infos</span><span class="o">=</span><span class="n">summary_infos</span><span class="p">,</span><span class="n">total</span><span class="o">=</span><span class="n">tsummary</span><span class="p">,</span><span class="n">within</span><span class="o">=</span><span class="n">wsummary</span><span class="p">)</span>
+        <span class="c1">#convert to namedtuple</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">summary_</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;summary&quot;</span><span class="p">,</span><span class="n">summary_</span><span class="o">.</span><span class="n">keys</span><span class="p">())(</span><span class="o">*</span><span class="n">summary_</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#sum of square cross product (SSCP) matrix</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#total-sample and within-class SSCP matrix</span>
+        <span class="n">tsscp</span><span class="p">,</span> <span class="n">wsscp</span> <span class="o">=</span> <span class="n">sscp</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">),</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">sscp</span><span class="p">(</span><span class="n">X_k</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">classes</span><span class="p">}</span>
+        <span class="c1">#pooled within-class SSCCP matrix</span>
+        <span class="n">pwsscp</span> <span class="o">=</span> <span class="n">reduce</span><span class="p">(</span><span class="k">lambda</span> <span class="n">i</span> <span class="p">,</span> <span class="n">j</span> <span class="p">:</span> <span class="n">i</span> <span class="o">+</span> <span class="n">j</span><span class="p">,</span> <span class="n">wsscp</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        <span class="c1">#between-class SSCP matrix</span>
+        <span class="n">bsscp</span> <span class="o">=</span> <span class="n">tsscp</span> <span class="o">-</span> <span class="n">pwsscp</span>
+        <span class="c1">#convert to dictionary</span>
+        <span class="n">sscp_</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">(</span><span class="n">total</span><span class="o">=</span><span class="n">tsscp</span><span class="p">,</span><span class="n">within</span><span class="o">=</span><span class="n">wsscp</span><span class="p">,</span><span class="n">pooled</span><span class="o">=</span><span class="n">pwsscp</span><span class="p">,</span><span class="n">between</span><span class="o">=</span><span class="n">bsscp</span><span class="p">)</span>
+        <span class="c1">#convert to namedtuple</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sscp_</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;sscp&quot;</span><span class="p">,</span><span class="n">sscp_</span><span class="o">.</span><span class="n">keys</span><span class="p">())(</span><span class="o">*</span><span class="n">sscp_</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#covariance matrices</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#total-sample and biased total-sample covariance matrices</span>
+        <span class="n">tcov</span><span class="p">,</span> <span class="n">tcovb</span> <span class="o">=</span> <span class="n">tsscp</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="n">n_samples</span> <span class="o">-</span> <span class="mi">1</span><span class="p">),</span> <span class="n">tsscp</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="n">n_samples</span><span class="p">)</span>
+        <span class="c1">#within-class and biased within-class covariance matrices</span>
+        <span class="n">wcov</span><span class="p">,</span> <span class="n">wcovb</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span> <span class="p">:</span> <span class="n">wsscp</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="n">n_k</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">classes</span><span class="p">},</span> <span class="p">{</span><span class="n">k</span> <span class="p">:</span> <span class="n">wsscp</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="n">n_k</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">classes</span><span class="p">}</span>
+        <span class="c1">#test of equality of covariance matrix - homogeneity of variance and covariance</span>
+        <span class="n">wcov_test</span> <span class="o">=</span> <span class="n">box_m_test</span><span class="p">(</span><span class="n">wcov</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span><span class="nb">list</span><span class="p">(</span><span class="n">n_k</span><span class="p">))</span>
+        <span class="c1">#chi-square pvalue</span>
+        <span class="n">p_value</span> <span class="o">=</span> <span class="n">wcov_test</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">6</span><span class="p">]</span>
+        <span class="c1">#print warning message</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">warn_message</span><span class="p">:</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;quad&quot;</span> <span class="ow">and</span>  <span class="n">p_value</span> <span class="o">&gt;</span> <span class="n">tol</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Since the Chi-Square value is not significant at the </span><span class="si">{}</span><span class="s2"> level, a pooled covariance matrix will be used in the discriminant function.</span><span class="se">\n</span><span class="s2">Reference: Morrison, D.F. (1976) Multivariate Statistical Methods p252.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tol</span><span class="p">))</span>
+            <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;quad&quot;</span> <span class="ow">and</span>  <span class="n">p_value</span> <span class="o">&lt;=</span> <span class="n">tol</span><span class="p">:</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Since the Chi-Square value is significant at the </span><span class="si">{}</span><span class="s2"> level, the within covariance matrices will be used in the discriminant function.</span><span class="se">\n</span><span class="s2">Reference: Morrison, D.F. (1976) Multivariate Statistical Methods p252.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tol</span><span class="p">))</span>
+
+        <span class="c1">#pooled within-class and biased pooled within-class covariance matrices</span>
+        <span class="n">pwcov</span><span class="p">,</span> <span class="n">pwcovb</span> <span class="o">=</span> <span class="n">pwsscp</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="n">n_samples</span> <span class="o">-</span> <span class="n">n_classes</span><span class="p">),</span> <span class="n">pwsscp</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="n">n_samples</span><span class="p">)</span>
+        <span class="c1">#between-class and biased between-class covariance matrices</span>
+        <span class="n">bcov</span><span class="p">,</span> <span class="n">bcovb</span>  <span class="o">=</span> <span class="n">bsscp</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="n">n_samples</span><span class="o">*</span><span class="p">(</span><span class="n">n_classes</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="n">n_classes</span><span class="p">),</span> <span class="n">bsscp</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="n">n_samples</span><span class="p">)</span>
+        <span class="c1">##covariance matrices informations - rank and natural log of the determinant</span>
+        <span class="n">cov_info</span> <span class="o">=</span> <span class="n">cov_infos</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">pwcov</span><span class="p">)</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(</span><span class="s2">&quot;Pooled&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;quad&quot;</span><span class="p">:</span>
+            <span class="c1">#within-class covariance matrices informations</span>
+            <span class="n">wcov_infos</span> <span class="o">=</span> <span class="n">concat</span><span class="p">((</span><span class="n">cov_infos</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">wcov</span><span class="p">[</span><span class="n">k</span><span class="p">])</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">classes</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+            <span class="c1">#concatenate</span>
+            <span class="n">cov_info</span> <span class="o">=</span> <span class="n">concat</span><span class="p">((</span><span class="n">cov_info</span><span class="p">,</span><span class="n">wcov_infos</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+        <span class="c1">#convert to integer</span>
+        <span class="n">cov_info</span><span class="p">[</span><span class="s2">&quot;Rank&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">cov_info</span><span class="p">[</span><span class="s2">&quot;Rank&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="c1">#convert to dictionary</span>
+        <span class="n">cov_</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">(</span><span class="n">infos</span><span class="o">=</span><span class="n">cov_info</span><span class="p">,</span><span class="n">total</span><span class="o">=</span><span class="n">tcov</span><span class="p">,</span><span class="n">btotal</span><span class="o">=</span><span class="n">tcovb</span><span class="p">,</span><span class="n">within</span><span class="o">=</span><span class="n">wcov</span><span class="p">,</span><span class="n">bwithin</span><span class="o">=</span><span class="n">wcovb</span><span class="p">,</span><span class="n">pooled</span><span class="o">=</span><span class="n">pwcov</span><span class="p">,</span><span class="n">bpooled</span><span class="o">=</span><span class="n">pwcovb</span><span class="p">,</span><span class="n">between</span><span class="o">=</span><span class="n">bcov</span><span class="p">,</span><span class="n">bbetween</span><span class="o">=</span><span class="n">bcovb</span><span class="p">,</span><span class="n">test</span><span class="o">=</span><span class="n">wcov_test</span><span class="p">)</span>
+        <span class="c1">#convert to namedtuple</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">cov_</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;cov&quot;</span><span class="p">,</span><span class="n">cov_</span><span class="o">.</span><span class="n">keys</span><span class="p">())(</span><span class="o">*</span><span class="n">cov_</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#correlation coefficients test</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#total sample and within-class correlation coefficients</span>
+        <span class="n">tcortest</span><span class="p">,</span> <span class="n">wcortest</span>  <span class="o">=</span> <span class="n">cov_to_cor_test</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">tcovb</span><span class="p">,</span><span class="n">n_samples</span><span class="o">=</span><span class="n">n_samples</span><span class="p">),</span> <span class="p">{</span><span class="n">k</span><span class="p">:</span> <span class="n">cov_to_cor_test</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">wcovb</span><span class="p">[</span><span class="n">k</span><span class="p">],</span><span class="n">n_samples</span><span class="o">=</span><span class="n">n_k</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">classes</span><span class="p">}</span>
+        <span class="c1">#pooled within-class and between-class correlation coefficients</span>
+        <span class="n">pwcortest</span><span class="p">,</span> <span class="n">bcortest</span> <span class="o">=</span> <span class="n">cov_to_cor_test</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">pwcov</span><span class="p">,</span><span class="n">n_samples</span><span class="o">=</span><span class="n">n_samples</span><span class="o">-</span><span class="n">n_classes</span><span class="o">+</span><span class="mi">1</span><span class="p">),</span> <span class="n">cov_to_cor_test</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">bcov</span><span class="p">,</span><span class="n">n_samples</span><span class="o">=</span><span class="n">n_classes</span><span class="p">)</span>
+        <span class="c1">#convert to dictionary</span>
+        <span class="n">cortest_</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">(</span><span class="n">total</span><span class="o">=</span><span class="n">tcortest</span><span class="p">,</span><span class="n">within</span><span class="o">=</span><span class="n">wcortest</span><span class="p">,</span><span class="n">pooled</span><span class="o">=</span><span class="n">pwcortest</span><span class="p">,</span><span class="n">between</span><span class="o">=</span><span class="n">bcortest</span><span class="p">)</span>
+        <span class="c1">#convert to namedtuple</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">corr_</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;corr&quot;</span><span class="p">,</span><span class="n">cortest_</span><span class="o">.</span><span class="n">keys</span><span class="p">())(</span><span class="o">*</span><span class="n">cortest_</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+        
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#classes and individuals informations</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#class level information</span>
+        <span class="n">class_infos</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">c_</span><span class="p">[</span><span class="n">n_k</span><span class="p">,</span><span class="n">p_k</span><span class="p">,</span><span class="n">priors</span><span class="p">],</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Frequency&quot;</span><span class="p">,</span><span class="s2">&quot;Proportion&quot;</span><span class="p">,</span><span class="s2">&quot;Prior Probability&quot;</span><span class="p">],</span><span class="n">index</span><span class="o">=</span><span class="n">classes</span><span class="p">)</span>
+        <span class="n">class_infos</span><span class="p">[</span><span class="s2">&quot;Frequency&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">class_infos</span><span class="p">[</span><span class="s2">&quot;Frequency&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        <span class="c1">#within-class average</span>
+        <span class="n">wcenter</span> <span class="o">=</span> <span class="n">concat</span><span class="p">((</span><span class="n">X_k</span><span class="p">[</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">classes</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+        <span class="c1">#total-sample standardized class means</span>
+        <span class="n">tcenter</span> <span class="o">=</span> <span class="n">wcenter</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">tsummary</span><span class="p">[</span><span class="s2">&quot;mean&quot;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="n">tsummary</span><span class="p">[</span><span class="s2">&quot;std&quot;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+        <span class="c1">#pooled within-class standardized class means</span>
+        <span class="n">pcenter</span> <span class="o">=</span> <span class="n">wcenter</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">tsummary</span><span class="p">[</span><span class="s2">&quot;mean&quot;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="n">diag</span><span class="p">(</span><span class="n">pwcov</span><span class="p">)),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+        <span class="c1">#convert to dictionary</span>
+        <span class="n">classes_</span><span class="p">,</span> <span class="n">ind_</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">(</span><span class="n">infos</span><span class="o">=</span><span class="n">class_infos</span><span class="p">,</span><span class="n">center</span><span class="o">=</span><span class="n">wcenter</span><span class="p">,</span><span class="n">total</span><span class="o">=</span><span class="n">tcenter</span><span class="p">,</span><span class="n">pooled</span><span class="o">=</span><span class="n">pcenter</span><span class="p">),</span> <span class="n">OrderedDict</span><span class="p">()</span>
+        
+        <span class="c1">#squared distance and generalized squared distance</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;quad&quot;</span> <span class="ow">and</span>  <span class="n">p_value</span> <span class="o">&lt;=</span> <span class="n">tol</span><span class="p">:</span>
+            <span class="c1">#inverse of within-class covariance matrices</span>
+            <span class="n">invwcov</span> <span class="o">=</span> <span class="p">{</span><span class="n">k</span> <span class="p">:</span> <span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">wcov</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">classes</span><span class="p">}</span>
+            <span class="c1">#squared distance of classes to origin</span>
+            <span class="n">class_mahal</span> <span class="o">=</span> <span class="n">concat</span><span class="p">((</span><span class="n">sqmahalanobis</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">wcenter</span><span class="p">,</span><span class="n">VI</span><span class="o">=</span><span class="n">invwcov</span><span class="p">[</span><span class="n">k</span><span class="p">],</span><span class="n">mu</span><span class="o">=</span><span class="n">wcenter</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">k</span><span class="p">,:])</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">classes</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="c1">#generalized squared distance of classes to origin</span>
+            <span class="n">class_gen</span> <span class="o">=</span> <span class="n">class_mahal</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">wcov_infos</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">classes</span><span class="p">,</span><span class="s2">&quot;Natural Log of the Determinant&quot;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> 
+
+            <span class="c1">#squared distance of individuals to origin</span>
+            <span class="n">ind_mahal</span> <span class="o">=</span> <span class="n">concat</span><span class="p">((</span><span class="n">sqmahalanobis</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span><span class="n">VI</span><span class="o">=</span><span class="n">invwcov</span><span class="p">[</span><span class="n">k</span><span class="p">],</span><span class="n">mu</span><span class="o">=</span><span class="n">wcenter</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">k</span><span class="p">,:])</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">classes</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="c1">#generalized squared distance of individuals to origin</span>
+            <span class="n">ind_gen</span> <span class="o">=</span> <span class="n">ind_mahal</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">wcov_infos</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">classes</span><span class="p">,</span><span class="s2">&quot;Natural Log of the Determinant&quot;</span><span class="p">],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> 
+        <span class="k">elif</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;linear&quot;</span><span class="p">)</span> <span class="ow">or</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;quad&quot;</span> <span class="ow">and</span>  <span class="n">p_value</span> <span class="o">&gt;</span> <span class="n">tol</span><span class="p">):</span>
+            <span class="c1">#inverse pooled within-class covariance matrix</span>
+            <span class="n">invpwcov</span> <span class="o">=</span> <span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">pwcov</span><span class="p">)</span>
+            <span class="c1">#squared distance of classes to origin</span>
+            <span class="n">class_mahal</span> <span class="o">=</span> <span class="n">concat</span><span class="p">((</span><span class="n">sqmahalanobis</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">wcenter</span><span class="p">,</span><span class="n">VI</span><span class="o">=</span><span class="n">invpwcov</span><span class="p">,</span><span class="n">mu</span><span class="o">=</span><span class="n">wcenter</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">k</span><span class="p">,:])</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">classes</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="c1">#generalized squared distance of classes to origin</span>
+            <span class="n">class_gen</span> <span class="o">=</span> <span class="n">class_mahal</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+            <span class="c1">#squared distance of individuals to origin</span>
+            <span class="n">ind_mahal</span> <span class="o">=</span> <span class="n">concat</span><span class="p">((</span><span class="n">sqmahalanobis</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span><span class="n">VI</span><span class="o">=</span><span class="n">invpwcov</span><span class="p">,</span><span class="n">mu</span><span class="o">=</span><span class="n">wcenter</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">k</span><span class="p">,:])</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">classes</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="c1">#generalized squared to distance of individuals to origin</span>
+            <span class="n">ind_gen</span> <span class="o">=</span> <span class="n">ind_mahal</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+
+            <span class="c1">#coefficients of features</span>
+            <span class="n">coef</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">dot</span><span class="p">(</span><span class="n">invpwcov</span><span class="p">,</span><span class="n">wcenter</span><span class="o">.</span><span class="n">T</span><span class="p">),</span><span class="n">index</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="n">classes</span><span class="p">)</span>
+            <span class="c1">#intercept</span>
+            <span class="n">intercept</span> <span class="o">=</span> <span class="o">-</span> <span class="mf">0.5</span><span class="o">*</span><span class="n">diag</span><span class="p">(</span><span class="n">dot</span><span class="p">(</span><span class="n">dot</span><span class="p">(</span><span class="n">wcenter</span><span class="p">,</span><span class="n">invpwcov</span><span class="p">),</span><span class="n">wcenter</span><span class="o">.</span><span class="n">T</span><span class="p">))</span>
+            <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">priors</span><span class="p">,</span><span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">priors</span> <span class="o">==</span> <span class="s2">&quot;equal&quot;</span><span class="p">):</span>
+                <span class="n">intercept</span> <span class="o">=</span> <span class="n">intercept</span> <span class="o">+</span> <span class="n">log</span><span class="p">(</span><span class="n">priors</span><span class="p">)</span>
+            <span class="c1">#convert to DataFrame</span>
+            <span class="n">intercept</span> <span class="o">=</span> <span class="n">Series</span><span class="p">(</span><span class="n">intercept</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="n">classes</span><span class="p">)</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(</span><span class="s2">&quot;Constant&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+            <span class="c1">#scores of individuals</span>
+            <span class="n">ind_scores</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">coef</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">intercept</span><span class="o">.</span><span class="n">values</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+            <span class="c1">#concatenate</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">coef_</span> <span class="o">=</span> <span class="n">concat</span><span class="p">((</span><span class="n">intercept</span><span class="p">,</span><span class="n">coef</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+            <span class="c1">#add score to ordered dictionary</span>
+            <span class="n">ind_</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">(</span><span class="o">**</span><span class="n">ind_</span><span class="p">,</span><span class="o">**</span><span class="n">OrderedDict</span><span class="p">(</span><span class="n">scores</span><span class="o">=</span><span class="n">ind_scores</span><span class="p">))</span>
+
+        <span class="c1">#remove priors log-probabilities</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">priors</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">priors</span> <span class="o">==</span> <span class="s2">&quot;equal&quot;</span><span class="p">):</span>
+            <span class="n">class_gen</span><span class="p">,</span> <span class="n">ind_gen</span> <span class="o">=</span> <span class="n">class_gen</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">log</span><span class="p">(</span><span class="n">priors</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="n">ind_gen</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">log</span><span class="p">(</span><span class="n">priors</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1">#convert to ordered dictionary</span>
+        <span class="n">classes_</span><span class="p">,</span> <span class="n">ind_</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">(</span><span class="o">**</span><span class="n">classes_</span><span class="p">,</span> <span class="o">**</span><span class="n">OrderedDict</span><span class="p">(</span><span class="n">mahal</span><span class="o">=</span><span class="n">class_mahal</span><span class="p">,</span><span class="n">gen</span><span class="o">=</span><span class="n">class_gen</span><span class="p">)),</span> <span class="n">OrderedDict</span><span class="p">(</span><span class="o">**</span><span class="n">ind_</span><span class="p">,</span><span class="o">**</span><span class="n">OrderedDict</span><span class="p">(</span><span class="n">mahal</span><span class="o">=</span><span class="n">ind_mahal</span><span class="p">,</span><span class="n">gen</span><span class="o">=</span><span class="n">ind_gen</span><span class="p">))</span>
+        <span class="c1">#convert to namedtuple</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;classes&quot;</span><span class="p">,</span><span class="n">classes_</span><span class="o">.</span><span class="n">keys</span><span class="p">())(</span><span class="o">*</span><span class="n">classes_</span><span class="o">.</span><span class="n">values</span><span class="p">()),</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;ind&quot;</span><span class="p">,</span><span class="n">ind_</span><span class="o">.</span><span class="n">keys</span><span class="p">())(</span><span class="o">*</span><span class="n">ind_</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>   
+        
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#multivariate goodness of fit - diagnostic test</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#standard deviation</span>
+        <span class="n">stdev</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">c_</span><span class="p">[</span><span class="n">sqrt</span><span class="p">(</span><span class="n">diag</span><span class="p">(</span><span class="n">tcov</span><span class="p">)),</span><span class="n">sqrt</span><span class="p">(</span><span class="n">diag</span><span class="p">(</span><span class="n">pwcov</span><span class="p">)),</span><span class="n">sqrt</span><span class="p">(</span><span class="n">diag</span><span class="p">(</span><span class="n">bcov</span><span class="p">))],</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Total Std. Dev.&quot;</span><span class="p">,</span><span class="s2">&quot;Pooled Std. Dev.&quot;</span><span class="p">,</span><span class="s2">&quot;Between Std. Dev.&quot;</span><span class="p">],</span><span class="n">index</span><span class="o">=</span><span class="n">features</span><span class="p">)</span>
+        <span class="c1">#compute univariate analysis of variance - ANOVA</span>
+        <span class="n">anova</span> <span class="o">=</span> <span class="n">concat</span><span class="p">((</span><span class="n">stdev</span><span class="p">,</span><span class="n">univ_test</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1">#average R-Square</span>
+        <span class="n">unwavg_rsq</span><span class="p">,</span> <span class="n">wavg_rsq</span> <span class="o">=</span> <span class="n">average</span><span class="p">(</span><span class="n">anova</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;R-Square&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">),</span> <span class="n">average</span><span class="p">(</span><span class="n">anova</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="s2">&quot;R-Square&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span><span class="n">weights</span><span class="o">=</span><span class="n">diag</span><span class="p">(</span><span class="n">tcovb</span><span class="p">))</span>
+        <span class="n">avg_rsq</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">([[</span><span class="n">unwavg_rsq</span><span class="p">,</span><span class="n">wavg_rsq</span><span class="p">]],</span><span class="n">index</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Average R-Square&quot;</span><span class="p">],</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Unweighted&quot;</span><span class="p">,</span><span class="s2">&quot;Weighted by Variance&quot;</span><span class="p">])</span>
+        <span class="c1">#compute multivariate analysis of variance - MANOVA</span>
+        <span class="n">manova</span> <span class="o">=</span> <span class="n">MANOVA</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="n">formula</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2">~</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="s2">&quot;+&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">features</span><span class="p">),</span><span class="s2">&quot;+&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">target</span><span class="p">])),</span> <span class="n">data</span><span class="o">=</span><span class="n">concat</span><span class="p">((</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span><span class="o">.</span><span class="n">mv_test</span><span class="p">(</span><span class="n">skip_intercept_test</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">summary_frame</span>
+        <span class="n">manova</span><span class="o">.</span><span class="n">index</span> <span class="o">=</span> <span class="n">manova</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">droplevel</span><span class="p">()</span>
+        <span class="c1">#convert to dictionary</span>
+        <span class="n">statistics_</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">(</span><span class="n">anova</span><span class="o">=</span><span class="n">anova</span><span class="p">,</span><span class="n">manova</span><span class="o">=</span><span class="n">manova</span><span class="p">,</span><span class="n">average_rsq</span><span class="o">=</span><span class="n">avg_rsq</span><span class="p">)</span> 
+    
+        <span class="c1">#add if linear discriminant analysis</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;linear&quot;</span><span class="p">:</span>
+            <span class="c1">#performance</span>
+            <span class="n">performance</span> <span class="o">=</span> <span class="n">diagnostics</span><span class="p">(</span><span class="n">Vb</span><span class="o">=</span><span class="n">tcovb</span><span class="p">,</span><span class="n">Wb</span><span class="o">=</span><span class="n">pwcovb</span><span class="p">,</span><span class="n">n_samples</span><span class="o">=</span><span class="n">n_samples</span><span class="p">,</span><span class="n">n_classes</span><span class="o">=</span><span class="n">n_classes</span><span class="p">)</span>
+            <span class="c1">#update classes</span>
+            <span class="n">statistics_</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">(</span><span class="o">**</span><span class="n">statistics_</span><span class="p">,</span><span class="o">**</span><span class="n">OrderedDict</span><span class="p">(</span><span class="n">performance</span><span class="o">=</span><span class="n">performance</span><span class="p">))</span>
+        
+        <span class="c1">#convert to namedtuple</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">statistics_</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;statistics&quot;</span><span class="p">,</span><span class="n">statistics_</span><span class="o">.</span><span class="n">keys</span><span class="p">())(</span><span class="o">*</span><span class="n">statistics_</span><span class="o">.</span><span class="n">values</span><span class="p">())</span> 
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_</span> <span class="o">=</span> <span class="s2">&quot;discrim&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">fit_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fit to data, then transform it</span>
+
+<span class="sd">        Fits transformer to ``X`` and returns a transformed version of samples.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : DataFrame of shape (n_samples, n_features)</span>
+<span class="sd">            Training data, where ``n_samples`` is the number of samples and ``n_features`` is the number of features.</span>
+<span class="sd">        </span>
+<span class="sd">        y : Series of shape (n_samples,)</span>
+<span class="sd">            Target values. True labels for ``X``.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        X_new : DataFrame of shape (n_samples, n_classes)</span>
+<span class="sd">            Transformed samples. </span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#fit discriminant analysis model</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+        <span class="c1">#chi-square pvalue and tolerance threshold</span>
+        <span class="n">p_value</span><span class="p">,</span> <span class="n">tol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cov_</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">6</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="o">.</span><span class="n">tol</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;quad&quot;</span> <span class="ow">and</span>  <span class="n">p_value</span> <span class="o">&lt;=</span> <span class="n">tol</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Since the Chi-Square value is significant at the </span><span class="si">{}</span><span class="s2"> level.&#39;fit_transform&#39; method cannot be used.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tol</span><span class="p">))</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_</span><span class="o">.</span><span class="n">scores</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Project data to maximize class separation</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : DataFrame of shape (n_samples, n_features)</span>
+<span class="sd">            New data, where ``n_samples`` is the number of samples and ``n_features`` is the number of features.</span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        X_new : DataFrame of shape (n_samples, n_classes)</span>
+<span class="sd">            Transformed data, where ``n_samples`` is the number of samples and ``n_classes`` is the number of classes.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#check if the estimator is fitted by verifying the presence of fitted attributes</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c1">#chi-square pvalue and tolerance threshokd</span>
+        <span class="n">p_value</span><span class="p">,</span> <span class="n">tol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cov_</span><span class="o">.</span><span class="n">test</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">6</span><span class="p">],</span> <span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="o">.</span><span class="n">tol</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">method</span> <span class="o">==</span> <span class="s2">&quot;quad&quot;</span> <span class="ow">and</span>  <span class="n">p_value</span> <span class="o">&lt;=</span> <span class="n">tol</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">NotImplementedError</span><span class="p">(</span><span class="s2">&quot;Since the Chi-Square value is significant at the </span><span class="si">{}</span><span class="s2"> level.&#39;transform&#39; method cannot be used.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">tol</span><span class="p">))</span>
+
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#check if X is an instance of class pd.DataFrame</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="n">check_is_dataframe</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="c1">#set index name as None</span>
+        <span class="n">X</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1">#check if X contains original features</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="o">.</span><span class="n">Xtot</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The names of the features is not the same as the ones in the active features of the DISCRIM result&quot;</span><span class="p">)</span>
+        
+        <span class="c1">#select original features</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="o">.</span><span class="n">Xtot</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+
+        <span class="c1">#split X</span>
+        <span class="n">split_X</span> <span class="o">=</span> <span class="n">splitmix</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="c1">#extract elements</span>
+        <span class="n">X_quanti</span><span class="p">,</span> <span class="n">X_quali</span><span class="p">,</span> <span class="n">n_quanti</span><span class="p">,</span> <span class="n">n_quali</span> <span class="o">=</span> <span class="n">split_X</span><span class="o">.</span><span class="n">quanti</span><span class="p">,</span> <span class="n">split_X</span><span class="o">.</span><span class="n">quali</span><span class="p">,</span> <span class="n">split_X</span><span class="o">.</span><span class="n">k1</span><span class="p">,</span> <span class="n">split_X</span><span class="o">.</span><span class="n">k2</span>
+
+        <span class="c1">#initialize DataFrame</span>
+        <span class="n">Xcod</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">index</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+
+        <span class="c1">#check if numerics variables</span>
+        <span class="k">if</span> <span class="n">n_quanti</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1">#replace with numerics columns</span>
+            <span class="n">Xcod</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">X_quanti</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span> <span class="o">=</span> <span class="n">X_quanti</span>
+        
+        <span class="c1">#check if categorical variables      </span>
+        <span class="k">if</span> <span class="n">n_quali</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1">#active categorics</span>
+            <span class="n">categorics</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="o">.</span><span class="n">Xtot</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+            <span class="c1">#replace with dummies</span>
+            <span class="n">Xcod</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">categorics</span><span class="p">]</span> <span class="o">=</span> <span class="n">tab_disjunctive</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X_quali</span><span class="p">,</span><span class="n">dummies_cols</span><span class="o">=</span><span class="n">categorics</span><span class="p">,</span><span class="n">prefix</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">sep</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        
+        <span class="c1">#remove non selected variables</span>
+        <span class="n">Xcod</span> <span class="o">=</span> <span class="n">Xcod</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">cov_</span><span class="o">.</span><span class="n">total</span><span class="o">.</span><span class="n">index</span><span class="p">)]</span> 
+        <span class="c1">#multiply by linear discriminant analysis coefficients</span>
+        <span class="k">return</span> <span class="n">Xcod</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:,:])</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, Duvérier DJIFACK ZEBAZE.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

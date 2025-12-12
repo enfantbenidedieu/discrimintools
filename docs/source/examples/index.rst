@@ -18,7 +18,7 @@ DISCRIM
 .. nbgallery::
       04_lda_alcools
       05_lda_heart
-      O6_qda_alcools
+      06_qda_alcools
 
 STEPDISC
 ~~~~~~~~
@@ -26,5 +26,5 @@ STEPDISC
 .. nbgallery::
       07_stepdisc_lda_alcools
       08_stepdisc_lda_heart
-      O9_stepdisc_lda_wavenoise
+      09_stepdisc_lda_wavenoise
       10_stepdisc_candisc_oliveoil
