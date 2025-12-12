@@ -10,3 +10,4 @@ This page gives an overview of all public ``discrimintools`` discriminant analys
    :toctree: 
    
    CANDISC
+   CPLS
