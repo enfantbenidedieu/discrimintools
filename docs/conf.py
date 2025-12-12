@@ -14,12 +14,11 @@ copyright = "2025, {}".format(author)
 extensions = [
     "myst_parser",              # Markdown
     "sphinx_copybutton",        # Bouton copier
-    "sphinx_design",            # Grilles, cartes, boutons
+    "sphinx_design",            # Grilles, cartes, boutons, cards
     "sphinx.ext.autodoc",       # Auto-doc Python
     "sphinx.ext.napoleon",      # Docstrings Google/NumPy
     "sphinx_autodoc_typehints", # Automatically add the types
     "sphinx.ext.viewcode",      # Add links to highlighted source code
-    "sphinx_design",            # add cards
     'sphinx.ext.autosummary',   # autosummary functions and class
     'sphinx.ext.duration',
     'sphinx.ext.doctest',
