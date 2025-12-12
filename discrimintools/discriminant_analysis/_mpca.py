@@ -95,19 +95,19 @@ class MPCA(TransformerMixin,BaseEstimator):
 
     See also
     --------
-    :class:`~discrimintools.discriminant_analysis.GFA`
+    :class:`~discrimintools.GFA`
         General Factor Analysis (GFA)
-    :class:`~discrimintools.discriminant_analysis.GFALDA`
+    :class:`~discrimintools.GFALDA`
         General Factor Analysis Linear Discriminant Analysis (GFALDA)
-    :class:`~discrimintools.discriminant_analysis.MDA
+    :class:`~discrimintools.MDA
         Mixed Discriminant Analysis (MDA)
-    :class:`~discrimintools.summary.summaryGFA`
+    :class:`~discrimintools.summaryGFA`
         Printing summaries of General Factor Analysis model.
-    :class:`~discrimintools.summary.summaryGFALDA`
+    :class:`~discrimintools.summaryGFALDA`
         Printing summaries of General Factor Analysis Linear Discriminant Analysis model.
-    :class:`~discrimintools.summary.summaryMDA`
+    :class:`~discrimintools.summaryMDA`
         Printing summaries of Mixed Discriminant Analysis model.
-    :class:`~discrimintools.summary.summaryMPCA`
+    :class:`~discrimintools.summaryMPCA`
         Printing summaries of Mixed Principal Component Analysis model.
 
     References

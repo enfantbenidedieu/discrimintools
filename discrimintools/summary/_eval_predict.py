@@ -8,7 +8,7 @@ def eval_predict(
     Parameters
     ----------
     obj : `class <https://docs.python.org/3/tutorial/classes.html>`_
-        an object of class :class:`~discrimintools.discriminant_analysis.CANDISC`, :class:`~discrimintools.discriminant_analysis.CPLS`, :class:`~discrimintools.discriminant_analysis.DiCA`, :class:`~discrimintools.discriminant_analysis.DISCRIM`, :class:`~discrimintools.discriminant_analysis.GFALDA`, :class:`~discrimintools.discriminant_analysis.MDA`, :class:`~discrimintools.discriminant_analysis.PLSDA` or :class:`~discrimintools.discriminant_analysis.PLSLDA`.
+        an object of class :class:`~discrimintools.CANDISC`, :class:`~discrimintools.CPLS`, :class:`~discrimintools.DiCA`, :class:`~discrimintools.DISCRIM`, :class:`~discrimintools.GFALDA`, :class:`~discrimintools.MDA`, :class:`~discrimintools.PLSDA` or :class:`~discrimintools.PLSLDA`.
 
     digits : `int <https://docs.python.org/3/library/functions.html#int>`_, default = 4
         The number of decimal printed.
@@ -28,25 +28,25 @@ def eval_predict(
 
     See also
     --------
-    :class:`~discrimintools.summary.summaryCANDISC`
+    :class:`~discrimintools.summaryCANDISC`
         Printing summaries of Canonical Discriminant Analysis model.
-    :class:`~discrimintools.summary.summaryCPLS`
+    :class:`~discrimintools.summaryCPLS`
         Printing summaries of Partial Least Squares for Classification model.
-    :class:`~discrimintools.summary.summaryDA`
+    :class:`~discrimintools.summaryDA`
         Printing summaries of Discriminant Analysis model.
-    :class:`~discrimintools.summary.summaryDiCA`
+    :class:`~discrimintools.summaryDiCA`
         Printing summaries of Discriminant Correspondence Analysis model.
-    :class:`~discrimintools.summary.summaryDISCRIM`
+    :class:`~discrimintools.summaryDISCRIM`
         Printing summaries of Discriminant Analysis (linear and quadratic) model.
-    :class:`~discrimintools.summary.summaryGFALDA`
+    :class:`~discrimintools.summaryGFALDA`
         Printing summaries of General Factor Analysis Linear Discriminant Analysis model.
-    :class:`~discrimintools.summary.summaryMDA`
+    :class:`~discrimintools.summaryMDA`
         Printing summaries of Mixed Discriminant Analysis model.
-    :class:`~discrimintools.summary.summaryPLSDA`
+    :class:`~discrimintools.summaryPLSDA`
         Printing summaries of Partial Least Squares Discriminant Analysis model.
-    :class:`~discrimintools.summary.summaryPLSLDA`
+    :class:`~discrimintools.summaryPLSLDA`
         Printing summaries of Partial Least Squares Linear Discriminant Analysis model.
-    :class:`~discrimintools.summary.summarySTEPDISC`
+    :class:`~discrimintools.summarySTEPDISC`
         Printing summaries of Stepwise Discriminant Analysis model.
 
     Examples

@@ -200,17 +200,17 @@ class DISCRIM(_BaseDA):
     
     See also
     --------
-    :class:`~discrimintools.discriminant_analysis.GFALDA`
+    :class:`~discrimintools.GFALDA`
         General Factor Analysis Linear Discriminant Analysis
-    :class:`~discrimintools.discriminant_analysis.CPLS`
+    :class:`~discrimintools.CPLS`
         Partial Least Squares for Classification
-    :class:`~discrimintools.discriminant_analysis.PLSDA`
+    :class:`~discrimintools.PLSDA`
         Partial Least Squares Discriminant Analysis
-    :class:`~discrimintools.discriminant_analysis.PLSLDA`
+    :class:`~discrimintools.PLSLDA`
         Partial Least Squares Linear Discriminant Analysis
-    :class:`~discrimintools.summary.summaryDISCRIM`
+    :class:`~discrimintools.summaryDISCRIM`
         Printing summaries of Discriminant Analysis (linear & quadratic) model.
-    :class:`~discrimintools.summary.summaryDA`
+    :class:`~discrimintools.summaryDA`
         Printing summaries of Discriminant Analysis model.
         
     References

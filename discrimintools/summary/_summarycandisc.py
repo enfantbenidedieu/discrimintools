@@ -13,7 +13,7 @@ def summaryCANDISC(
     Parameters
     ----------
     obj : `class <https://docs.python.org/3/tutorial/classes.html>`_
-        An object of class :class:`~discrimintools.discriminant_analysis.CANDISC`.
+        An object of class :class:`~discrimintools.CANDISC`.
 
     digits : `int <https://docs.python.org/3/library/functions.html#int>`_, default = 4
         The number of decimal printed.
@@ -36,23 +36,23 @@ def summaryCANDISC(
 
     See also
     --------
-    :class:`~discrimintools.summary.summaryCPLS`
+    :class:`~discrimintools.summaryCPLS`
         Printing summaries of Partial Least Squares for Classification model.
-    :class:`~discrimintools.summary.summaryDA`
+    :class:`~discrimintools.summaryDA`
         Printing summaries of Discriminant Analysis model.
-    :class:`~discrimintools.summary.summaryDiCA`
+    :class:`~discrimintools.summaryDiCA`
         Printing summaries of Discriminant Correspondence Analysis model.
-    :class:`~discrimintools.summary.summaryDISCRIM`
+    :class:`~discrimintools.summaryDISCRIM`
         Printing summaries of Discriminant Analysis (linear and quadratic) model.
-    :class:`~discrimintools.summary.summaryGFALDA`
+    :class:`~discrimintools.summaryGFALDA`
         Printing summaries of General Factor Analysis Linear Discriminant Analysis model.
-    :class:`~discrimintools.summary.summaryMDA`
+    :class:`~discrimintools.summaryMDA`
         Printing summaries of Mixed Discriminant Analysis model.
-    :class:`~discrimintools.summary.summaryPLSDA`
+    :class:`~discrimintools.summaryPLSDA`
         Printing summaries of Partial Least Squares Discriminant Analysis model.
-    :class:`~discrimintools.summary.summaryPLSLDA`
+    :class:`~discrimintools.summaryPLSLDA`
         Printing summaries of Partial Least Squares Linear Discriminant Analysis model.
-    :class:`~discrimintools.summary.summarySTEPDISC`
+    :class:`~discrimintools.summarySTEPDISC`
         Printing summaries of Stepwise Discriminant Analysis model.
 
     Examples

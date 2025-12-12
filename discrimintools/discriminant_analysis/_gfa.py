@@ -19,9 +19,7 @@ class GFA(TransformerMixin,BaseEstimator):
     General Factor Analysis (GFA)
 
     General factor analysis refers to dimensionality reduction technique such as PCA, CA, MCA, FAMD which helps to reduce the number of features in a 
-    dataset while keeping the most important informations. For more about generalized factor analysis, see `scientisttools`_.
-
-    .. _scientisttools: https://pypi.org/project/scientisttools/
+    dataset while keeping the most important informations. For more about generalized factor analysis, see `scientisttools <https://pypi.org/project/scientisttools/>`_.
 
     Parameters
     ----------
@@ -94,19 +92,19 @@ class GFA(TransformerMixin,BaseEstimator):
 
     See also
     --------
-    :class:`~discrimintools.discriminant_analysis.GFALDA`
+    :class:`~discrimintools.GFALDA`
         General Factor Analysis Linear Discriminant Analysis (GFALDA)
-    :class:`~discrimintools.discriminant_analysis.MDA`
+    :class:`~discrimintools.MDA`
         Mixed Discriminant Analysis (MDA)
-    :class:`~discrimintools.discriminant_analysis.MPCA`
+    :class:`~discrimintools.MPCA`
         Mixed Principal Component Analysis (MPCA)
-    :class:`~discrimintools.summary.summaryGFA`
+    :class:`~discrimintools.summaryGFA`
         Printing summaries of General Factor Analysis model.
-    :class:`~discrimintools.summary.summaryGFALDA`
+    :class:`~discrimintools.summaryGFALDA`
         Printing summaries of General Factor Analysis Linear Discriminant Analysis model.
-    :class:`~discrimintools.summary.summaryMDA`
+    :class:`~discrimintools.summaryMDA`
         Printing summaries of Mixed Discriminant Analysis model.
-    :class:`~discrimintools.summary.summaryMPCA`
+    :class:`~discrimintools.summaryMPCA`
         Printing summaries of Mixed Principal Component Analysis model.
 
     References

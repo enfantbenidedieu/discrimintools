@@ -9,7 +9,7 @@ def summaryGFA(
     Parameters
     ----------
     obj : `class <https://docs.python.org/3/tutorial/classes.html>`_
-        an object of class :class:`~discrimintools.discriminant_analysis.GFA`.
+        an object of class :class:`~discrimintools.GFA`.
 
     digits : `int <https://docs.python.org/3/library/functions.html#int>`_, default = 4
         The number of decimal printed.
@@ -35,11 +35,11 @@ def summaryGFA(
 
     See also
     --------
-    :class:`~discrimintools.summary.summaryGFALDA`
+    :class:`~discrimintools.summaryGFALDA`
         Printing summaries of General Factor Analysis Linear Discriminant Analysis model.
-    :class:`~discrimintools.summary.summaryMPCA`
+    :class:`~discrimintools.summaryMPCA`
         Printing summaries of Mixed Principal Component Analysis model.
-    :class:`~discrimintools.summary.summaryMDA`
+    :class:`~discrimintools.summaryMDA`
         Printing summaries of Mixed Discriminant Analysis model.
 
     Examples
@@ -47,7 +47,7 @@ def summaryGFA(
     >>> from discrimintools.datasets import load_alcools, load_canines, load_heart
     >>> from discrimintools import GFA, summaryGFA
 
-    The :class:`~discrimintools.discriminant_analysis.GFA` performs principal component analysis (PCA) ...
+    The :class:`~discrimintools.GFA` performs principal component analysis (PCA) ...
 
     >>> #PCA
     >>> D = load_alcools("train")

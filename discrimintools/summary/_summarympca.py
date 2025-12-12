@@ -9,7 +9,7 @@ def summaryMPCA(
     Parameters
     ----------
     obj : `class <https://docs.python.org/3/tutorial/classes.html>`_
-        An object of class :class:`~discrimintools.discriminant_analysis.MPCA`.
+        An object of class :class:`~discrimintools.MPCA`.
 
     digits : `int <https://docs.python.org/3/library/functions.html#int>`_, default = 4
         The number of decimal printed.
@@ -35,11 +35,11 @@ def summaryMPCA(
 
     See also
     --------
-    :class:`~discrimintools.summary.summaryGFA`
+    :class:`~discrimintools.summaryGFA`
         Printing summaries of General Factor Analysis model.
-    :class:`~discrimintools.summary.summaryGFALDA`
+    :class:`~discrimintools.summaryGFALDA`
         Printing summaries of General Factor Analysis Linear Discriminant Analysis model.
-    :class:`~discrimintools.summary.summaryMDA`
+    :class:`~discrimintools.summaryMDA`
         Printing summaries of Mixed Discriminant Analysis model.
 
     Examples

@@ -28,3 +28,28 @@ STEPDISC
       08_stepdisc_lda_heart
       09_stepdisc_lda_wavenoise
       10_stepdisc_candisc_oliveoil
+
+DiCA
+~~~~
+
+.. nbgallery::
+      11_dica_divay
+      12_dica_canines
+
+GFALDA
+~~~~~~
+
+.. nbgallery::
+      13_pcada_alcools
+      14_disqual_vote
+      15_disqual_mushroom
+      16_dismix_heart
+
+PLSR
+~~~~
+
+.. nbgallery::
+      17_cpls_breast
+      18_plsda_breast
+      19_plslda_breast
+      20_plslogit_breast

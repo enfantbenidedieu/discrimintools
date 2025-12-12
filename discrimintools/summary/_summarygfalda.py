@@ -13,7 +13,7 @@ def summaryGFALDA(
     Parameters
     ----------
     obj : `class <https://docs.python.org/3/tutorial/classes.html>`_
-        an object of class :class:`~discrimintools.discriminant_analysis.GFALDA`.
+        an object of class :class:`~discrimintools.GFALDA`.
 
     digits : `int <https://docs.python.org/3/library/functions.html#int>`_, default = 4
         The number of decimal printed.
@@ -36,23 +36,23 @@ def summaryGFALDA(
 
     See also
     --------
-    :class:`~discrimintools.summary.summaryCANDISC`
+    :class:`~discrimintools.summaryCANDISC`
         Printing summaries of Canonical Discriminant Analysis model.
-    :class:`~discrimintools.summary.summaryCPLS`
+    :class:`~discrimintools.summaryCPLS`
         Printing summaries of Partial Least Squares for Classification model.
-    :class:`~discrimintools.summary.summaryDA`
+    :class:`~discrimintools.summaryDA`
         Printing summaries of Discriminant Analysis model.
-    :class:`~discrimintools.summary.summaryDiCA`
+    :class:`~discrimintools.summaryDiCA`
         Printing summaries of Discriminant Correspondence Analysis model.
-    :class:`~discrimintools.summary.summaryDISCRIM`
+    :class:`~discrimintools.summaryDISCRIM`
         Printing summaries of Discriminant Analysis (linear and quadratic) model.
-    :class:`~discrimintools.summary.summaryMDA`
+    :class:`~discrimintools.summaryMDA`
         Printing summaries of Mixed Discriminant Analysis model.
-    :class:`~discrimintools.summary.summaryPLSDA`
+    :class:`~discrimintools.summaryPLSDA`
         Printing summaries of Partial Least Squares Discriminant Analysis model.
-    :class:`~discrimintools.summary.summaryPLSLDA`
+    :class:`~discrimintools.summaryPLSLDA`
         Printing summaries of Partial Least Squares Linear Discriminant Analysis model.
-    :class:`~discrimintools.summary.summarySTEPDISC`
+    :class:`~discrimintools.summarySTEPDISC`
         Printing summaries of Stepwise Discriminant Analysis model.
 
     Examples
@@ -60,7 +60,7 @@ def summaryGFALDA(
     >>> from discrimintools.datasets import load_alcools, load_vote, load_heart
     >>> from discrimintools import GFALDA, summaryGFALDA
 
-    The :class:`~discrimintools.discriminant_analysis.GFALDA` class performs principal component analysis - discriminant analysis (PCADA)...
+    The :class:`~discrimintools.GFALDA` class performs principal component analysis - discriminant analysis (PCADA)...
 
     >>> #PCA + LDA = PCADA
     >>> D = load_alcools("train")

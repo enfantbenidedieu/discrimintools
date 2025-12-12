@@ -17,17 +17,17 @@ class STEPDISC(_BaseDA):
     """
     Stepwise Discriminant Analysis (STEPDISC)
     
-    Given a classification variable and several quantitative variables, the :class:`~discrimintools.discriminant_analysis.STEPDISC` class performs a
+    Given a classification variable and several quantitative variables, the :class:`~discrimintools.STEPDISC` class performs a
     stepwise discriminant analysis to select a subset of the quantitative variables for use in discriminating among
     the classes. The set of variables that make up each class is assumed to be multivariate normal with a common
-    covariance matrix. The :class:`~discrimintools.discriminant_analysis.STEPDISC` class can use forward selection and backward elimination, 
-    which is a useful prelude to further analyses with the :class:`~discrimintools.discriminant_analysis.CANDISC` class or the :class:`~discrimintools.discriminant_analysis.DISCRIM` class.
+    covariance matrix. The :class:`~discrimintools.STEPDISC` class can use forward selection and backward elimination, 
+    which is a useful prelude to further analyses with the :class:`~discrimintools.CANDISC` class or the :class:`~discrimintools.DISCRIM` class.
 
-    With :class:`~discrimintools.discriminant_analysis.STEPDISC`, variables are chosen to enter or leave the model according to the significance level of an `F` test from an analysis of covariance, 
+    With :class:`~discrimintools.STEPDISC`, variables are chosen to enter or leave the model according to the significance level of an `F` test from an analysis of covariance, 
     where the variables already chosen act as covariates and the variable under consideration is the dependent variable.
     Two selection methods are available: 'forward' and 'backward':
 
-    1. Forward selection begins with no variables in the model. At each step, :class:`~discrimintools.discriminant_analysis.STEPDISC` enters the variable that contributes most to the discriminatory power of the model as measured by Wilks' lambda, the likelihood ratio criterion. When none of the unselected variables meet the entry criterion, the forward selection process stops.
+    1. Forward selection begins with no variables in the model. At each step, :class:`~discrimintools.STEPDISC` enters the variable that contributes most to the discriminatory power of the model as measured by Wilks' lambda, the likelihood ratio criterion. When none of the unselected variables meet the entry criterion, the forward selection process stops.
     2. Backward elimination begins with all variables in the model except those that are linearly dependent on previous variables in the VAR statement. At each step, the variable that contributes least to the discriminatory power of the model as measured by Wilks' lambda is removed. When all remaining variables meet the criterion to stay in the model, the backward elimination process stops.
 
     Parameters
@@ -80,13 +80,13 @@ class STEPDISC(_BaseDA):
 
     See also
     --------
-    :class:`~discrimintools.discriminant_analysis.CANDISC`
+    :class:`~discrimintools.CANDISC`
         Canonical Discriminant Analysis (CANDISC)
-    :class:`~discrimintools.discriminant_analysis.DISCRIM`
+    :class:`~discrimintools.DISCRIM`
         Discriminant Analysis (linear and quadratic).
-    :class:`~discrimintools.summary.summaryCANDISC`
+    :class:`~discrimintools.summaryCANDISC`
         Printing summaries of Canonical Discriminant Analysis model.
-    :class:`~discrimintools.summary.summaryDISCRIM`
+    :class:`~discrimintools.summaryDISCRIM`
         Printing summaries of Discriminant Analysis (linear and quadratic) model.
 
     References

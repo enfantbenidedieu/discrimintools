@@ -27,7 +27,7 @@ class PLSLDA(_BaseDA):
     
     1. Recode the target variable into ``n_classes`` dummy variables.
     2. Computation of partial least squares regression using `PLSRegression <https://scikit-learn.org/stable/modules/generated/sklearn.cross_decomposition.PLSRegression.html>`_.
-    3. Computation of linear discriminant analysis on ``x_scores`` extract in step using :class:`~discrimintools.discriminant_analysis.DISCRIM`.
+    3. Computation of linear discriminant analysis on ``x_scores`` extract in step using :class:`~discrimintools.DISCRIM`.
 
     Parameters
     ----------
@@ -130,7 +130,7 @@ class PLSLDA(_BaseDA):
             The generalized squared distance to origin.
 
     lda_ : class
-        An object of class :class:`~discrimintools.discriminant_analysis.DISCRIM`.
+        An object of class :class:`~discrimintools.DISCRIM`.
         
     model_ : str, default = 'plslda'
         The model fitted name.
@@ -149,11 +149,11 @@ class PLSLDA(_BaseDA):
 
     See also
     --------
-    :class:`~discrimintools.discriminant_analysis.PLSLOGIT`
+    :class:`~discrimintools.PLSLOGIT`
         Partial Least Squares Logistic Regression
-    :class:`~discrimintools.summary.summaryPLSLDA`
+    :class:`~discrimintools.summaryPLSLDA`
         Printing summaries of Partial Least Squares Linear Discriminant Analysis model.
-    :class:`~discrimintools.summary.summaryDA`
+    :class:`~discrimintools.summaryDA`
         Printing summaries of Discriminant Analysis model.
 
     References

@@ -142,17 +142,17 @@ class CPLS(_BaseDA):
 
     See also
     --------
-    :class:`~discrimintools.plot.fviz_plsr`
+    :class:`~discrimintools.fviz_plsr`
         Visualize Partial Least Squares Regression.
-    :class:`~discrimintools.plot.fviz_plsr_ind`
+    :class:`~discrimintools.fviz_plsr_ind`
         Visualize Partial Least Squares Regression - Graph of individuals.
-    :class:`~discrimintools.plot.fviz_plsr_var`
+    :class:`~discrimintools.fviz_plsr_var`
         Visualize Partial Least Squares Regression - Graph of variables.
-    :class:`~discrimintools.plot.fviz_dist`
+    :class:`~discrimintools.fviz_dist`
         Visualize distance between barycenter.
-    :class:`~discrimintools.summary.summaryCPLS`
+    :class:`~discrimintools.summaryCPLS`
         Printing summaries of Partial Least Squares for Classification model.
-    :class:`~discrimintools.summary.summaryDA`
+    :class:`~discrimintools.summaryDA`
         Printing summaries of Discriminant Analysis model.
 
     References

@@ -36,7 +36,7 @@ class CANDISC(_BaseDA):
     of the quantitative variables that summarize between-class variation in much the same way that principal
     components summarize total variation.
 
-    The :class:`~discrimintools.discriminant_analysis.CANDISC` procedure performs a canonical discriminant analysis, computes squared Mahalanobis
+    The :class:`~discrimintools.CANDISC` procedure performs a canonical discriminant analysis, computes squared Mahalanobis
     distances between class means, and performs both univariate and multivariate one-way analyses of variance.
     
     Parameters
@@ -223,19 +223,19 @@ class CANDISC(_BaseDA):
 
     See also
     --------
-    :class:`~discrimintools.plot.fviz_candisc`
+    :class:`~discrimintools.fviz_candisc`
         Visualize Canonical Discriminant Analysis.
-    :class:`~discrimintools.plot.fviz_candisc_biplot`
+    :class:`~discrimintools.fviz_candisc_biplot`
         Visualize Canonical Discriminant Analysis (CANDISC) - Biplot of individuals and variables.
-    :class:`~discrimintools.plot.fviz_candisc_ind`
+    :class:`~discrimintools.fviz_candisc_ind`
         Visualize Canonical Discriminant Analysis (CANDISC) - Graph of individuals.
-    :class:`~discrimintools.plot.fviz_candisc_var`
+    :class:`~discrimintools.fviz_candisc_var`
         Visualize Canonical Discriminant Analysis (CANDISC) - Graph of variables.
-    :class:`~discrimintools.plot.fviz_dist`
+    :class:`~discrimintools.fviz_dist`
         Visualize distance between barycenter.
-    :class:`~discrimintools.summary.summaryCANDISC`
+    :class:`~discrimintools.summaryCANDISC`
         Printing summaries of Canonical Discriminant Analysis model.
-    :class:`~discrimintools.summary.summaryDA`
+    :class:`~discrimintools.summaryDA`
         Printing summaries of Discriminant Analysis model.
 
     References

@@ -148,11 +148,11 @@ class PLSDA(_BaseDA):
 
     See also
     --------
-    :class:`~discrimintools.discriminant_analysis.PLSLOGIT`
+    :class:`~discrimintools.PLSLOGIT`
         Partial Least Squares Logistic Regression
-    :class:`~discrimintools.summary.summaryPLSLDA`
+    :class:`~discrimintools.summaryPLSLDA`
         Printing summaries of Partial Least Squares Linear Discriminant Analysis model.
-    :class:`~discrimintools.summary.summaryDA`
+    :class:`~discrimintools.summaryDA`
         Printing summaries of Discriminant Analysis model.
 
     References

@@ -132,21 +132,21 @@ class DiCA(_BaseDA):
 
     See also
     --------
-    :class:`~discrimintools.plot.fviz_dica`
+    :class:`~discrimintools.fviz_dica`
         Visualize Discriminant Correspondence Analysis Analysis.
-    :class:`~discrimintools.plot.fviz_dica_biplot`
+    :class:`~discrimintools.fviz_dica_biplot`
         Visualize Discriminant Correspondence Analysis (DiCA) - Biplot of individuals and variables.
-    :class:`~discrimintools.plot.fviz_dica_ind`
+    :class:`~discrimintools.fviz_dica_ind`
         Visualize Discriminant Correspondence Analysis (DiCA) - Graph of individuals.
-    :class:`~discrimintools.plot.fviz_dica_quali_var`
+    :class:`~discrimintools.fviz_dica_quali_var`
         Visualize Discriminant Correspondence Analysis (DiCA) - Graph of qualitative variables.
-    :class:`~discrimintools.plot.fviz_dica_var`
+    :class:`~discrimintools.fviz_dica_var`
         Visualize Discriminant Correspondence Analysis (DiCA) - Graph of variables/categories.
-    :class:`~discrimintools.plot.fviz_dist`
+    :class:`~discrimintools.fviz_dist`
         Visualize distance between barycenter.
-    :class:`~discrimintools.summary.summaryDiCA`
+    :class:`~discrimintools.summaryDiCA`
         Printing summaries of Discriminant Correspondence Analysis model.
-    :class:`~discrimintools.summary.summaryDA`
+    :class:`~discrimintools.summaryDA`
         Printing summaries of Discriminant Analysis model.
 
     References
