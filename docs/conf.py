@@ -57,4 +57,3 @@ numfig_format = {
     'table': 'Table %s',
 }
 email_automode = True # for mail
-latex_engine = "xelatex" # for PDF file

@@ -1,0 +1,1095 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>discrimintools.discriminant_analysis._plsda &#8212; discrimintools 0.1.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/discrimintools/discriminant_analysis/_plsda';</script>
+    <link rel="icon" href="../../../_static/discrimintools.svg"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/discrimintools.svg" class="logo__image only-light" alt=""/>
+    <img src="../../../_static/discrimintools.svg" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">discrimintools</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../source/install/index.html">
+    Install
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../source/getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../source/user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../source/reference/index.html">
+    API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../source/examples/index.html">
+    Examples
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/enfantbenidedieu/discrimintools" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../source/install/index.html">
+    Install
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../source/getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../source/user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../source/reference/index.html">
+    API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../source/examples/index.html">
+    Examples
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/enfantbenidedieu/discrimintools" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">discrimintools.discriminant_analysis._plsda</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for discrimintools.discriminant_analysis._plsda</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="kn">import</span> <span class="n">dot</span><span class="p">,</span> <span class="n">array</span><span class="p">,</span> <span class="n">linalg</span><span class="p">,</span> <span class="n">c_</span><span class="p">,</span> <span class="n">cumsum</span><span class="p">,</span> <span class="n">log</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pandas</span><span class="w"> </span><span class="kn">import</span> <span class="n">DataFrame</span><span class="p">,</span> <span class="n">CategoricalDtype</span><span class="p">,</span> <span class="n">get_dummies</span><span class="p">,</span> <span class="n">Series</span><span class="p">,</span> <span class="n">concat</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">pandas.api.types</span><span class="w"> </span><span class="kn">import</span> <span class="n">is_string_dtype</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">collections</span><span class="w"> </span><span class="kn">import</span> <span class="n">OrderedDict</span><span class="p">,</span> <span class="n">namedtuple</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.cross_decomposition</span><span class="w"> </span><span class="kn">import</span> <span class="n">PLSRegression</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">scipy.spatial.distance</span><span class="w"> </span><span class="kn">import</span> <span class="n">pdist</span><span class="p">,</span><span class="n">squareform</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sklearn.utils.validation</span><span class="w"> </span><span class="kn">import</span> <span class="n">check_is_fitted</span>
+
+<span class="c1">#interns functions</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">._base</span><span class="w"> </span><span class="kn">import</span> <span class="n">_BaseDA</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.functions.utils</span><span class="w"> </span><span class="kn">import</span> <span class="n">check_is_dataframe</span><span class="p">,</span> <span class="n">check_is_series</span><span class="p">,</span> <span class="n">check_is_bool</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.functions.preprocessing</span><span class="w"> </span><span class="kn">import</span> <span class="n">preprocessing</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.functions.model_matrix</span><span class="w"> </span><span class="kn">import</span> <span class="n">model_matrix</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.functions.plsrvip</span><span class="w"> </span><span class="kn">import</span> <span class="n">plsrvip</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.functions.splitmix</span><span class="w"> </span><span class="kn">import</span> <span class="n">splitmix</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">.functions.tab_disjunctive</span><span class="w"> </span><span class="kn">import</span> <span class="n">tab_disjunctive</span>
+
+<div class="viewcode-block" id="PLSDA">
+<a class="viewcode-back" href="../../../source/reference/discrimintools.PLSDA.html#discrimintools.PLSDA">[docs]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">PLSDA</span><span class="p">(</span><span class="n">_BaseDA</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Partial Least Squares Discriminant Analysis (PLSDA)</span>
+
+<span class="sd">    Partial Least Squares Discriminant Analysis (PLSDA) is an application of Partial Least Squares to classification problems. The general idea is to perform a PLS(2) </span>
+<span class="sd">    decomposition between features :math:`X` and :math:`Z`, where :math:`Z` is `dummy encoded &lt;https://pandas.pydata.org/docs/reference/api/pandas.get_dummies.html&gt;`_ for the different classes.</span>
+<span class="sd">    Partial Least-Squares Discriminant Analysis consists in two steps::</span>
+
+<span class="sd">    1. Recode the target variable into ``n_classes`` dummy variables.</span>
+<span class="sd">    2. Computation of partial least squares regression.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    n_components : int or None, default = 2</span>
+<span class="sd">        Number of components to keep. Should be in ``[1, n_features]``.</span>
+
+<span class="sd">    scale : bool, defaul = True</span>
+<span class="sd">        Whether to scale ``X`` and ``y``.</span>
+
+<span class="sd">    classes : None, tuple or list, default = None</span>
+<span class="sd">        Name of level in order to return. If None, classes are sorted in unique values in y.</span>
+
+<span class="sd">    max_iter : int, default = 500</span>
+<span class="sd">        The maximum number of iterations for NIPALS method</span>
+<span class="sd">    </span>
+<span class="sd">    tol : float, default = 1e-06</span>
+<span class="sd">        The tolerance used as convergence criteria in the NIPALS method.</span>
+
+<span class="sd">    var_select : bool, default = True</span>
+<span class="sd">        Whether to applied feature selection based on variables importance in Projection for Partial Least-Squares Regression</span>
+
+<span class="sd">    threshold : float, default = 1.0</span>
+<span class="sd">        You can use VIP to select predictor variables when multicollinearity exists among variables. </span>
+<span class="sd">        Variables with a VIP score greater than 1 are considered important for the projection of the PLS regression.</span>
+
+<span class="sd">    warn_message : bool, default = True</span>
+<span class="sd">        Whether to show warning messages.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    call_ : NamedTuple</span>
+<span class="sd">        Call informations:</span>
+
+<span class="sd">        - Xtot : DataFrame of shape (n_samples, n_columns)</span>
+<span class="sd">                Input data.</span>
+<span class="sd">        - X : DataFrame of shape (n_samples, n_features)</span>
+<span class="sd">                Training data.</span>
+<span class="sd">        - y : Series of shape (n_samples,)</span>
+<span class="sd">                Target values. True values for ``X``.</span>
+<span class="sd">        - target : str</span>
+<span class="sd">                 Name of target.</span>
+<span class="sd">        - features : list</span>
+<span class="sd">            Names of features seen during ``fit``.</span>
+<span class="sd">        - classes : list</span>
+<span class="sd">            Names of classes</span>
+<span class="sd">        - priors : Series of shape (n_classes,)</span>
+<span class="sd">            Priors probabilities</span>
+<span class="sd">        - center : Series of shape (n_features,)</span>
+<span class="sd">            The average of `X`</span>
+<span class="sd">        - scale : Series of shape (n_features,)</span>
+<span class="sd">            The standard deviation of ``X``.</span>
+<span class="sd">        - n_samples : int</span>
+<span class="sd">            Number of samples.</span>
+<span class="sd">        - n_features : int</span>
+<span class="sd">            Number of features.</span>
+<span class="sd">        - max_components : int</span>
+<span class="sd">            Maximum number of components.</span>
+<span class="sd">        - n_components : int</span>
+<span class="sd">            Number of components kept.</span>
+<span class="sd">        - n_classes : int</span>
+<span class="sd">            Number of target values.</span>
+<span class="sd">        - max_iter : int</span>
+<span class="sd">            Maximum number of iterations.</span>
+<span class="sd">        - tol : float</span>
+<span class="sd">            The tolerance used as convergence criteria.</span>
+<span class="sd">        - threshold : float,</span>
+<span class="sd">            The tolerance for variable importance in projection.</span>
+
+<span class="sd">    classes_ : NamedTuple</span>
+<span class="sd">        Classes informations:</span>
+
+<span class="sd">        - infos : DataFrame of shape (n_classes, 3)</span>
+<span class="sd">            class level information (frequency, proportion, prior probability).</span>
+<span class="sd">        - coord : DataFrame of shape (n_classes, n_components)</span>
+<span class="sd">            Class coordinates.</span>
+<span class="sd">        - eucl : DataFrame of shape (n_classes, n_classes)</span>
+<span class="sd">            The squared Euclidean distance to origin.</span>
+<span class="sd">        - gen : DataFrame shape (n_classes, n_classes) </span>
+<span class="sd">            The generalized squared distance to origin.</span>
+
+<span class="sd">    coef_ : DataFrame of shape (n_features + 1, n_classes)</span>
+<span class="sd">        The coefficients of the partial least squares discriminant analysis model.</span>
+
+<span class="sd">    explained_variance_ : DataFrame of shape (n_components, 2)</span>
+<span class="sd">        The explained variance and the cumulative explained variance.</span>
+<span class="sd">    </span>
+<span class="sd">    ind_ : NamedTuple</span>
+<span class="sd">        Individuals informations:</span>
+
+<span class="sd">        - coord : DataFrame of shape (n_samples, n_components)</span>
+<span class="sd">            The transformed training simples.</span>
+<span class="sd">        - scores : DataFrame of shape (n_samples,) </span>
+<span class="sd">            The total scores of individuals.</span>
+<span class="sd">        - eucl : DataFrame of shape (n_samples, n_classes)</span>
+<span class="sd">            The squared Euclidean distance to origin.</span>
+<span class="sd">        - gen : DataFrame shape (n_samples, n_classes) </span>
+<span class="sd">            The generalized squared distance to origin.</span>
+
+<span class="sd">    model_ : str, default = &#39;plsda&#39;</span>
+<span class="sd">        The model fitted name.</span>
+
+<span class="sd">    var_ : NamedTuple</span>
+<span class="sd">        Variables informations:</span>
+
+<span class="sd">        - weights : DataFrame of shape (n_features, n_components)</span>
+<span class="sd">            The left singular vectors of the cross-covariance matrices of each iteration.</span>
+
+<span class="sd">        - loadings : DataFrame of shape (n_features, n_components)</span>
+<span class="sd">            The loadings of `X`.</span>
+
+<span class="sd">        - rotations : DataFrame of shape (n_features, n_components)</span>
+<span class="sd">            The projection matrix used to transform X.</span>
+
+<span class="sd">    vip_ : NamedTuple</span>
+<span class="sd">        - vip : Series of shape (n_features,)</span>
+<span class="sd">            The variable importance in projection for partial least squares regression.</span>
+
+<span class="sd">        - selected : list</span>
+<span class="sd">            Selected features.</span>
+
+<span class="sd">    See also</span>
+<span class="sd">    --------</span>
+<span class="sd">    :class:`~discrimintools.discriminant_analysis.PLSLOGIT`</span>
+<span class="sd">        Partial Least Squares Logistic Regression</span>
+<span class="sd">    :class:`~discrimintools.summary.summaryPLSLDA`</span>
+<span class="sd">        Printing summaries of Partial Least Squares Linear Discriminant Analysis model.</span>
+<span class="sd">    :class:`~discrimintools.summary.summaryDA`</span>
+<span class="sd">        Printing summaries of Discriminant Analysis model.</span>
+
+<span class="sd">    References</span>
+<span class="sd">    ----------</span>
+<span class="sd">    [1] H. Abdi (2003), « `Partial Least Square Regression`_ », Multivariate analysis. In M. Lewis-Beck, A. Bryman, &amp; T. Futing (Eds): *Encyclopedia for research methods for the social sciences*. Thousand Oaks:Sage.</span>
+
+<span class="sd">    [2] M. Tenenhaus (1998), « La régression PLS - Théorie et Pratique », Editions TECHNIP.</span>
+
+<span class="sd">    [3] M. Tenenhaus (1995), « `Régression PLS et applications`_ », _Revue de statistique appliquée, tome 43, n°1, p. 7-63</span>
+
+<span class="sd">    [4] R. Tomassone, M. Danzart, J.J. Daudin, J.P. Masson (1988), « Discrimination et classement », Masson.</span>
+
+<span class="sd">    [5] Ricco Rakotomalala (2008), « `Analyse Discriminante PLS`_ », Université Lumière Lyon 2.</span>
+
+<span class="sd">    [6] Ricco Rakotomalala (2008), « `Analyse Discriminante PLS - Etude comparative`_ », Université Lumière Lyon 2. </span>
+<span class="sd">    </span>
+<span class="sd">    [7] Ricco Rakotomalala (2008), « `Régression PLS`_ », Université Lumière Lyon 2.</span>
+
+<span class="sd">    [8] Ricco Rakotomalala (2008), « `Régression PLS - Sélection du nombre d&#39;axes`_ », Université Lumière Lyon 2.</span>
+
+<span class="sd">    [9] Ricco Rakotomalala (2008), « `Régression PLS - Comparaison de logiciels`_ », Université Lumière Lyon 2. </span>
+
+<span class="sd">    [10] Ricco Rakotomalala (2020), `Pratique de l&#39;Analyse Discriminante Linéaire`_, Version 1.0, Université Lumière Lyon 2.</span>
+<span class="sd">    </span>
+<span class="sd">    [11] S. Chevallier, D. Bertrand, A. Kohler, P. Courcoux (2006), « `Application of PLS-DA in multivariate image analysis`_ », in J. Chemometrics, 20 : 221-229.</span>
+<span class="sd">    </span>
+<span class="sd">    [12] S. Vancolen (2004), « `La régression PLS`_ », Université de Neuchâtel.</span>
+
+<span class="sd">    .. _Partial Least Square Regression: https://personal.utdallas.edu/~herve/Abdi-PLSR2007-pretty.pdf</span>
+<span class="sd">    .. _Régression PLS et applications: https://hal.science/hal-01604598v1/file/Rregression%20PLS_1.pdf</span>
+<span class="sd">    .. _Analyse Discriminante PLS: https://eric.univ-lyon2.fr/ricco/tanagra/fichiers/fr_Tanagra_PLS_DA.pdf</span>
+<span class="sd">    .. _Analyse Discriminante PLS - Etude comparative: https://eric.univ-lyon2.fr/ricco/tanagra/fichiers/fr_Tanagra_PLS_DA_Comparaison.pdf</span>
+<span class="sd">    .. _Régression PLS: https://eric.univ-lyon2.fr/ricco/tanagra/fichiers/fr_Tanagra_PLS.pdf</span>
+<span class="sd">    .. _Régression PLS - Sélection du nombre d&#39;axes: https://eric.univ-lyon2.fr/ricco/tanagra/fichiers/fr_Tanagra_PLS_Selecting_Factors.pdf</span>
+<span class="sd">    .. _Régression PLS - Comparaison de logiciels: https://eric.univ-lyon2.fr/ricco/tanagra/fichiers/fr_Tanagra_PLSR_Software_Comparison.pdf</span>
+<span class="sd">    .. _Pratique de l&#39;Analyse Discriminante Linéaire: https://hal.science/hal-04868585v1/file/Pratique_Analyse_Discriminante_Lineaire.pdf</span>
+<span class="sd">    .. _Application of PLS-DA in multivariate image analysis: https://www.researchgate.net/publication/229902518_Application_of_PLS-DA_in_multivariate_image_analysis</span>
+<span class="sd">    .. _La régression PLS: https://libra.unine.ch/handle/20.500.14713/28717</span>
+<span class="sd">    </span>
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from discrimintools.datasets import load_dataset</span>
+<span class="sd">    &gt;&gt;&gt; from discrimintools import PLSDA</span>
+<span class="sd">    &gt;&gt;&gt; D = load_dataset(&quot;breast&quot;)</span>
+<span class="sd">    &gt;&gt;&gt; y, X = D[&quot;Class&quot;], D.drop(columns=[&quot;Class&quot;])</span>
+<span class="sd">    &gt;&gt;&gt; clf = PLSDA()</span>
+<span class="sd">    &gt;&gt;&gt; clf.fit(X,y)</span>
+<span class="sd">    PLSDA()</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+<div class="viewcode-block" id="PLSDA.__init__">
+<a class="viewcode-back" href="../../../source/reference/discrimintools.PLSDA.html#discrimintools.PLSDA.__init__">[docs]</a>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+            <span class="bp">self</span><span class="p">,</span> <span class="n">n_components</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">classes</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">max_iter</span> <span class="o">=</span> <span class="mi">500</span><span class="p">,</span> <span class="n">tol</span> <span class="o">=</span> <span class="mf">1e-10</span><span class="p">,</span> <span class="n">var_select</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span> <span class="n">threshold</span> <span class="o">=</span> <span class="mf">1.0</span><span class="p">,</span> <span class="n">warn_message</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span> <span class="o">=</span> <span class="n">n_components</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">scale</span> <span class="o">=</span> <span class="n">scale</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classes</span> <span class="o">=</span> <span class="n">classes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span> <span class="o">=</span> <span class="n">max_iter</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tol</span> <span class="o">=</span> <span class="n">tol</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">var_select</span> <span class="o">=</span> <span class="n">var_select</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span> <span class="o">=</span> <span class="n">threshold</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">warn_message</span> <span class="o">=</span> <span class="n">warn_message</span></div>
+
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">decision_function</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Apply decision function to an input data</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : DataFrame of shape (n_samples, n_features)</span>
+<span class="sd">            Input data, where ``n_samples`` is the number of samples and ``n_features`` is the number of features.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        C : DataFrame of shape (n_samples, n_classes)</span>
+<span class="sd">            Decision function values related to each class, per sample.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#check if the estimator is fitted by verifying the presence of fitted attributes</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#check if X is an instance of class pd.DataFrame</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="n">check_is_dataframe</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="c1">#set index name as None</span>
+        <span class="n">X</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1">#check if X contains original features</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="o">.</span><span class="n">Xtot</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The names of the features is not the same as the ones in the active features of the PLSDA result&quot;</span><span class="p">)</span>
+        <span class="c1">#select original features</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="o">.</span><span class="n">Xtot</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+
+        <span class="c1">#split X</span>
+        <span class="n">split_X</span> <span class="o">=</span> <span class="n">splitmix</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="c1">#extract elements</span>
+        <span class="n">X_quanti</span><span class="p">,</span> <span class="n">X_quali</span><span class="p">,</span> <span class="n">n_quanti</span><span class="p">,</span> <span class="n">n_quali</span> <span class="o">=</span> <span class="n">split_X</span><span class="o">.</span><span class="n">quanti</span><span class="p">,</span> <span class="n">split_X</span><span class="o">.</span><span class="n">quali</span><span class="p">,</span> <span class="n">split_X</span><span class="o">.</span><span class="n">k1</span><span class="p">,</span> <span class="n">split_X</span><span class="o">.</span><span class="n">k2</span>
+
+        <span class="c1">#initialize DataFrame</span>
+        <span class="n">Xcod</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">index</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+
+        <span class="c1">#check if numerics variables</span>
+        <span class="k">if</span> <span class="n">n_quanti</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1">#replace with numerics columns</span>
+            <span class="n">Xcod</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">X_quanti</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span> <span class="o">=</span> <span class="n">X_quanti</span>
+        
+        <span class="c1">#check if categorical variables      </span>
+        <span class="k">if</span> <span class="n">n_quali</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1">#active categorics</span>
+            <span class="n">categorics</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="o">.</span><span class="n">Xtot</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+            <span class="c1">#replace with dummies</span>
+            <span class="n">Xcod</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">categorics</span><span class="p">]</span> <span class="o">=</span> <span class="n">tab_disjunctive</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X_quali</span><span class="p">,</span><span class="n">dummies_cols</span><span class="o">=</span><span class="n">categorics</span><span class="p">,</span><span class="n">prefix</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">sep</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+
+        <span class="c1">#remove non selected variables</span>
+        <span class="n">Xcod</span> <span class="o">=</span> <span class="n">Xcod</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="o">.</span><span class="n">center</span><span class="o">.</span><span class="n">index</span><span class="p">)]</span>
+        <span class="c1">#multiply by linear discriminant analysis coefficients</span>
+        <span class="k">return</span> <span class="n">Xcod</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:,:])</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+    <span class="k">def</span><span class="w"> </span><span class="nf">fit</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Fit Partial Least-Squares Discriminant Analysis Model</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : DataFrame of shape (n_samples, n_features)</span>
+<span class="sd">            Training data, where ``n_samples`` is the number of samples and ``n_features`` is the number of features.</span>
+<span class="sd">        </span>
+<span class="sd">        y : Series of shape (n_samples,)</span>
+<span class="sd">            Target values. True values for ``X``.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        self : object</span>
+<span class="sd">            Fitted estimator</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#check if X is an instance of class pd.DataFrame</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="n">check_is_dataframe</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#check if y is an instance of class pd.Series</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="n">check_is_series</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+        <span class="c1">#check if len are equal</span>
+        <span class="k">if</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">!=</span> <span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The number of samples in X must be equal to the number of samples in y&quot;</span><span class="p">)</span>
+        
+        <span class="c1">#check if all elements in y are string</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">all</span><span class="p">(</span><span class="nb">isinstance</span><span class="p">(</span><span class="n">kq</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="k">for</span> <span class="n">kq</span> <span class="ow">in</span> <span class="n">y</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;All elements in y must be a string&quot;</span><span class="p">)</span>
+        
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#check if max_iter is not None</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">max_iter</span> <span class="o">=</span> <span class="mi">500</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span><span class="p">,(</span><span class="nb">int</span><span class="p">,</span><span class="nb">float</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> is not supported&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span><span class="p">)))</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;max_iter&#39; must be positive&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">max_iter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_iter</span>
+        
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#check if tol is not None</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">tol</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">tol</span> <span class="o">=</span> <span class="mf">1e-10</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tol</span><span class="p">,(</span><span class="nb">int</span><span class="p">,</span><span class="nb">float</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> is not supported&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tol</span><span class="p">)))</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">tol</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">tol</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;the &#39;tol&#39; value </span><span class="si">{}</span><span class="s2"> is not within the required range of 0 and 1.&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tol</span><span class="p">))</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">tol</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">tol</span>
+
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#check if var_select is a bool</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="n">check_is_bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">var_select</span><span class="p">)</span>
+
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#check if threshold is not None</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">threshold</span> <span class="o">=</span> <span class="mi">1</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">threshold</span><span class="p">,(</span><span class="nb">int</span><span class="p">,</span><span class="nb">float</span><span class="p">)):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{}</span><span class="s2"> is not supported&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">threshold</span><span class="p">)))</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;the &#39;threshold&#39; value must be positive.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">threshold</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">threshold</span>
+
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#check if warn_message is a bool</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="n">check_is_bool</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">warn_message</span><span class="p">)</span>
+
+        <span class="c1">#make a copy of original data</span>
+        <span class="n">Xtot</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">copy</span><span class="p">(</span><span class="n">deep</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#preprocessing</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">preprocessing</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="c1">#set y name if None</span>
+        <span class="k">if</span> <span class="n">y</span><span class="o">.</span><span class="n">name</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="nb">int</span><span class="p">):</span>
+            <span class="n">y</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;group&quot;</span>
+
+        <span class="c1">#warning message to inform</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">warn_message</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">is_string_dtype</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">k</span><span class="p">])</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
+                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Categorical features have been encoded into binary variables.</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+
+        <span class="c1">#recode to dummy if categorics variables</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">model_matrix</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="c1">#unique element in y</span>
+        <span class="n">uq_y</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span>
+        <span class="c1">#number of classes</span>
+        <span class="n">n_classes</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">uq_y</span><span class="p">)</span>
+
+        <span class="c1">#class of categories</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">,</span> <span class="p">(</span><span class="nb">list</span><span class="p">,</span><span class="nb">tuple</span><span class="p">)):</span>
+            <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">)</span> <span class="o">&amp;</span> <span class="nb">set</span><span class="p">(</span><span class="n">uq_y</span><span class="p">)))</span> <span class="o">!=</span> <span class="n">n_classes</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Insert good classes&quot;</span><span class="p">)</span>
+            <span class="n">classes</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">classes</span><span class="p">]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">classes</span> <span class="o">=</span> <span class="n">uq_y</span>
+
+        <span class="c1">#convert y to categorical data type</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="n">CategoricalDtype</span><span class="p">(</span><span class="n">categories</span><span class="o">=</span><span class="n">classes</span><span class="p">,</span><span class="n">ordered</span><span class="o">=</span><span class="kc">True</span><span class="p">))</span>
+        <span class="c1">#set target name</span>
+        <span class="n">target</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">name</span>
+        <span class="c1">#set piors</span>
+        <span class="n">priors</span> <span class="o">=</span> <span class="n">Series</span><span class="p">(</span><span class="n">array</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">classes</span><span class="p">]),</span><span class="n">index</span><span class="o">=</span><span class="n">classes</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;priors&quot;</span><span class="p">)</span>
+        <span class="c1">#number of samples and features</span>
+        <span class="n">n_samples</span><span class="p">,</span> <span class="n">n_features</span><span class="p">,</span> <span class="n">features</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="nb">list</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+
+        <span class="c1">#create disjunctive table</span>
+        <span class="n">Y</span> <span class="o">=</span> <span class="n">get_dummies</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">dtype</span><span class="o">=</span><span class="nb">int</span><span class="p">)</span>
+
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#partial least square regression (PLSR)</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#QR decomposition of X</span>
+        <span class="n">Q</span><span class="p">,</span> <span class="n">R</span> <span class="o">=</span> <span class="n">linalg</span><span class="o">.</span><span class="n">qr</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="c1">#maximum number of components</span>
+        <span class="n">max_components</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">linalg</span><span class="o">.</span><span class="n">matrix_rank</span><span class="p">(</span><span class="n">Q</span><span class="p">),</span> <span class="n">linalg</span><span class="o">.</span><span class="n">matrix_rank</span><span class="p">(</span><span class="n">R</span><span class="p">),</span> <span class="n">n_samples</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">n_features</span><span class="p">))</span>
+        <span class="c1">#set number of components</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">n_components</span> <span class="o">=</span> <span class="n">max_components</span>
+        <span class="k">elif</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_components</span><span class="p">,</span><span class="nb">int</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="s2">&quot;&#39;n_components&#39; must be an integer.&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="bp">self</span><span class="o">.</span><span class="n">n_components</span> <span class="o">&lt;</span> <span class="mi">1</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;n_components&#39; must be equal or greater than 1.&quot;</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">n_components</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">n_components</span><span class="p">,</span> <span class="n">max_components</span><span class="p">)</span>
+
+       <span class="c1">#partial least squares regression</span>
+        <span class="n">plsr</span> <span class="o">=</span> <span class="n">PLSRegression</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">n_components</span><span class="p">,</span><span class="n">scale</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">,</span><span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">,</span><span class="n">tol</span><span class="o">=</span><span class="n">tol</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span>
+        <span class="c1">#variable importance in projection</span>
+        <span class="n">vip</span> <span class="o">=</span> <span class="n">plsrvip</span><span class="p">(</span><span class="n">obj</span><span class="o">=</span><span class="n">plsr</span><span class="p">,</span><span class="n">threshold</span><span class="o">=</span><span class="n">threshold</span><span class="p">)</span>
+
+        <span class="c1">#if selected variables</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">var_select</span><span class="p">:</span>
+            <span class="c1">#update X</span>
+            <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">vip</span><span class="o">.</span><span class="n">selected</span><span class="p">]</span>
+            <span class="c1">#update partial least squares regression</span>
+            <span class="n">plsr</span> <span class="o">=</span> <span class="n">PLSRegression</span><span class="p">(</span><span class="n">n_components</span><span class="o">=</span><span class="n">n_components</span><span class="p">,</span><span class="n">scale</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">scale</span><span class="p">,</span><span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">,</span><span class="n">tol</span><span class="o">=</span><span class="n">tol</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">Y</span><span class="p">)</span>
+            <span class="c1">#update variable importance in projection</span>
+            <span class="n">vip</span> <span class="o">=</span> <span class="n">plsrvip</span><span class="p">(</span><span class="n">obj</span><span class="o">=</span><span class="n">plsr</span><span class="p">,</span><span class="n">threshold</span><span class="o">=</span><span class="n">threshold</span><span class="p">)</span>
+        
+        <span class="c1">#update number of features and features in</span>
+        <span class="n">n_features</span><span class="p">,</span> <span class="n">features</span> <span class="o">=</span> <span class="n">plsr</span><span class="o">.</span><span class="n">n_features_in_</span><span class="p">,</span> <span class="n">plsr</span><span class="o">.</span><span class="n">feature_names_in_</span>
+
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#convert to pandas DataFrame</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#center and scale</span>
+        <span class="n">x_center</span><span class="p">,</span> <span class="n">x_scale</span> <span class="o">=</span> <span class="n">Series</span><span class="p">(</span><span class="n">plsr</span><span class="o">.</span><span class="n">_x_mean</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="n">plsr</span><span class="o">.</span><span class="n">feature_names_in_</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;center&quot;</span><span class="p">),</span> <span class="n">Series</span><span class="p">(</span><span class="n">plsr</span><span class="o">.</span><span class="n">_x_std</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="n">plsr</span><span class="o">.</span><span class="n">feature_names_in_</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;scale&quot;</span><span class="p">)</span>
+        
+        <span class="c1">#convert to ordered dictionary</span>
+        <span class="n">call_</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">(</span><span class="n">Xtot</span><span class="o">=</span><span class="n">Xtot</span><span class="p">,</span><span class="n">X</span><span class="o">=</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="o">=</span><span class="n">y</span><span class="p">,</span><span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">,</span><span class="n">features</span><span class="o">=</span><span class="n">features</span><span class="p">,</span><span class="n">classes</span><span class="o">=</span><span class="n">classes</span><span class="p">,</span><span class="n">priors</span><span class="o">=</span><span class="n">priors</span><span class="p">,</span><span class="n">center</span><span class="o">=</span><span class="n">x_center</span><span class="p">,</span><span class="n">scale</span><span class="o">=</span><span class="n">x_scale</span><span class="p">,</span>
+                            <span class="n">n_samples</span><span class="o">=</span><span class="n">n_samples</span><span class="p">,</span><span class="n">n_features</span><span class="o">=</span><span class="n">n_features</span><span class="p">,</span><span class="n">max_components</span><span class="o">=</span><span class="n">max_components</span><span class="p">,</span><span class="n">n_components</span><span class="o">=</span><span class="n">n_components</span><span class="p">,</span><span class="n">n_classes</span><span class="o">=</span><span class="n">n_classes</span><span class="p">,</span>
+                            <span class="n">max_iter</span><span class="o">=</span><span class="n">max_iter</span><span class="p">,</span><span class="n">tol</span><span class="o">=</span><span class="n">tol</span><span class="p">,</span><span class="n">threshold</span><span class="o">=</span><span class="n">threshold</span><span class="p">)</span>
+        <span class="c1">#convert to namedtuple</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">call_</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;call&quot;</span><span class="p">,</span><span class="n">call_</span><span class="o">.</span><span class="n">keys</span><span class="p">())(</span><span class="o">*</span><span class="n">call_</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#variables importance in projection</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">vip_</span> <span class="o">=</span> <span class="n">vip</span>
+
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#coefficients of partial least squares regression</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#coefficients of variables</span>
+        <span class="n">coef_</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">plsr</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="n">plsr</span><span class="o">.</span><span class="n">feature_names_in_</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="n">classes</span><span class="p">)</span>
+        <span class="c1">#intercept</span>
+        <span class="n">intercept_</span> <span class="o">=</span> <span class="n">Series</span><span class="p">(</span><span class="n">plsr</span><span class="o">.</span><span class="n">_y_mean</span> <span class="o">-</span> <span class="n">dot</span><span class="p">(</span><span class="n">x_center</span><span class="p">,</span><span class="n">coef_</span><span class="p">),</span><span class="n">index</span><span class="o">=</span><span class="n">classes</span><span class="p">,</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Constant&quot;</span><span class="p">)</span>
+        <span class="c1">#coefficients of partial least-squares regression</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">coef_</span> <span class="o">=</span> <span class="n">concat</span><span class="p">((</span><span class="n">intercept_</span><span class="o">.</span><span class="n">to_frame</span><span class="p">()</span><span class="o">.</span><span class="n">T</span><span class="p">,</span><span class="n">coef_</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#individuals informations : coordinates and scores</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#individuals coordinates</span>
+        <span class="n">ind_coord</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">plsr</span><span class="o">.</span><span class="n">x_scores_</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">index</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Can</span><span class="si">{}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_components</span><span class="p">)])</span>
+        <span class="c1">#individuals scores - decision function</span>
+        <span class="n">ind_scores</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">1</span><span class="p">:,:])</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">coef_</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,:],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#classes informations: coordinates, squared euclidean distance and squared generalized distance</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#count and proportion</span>
+        <span class="n">n_k</span><span class="p">,</span> <span class="n">p_k</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">classes</span><span class="p">],</span>  <span class="n">y</span><span class="o">.</span><span class="n">value_counts</span><span class="p">(</span><span class="n">normalize</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">classes</span><span class="p">]</span>
+        <span class="c1">#class level information</span>
+        <span class="n">class_infos</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">c_</span><span class="p">[</span><span class="n">n_k</span><span class="p">,</span><span class="n">p_k</span><span class="p">,</span><span class="n">priors</span><span class="p">],</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Frequency&quot;</span><span class="p">,</span><span class="s2">&quot;Proportion&quot;</span><span class="p">,</span><span class="s2">&quot;Prior Probability&quot;</span><span class="p">],</span><span class="n">index</span><span class="o">=</span><span class="n">classes</span><span class="p">)</span>
+        <span class="n">class_infos</span><span class="p">[</span><span class="s2">&quot;Frequency&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">class_infos</span><span class="p">[</span><span class="s2">&quot;Frequency&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">int</span><span class="p">)</span>
+        
+        <span class="c1">#classes coordinates</span>
+        <span class="n">class_coord</span> <span class="o">=</span> <span class="n">concat</span><span class="p">((</span><span class="n">ind_coord</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">y</span><span class="p">[</span><span class="n">y</span><span class="o">==</span><span class="n">k</span><span class="p">]</span><span class="o">.</span><span class="n">index</span><span class="p">,:]</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">classes</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+        <span class="c1">#squared euclidean distance between classes</span>
+        <span class="n">class_eucl</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">squareform</span><span class="p">(</span><span class="n">pdist</span><span class="p">(</span><span class="n">class_coord</span><span class="p">,</span><span class="n">metric</span><span class="o">=</span><span class="s2">&quot;sqeuclidean&quot;</span><span class="p">)),</span><span class="n">index</span><span class="o">=</span><span class="n">classes</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="n">classes</span><span class="p">)</span>
+        <span class="c1">#squared generalized distance</span>
+        <span class="n">class_gen</span> <span class="o">=</span> <span class="n">class_eucl</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">log</span><span class="p">(</span><span class="n">priors</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1">#convert to ordered dictionary</span>
+        <span class="n">classes_</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">(</span><span class="n">infos</span><span class="o">=</span><span class="n">class_infos</span><span class="p">,</span><span class="n">coord</span><span class="o">=</span><span class="n">class_coord</span><span class="p">,</span><span class="n">eucl</span><span class="o">=</span><span class="n">class_eucl</span><span class="p">,</span><span class="n">gen</span><span class="o">=</span><span class="n">class_gen</span><span class="p">)</span>
+        <span class="c1">#convert to namedtuple</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">classes_</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;classes&quot;</span><span class="p">,</span><span class="n">classes_</span><span class="o">.</span><span class="n">keys</span><span class="p">())(</span><span class="o">*</span><span class="n">classes_</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#individuals additional informations: squared euclidean distance between classes barycenters and squared generalized distance</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#squared euclidean distance to class center</span>
+        <span class="n">ind_eucl</span> <span class="o">=</span> <span class="n">concat</span><span class="p">((</span><span class="n">ind_coord</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">class_coord</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">k</span><span class="p">,:],</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">to_frame</span><span class="p">(</span><span class="n">k</span><span class="p">)</span> <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">classes</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1">#squared generalized distance</span>
+        <span class="n">ind_gen</span> <span class="o">=</span> <span class="n">ind_eucl</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">log</span><span class="p">(</span><span class="n">priors</span><span class="p">),</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+        <span class="c1">#convert to ordered dictionary</span>
+        <span class="n">ind_</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">(</span><span class="n">coord</span><span class="o">=</span><span class="n">ind_coord</span><span class="p">,</span><span class="n">scores</span><span class="o">=</span><span class="n">ind_scores</span><span class="p">,</span><span class="n">eucl</span><span class="o">=</span><span class="n">ind_eucl</span><span class="p">,</span><span class="n">gen</span><span class="o">=</span><span class="n">ind_gen</span><span class="p">)</span>
+        <span class="c1">#convert to namedtuple</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">ind_</span> <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;ind&quot;</span><span class="p">,</span><span class="n">ind_</span><span class="o">.</span><span class="n">keys</span><span class="p">())(</span><span class="o">*</span><span class="n">ind_</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#variables informations : weights, loadings and rotations</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#variables weights</span>
+        <span class="n">var_weights</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">plsr</span><span class="o">.</span><span class="n">x_weights_</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="n">features</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="n">ind_coord</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+        <span class="c1">#variables loadings</span>
+        <span class="n">var_loadings</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">plsr</span><span class="o">.</span><span class="n">x_loadings_</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="n">features</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="n">var_weights</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+        <span class="c1">#variables rotations</span>
+        <span class="n">var_rotations</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">plsr</span><span class="o">.</span><span class="n">x_rotations_</span><span class="p">,</span><span class="n">index</span><span class="o">=</span><span class="n">features</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="n">var_weights</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+        <span class="c1">#convert to ordered dictionary</span>
+        <span class="n">var_</span> <span class="o">=</span> <span class="n">OrderedDict</span><span class="p">(</span><span class="n">weights</span><span class="o">=</span><span class="n">var_weights</span><span class="p">,</span><span class="n">loadings</span><span class="o">=</span><span class="n">var_loadings</span><span class="p">,</span><span class="n">rotations</span><span class="o">=</span><span class="n">var_rotations</span><span class="p">)</span>
+        <span class="c1">#convert to namedtuple</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">var_</span>  <span class="o">=</span> <span class="n">namedtuple</span><span class="p">(</span><span class="s2">&quot;var&quot;</span><span class="p">,</span><span class="n">var_</span><span class="o">.</span><span class="n">keys</span><span class="p">())(</span><span class="o">*</span><span class="n">var_</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#explained variance for X by each components </span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#total variance in Z</span>
+        <span class="n">total_var</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="n">x_center</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="n">x_scale</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+        <span class="c1">#explained variance</span>
+        <span class="n">explained_var</span> <span class="o">=</span> <span class="mi">100</span><span class="o">*</span><span class="p">(</span><span class="n">ind_coord</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span><span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="n">var_loadings</span><span class="o">.</span><span class="n">pow</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span><span class="o">/</span><span class="n">total_var</span>
+        <span class="c1">#convert to DataFrame</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">explained_variance_</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">c_</span><span class="p">[</span><span class="n">explained_var</span><span class="p">,</span><span class="n">cumsum</span><span class="p">(</span><span class="n">explained_var</span><span class="p">)],</span><span class="n">columns</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Proportion (%)&quot;</span><span class="p">,</span><span class="s2">&quot;Cumulative (%)&quot;</span><span class="p">],</span><span class="n">index</span><span class="o">=</span><span class="n">explained_var</span><span class="o">.</span><span class="n">index</span><span class="p">)</span>
+
+        <span class="c1">#set model name</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">model_</span> <span class="o">=</span> <span class="s2">&quot;plsda&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">fit_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Learn and apply the dimension reduction on the train data.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : DataFrame of shape (n_samples, n_features)</span>
+<span class="sd">            Training data, where ``n_samples`` is the number of samples and ``n_features`` is the number of features.</span>
+
+<span class="sd">        y : Series of shape (n_samples,)</span>
+<span class="sd">            Target values. True labels for ``X``. </span>
+<span class="sd">        </span>
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        x_scores : DataFrame of shape (n_samples, n_components)</span>
+<span class="sd">            The transformed training samples, where ``n_components`` is the number of pls components.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ind_</span><span class="o">.</span><span class="n">coord</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">inverse_transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Transform data back to its original space.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : DataFrame of shape (n_samples, n_components)</span>
+<span class="sd">            New data, where ``n_samples`` is the number of samples and ``n_components`` is the number of pls components.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        X_original : ndarray of shape (n_samples, n_features)</span>
+<span class="sd">            Return the reconstructed ``X`` data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#check if the estimator is fitted by verifying the presence of fitted attributes</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="c1">#from pls space to original space and normalize</span>
+        <span class="k">return</span> <span class="n">X</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">var_</span><span class="o">.</span><span class="n">loadings</span><span class="o">.</span><span class="n">T</span><span class="p">)</span><span class="o">.</span><span class="n">mul</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="o">.</span><span class="n">scale</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="o">.</span><span class="n">center</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    
+    <span class="k">def</span><span class="w"> </span><span class="nf">transform</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">X</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Apply the dimension reduction.</span>
+
+<span class="sd">        Parameters</span>
+<span class="sd">        ----------</span>
+<span class="sd">        X : DataFrame of shape (n_samples, n_features)</span>
+<span class="sd">            Sample to transform.</span>
+
+<span class="sd">        Returns</span>
+<span class="sd">        -------</span>
+<span class="sd">        x_scores : DataFrame of shape (n_samples, n_components)</span>
+<span class="sd">            The transformed input data.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#check if the estimator is fitted by verifying the presence of fitted attributes</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="n">check_is_fitted</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="c1">#check if X is an instance of class pd.DataFrame</span>
+        <span class="c1">#---------------------------------------------------------------------------------------------------------------------------------------------------------------------</span>
+        <span class="n">check_is_dataframe</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+        <span class="c1">#set index name as None</span>
+        <span class="n">X</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="kc">None</span>
+
+        <span class="c1">#check if X contains original features</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">set</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="o">.</span><span class="n">Xtot</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="o">.</span><span class="n">issubset</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;The names of the features is not the same as the ones in the active features of the PLSDA result&quot;</span><span class="p">)</span>
+        <span class="c1">#select original features</span>
+        <span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="o">.</span><span class="n">Xtot</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+
+        <span class="c1">#split X</span>
+        <span class="n">split_X</span> <span class="o">=</span> <span class="n">splitmix</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+        <span class="c1">#extract elements</span>
+        <span class="n">X_quanti</span><span class="p">,</span> <span class="n">X_quali</span><span class="p">,</span> <span class="n">n_quanti</span><span class="p">,</span> <span class="n">n_quali</span> <span class="o">=</span> <span class="n">split_X</span><span class="o">.</span><span class="n">quanti</span><span class="p">,</span> <span class="n">split_X</span><span class="o">.</span><span class="n">quali</span><span class="p">,</span> <span class="n">split_X</span><span class="o">.</span><span class="n">k1</span><span class="p">,</span> <span class="n">split_X</span><span class="o">.</span><span class="n">k2</span>
+
+        <span class="c1">#initialize DataFrame</span>
+        <span class="n">Xcod</span> <span class="o">=</span> <span class="n">DataFrame</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">X</span><span class="o">.</span><span class="n">index</span><span class="p">,</span><span class="n">columns</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span><span class="o">.</span><span class="n">astype</span><span class="p">(</span><span class="nb">float</span><span class="p">)</span>
+
+        <span class="c1">#check if numerics variables</span>
+        <span class="k">if</span> <span class="n">n_quanti</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1">#replace with numerics columns</span>
+            <span class="n">Xcod</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">X_quanti</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span> <span class="o">=</span> <span class="n">X_quanti</span>
+        
+        <span class="c1">#check if categorical variables      </span>
+        <span class="k">if</span> <span class="n">n_quali</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="c1">#active categorics</span>
+            <span class="n">categorics</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="o">.</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span> <span class="k">if</span> <span class="n">x</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="o">.</span><span class="n">Xtot</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span>
+            <span class="c1">#replace with dummies</span>
+            <span class="n">Xcod</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="n">categorics</span><span class="p">]</span> <span class="o">=</span> <span class="n">tab_disjunctive</span><span class="p">(</span><span class="n">X</span><span class="o">=</span><span class="n">X_quali</span><span class="p">,</span><span class="n">dummies_cols</span><span class="o">=</span><span class="n">categorics</span><span class="p">,</span><span class="n">prefix</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span><span class="n">sep</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">)</span>
+        
+        <span class="c1">#remove non selected variables</span>
+        <span class="n">Xcod</span> <span class="o">=</span> <span class="n">Xcod</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="o">.</span><span class="n">center</span><span class="o">.</span><span class="n">index</span><span class="p">)]</span>
+        <span class="c1">#standardize : Z = (X - center)/scale and apply rotation</span>
+        <span class="k">return</span> <span class="n">Xcod</span><span class="o">.</span><span class="n">sub</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="o">.</span><span class="n">center</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">div</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">call_</span><span class="o">.</span><span class="n">scale</span><span class="p">,</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">var_</span><span class="o">.</span><span class="n">rotations</span><span class="p">)</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, Duvérier DJIFACK ZEBAZE.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>

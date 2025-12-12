@@ -1,0 +1,576 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>discrimintools.summary._summaryda &#8212; discrimintools 0.1.0 documentation</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../../_static/styles/theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+<link href="../../../_static/styles/pydata-sphinx-theme.css?digest=8878045cc6db502f8baf" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=8f2a1f02" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../../_static/sphinx-design.min.css?v=95c83b7e" />
+  
+  <!-- So that users can add custom icons -->
+  <script src="../../../_static/scripts/fontawesome.js?digest=8878045cc6db502f8baf"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf" />
+<link rel="preload" as="script" href="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf" />
+
+    <script src="../../../_static/documentation_options.js?v=01f34227"></script>
+    <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+    <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../../_static/design-tabs.js?v=f930bc37"></script>
+    <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = '_modules/discrimintools/summary/_summaryda';</script>
+    <link rel="icon" href="../../../_static/discrimintools.svg"/>
+    <link rel="index" title="Index" href="../../../genindex.html" />
+    <link rel="search" title="Search" href="../../../search.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search the docs ..."
+         aria-label="Search the docs ..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-3 navbar-header-items__start">
+    
+      <div class="navbar-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../../_static/discrimintools.svg" class="logo__image only-light" alt=""/>
+    <img src="../../../_static/discrimintools.svg" class="logo__image only-dark pst-js-only" alt=""/>
+  
+  
+    <p class="title logo__title">discrimintools</p>
+  
+</a></div>
+    
+  </div>
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    <div class="me-auto navbar-header-items__center">
+      
+        <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../source/install/index.html">
+    Install
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../source/getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../source/user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../source/reference/index.html">
+    API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../source/examples/index.html">
+    Examples
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+      
+    </div>
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+        <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+      
+        <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/enfantbenidedieu/discrimintools" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar hide-on-wide">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+      <div class="sidebar-header-items__center">
+        
+          
+          
+            <div class="navbar-item">
+<nav>
+  <ul class="bd-navbar-elements navbar-nav">
+    
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../source/install/index.html">
+    Install
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../source/getting_started/index.html">
+    Getting started
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../source/user_guide/index.html">
+    User Guide
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../source/reference/index.html">
+    API reference
+  </a>
+</li>
+
+
+<li class="nav-item ">
+  <a class="nav-link nav-internal" href="../../../source/examples/index.html">
+    Examples
+  </a>
+</li>
+
+  </ul>
+</nav></div>
+          
+        
+      </div>
+    
+    
+    
+      <div class="sidebar-header-items__end">
+        
+          <div class="navbar-item">
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button></div>
+        
+          <div class="navbar-item"><ul class="navbar-icon-links"
+    aria-label="Icon Links">
+        <li class="nav-item">
+          
+          
+          
+          
+          
+          
+          
+          
+          <a href="https://github.com/enfantbenidedieu/discrimintools" title="GitHub" class="nav-link pst-navbar-icon" rel="noopener" target="_blank" data-bs-toggle="tooltip" data-bs-placement="bottom"><i class="fab fa-github fa-lg" aria-hidden="true"></i>
+            <span class="sr-only">GitHub</span></a>
+        </li>
+</ul></div>
+        
+      </div>
+    
+  </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item">
+
+<nav aria-label="Breadcrumb" class="d-print-none">
+  <ul class="bd-breadcrumbs">
+    
+    <li class="breadcrumb-item breadcrumb-home">
+      <a href="../../../index.html" class="nav-link" aria-label="Home">
+        <i class="fa-solid fa-home"></i>
+      </a>
+    </li>
+    
+    <li class="breadcrumb-item"><a href="../../index.html" class="nav-link">Module code</a></li>
+    
+    <li class="breadcrumb-item active" aria-current="page"><span class="ellipsis">discrimintools.summary._summaryda</span></li>
+  </ul>
+</nav>
+</div>
+      
+    </div>
+  
+  
+</div>
+</div>
+              
+              
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <h1>Source code for discrimintools.summary._summaryda</h1><div class="highlight"><pre>
+<span></span><span class="c1"># -*- coding: utf-8 -*-</span>
+
+<span class="c1">#interns functions</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">._summarycandisc</span><span class="w"> </span><span class="kn">import</span> <span class="n">summaryCANDISC</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">._summarycpls</span><span class="w"> </span><span class="kn">import</span> <span class="n">summaryCPLS</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">._summarydica</span><span class="w"> </span><span class="kn">import</span> <span class="n">summaryDiCA</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">._summarydiscrim</span><span class="w"> </span><span class="kn">import</span> <span class="n">summaryDISCRIM</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">._summarygfalda</span><span class="w"> </span><span class="kn">import</span> <span class="n">summaryGFALDA</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">._summarymda</span><span class="w"> </span><span class="kn">import</span> <span class="n">summaryMDA</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">._summaryplsda</span><span class="w"> </span><span class="kn">import</span> <span class="n">summaryPLSDA</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">._summaryplslda</span><span class="w"> </span><span class="kn">import</span> <span class="n">summaryPLSLDA</span>
+
+<div class="viewcode-block" id="summaryDA">
+<a class="viewcode-back" href="../../../source/reference/discrimintools.summaryDA.html#discrimintools.summaryDA">[docs]</a>
+<span class="k">def</span><span class="w"> </span><span class="nf">summaryDA</span><span class="p">(</span>
+        <span class="n">obj</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span>
+<span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Printing summaries of Discriminant Analysis model.</span>
+
+<span class="sd">    Parameters</span>
+<span class="sd">    ----------</span>
+<span class="sd">    obj : `class &lt;https://docs.python.org/3/tutorial/classes.html&gt;`_</span>
+<span class="sd">        An object of class :class:`~discrimintools.discriminant_analysis.CANDISC`, :class:`~discrimintools.discriminant_analysis.CPLS`, :class:`~discrimintools.discriminant_analysis.DiCA`, :class:`~discrimintools.discriminant_analysis.DISCRIM`, :class:`~discrimintools.discriminant_analysis.GFALDA`, :class:`~discrimintools.discriminant_analysis.MDA`, :class:`~discrimintools.discriminant_analysis.PLSDA` or :class:`~discrimintools.discriminant_analysis.PLSLDA`.</span>
+
+<span class="sd">    **kwargs: </span>
+<span class="sd">        Additionals parameters to pass to summary.</span>
+
+<span class="sd">    Returns</span>
+<span class="sd">    -------</span>
+<span class="sd">    NoneType</span>
+
+<span class="sd">    See also</span>
+<span class="sd">    --------</span>
+<span class="sd">    :class:`~discrimintools.summary.summaryCANDISC`</span>
+<span class="sd">        Printing summaries of Canonical Discriminant Analysis model.</span>
+<span class="sd">    :class:`~discrimintools.summary.summaryCPLS`</span>
+<span class="sd">        Printing summaries of Partial Least Squares for Classification model.</span>
+<span class="sd">    :class:`~discrimintools.summary.summaryDiCA`</span>
+<span class="sd">        Printing summaries of Discriminant Correspondence Analysis model.</span>
+<span class="sd">    :class:`~discrimintools.summary.summaryDISCRIM`</span>
+<span class="sd">        Printing summaries of Discriminant Analysis (linear and quadratic) model.</span>
+<span class="sd">    :class:`~discrimintools.summary.summaryGFALDA`</span>
+<span class="sd">        Printing summaries of General Factor Analysis Linear Discriminant Analysis model.</span>
+<span class="sd">    :class:`~discrimintools.summary.summaryMDA`</span>
+<span class="sd">        Printing summaries of Mixed Discriminant Analysis model.</span>
+<span class="sd">    :class:`~discrimintools.summary.summaryPLSDA`</span>
+<span class="sd">        Printing summaries of Partial Least Squares Discriminant Analysis model.</span>
+<span class="sd">    :class:`~discrimintools.summary.summaryPLSLDA`</span>
+<span class="sd">        Printing summaries of Partial Least Squares Linear Discriminant Analysis model.</span>
+<span class="sd">    :class:`~discrimintools.summary.summarySTEPDISC`</span>
+<span class="sd">        Printing summaries of Stepwise Discriminant Analysis model.</span>
+
+<span class="sd">    Examples</span>
+<span class="sd">    --------</span>
+<span class="sd">    &gt;&gt;&gt; from discrimintools.datasets import load_heart</span>
+<span class="sd">    &gt;&gt;&gt; from discrimintools import DISCRIM, summaryDA</span>
+<span class="sd">    &gt;&gt;&gt; D = load_heart(&quot;train&quot;) # load training data</span>
+<span class="sd">    &gt;&gt;&gt; y, X = D[&quot;disease&quot;], D.drop(columns=[&quot;disease&quot;]) # split into X and y</span>
+<span class="sd">    &gt;&gt;&gt; clf = DISCRIM()</span>
+<span class="sd">    &gt;&gt;&gt; clf.fit(X,y)</span>
+<span class="sd">    Categorical features have been encoded into binary variables.</span>
+<span class="sd">    DISCRIM(priors=&#39;prop&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; summaryDA(clf)</span>
+<span class="sd">                        Discriminant Analysis - Results</span>
+<span class="sd">    Summary Information:</span>
+<span class="sd">                   Infos  Value                  DF  DF value</span>
+<span class="sd">    0  Total Sample Size    150            DF Total       149</span>
+<span class="sd">    1          Variables     18   DF Within Classes       148</span>
+<span class="sd">    2            Classes      2  DF Between Classes         1</span>
+<span class="sd">    Class Level Information:</span>
+<span class="sd">              Frequency  Proportion  Prior Probability</span>
+<span class="sd">    absence          82      0.5467             0.5467</span>
+<span class="sd">    presence         68      0.4533             0.4533</span>
+<span class="sd">    Linear Discriminant Function for disease:</span>
+<span class="sd">                                absence  presence</span>
+<span class="sd">    Constant                  -124.3546 -127.3863</span>
+<span class="sd">    age                          1.1836    1.1914</span>
+<span class="sd">    sexmale                     14.2659   15.9123</span>
+<span class="sd">    chestpainatypicalAngina      0.5668   -1.8839</span>
+<span class="sd">    chestpainnonAnginal          3.4872    1.6652</span>
+<span class="sd">    chestpaintypicalAngina      -2.8081   -7.4223</span>
+<span class="sd">    restbpress                   0.3460    0.3690</span>
+<span class="sd">    cholesteral                  0.0407    0.0373</span>
+<span class="sd">    sugarlow                    10.4057   11.7146</span>
+<span class="sd">    electrosttAbnormality      -15.8118  -12.8213</span>
+<span class="sd">    electroventricHypertrophy   -1.8553   -1.2411</span>
+<span class="sd">    maxHeartRate                 0.4856    0.4579</span>
+<span class="sd">    ExerciseAnginayes            4.9170    5.9612</span>
+<span class="sd">    oldpeak                      3.0652    3.7751</span>
+<span class="sd">    slopeflat                   18.6429   19.8215</span>
+<span class="sd">    slopeupsloping              14.7467   15.2526</span>
+<span class="sd">    vesselsColored              -2.5087   -1.0308</span>
+<span class="sd">    thalnormal                  21.1525   20.1211</span>
+<span class="sd">    thalreversableEffect        14.8540   16.1636</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">obj</span><span class="o">.</span><span class="n">model_</span> <span class="o">==</span> <span class="s2">&quot;candisc&quot;</span><span class="p">:</span>
+        <span class="n">summaryCANDISC</span><span class="p">(</span><span class="n">obj</span><span class="o">=</span><span class="n">obj</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">obj</span><span class="o">.</span><span class="n">model_</span> <span class="o">==</span> <span class="s2">&quot;cpls&quot;</span><span class="p">:</span>
+        <span class="n">summaryCPLS</span><span class="p">(</span><span class="n">obj</span><span class="o">=</span><span class="n">obj</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">obj</span><span class="o">.</span><span class="n">model_</span> <span class="o">==</span> <span class="s2">&quot;dica&quot;</span><span class="p">:</span>
+        <span class="n">summaryDiCA</span><span class="p">(</span><span class="n">obj</span><span class="o">=</span><span class="n">obj</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">obj</span><span class="o">.</span><span class="n">model_</span> <span class="o">==</span> <span class="s2">&quot;discrim&quot;</span><span class="p">:</span>
+        <span class="n">summaryDISCRIM</span><span class="p">(</span><span class="n">obj</span><span class="o">=</span><span class="n">obj</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">obj</span><span class="o">.</span><span class="n">model_</span> <span class="o">==</span> <span class="s2">&quot;gfalda&quot;</span><span class="p">:</span>
+        <span class="n">summaryGFALDA</span><span class="p">(</span><span class="n">obj</span><span class="o">=</span><span class="n">obj</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">obj</span><span class="o">.</span><span class="n">model_</span> <span class="o">==</span> <span class="s2">&quot;mda&quot;</span><span class="p">:</span>
+        <span class="n">summaryMDA</span><span class="p">(</span><span class="n">obj</span><span class="o">=</span><span class="n">obj</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">obj</span><span class="o">.</span><span class="n">model_</span> <span class="o">==</span> <span class="s2">&quot;plsda&quot;</span><span class="p">:</span>
+        <span class="n">summaryPLSDA</span><span class="p">(</span><span class="n">obj</span><span class="o">=</span><span class="n">obj</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">obj</span><span class="o">.</span><span class="n">model_</span> <span class="o">==</span> <span class="s2">&quot;plslda&quot;</span><span class="p">:</span>
+        <span class="n">summaryPLSLDA</span><span class="p">(</span><span class="n">obj</span><span class="o">=</span><span class="n">obj</span><span class="p">,</span><span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;&#39;obj&#39; must be an object of class CANDISC, CPLS, DiCA, DISCRIM, GFALDA, MDA, PLSDA or PLSLDA&quot;</span><span class="p">)</span></div>
+
+</pre></div>
+
+                </article>
+              
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+          </footer>
+        
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../../_static/scripts/bootstrap.js?digest=8878045cc6db502f8baf"></script>
+<script defer src="../../../_static/scripts/pydata-sphinx-theme.js?digest=8878045cc6db502f8baf"></script>
+
+  <footer class="bd-footer">
+<div class="bd-footer__inner bd-page-width">
+  
+    <div class="footer-items__start">
+      
+        <div class="footer-item">
+
+  <p class="copyright">
+    
+      © Copyright 2025, Duvérier DJIFACK ZEBAZE.
+      <br/>
+    
+  </p>
+</div>
+      
+        <div class="footer-item">
+
+  <p class="sphinx-version">
+    Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    <br/>
+  </p>
+</div>
+      
+    </div>
+  
+  
+  
+    <div class="footer-items__end">
+      
+        <div class="footer-item">
+<p class="theme-version">
+  <!-- # L10n: Setting the PST URL as an argument as this does not need to be localized -->
+  Built with the <a href="https://pydata-sphinx-theme.readthedocs.io/en/stable/index.html">PyData Sphinx Theme</a> 0.16.1.
+</p></div>
+      
+    </div>
+  
+</div>
+
+  </footer>
+  </body>
+</html>
