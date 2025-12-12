@@ -57,3 +57,4 @@ numfig_format = {
     'table': 'Table %s',
 }
 email_automode = True # for mail
+nbsphinx_execute = "never" # to generate PDF without execute ipynb
