@@ -9,12 +9,12 @@ setuptools.setup(
     name="discrimintools",
     version="0.1.0",
     author="Duvérier DJIFACK ZEBAZE",
-    author_email="duverierdjifack@gmail.com",
+    author_email="djifacklab@gmail.com",
     description="Python package dedicated to Discriminant Analysis (DA) distributed under the MIT License",
     long_description_content_type="text/markdown",
     long_description=long_description,
     url="https://github.com/enfantbenidedieu/discrimintools",
-    packages=setuptools.find_packages(where="discrimintools"),
+    packages=setuptools.find_packages(where="."),
     classifiers=[
         "Intended Audience :: Science/Research",
         "Intended Audience :: Developers",
@@ -33,10 +33,16 @@ setuptools.setup(
         "openpyxl>=3.1.5",
         "tabulate>=0.9.0",
         "plotnine>=0.15.1",
-        "adjustText>=1.3.0"
+        "adjustText>=1.3.0",
         "ipython>=9.8.0",
         "great_tables>=0.20.0"
     ],
+    include_package_data=True,
+    package_data={
+        "": [
+            "data/*",              
+        ],
+    },
     keywords="linear discriminant analysis, quadratic discriminant analysis, disqual, dismix, dica",
     project_urls={
         "Bug Reports": "https://github.com/enfantbenidedieu/discrimintools/issues",
