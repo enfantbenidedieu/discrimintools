@@ -10,7 +10,7 @@ CANDISC
 ~~~~~~~
 
 .. autosummary::
-   :toctree: plot/
+   :toctree: 
 
    plot.fviz_candisc
    plot.fviz_candisc_biplot
@@ -21,7 +21,7 @@ DiCA
 ~~~~
 
 .. autosummary::
-   :toctree: plot/
+   :toctree: 
 
    plot.fviz_dica
    plot.fviz_dica_biplot
@@ -33,7 +33,7 @@ Distance
 ~~~~~~~~
 
 .. autosummary::
-   :toctree: plot/
+   :toctree: 
 
    plot.fviz_dist
 
@@ -41,7 +41,7 @@ PLSR
 ~~~~
 
 .. autosummary::
-   :toctree: plot/
+   :toctree: 
 
    plot.fviz_plsr
    plot.fviz_plsr_ind
@@ -51,7 +51,7 @@ Others
 ~~~~~~
 
 .. autosummary::
-   :toctree: plot/
+   :toctree: 
 
    plot.add_scatter
    plot.fviz_circle

@@ -7,7 +7,7 @@ This page gives an overview of all public ``discrimintools`` datasets.
 .. currentmodule:: discrimintools
 
 .. autosummary::
-   :toctree: datasets/
+   :toctree:
    
    datasets.load_alcools
    datasets.load_autos

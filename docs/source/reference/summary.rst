@@ -7,7 +7,7 @@ This page gives an overview of all public ``discrimintools`` summary functions.
 .. currentmodule:: discrimintools
 
 .. autosummary::
-   :toctree: summary/
+   :toctree: 
 
    summary.eval_predict
    summary.summaryCANDISC
