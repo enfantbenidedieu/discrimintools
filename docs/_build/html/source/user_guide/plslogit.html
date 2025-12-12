@@ -420,14 +420,14 @@
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a>
 </h2>
-<p><a class="reference internal" href="../reference/discriminant_analysis/discrimintools.discriminant_analysis.PLSLOGIT.html#discrimintools.discriminant_analysis.PLSLOGIT" title="discrimintools.discriminant_analysis.PLSLOGIT"><code class="xref py py-class docutils literal notranslate"><span class="pre">PLSLOGIT</span></code></a> combines PLS Regression and Logistic Regression. It can handle multiclass
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">PLSLOGIT</span></code> combines PLS Regression and Logistic Regression. It can handle multiclass
 problem i.e. the target variable can have <span class="math notranslate nohighlight">\(K \left(K \geq 2\right)\)</span> classes. It relies on the same principle
-<a class="reference internal" href="../reference/discriminant_analysis/discrimintools.discriminant_analysis.PLSLDA.html#discrimintools.discriminant_analysis.PLSLDA" title="discrimintools.discriminant_analysis.PLSLDA"><code class="xref py py-class docutils literal notranslate"><span class="pre">PLSLDA</span></code></a> about the number of components detection.</p>
+<code class="xref py py-class docutils literal notranslate"><span class="pre">PLSLDA</span></code> about the number of components detection.</p>
 </section>
 <section id="description-of-the-method">
 <h2>Description of the method<a class="headerlink" href="#description-of-the-method" title="Link to this heading">#</a>
 </h2>
-<p>There are two main steps in the learning process. Firstly, using the same coding scheme as <a class="reference internal" href="../reference/discriminant_analysis/discrimintools.discriminant_analysis.PLSDA.html#discrimintools.discriminant_analysis.PLSDA" title="discrimintools.discriminant_analysis.PLSDA"><code class="xref py py-class docutils literal notranslate"><span class="pre">PLSDA</span></code></a>,
+<p>There are two main steps in the learning process. Firstly, using the same coding scheme as <code class="xref py py-class docutils literal notranslate"><span class="pre">PLSDA</span></code>,
 we launch the PLS algorithm. Secondly, we launch the logistic regression on the X
 component scores (factors). This kind of data transformation is very useful when the original input variables are highly correlated.</p>
 </section>
@@ -439,7 +439,7 @@ component scores (factors). This kind of data transformation is very useful when
 <section id="number-of-components">
 <h2>Number of components<a class="headerlink" href="#number-of-components" title="Link to this heading">#</a>
 </h2>
-<p>In <a class="reference internal" href="../reference/discriminant_analysis/discrimintools.discriminant_analysis.PLSLOGIT.html#discrimintools.discriminant_analysis.PLSLOGIT" title="discrimintools.discriminant_analysis.PLSLOGIT"><code class="xref py py-class docutils literal notranslate"><span class="pre">PLSLOGIT</span></code></a> procedure, we can explicitly specify the number of components, with the parameter <code class="docutils literal notranslate"><span class="pre">n_components</span></code>, for NIPALS <a class="footnote-reference brackets" href="#id2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> algorithms.</p>
+<p>In <code class="xref py py-class docutils literal notranslate"><span class="pre">PLSLOGIT</span></code> procedure, we can explicitly specify the number of components, with the parameter <code class="docutils literal notranslate"><span class="pre">n_components</span></code>, for NIPALS <a class="footnote-reference brackets" href="#id2" id="id1" role="doc-noteref"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></a> algorithms.</p>
 <p class="rubric">References</p>
 <aside class="footnote-list brackets">
 <aside class="footnote brackets" id="id2" role="doc-footnote">

@@ -444,7 +444,7 @@ The variable <span class="math notranslate nohighlight">\(Z\)</span> is defined 
 <section id="number-of-components">
 <h2>Number of components<a class="headerlink" href="#number-of-components" title="Link to this heading">#</a>
 </h2>
-<p>In <a class="reference internal" href="../reference/discriminant_analysis/discrimintools.discriminant_analysis.CPLS.html#discrimintools.discriminant_analysis.CPLS" title="discrimintools.discriminant_analysis.CPLS"><code class="xref py py-class docutils literal notranslate"><span class="pre">CPLS</span></code></a> procedure, we can explicitly specify the number of components, with the parameter <code class="docutils literal notranslate"><span class="pre">n_components</span></code>, for NIPALS <a class="footnote-reference brackets" href="#id4" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> algorithms.</p>
+<p>In <code class="xref py py-class docutils literal notranslate"><span class="pre">CPLS</span></code> procedure, we can explicitly specify the number of components, with the parameter <code class="docutils literal notranslate"><span class="pre">n_components</span></code>, for NIPALS <a class="footnote-reference brackets" href="#id4" id="id2" role="doc-noteref"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></a> algorithms.</p>
 </section>
 <section id="vip">
 <h2>VIP<a class="headerlink" href="#vip" title="Link to this heading">#</a>
@@ -458,7 +458,7 @@ importance for the selected factors.</p>
 <div class="math notranslate nohighlight">
 \[VIP_{j} = \sqrt{\dfrac{p}{\displaystyle \sum_{h=1}^{h=H}R^{2}\left(y,t_{h}\right)}\displaystyle \sum_{h=1}^{h=H}R^{2}\left(y,t_{h}\right) w_{j,h}^{2}}\]</div>
 <p>where <span class="math notranslate nohighlight">\(R^{2}\left(y,t_{h}\right)\)</span> is the square correlation coefficient between <span class="math notranslate nohighlight">\(y\)</span> and <span class="math notranslate nohighlight">\(t_{h}\)</span>; <span class="math notranslate nohighlight">\(w_{j,h}\)</span> is the <span class="math notranslate nohighlight">\(x\)</span>-weight coefficient.</p>
-<p>Variables with a VIP score greater than <span class="math notranslate nohighlight">\(1\)</span> (default <code class="docutils literal notranslate"><span class="pre">threshold</span></code> in <a class="reference internal" href="../reference/discriminant_analysis/discrimintools.discriminant_analysis.CPLS.html#discrimintools.discriminant_analysis.CPLS" title="discrimintools.discriminant_analysis.CPLS"><code class="xref py py-class docutils literal notranslate"><span class="pre">CPLS</span></code></a> procedure) are considered important for the projection of the PLS regression.</p>
+<p>Variables with a VIP score greater than <span class="math notranslate nohighlight">\(1\)</span> (default <code class="docutils literal notranslate"><span class="pre">threshold</span></code> in <code class="xref py py-class docutils literal notranslate"><span class="pre">CPLS</span></code> procedure) are considered important for the projection of the PLS regression.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>These selections rules must be use with caution because the VIP reflects only the relative importance (each others) of the input variables.

@@ -8,5 +8,3 @@ API reference
    :maxdepth: 2
 
    discriminant_analysis
-   summary
-   plot

@@ -420,7 +420,7 @@
 <section id="overview">
 <h2>Overview<a class="headerlink" href="#overview" title="Link to this heading">#</a>
 </h2>
-<p><a class="reference internal" href="../reference/discriminant_analysis/discrimintools.discriminant_analysis.GFALDA.html#discrimintools.discriminant_analysis.GFALDA" title="discrimintools.discriminant_analysis.GFALDA"><code class="xref py py-class docutils literal notranslate"><span class="pre">GFALDA</span></code></a> combines General factor analysis <a class="reference internal" href="../reference/discriminant_analysis/discrimintools.discriminant_analysis.GFA.html#discrimintools.discriminant_analysis.GFA" title="discrimintools.discriminant_analysis.GFA"><code class="xref py py-class docutils literal notranslate"><span class="pre">GFA</span></code></a> and Linear Discriminant Analysis. It can handle multiclass
+<p><code class="xref py py-class docutils literal notranslate"><span class="pre">GFALDA</span></code> combines General factor analysis <code class="xref py py-class docutils literal notranslate"><span class="pre">GFA</span></code> and Linear Discriminant Analysis. It can handle multiclass
 problem i.e. the target variable can have <span class="math notranslate nohighlight">\(K \left(K \geq 2\right)\)</span> classes.</p>
 </section>
 <section id="description-of-the-method">
@@ -428,7 +428,7 @@ problem i.e. the target variable can have <span class="math notranslate nohighli
 </h2>
 <p>There are two main steps in the learning process. Firstly, we launch the general factor analysis algorithm on <span class="math notranslate nohighlight">\(X\)</span>.
 Secondly, we launch the linear discriminant analysis on the X component scores (factors).
-Because these factors are orthogonal, the <a class="reference internal" href="../reference/discriminant_analysis/discrimintools.discriminant_analysis.DISCRIM.html#discrimintools.discriminant_analysis.DISCRIM" title="discrimintools.discriminant_analysis.DISCRIM"><code class="xref py py-class docutils literal notranslate"><span class="pre">DISCRIM</span></code></a> is more reliable. This
+Because these factors are orthogonal, the <code class="xref py py-class docutils literal notranslate"><span class="pre">DISCRIM</span></code> is more reliable. This
 kind of data transformation is very useful when the original input variables are highly correlated.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -442,7 +442,7 @@ kind of data transformation is very useful when the original input variables are
 <section id="predictive-idea">
 <h2>Predictive idea<a class="headerlink" href="#predictive-idea" title="Link to this heading">#</a>
 </h2>
-<p>The classification rule is the same as the <a class="reference internal" href="../reference/discriminant_analysis/discrimintools.discriminant_analysis.DISCRIM.html#discrimintools.discriminant_analysis.DISCRIM" title="discrimintools.discriminant_analysis.DISCRIM"><code class="xref py py-class docutils literal notranslate"><span class="pre">DISCRIM</span></code></a> component.</p>
+<p>The classification rule is the same as the <code class="xref py py-class docutils literal notranslate"><span class="pre">DISCRIM</span></code> component.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
 <p>Because we combine two approaches, it is very difficult to evaluate the influence of the
@@ -452,7 +452,7 @@ original features. For this reason no information is provided about the relevanc
 <section id="number-of-components">
 <h2>Number of components<a class="headerlink" href="#number-of-components" title="Link to this heading">#</a>
 </h2>
-<p>In <a class="reference internal" href="../reference/discriminant_analysis/discrimintools.discriminant_analysis.GFALDA.html#discrimintools.discriminant_analysis.GFALDA" title="discrimintools.discriminant_analysis.GFALDA"><code class="xref py py-class docutils literal notranslate"><span class="pre">GFALDA</span></code></a> procedure, we can explicitly specify the number of components, with the parameter <code class="docutils literal notranslate"><span class="pre">n_components</span></code>.</p>
+<p>In <code class="xref py py-class docutils literal notranslate"><span class="pre">GFALDA</span></code> procedure, we can explicitly specify the number of components, with the parameter <code class="docutils literal notranslate"><span class="pre">n_components</span></code>.</p>
 </section>
 </section>
 
