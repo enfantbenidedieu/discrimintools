@@ -5,7 +5,6 @@ def check_is_valid_axis(
 ):
     """
     Performs is_valid_axis validation
-    ---------------------------------
 
     Parameters
     ----------
@@ -38,7 +37,6 @@ def check_is_valid_geom(
 ):
     """
     Check is_valid_geom validation
-    ------------------------------
 
     Parameters
     ----------

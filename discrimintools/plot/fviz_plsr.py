@@ -32,12 +32,12 @@ def fviz_plsr_ind(
     """
     Visualize Partial Least Squares Regression - Graph of individuals
     
-    :class:`~discrimintools.plot.fviz_plsr_ind` provides plotnine based elegant visualization of :class:`~discrimintools.discriminant_analysis.CPLS`, :class:`~discrimintools.discriminant_analysis.PLSDA`, :class:`~discrimintools.discriminant_analysis.PLSLDA` and :class:`~discrimintools.discriminant_analysis.PLSLOGIT` outputs for individuals.
+    :class:`~discrimintools.fviz_plsr_ind` provides plotnine based elegant visualization of :class:`~discrimintools.CPLS`, :class:`~discrimintools.PLSDA`, :class:`~discrimintools.PLSLDA` and :class:`~discrimintools.PLSLOGIT` outputs for individuals.
 
     Parameters
     ----------
     obj : class
-        An instance of class :class:`~discrimintools.discriminant_analysis.CPLS`, :class:`~discrimintools.discriminant_analysis.PLSDA`, :class:`~discrimintools.discriminant_analysis.PLSLDA`, :class:`~discrimintools.discriminant_analysis.PLSLOGIT`.
+        An instance of class :class:`~discrimintools.CPLS`, :class:`~discrimintools.PLSDA`, :class:`~discrimintools.PLSLDA`, :class:`~discrimintools.PLSLOGIT`.
     
     axis : list, defaul=[0,1]
         Dimensions to be plotted.
@@ -107,11 +107,11 @@ def fviz_plsr_ind(
 
     See also
     --------
-    :class:`~discrimintools.plot.fviz_plsr`
+    :class:`~discrimintools.fviz_plsr`
         Visualize Partial Least Squares Regression (CPLS, PLSDA, PLSLDA, PLSLOGIT).
-    :class:`~discrimintools.plot.fviz_plsr_var`
+    :class:`~discrimintools.fviz_plsr_var`
         Visualize Partial Least Squares Regression (CPLS, PLSDA, PLSLDA, PLSLOGIT) - Graph of variables.
-    :class:`~discrimintools.plot.fviz_dist`
+    :class:`~discrimintools.fviz_dist`
         Visualize distance between barycenter.
 
     Examples
@@ -126,8 +126,9 @@ def fviz_plsr_ind(
     >>> p = fviz_plsr_ind(clf) # graph of individuals
     >>> print(p)
 
-    .. figure:: ../../../_static/fviz_plsr_ind.png
-        :scale: 90%
+    .. figure:: ../../../../_static/fviz_plsr_ind.png
+    
+        Graph of individuals - CPLS
     """
     #---------------------------------------------------------------------------------------------------------------------------------------------------------------------
     #check if obj is an instance of class CPLS, PLSDA, PLSLDA, PLSLOGIT
@@ -245,12 +246,12 @@ def fviz_plsr_var(
     """
     Visualize Partial Least Squares Regression - Graph of variables
 
-    :class:`~discrimintools.plot.fviz_plsr_var` provides plotnine based elegant visualization of :class:`~discrimintools.discriminant_analysis.CPLS`, :class:`~discrimintools.discriminant_analysis.PLSDA`,:class:`~discrimintools.discriminant_analysis.PLSLDA` and :class:`~discrimintools.discriminant_analysis.PLSLOGIT` outputs for variables.
+    :class:`~discrimintools.fviz_plsr_var` provides plotnine based elegant visualization of :class:`~discrimintools.CPLS`, :class:`~discrimintools.PLSDA`,:class:`~discrimintools.PLSLDA` and :class:`~discrimintools.PLSLOGIT` outputs for variables.
     
     Parameters
     ----------
     obj : class
-        An instance of class :class:`~discrimintools.discriminant_analysis.CPLS`, :class:`~discrimintools.discriminant_analysis.PLSDA`, :class:`~discrimintools.discriminant_analysis.PLSLDA` or :class:`~discrimintools.discriminant_analysis.PLSLOGIT`.
+        An instance of class :class:`~discrimintools.CPLS`, :class:`~discrimintools.PLSDA`, :class:`~discrimintools.PLSLDA` or :class:`~discrimintools.PLSLOGIT`.
     
     axis : list, defaul = [0,1]
         Dimensions to be plotted.
@@ -314,11 +315,11 @@ def fviz_plsr_var(
 
     See also
     --------
-    :class:`~discrimintools.plot.fviz_plsr`
+    :class:`~discrimintools.fviz_plsr`
         Visualize Partial Least Squares Regression (CPLS, PLSDA, PLSLDA, PLSLOGIT)
-    :class:`~discrimintools.plot.fviz_plsr_ind`
+    :class:`~discrimintools.fviz_plsr_ind`
         Visualize Partial Least Squares Regression (CPLS, PLSDA, PLSLDA, PLSLOGIT) - Graph of individuals.
-    :class:`~discrimintools.plot.fviz_dist`
+    :class:`~discrimintools.fviz_dist`
         Visualize distance between barycenter.
 
     Examples
@@ -333,8 +334,9 @@ def fviz_plsr_var(
     >>> p = fviz_plsr_var(clf) # graph of variables
     >>> print(p)
 
-    .. figure:: ../../../_static/fviz_plsr_var.png
-        :scale: 90%
+    .. figure:: ../../../../_static/fviz_plsr_var.png
+        
+        Graph of variables - CPLS
     """
     #---------------------------------------------------------------------------------------------------------------------------------------------------------------------
     #check if obj is an instance of class CPLS, PLSDA, PLSLDA, PLSLOGIT
@@ -398,12 +400,12 @@ def fviz_plsr(
     """
     Visualize Partial Least Squares Regression (CPLS, PLSDA, PLSLDA, PLSLOGIT)
 
-    :class:`~discrimintools.plot.fviz_plsr` provides plotnine based elegant visualization of :class:`~discrimintools.discriminant_analysis.CPLS`, :class:`~discrimintools.discriminant_analysis.PLSDA`, :class:`~discrimintools.discriminant_analysis.PLSLDA` and :class:`~discrimintools.discriminant_analysis.PLSLOGIT` outputs.
+    :class:`~discrimintools.fviz_plsr` provides plotnine based elegant visualization of :class:`~discrimintools.CPLS`, :class:`~discrimintools.PLSDA`, :class:`~discrimintools.PLSLDA` and :class:`~discrimintools.PLSLOGIT` outputs.
     
     Parameters
     ----------
     obj : class
-        An object of class :class:`~discrimintools.discriminant_analysis.CPLS`, :class:`~discrimintools.discriminant_analysis.PLSDA`, :class:`~discrimintools.discriminant_analysis.PLSLDA`, :class:`~discrimintools.discriminant_analysis.PLSLOGIT`.
+        An object of class :class:`~discrimintools.CPLS`, :class:`~discrimintools.PLSDA`, :class:`~discrimintools.PLSLDA`, :class:`~discrimintools.PLSLOGIT`.
 
     element : str, default = 'ind'
         The element to plot from the output, possible values:
@@ -422,11 +424,11 @@ def fviz_plsr(
 
     See also
     --------
-    :class:`~discrimintools.plot.fviz_plsr_ind`
+    :class:`~discrimintools.fviz_plsr_ind`
         Visualize Partial Least Squares Regression (CPLS, PLSDA, PLSLDA, PLSLOGIT) - Graph of individuals.
-    :class:`~discrimintools.plot.fviz_plsr_var`
+    :class:`~discrimintools.fviz_plsr_var`
         Visualize Partial Least Squares Regression (CPLS, PLSDA, PLSLDA, PLSLOGIT) - Graph of variables.
-    :class:`~discrimintools.plot.fviz_dist`
+    :class:`~discrimintools.fviz_dist`
         Visualize distance between barycenter.
 
     Examples
@@ -444,24 +446,27 @@ def fviz_plsr(
     >>> p = fviz_plsr(clf, "ind") # graph of individuals
     >>> print(p)
 
-    .. figure:: ../../../_static/fviz_plsr_ind.png
-        :scale: 90%
+    .. figure:: ../../../../_static/fviz_plsr_ind.png
+        
+        Graph of individuals - CPLS
 
     Graph of variables...
         
     >>> p = fviz_cpls(clf, "var") # graph of variables
     >>> print(p)
 
-    .. figure:: ../../../_static/fviz_plsr_var.png
-        :scale: 90%
+    .. figure:: ../../../../_static/fviz_plsr_var.png
+
+        Graph of variables - CPLS
 
     Distance between class barycenter.
 
     >>> p = fviz_cpls(clf, "dist") # graph of distance
     >>> print(p)
 
-    .. figure:: ../../../_static/fviz_plsr_dist.png
-        :scale: 90%
+    .. figure:: ../../../../_static/fviz_plsr_dist.png
+        
+        Distance between barycenter - CPLS
     """
     if element == "ind":
         return fviz_plsr_ind(obj,**kwargs)

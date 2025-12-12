@@ -6,13 +6,7 @@ def box_m_test(W,n_k):
     """
     Box-M test
 
-    Performs multiple sample hypothesis test that covariance matrices are equal. The Null and alternative hypotheses are
-
-    .. math::
-       H0 &: \Sigma_i = \Sigma_j  \text{ for all i and j} \\
-       H1 &: \Sigma_i \neq \Sigma_j \text{ for at least one i and j}
-
-    where :math:`\Sigma_i` is the covariance of sample `i`.
+    Performs multiple sample hypothesis test that covariance matrices are equal.
 
     Parameters
     ----------

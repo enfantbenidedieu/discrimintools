@@ -32,12 +32,12 @@ def fviz_dica_ind(
     """
     Visualize Discriminant Correspondence Analysis (DiCA) - Graph of individuals
 
-    Discriminant correspondence analysis (DiCA) is a canonical discriminant analysis on qualitative predictors. :class:`~discrimintools.plot.fviz_dica_ind` provides plotnine based elegant visualization of DiCA outputs for individuals.
+    Discriminant correspondence analysis (DiCA) is a canonical discriminant analysis on qualitative predictors. :class:`~discrimintools.fviz_dica_ind` provides plotnine based elegant visualization of DiCA outputs for individuals.
 
     Parameters
     ----------
     obj : class
-        An instance of class :class:`~discrimintools.discriminant_analysis.DiCA`
+        An instance of class :class:`~discrimintools.DiCA`
     
     axis : list, defaul = [0,1]
         Dimensions to be plotted
@@ -107,15 +107,15 @@ def fviz_dica_ind(
 
     See also
     --------
-    :class:`~discrimintools.plot.fviz_dica`
+    :class:`~discrimintools.fviz_dica`
         Visualize Discriminant Correspondence Analysis (DiCA).
-    :class:`~discrimintools.plot.fviz_dica_biplot`
+    :class:`~discrimintools.fviz_dica_biplot`
         Visualize Discriminant Correspondence Analysis (DiCA) - Biplot of individuals and variables.
-    :class:`~discrimintools.plot.fviz_dica_quali_var`
+    :class:`~discrimintools.fviz_dica_quali_var`
         Visualize Discriminant Correspondence Analysis (DiCA) - Graph of qualitative variables.
-    :class:`~discrimintools.plot.fviz_dica_var`
+    :class:`~discrimintools.fviz_dica_var`
         Visualize Discriminant Correspondence Analysis (DiCA) - graph of variables/categories.
-    :class:`~discrimintools.plot.fviz_dist`
+    :class:`~discrimintools.fviz_dist`
         Visualize distance between barycenter.
 
     Examples
@@ -131,7 +131,8 @@ def fviz_dica_ind(
     >>> print(p)
 
     .. figure:: ../../../_static/fviz_dica_ind.png
-        :scale: 90%
+        
+        Graph if individuals - DiCA
     """
     #---------------------------------------------------------------------------------------------------------------------------------------------------------------------
     #check if obj is an instance of class DiCA
@@ -249,12 +250,12 @@ def fviz_dica_var(
     """
     Visualize Discriminant Correspondence Analysis (DiCA) - Graph of variables/categories
 
-    Discriminant correspondence analysis (DiCA) is a canonical discriminant analysis on qualitative predictors. :class:`~discrimintools.plot.fviz_dica_var` provides plotnine based elegant visualization of DiCA outputs for variables/categories.
+    Discriminant correspondence analysis (DiCA) is a canonical discriminant analysis on qualitative predictors. :class:`~discrimintools.fviz_dica_var` provides plotnine based elegant visualization of DiCA outputs for variables/categories.
 
     Parameters
     ----------
     obj : class
-        An instance of class :class:`~discrimintools.discriminant_analysis.DiCA`.
+        An instance of class :class:`~discrimintools.DiCA`.
     
     axis : list, defaul = [0,1]
         Dimensions to be plotted.
@@ -327,15 +328,15 @@ def fviz_dica_var(
 
     See also
     --------
-    :class:`~discrimintools.plot.fviz_dica`
+    :class:`~discrimintools.fviz_dica`
         Visualize Discriminant Correspondence Analysis (DiCA).
-    :class:`~discrimintools.plot.fviz_dica_biplot`
+    :class:`~discrimintools.fviz_dica_biplot`
         Visualize Discriminant Correspondence Analysis (DiCA) - Biplot of individuals and variables.
-    :class:`~discrimintools.plot.fviz_dica_ind`
+    :class:`~discrimintools.fviz_dica_ind`
         Visualize Discriminant Correspondence Analysis (DiCA) - Graph of individuals.
-    :class:`~discrimintools.plot.fviz_dica_quali_var`
+    :class:`~discrimintools.fviz_dica_quali_var`
         Visualize Discriminant Correspondence Analysis (DiCA) - Graph of qualitative variables.
-    :class:`~discrimintools.plot.fviz_dist`
+    :class:`~discrimintools.fviz_dist`
         Visualize distance between barycenter.
 
     Examples
@@ -350,8 +351,9 @@ def fviz_dica_var(
     >>> p = fviz_dica_var(clf) # graph of variables
     >>> print(p)
 
-    .. figure:: ../../../_static/fviz_dica_var.png
-        :scale: 90%
+    .. figure:: ../../../../_static/fviz_dica_var.png
+        
+        Graph of variables - DiCA
     """
     #---------------------------------------------------------------------------------------------------------------------------------------------------------------------
     #check if obj is an instance of class DiCA
@@ -447,12 +449,12 @@ def fviz_dica_quali_var(
     """
     Visualize Discriminant Correspondence Analysis (DiCA) - Graph of qualitative variables
 
-    Discriminant correspondence analysis (DiCA) is a canonical discriminant analysis on qualitative predictors. :class:`~discrimintools.plot.fviz_dica_quali_var` provides plotnine based elegant visualization of DiCA outputs for qualitative variables.
+    Discriminant correspondence analysis (DiCA) is a canonical discriminant analysis on qualitative predictors. :class:`~discrimintools.fviz_dica_quali_var` provides plotnine based elegant visualization of DiCA outputs for qualitative variables.
 
     Parameters
     ----------
     obj : class
-        An instance of class :class:`~discrimintools.discriminant_analysis.DiCA`.
+        An instance of class :class:`~discrimintools.DiCA`.
     
     axis : list, defaul = [0,1]
         Dimensions to be plotted.
@@ -510,15 +512,15 @@ def fviz_dica_quali_var(
 
     See also
     --------
-    :class:`~discrimintools.plot.fviz_dica`
+    :class:`~discrimintools.fviz_dica`
         Visualize Discriminant Correspondence Analysis (DiCA)
-    :class:`~discrimintools.plot.fviz_dica_biplot`
+    :class:`~discrimintools.fviz_dica_biplot`
         Visualize Discriminant Correspondence Analysis (DiCA) - Biplot of individuals and variables
-    :class:`~discrimintools.plot.fviz_dica_ind`
+    :class:`~discrimintools.fviz_dica_ind`
         Visualize Discriminant Correspondence Analysis (DiCA) - Graph of individuals
-    :class:`~discrimintools.plot.fviz_dica_var`
+    :class:`~discrimintools.fviz_dica_var`
         Visualize Discriminant Correspondence Analysis (DiCA) - Graph of variables/categories
-    :class:`~discrimintools.plot.fviz_dist`
+    :class:`~discrimintools.fviz_dist`
         Visualize distance between barycenter.
 
     Examples
@@ -533,8 +535,9 @@ def fviz_dica_quali_var(
     >>> p = fviz_dica_quali_var(clf) # graph of qualitative variables
     >>> print(p)
 
-    .. figure:: ../../../_static/fviz_dica_quali_var.png
-        :scale: 90%
+    .. figure:: ../../../../_static/fviz_dica_quali_var.png
+        
+        Graph of qualitative variables - DiCA
     """
     #---------------------------------------------------------------------------------------------------------------------------------------------------------------------
     #check if obj is an instance of class DiCA
@@ -606,15 +609,15 @@ def fviz_dica_biplot(
     """
     Visualize Discriminant Correspondence Analysis (DiCA) - Biplot of individuals and variables
 
-    Discriminant correspondence analysis (DiCA) is a canonical discriminant analysis on qualitative predictors. :class:`~discrimintools.plot.fviz_dica_biplot` provides plotnine based elegant visualization of DiCA outputs for individuals and variables.
+    Discriminant correspondence analysis (DiCA) is a canonical discriminant analysis on qualitative predictors. :class:`~discrimintools.fviz_dica_biplot` provides plotnine based elegant visualization of DiCA outputs for individuals and variables.
 
     Parameters
     ----------
     obj : class
-        An object of class :class:`~discrimintools.discriminant_analysis.DiCA`.
+        An object of class :class:`~discrimintools.DiCA`.
 
     **kwargs : 
-        further arguments passed to or from other methods. See :class:`~discrimintools.plot.fviz_dica_ind`, :class:`~discrimintools.plot.fviz_dica_var`.
+        further arguments passed to or from other methods. See :class:`~discrimintools.fviz_dica_ind`, :class:`~discrimintools.fviz_dica_var`.
 
     Returns
     -------
@@ -623,15 +626,15 @@ def fviz_dica_biplot(
 
     See also
     --------
-    :class:`~discrimintools.plot.fviz_dica`
+    :class:`~discrimintools.fviz_dica`
         Visualize Discriminant Correspondence Analysis (DiCA)
-    :class:`~discrimintools.plot.fviz_dica_ind`
+    :class:`~discrimintools.fviz_dica_ind`
         Visualize Discriminant Correspondence Analysis (DiCA) - Graph of individuals
-    :class:`~discrimintools.plot.fviz_dica_quali_var`
+    :class:`~discrimintools.fviz_dica_quali_var`
         Visualize Discriminant Correspondence Analysis (DiCA) - Graph of qualitative variables
-    :class:`~discrimintools.plot.fviz_dica_var`
+    :class:`~discrimintools.fviz_dica_var`
         Visualize Discriminant Correspondence Analysis (DiCA) - graph of variables/categories
-    :class:`~discrimintools.plot.fviz_dist`
+    :class:`~discrimintools.fviz_dist`
         Visualize distance between barycenter.    
 
     Examples
@@ -646,8 +649,9 @@ def fviz_dica_biplot(
     >>> p = fviz_dica_biplot(clf) # biplot of individuals and variables
     >>> print(p)
 
-    .. figure:: ../../../_static/fviz_dica_biplot.png
-        :scale: 90%
+    .. figure:: ../../../../_static/fviz_dica_biplot.png
+
+        Biplot of individuals and variables
     """
     #---------------------------------------------------------------------------------------------------------------------------------------------------------------------
     #check if obj is an instance of class DiCA
@@ -751,12 +755,12 @@ def fviz_dica(
     """
     Visualize Discriminant Correspondence Analysis (DiCA)
 
-    Discriminant correspondence analysis (DiCA) is a canonical discriminant analysis on qualitative predictors. :class:`~discrimintools.plot.fviz_dica` provides plotnine based elegant visualization of DiCA outputs.
+    Discriminant correspondence analysis (DiCA) is a canonical discriminant analysis on qualitative predictors. :class:`~discrimintools.fviz_dica` provides plotnine based elegant visualization of DiCA outputs.
     
     Parameters
     ----------
     obj : class
-        An object of class :class:`~discrimintools.discriminant_analysis.DiCA`.
+        An object of class :class:`~discrimintools.DiCA`.
 
     element : str, default = 'biplot'
         The element to plot from the output, possible values: 
@@ -777,15 +781,15 @@ def fviz_dica(
 
     See also
     --------
-    :class:`~discrimintools.plot.fviz_dica_biplot`
+    :class:`~discrimintools.fviz_dica_biplot`
         Visualize Discriminant Correspondence Analysis (DiCA) - Biplot of individuals and variables
-    :class:`~discrimintools.plot.fviz_dica_ind`
+    :class:`~discrimintools.fviz_dica_ind`
         Visualize Discriminant Correspondence Analysis (DiCA) - Graph of individuals
-    :class:`~discrimintools.plot.fviz_dica_quali_var`
+    :class:`~discrimintools.fviz_dica_quali_var`
         Visualize Discriminant Correspondence Analysis (DiCA) - Graph of qualitative variables
-    :class:`~discrimintools.plot.fviz_dica_var`
+    :class:`~discrimintools.fviz_dica_var`
         Visualize Discriminant Correspondence Analysis (DiCA) - graph of variables/categories
-    :class:`~discrimintools.plot.fviz_dist`
+    :class:`~discrimintools.fviz_dist`
         Visualize distance between barycenter.
 
     Examples
@@ -803,40 +807,45 @@ def fviz_dica(
     >>> p = fviz_dica(clf, "ind") # graph of individuals
     >>> print(p)
 
-    .. figure:: ../../../_static/fviz_dica_ind.png
-        :scale: 90%
+    .. figure:: ../../../../_static/fviz_dica_ind.png
 
-    Graph of variables ...
+        Graph of individuals - DiCA
+
+    Graph of variables/categories ...
 
     >>> p = fviz_dica(clf, "var") # graph of variables/categories
     >>> print(p)
 
-    .. figure:: ../../../_static/fviz_dica_var.png
-        :scale: 90%
+    .. figure:: ../../../../_static/fviz_dica_var.png
+
+        Graph of variables/categories - DiCA
 
     Graph of qualitative variables...
 
     >>> p = fviz_dica(clf, "quali_var") # graph of qualitative variables
     >>> print(p)
 
-    .. figure:: ../../../_static/fviz_dica_quali_var.png
-        :scale: 90%
+    .. figure:: ../../../../_static/fviz_dica_quali_var.png
+
+        Graph of qualitative variables - DiCA
 
     Biplot of individuals and variables...
 
     >>> p = fviz_dica(clf, "biplot") # biplot of individuals and variables
     >>> print(p)
 
-    .. figure:: ../../../_static/fviz_dica_biplot.png
-        :scale: 90%
+    .. figure:: ../../../../_static/fviz_dica_biplot.png
+
+        Biplot of individuals and variables - DiCA
 
     Distance between class barycenter.
 
     >>> p = fviz_dica(clf, "dist") # distance between barycenter
     >>> print(p)
 
-    .. figure:: ../../../_static/fviz_dica_dist.png
-        :scale: 90%
+    .. figure:: ../../../../_static/fviz_dica_dist.png
+
+        Distance between barycenter - DiCA
 
     """
     if element == "ind":

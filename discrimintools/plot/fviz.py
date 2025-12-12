@@ -74,8 +74,9 @@ def add_scatter(
     >>> p = add_scatter(ggplot(),clf.ind_.coord,repel=True)+theme_minimal()
     >>> print(p)
 
-    .. figure:: ../../../_static/add_scatter.png
-        :scale: 90%
+    .. figure:: ../../../../_static/add_scatter.png
+        
+        Add individuals points - CANDISC
     """
     #---------------------------------------------------------------------------------------------------------------------------------------------------------------------
     #check if p is an instance of class ggplot
@@ -170,8 +171,9 @@ def set_axis(
     >>> from discrimintools import set_axis
     >>> p = set_axis(ggplot())
 
-    .. figure:: ../../../_static/set_axis.png
-        :scale: 90%
+    .. figure:: ../../../../_static/set_axis.png
+        
+        Set axis ggplot
     """
     #set title
     if title is None:
@@ -293,8 +295,9 @@ def fviz_circle(
     >>> from discrimintools import fviz_circle
     >>> p = fviz_circle(ggplot()) + theme_minimal()
 
-    .. figure:: ../../../_static/fviz_circle.png
-        :scale: 90%
+    .. figure:: ../../../../_static/fviz_circle.png
+    
+        Draw circle ggplot
     """
     #---------------------------------------------------------------------------------------------------------------------------------------------------------------------
     #check if p is an instance of class ggplot

@@ -31,7 +31,7 @@ def fviz_dist(
     Parameters
     ----------
     obj : class
-        An instance of class :class:`~discrimintools.discriminant_analysis.CANDISC`, :class:`~discrimintools.discriminant_analysis.DiCA`, :class:`~discrimintools.discriminant_analysis.CPLS`, :class:`~discrimintools.discriminant_analysis.PLSDA`, :class:`~discrimintools.discriminant_analysis.PLSLDA`, :class:`~discrimintools.discriminant_analysis.PLSLOGIT`.
+        An instance of class :class:`~discrimintools.CANDISC`, :class:`~discrimintools.DiCA`, :class:`~discrimintools.CPLS`, :class:`~discrimintools.PLSDA`, :class:`~discrimintools.PLSLDA`, :class:`~discrimintools.PLSLOGIT`.
     
     axis : list, defaul=[0,1]
         Dimensions to be plotted
@@ -54,7 +54,7 @@ def fviz_dist(
         
     palette : None or list, default = None
         Color palette to be used for coloring by groups.
-    
+
     x_lim : None, list or tuple, default = None
         The range of the plotted ``x`` values
     
@@ -99,8 +99,9 @@ def fviz_dist(
     >>> p = fviz_dist(clf) # graph of distance between barycenter
     >>> print(p)
 
-    .. figure:: ../../../_static/fviz_candisc_dist.png
-        :scale: 90%
+    .. figure:: ../../../../_static/fviz_candisc_dist.png
+        
+        Distance between barycenter - CANDISC
     """
     #---------------------------------------------------------------------------------------------------------------------------------------------------------------------
     #check if obj is an instance of class CANDISC or DiCA

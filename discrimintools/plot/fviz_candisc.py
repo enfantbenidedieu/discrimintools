@@ -33,12 +33,12 @@ def fviz_candisc_ind(
     """
     Visualize Canonical Discriminant Analysis (CANDISC) - Graph of individuals
 
-    Canonical discriminant analysis is a dimension-reduction technique related to principal component analysis and canonical correlation. :class:`~discrimintools.plot.fviz_candisc_ind` provides plotnine based elegant visualization of CANDISC outputs for individuals.
+    Canonical discriminant analysis is a dimension-reduction technique related to principal component analysis and canonical correlation. :class:`~discrimintools.fviz_candisc_ind` provides plotnine based elegant visualization of CANDISC outputs for individuals.
 
     Parameters
     ----------
     obj : class
-        An instance of class :class:`~discrimintools.discriminant_analysis.CANDISC`.
+        An instance of class :class:`~discrimintools.CANDISC`.
     
     axis : list, defaul=[0,1]
         Dimensions to be plotted.
@@ -108,13 +108,13 @@ def fviz_candisc_ind(
 
     See also
     --------
-    :class:`~discrimintools.plot.fviz_candisc`
+    :class:`~discrimintools.fviz_candisc`
         Visualize Canonical Discriminant Analysis (CANDISC).
-    :class:`~discrimintools.plot.fviz_candisc_biplot`
+    :class:`~discrimintools.fviz_candisc_biplot`
         Visualize Canonical Discriminant Analysis (CANDISC) - Biplot of individuals and variables.
-    :class:`~discrimintools.plot.fviz_candisc_var`
+    :class:`~discrimintools.fviz_candisc_var`
         Visualize Canonical Discriminant Analysis (CANDISC) - Graph of variables.
-    :class:`~discrimintools.plot.fviz_dist`
+    :class:`~discrimintools.fviz_dist`
         Visualize distance between barycenter.
 
     Examples
@@ -129,8 +129,9 @@ def fviz_candisc_ind(
     >>> p = fviz_candisc_ind(clf) # graph of individuals
     >>> print(p)
 
-    .. figure:: ../../../_static/fviz_candisc_ind.png
-        :scale: 90%
+    .. figure:: ../../../../_static/fviz_candisc_ind.png
+    
+        Graph of individuals - CANDISC
     """
     #---------------------------------------------------------------------------------------------------------------------------------------------------------------------
     #check if obj is an instance of class CANDISC
@@ -248,12 +249,12 @@ def fviz_candisc_var(
     """
     Visualize Canonical Discriminant Analysis (CANDISC) - Graph of variables
 
-    Canonical discriminant analysis is a dimension-reduction technique related to principal component analysis and canonical correlation. :class:`~discrimintools.plot.fviz_candisc_var` provides plotnine based elegant visualization of CANDISC outputs for variables.
+    Canonical discriminant analysis is a dimension-reduction technique related to principal component analysis and canonical correlation. :class:`~discrimintools.fviz_candisc_var` provides plotnine based elegant visualization of CANDISC outputs for variables.
     
     Parameters
     ----------
     obj : class
-        An instance of class :class:`~discrimintools.discriminant_analysis.CANDISC`.
+        An instance of class :class:`~discrimintools.CANDISC`.
     
     axis : list, defaul = [0,1]
         Dimensions to be plotted
@@ -317,13 +318,13 @@ def fviz_candisc_var(
 
     See also
     --------
-    :class:`~discrimintools.plot.fviz_candisc`
+    :class:`~discrimintools.fviz_candisc`
         Visualize Canonical Discriminant Analysis (CANDISC).
-    :class:`~discrimintools.plot.fviz_candisc_biplot`
+    :class:`~discrimintools.fviz_candisc_biplot`
         Visualize Canonical Discriminant Analysis (CANDISC) - Biplot of individuals and variables.
-    :class:`~discrimintools.plot.fviz_candisc_ind`
+    :class:`~discrimintools.fviz_candisc_ind`
         Visualize Canonical Discriminant Analysis (CANDISC) - Graph of individuals.
-    :class:`~discrimintools.plot.fviz_dist`
+    :class:`~discrimintools.fviz_dist`
         Visualize distance between barycenter.
 
     Examples
@@ -338,8 +339,9 @@ def fviz_candisc_var(
     >>> p = fviz_candisc_var(clf) # graph of variables
     >>> print(p)
 
-    .. figure:: ../../../_static/fviz_candisc_var.png
-        :scale: 90%
+    .. figure:: ../../../../_static/fviz_candisc_var.png
+
+        Graph of variables - CANDISC
     """
     #---------------------------------------------------------------------------------------------------------------------------------------------------------------------
     #check if obj is an instance of class CANDISC
@@ -449,15 +451,15 @@ def fviz_candisc_biplot(
     """
     Visualize Canonical Discriminant Analysis (CANDISC) - Biplot of individuals and variables
 
-    Canonical discriminant analysis is a dimension-reduction technique related to principal component analysis and canonical correlation. :class:`~discrimintools.plot.fviz_candisc_biplot` provides plotnine based elegant visualization of CANDISC outputs for individuals and variables.
+    Canonical discriminant analysis is a dimension-reduction technique related to principal component analysis and canonical correlation. :class:`~discrimintools.fviz_candisc_biplot` provides plotnine based elegant visualization of CANDISC outputs for individuals and variables.
 
     Parameters
     ----------
     obj : class
-        An object of class :class:`~discrimintools.discriminant_analysis.CANDISC`.
+        An object of class :class:`~discrimintools.CANDISC`.
 
     **kwargs : 
-        further arguments passed to or from others functions. See :class:`~discrimintools.plot.fviz_candisc_ind`, :class:`~discrimintools.plot.fviz_candisc_var`.
+        further arguments passed to or from others functions. See :class:`~discrimintools.fviz_candisc_ind`, :class:`~discrimintools.fviz_candisc_var`.
 
     Returns
     -------
@@ -466,13 +468,13 @@ def fviz_candisc_biplot(
 
     See also
     --------
-    :class:`~discrimintools.plot.fviz_candisc`
+    :class:`~discrimintools.fviz_candisc`
         Visualize Canonical Discriminant Analysis (CANDISC).
-    :class:`~discrimintools.plot.fviz_candisc_ind`
+    :class:`~discrimintools.fviz_candisc_ind`
         Visualize Canonical Discriminant Analysis (CANDISC) - Graph of individuals.
-    :class:`~discrimintools.plot.fviz_candisc_var`
+    :class:`~discrimintools.fviz_candisc_var`
         Visualize Canonical Discriminant Analysis (CANDISC) - Graph of variables.
-    :class:`~discrimintools.plot.fviz_dist`
+    :class:`~discrimintools.fviz_dist`
         Visualize distance between barycenter.
 
     Examples
@@ -487,8 +489,9 @@ def fviz_candisc_biplot(
     >>> p = fviz_candisc_biplot(clf) # biplot of individuals and variables
     >>> print(p)
 
-    .. figure:: ../../../_static/fviz_candisc_biplot.png
-        :scale: 90%
+    .. figure:: ../../../../_static/fviz_candisc_biplot.png
+
+        Biplot of individuals and variables - CANDISC
     """
     #---------------------------------------------------------------------------------------------------------------------------------------------------------------------
     #check if obj is an instance of class CANDISC
@@ -608,12 +611,12 @@ def fviz_candisc(
     """
     Visualize Canonical Discriminant Analysis (CANDISC)
 
-    Canonical discriminant analysis is a dimension-reduction technique related to principal component analysis and canonical correlation. :class:`~discrimintools.plot.fviz_candisc` provides plotnine based elegant visualization of CANDISC outputs.
+    Canonical discriminant analysis is a dimension-reduction technique related to principal component analysis and canonical correlation. :class:`~discrimintools.fviz_candisc` provides plotnine based elegant visualization of CANDISC outputs.
     
     Parameters
     ----------
     obj : class
-        An object of class :class:`~discrimintools.discriminant_analysis.CANDISC`.
+        An object of class :class:`~discrimintools.CANDISC`.
 
     element : str, default = 'biplot'
         The element to plot from the output, possible values:
@@ -633,13 +636,13 @@ def fviz_candisc(
 
     See also
     --------
-    :class:`~discrimintools.plot.fviz_candisc_biplot`
+    :class:`~discrimintools.fviz_candisc_biplot`
         Visualize Canonical Discriminant Analysis (CANDISC) - Biplot of individuals and variables.
-    :class:`~discrimintools.plot.fviz_candisc_ind`
+    :class:`~discrimintools.fviz_candisc_ind`
         Visualize Canonical Discriminant Analysis (CANDISC) - Graph of individuals.
-    :class:`~discrimintools.plot.fviz_candisc_var`
+    :class:`~discrimintools.fviz_candisc_var`
         Visualize Canonical Discriminant Analysis (CANDISC) - Graph of variables.
-    :class:`~discrimintools.plot.fviz_dist`
+    :class:`~discrimintools.fviz_dist`
         Visualize distance between barycenter.
 
     Examples
@@ -657,32 +660,36 @@ def fviz_candisc(
     >>> p = fviz_candisc(clf, "ind") # graph of individuals
     >>> print(p)
 
-    .. figure:: ../../../_static/fviz_candisc_ind.png
-        :scale: 90%
+    .. figure:: ../../../../_static/fviz_candisc_ind.png
+
+        Graph of individuals - CANDISC
 
     Graph of variables...
         
     >>> p = fviz_candisc(clf, "var") # graph of variables
     >>> print(p)
 
-    .. figure:: ../../../_static/fviz_candisc_var.png
-        :scale: 90%
+    .. figure:: ../../../../_static/fviz_candisc_var.png
+
+        Graph of variables - CANDISC
 
     Biplot of individuals and variables...
 
     >>> p = fviz_candisc(clf, "biplot") # biplot of individuals and variables
     >>> print(p)
 
-    .. figure:: ../../../_static/fviz_candisc_biplot.png
-        :scale: 90%
+    .. figure:: ../../../../_static/fviz_candisc_biplot.png
+        Biplot of individuals and variables - CANDISC
 
     Distance between class barycenter.
 
     >>> p = fviz_candisc(clf, "dist") # graph of distance
     >>> print(p)
 
-    .. figure:: ../../../_static/fviz_candisc_dist.png
-        :scale: 90%
+    .. figure:: ../../../../_static/fviz_candisc_dist.png
+
+        Distance between class barycenter - CANDISC
+
     """
     if element == "ind":
         return fviz_candisc_ind(obj,**kwargs)

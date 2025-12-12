@@ -56,7 +56,7 @@ discrimintools provides functions for:
 
 3. **Regularized Discriminant Analysis (RDA)**:
     * Partial Least Squares for Classification - [CPLS](https://eric.univ-lyon2.fr/ricco/tanagra/fichiers/en_Tanagra_PLS_DA.pdf)
-    * General Factor Analysis Linear Discriminant Analysis ([PCADA](https://eric.univ-lyon2.fr/ricco/tanagra/fichiers/fr_Tanagra_Deploying_Predictive_Models_with_R.pdf), [DISQUAL](https://eric.univ-lyon2.fr/ricco/tanagra/fichiers/fr_Tanagra_Pipeline_Python.pdf[) & [DISMIX](https://tutoriels-data-science.blogspot.com/p/tutoriels-en-francais.html#S6wTBImDN7Q)) - GFALDA
+    * General Factor Analysis Linear Discriminant Analysis ([PCADA](https://eric.univ-lyon2.fr/ricco/tanagra/fichiers/fr_Tanagra_Deploying_Predictive_Models_with_R.pdf), [DISQUAL](https://eric.univ-lyon2.fr/ricco/tanagra/fichiers/fr_Tanagra_Pipeline_Python.pdf[) & [DISMIX](https://tutoriels-data-science.blogspot.com/p/tutoriels-en-francais.html#S6wTBImDN7Q)) - [GFALDA](https://eric.univ-lyon2.fr/ricco/tanagra/fichiers/en_dr_utiliser_axes_factoriels_descripteurs.pdf)
     * Discriminant Analysis on Mixed Predictors - [MDA](https://www.researchgate.net/publication/265751966_Discriminant_Analysis_on_Mixed_Predictors)
     * Partial Least Squares Discriminant Analysis - [PLSDA](https://eric.univ-lyon2.fr/ricco/tanagra/fichiers/en_Tanagra_PLS_DA.pdf)
     * Partial Least Squares Logistic Regression - [PLSLOGIT](https://inria.hal.science/inria-00494857v1/document)
