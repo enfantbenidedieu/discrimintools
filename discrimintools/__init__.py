@@ -7,6 +7,7 @@ from __future__ import annotations
 from .discriminant_analysis import *
 from .summary import *
 from .plot import *
+from .datasets import *
 
 __version__ = '0.1.0'
 __name__ = "discrimintools"
